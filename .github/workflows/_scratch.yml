@@ -1,27 +1,12 @@
 name: scratch
 on:
   workflow_dispatch: {}
-  push:
-    tags:
-      - "v*"
-permissions:
-  contents: read
-  packages: write
-concurrency:
-  group: bottles
-  cancel-in-progress: false
 jobs:
-  bottle:
-    name: bottle-${{ matrix.platform }}
-    runs-on: ${{ matrix.runner }}
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - platform: arm64_sequoia
-            runner: macos-15
+  t:
+    runs-on: ubuntu-latest
     steps:
-      - name: Tap and install tooling
-        run: |
-          brew tap tmonk/brew
-          brew install oras
+      - uses: actions/checkout@v4
+      - name: Set up Homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
