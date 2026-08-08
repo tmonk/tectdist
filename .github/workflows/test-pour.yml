@@ -13,7 +13,7 @@ jobs:
       - name: Plain curl probe (independent of brew)
         run: |
           set -euo pipefail
-          URL="https://github.com/tmonk/tectdist/releases/download/v0.2.0/tectdist--0.2.0.arm64_sequoia.bottle.tar.gz"
+          URL="https://github.com/tmonk/tectdist/releases/download/v0.2.0/tectdist-0.2.0.arm64_sequoia.bottle.tar.gz"
           WANT="a6cf84fee9d0090e970e9ce1a0e007cdbbe34aae5a88c3eee0bd626b43fe2d00"
           curl -sL -o /tmp/probe.tar.gz "$URL"
           GOT=$(shasum -a 256 /tmp/probe.tar.gz | cut -d' ' -f1)

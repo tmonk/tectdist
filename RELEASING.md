@@ -178,10 +178,15 @@ was evaluated and ruled out: `GITHUB_TOKEN` can push to a user-namespace
 ghcr package but can only make it private — setting visibility to public
 requires the account owner's own `write:packages` PAT, which the project
 does not use.  Release assets are public by default, need no registry
-tokens, and ride the existing release workflow.  (Known GitHub quirk:
-newly-uploaded release assets can briefly 404 from some edge backends;
-assets stabilize within an hour or two — the deterministic source tarball
-is unaffected and installs never block on the bottle.)
+tokens, and ride the existing release workflow.  (Naming gotcha, solved:
+ `brew bottle` emits `{name}--{version}.{tag}.bottle.tar.gz` (double
+ hyphen) but brew's flat-file fetch requests `{name}-{version}.{tag}.
+ bottle.tar.gz` (single hyphen) — Bottle::Filename#url_encode vs #to_str
+ in Homebrew/brew.  Assets uploaded under the double-hyphen name 404 for
+ brew even though the bytes are identical and direct curl/python downloads
+ work; the workflow renames the archive to the single-hyphen name before
+ attaching it to the release.  The fetch-name rule is the authoritative
+ source of truth for asset naming — never rename assets on a hunch.)
 
 **Building and publishing** — `.github/workflows/build-bottles.yml`
 (`workflow_dispatch` or on any `v*` tag push): on each of the four
@@ -189,9 +194,10 @@ platforms (macos-15 → `arm64_sequoia`, macos-15-intel → `sequoia`,
 ubuntu-24.04 → `x86_64_linux`, ubuntu-24.04-arm → `arm64_linux`) it runs
 `brew install --build-bottle`, then `brew bottle --json --no-rebuild
 --root-url .../releases/download/vX.Y.Z`, uploads the archive to the
-release, prints the `bottle do` block, and keeps the archive as an action
-artifact.  macOS 13/ventura runners are retired (Dec 2025), so Intel macOS
-bottles are `sequoia` on `macos-15-intel`.
+release **under the single-hyphen fetch name** (`{name}-{version}.{tag}.
+bottle.tar.gz`), prints the `bottle do` block, and keeps the archive as an
+action artifact.  macOS 13/ventura runners are retired (Dec 2025), so Intel
+macOS bottles are `sequoia` on `macos-15-intel`.
 
 **Adding the block** (after a release):
 
@@ -210,10 +216,16 @@ is verified on this machine; core CI strips/replaces it with its own
 bottles on merge).
 
 **Pour verification**: uninstall + `rm -rf ~/Library/Caches/Homebrew` +
-reinstall; the log must show `Pouring tectdist--X.Y.Z.<tag>.bottle...tar.gz`
-and finish in seconds.  Verified on the v0.2.0 bottles (arm64_golden_gate
-poured in 5s on the maintainer's machine; 62 keg bin entries; doctor PAIR
-OK; biblatex E2E renders the citation; `brew test` green; battery 298/0/4).
+reinstall; the log must show `Pouring tectdist-X.Y.Z.<tag>.bottle...tar.gz`
+and finish in seconds.  Verified on the v0.2.0 bottles with a fully cleared
+cache and zero cache tricks: fresh `brew install tmonk/brew/tectdist`
+poured the bottle from the release URL in **8.8s real** (deps gdbm/perl/
+libxml2/libxslt poured from core bottles too); 62 keg bin entries; doctor
+PAIR OK; biblatex E2E renders the citation; `brew test` green; battery
+298/0/4.  The definitive fetch that once 404'd ~30 times across local,
+raw, jsDelivr, and GitHub-runner tests succeeded instantly once the
+assets were attached under the single-hyphen fetch name — the double-
+hyphen names `brew bottle` emits are a trap; only the fetch name matters.
 
 ## 5. Post-release smoke test
 

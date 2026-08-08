@@ -16,7 +16,11 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   itself — chosen after ghcr.io/tmonk/tectdist was ruled out (only the
   account owner's `write:packages` PAT can make a user-namespace ghcr
   package public; release assets are public by default and brew fetches them
-  flat-file, `{root_url}/{filename}`).  The from-source build stays as the
+  flat-file, `{root_url}/{filename}`).  Bottle assets are attached under
+  brew's single-hyphen fetch name (`{name}-{version}.{tag}.bottle.tar.gz`
+  — `brew bottle` emits a double-hyphen local name; fetching the
+  double-hyphen asset name 404s for brew even though the bytes match).
+  The from-source build stays as the
   always-works fallback; measured **2m43s cold** (cleared caches) on an
   M-class Mac — the earlier "~10-20 minutes" claim was dropped.
 
