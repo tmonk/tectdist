@@ -1,15 +1,15 @@
 class Tectdist < Formula
   desc "Standard-TeX-compatible TeX distribution backed by Tectonic"
   homepage "https://github.com/tmonk/tectdist"
-  url "https://github.com/tmonk/tectdist/archive/refs/tags/v0.1.0.tar.gz"
-  # sha256 of the archive as fetched by Homebrew (ghcr.io mirror of the
-  # GitHub-generated tarball).  GitHub's codeload gzip is regenerated and
-  # NOT byte-stable, so verify with `brew fetch` rather than curl:
+  url "https://github.com/tmonk/tectdist/releases/download/v0.1.0/tectdist-0.1.0.tar.gz"
+  # sha256 of the release's source-tarball asset.  The asset is built
+  # deterministically from the tag (`git archive | gzip -n`), uploaded once,
+  # and immutable — unlike GitHub's codeload tarballs, which are regenerated
+  # over time and NOT byte-stable.  Verify with `brew fetch` rather than curl:
   #   brew fetch --force tmonk/brew/tectdist
-  #   shasum -a 256 $(ls -t ~/Library/Caches/Homebrew/downloads/*tectdist-0.1.0.tar.gz | head -1)
-  # NOTE: this value changes when the tag is force-retagged (release tarball
-  # content changes) — see RELEASING.md.
-  sha256 "d876c9175a3a88fe70a9c2fc576baffb7c92440ff07f43614fce885d1c28873c"
+  # (NOTE: this value changes when the tag is force-retagged — see
+  # RELEASING.md.)
+  sha256 "0570fa6583bdf242e36ef385f52b1c1ac36ecb564e3ec1b358c05c35198796d0"
   license "AGPL-3.0-only"
 
   # Version pairing (the source of truth for this release):
