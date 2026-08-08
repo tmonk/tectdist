@@ -2,8 +2,9 @@
 
 The release is prepared locally (annotated tag at HEAD), but pushing to
 GitHub and publishing to Homebrew are manual steps done by a maintainer
-with push access.  Current release: **v0.2.0** (biber 2.17 built from
-source, pairing enforced at runtime).
+with push access.  Current release: **v0.2.1** (patch — docs to standard
+public-facing brevity, bottles rebuilt; pairing unchanged).  Previous:
+v0.2.0 (biber 2.17 built from source, pairing enforced at runtime).
 
 The remote repo history was rewritten once for the single-release v0.1.0
 (a squashed `release: v0.1.0` commit); backups of the superseded history
@@ -211,14 +212,15 @@ python3 tests/check_purity.py   # stdlib-only OK
 
 ## 6. homebrew-core draft (SUBMISSION-READY, NOT submitted)
 
-A draft of the formula lives on branch `tectdist-0.2.0` of the fork
+A draft of the formula lives on branch `tectdist-0.2.1` of the fork
 `github.com/tmonk/homebrew-core`, as `Formula/t/tectdist.rb`.  It is
 **byte-identical to the canonical `Formula/tectdist.rb`** — there is exactly
 one tectdist version, one formula, everything in it (source-built biber,
 runtime pairing check, the lot; sha256 of all three copies:
-`20505638...`) — and the `tmonk/brew` tap serves the same bytes.  **No PR
+`aca5fec3...`) — and the `tmonk/brew` tap serves the same bytes.  **No PR
 has been opened** (policy: tap-only for now).  The draft is FULLY READY:
-opening the PR below is the only step left.
+opening the PR below is the only step left.  (Historical drafts: branches
+`tectdist-0.1.0` and `tectdist-0.2.0`.)
 
 ### 6.1. Audit state: ZERO findings
 
@@ -294,8 +296,8 @@ rather than adapting to first-pass review:
 
 ```
 gh pr create --repo Homebrew/homebrew-core \
-  --head tmonk:tectdist-0.2.0 \
-  --title "tectdist 0.2.0: Standard-TeX-compatible TeX distribution backed by Tectonic" \
+  --head tmonk:tectdist-0.2.1 \
+  --title "tectdist 0.2.1: Standard-TeX-compatible TeX distribution backed by Tectonic" \
   --body-file docs/core-pr-body.md
 ```
 
