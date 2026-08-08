@@ -22,9 +22,6 @@ Prebuilt bottles are published for macOS (arm64 + Intel) and Linux (x86_64 +
 arm64), so installs pour in seconds; the from-source build (measured 2m43s
 cold) remains the always-available fallback. The formula builds the matching
 biber 2.17 from source, so biblatex works out of the box on every platform.
-Each release is one verified set — `brew upgrade` always lands the tectonic,
-biblatex and biber versions that work together (currently 0.17.x → 3.17 →
-2.17).
 
 If another TeX installation already provides some farm names:
 
