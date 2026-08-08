@@ -12,19 +12,27 @@ jobs:
         uses: Homebrew/actions/setup-homebrew@master
       - name: Fresh install from the tap (must pour the bottle)
         run: |
+          set +e
           brew tap tmonk/brew
           brew install tmonk/brew/tectdist > /tmp/install.log 2>&1
+          INSTALL_EXIT=$?
+          echo "=== install exit: $INSTALL_EXIT ==="
           echo "=== install log (bottle-related lines) ==="
-          grep -iE 'pour|fetching|built from source' /tmp/install.log | head -10
+          grep -iE 'pour|fetching|built from source|error|✘' /tmp/install.log | head -15
           echo "=== verdict ==="
           if grep -qi 'Pouring tectdist' /tmp/install.log; then
             echo "POURED: bottle was poured"
+          elif grep -qi 'Download failed' /tmp/install.log; then
+            echo "DOWNLOAD FAILED: bottle fetch 404"
           elif grep -qi 'bottle' /tmp/install.log; then
             echo "WARN: bottle-related line found but not 'Pouring tectdist'"
           else
             echo "NO BOTTLE POUR LINE — likely built from source"
           fi
-          echo "=== functionality ==="
-          tectdist doctor
-          biber --version
-          ls "$(brew --prefix)"/Cellar/tectdist/0.2.0/bin | wc -l
+          if [ $INSTALL_EXIT -eq 0 ]; then
+            echo "=== functionality ==="
+            tectdist doctor
+            biber --version
+            ls "$(brew --prefix)"/Cellar/tectdist/0.2.0/bin | wc -l
+          fi
+          exit 0
