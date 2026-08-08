@@ -1,8 +1,27 @@
 name: scratch
 on:
   workflow_dispatch: {}
+  push:
+    tags:
+      - "v*"
+permissions:
+  contents: read
+  packages: write
+concurrency:
+  group: bottles
+  cancel-in-progress: false
 jobs:
-  t:
-    runs-on: ubuntu-latest
+  bottle:
+    name: bottle-${{ matrix.platform }}
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: arm64_sequoia
+            runner: macos-15
     steps:
-      - run: echo hi
+      - name: Tap and install tooling
+        run: |
+          brew tap tmonk/brew
+          brew install oras
