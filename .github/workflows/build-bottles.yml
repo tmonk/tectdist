@@ -77,13 +77,14 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          for name in "tectdist" "tectdist/tectdist"; do
-            if gh api "GET /user/packages/container/${name}" >/dev/null 2>&1; then
-              gh api -X POST "user/packages/container/${name}/visibility" \
-                -f visibility=public
-              echo "made public: ${name}"
-            fi
-          done
+          NAME=$(gh api '/user/packages?package_type=container' --jq '.[] | select(.name | contains("tectdist")) | .name' | head -1)
+          if [ -n "$NAME" ]; then
+            ENC=$(python3 -c 'import sys, urllib.parse; print(urllib.parse.quote(sys.argv[1], safe=""))' "$NAME")
+            gh api -X POST "user/packages/container/${ENC}/visibility" -f visibility=public
+            echo "made public: $NAME"
+          else
+            echo "package not listed yet; will be made public on the next run"
+          fi
 
       - name: Emit bottle block
         run: |
