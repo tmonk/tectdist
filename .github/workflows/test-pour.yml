@@ -1,0 +1,30 @@
+name: test-pour
+on:
+  workflow_dispatch: {}
+permissions:
+  contents: read
+jobs:
+  pour:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+      - name: Fresh install from the tap (must pour the bottle)
+        run: |
+          brew tap tmonk/brew
+          brew install tmonk/brew/tectdist > /tmp/install.log 2>&1
+          echo "=== install log (bottle-related lines) ==="
+          grep -iE 'pour|fetching|built from source' /tmp/install.log | head -10
+          echo "=== verdict ==="
+          if grep -qi 'Pouring tectdist' /tmp/install.log; then
+            echo "POURED: bottle was poured"
+          elif grep -qi 'bottle' /tmp/install.log; then
+            echo "WARN: bottle-related line found but not 'Pouring tectdist'"
+          else
+            echo "NO BOTTLE POUR LINE — likely built from source"
+          fi
+          echo "=== functionality ==="
+          tectdist doctor
+          biber --version
+          ls "$(brew --prefix)"/Cellar/tectdist/0.2.0/bin | wc -l
