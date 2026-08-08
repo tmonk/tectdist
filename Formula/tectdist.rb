@@ -9,7 +9,7 @@ class Tectdist < Formula
   #   shasum -a 256 $(ls -t ~/Library/Caches/Homebrew/downloads/*tectdist-0.1.0.tar.gz | head -1)
   # NOTE: this value changes when the tag is force-retagged (release tarball
   # content changes) — see RELEASING.md.
-  sha256 "31c7e188c203c8c3e04980e6f7a9d077fff46e94c7fec1bf0efa696bf2445163"
+  sha256 "d876c9175a3a88fe70a9c2fc576baffb7c92440ff07f43614fce885d1c28873c"
   license "AGPL-3.0-only"
 
   # Version pairing (the source of truth for this release):
