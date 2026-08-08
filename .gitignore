@@ -1,0 +1,14 @@
+.DS_Store
+build/
+dist/
+*.log
+*.aux
+.pytest_cache/
+.benchmarks/
+# pi agent session data (never commit)
+.pi/
+__pycache__/
+*.pyc
+.venv/
+out/
+benchmarks/*.json

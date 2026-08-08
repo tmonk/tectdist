@@ -1,0 +1,36 @@
+[project]
+name = "tectdist"
+version = "0.1.0"     # mirrors src/tectdist/version.py (single source of truth)
+description = "A standard-TeX-compatible distribution backed by Tectonic"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "AGPL-3.0-only" }
+keywords = ["tex", "latex", "tectonic", "texlive", "latexmk"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "License :: OSI Approved :: GNU Affero General Public License v3",
+    "Operating System :: MacOS :: MacOS X",
+    "Operating System :: POSIX",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Topic :: Text Processing :: Markup :: LaTeX",
+]
+
+# Everything in this repo runs through uv — but ONLY for development.  The
+# shipped product (dist/tectdist zipapp, the symlink farm, install.py /
+# uninstall.py, tests/battery.py, tests/check_purity.py) is stdlib-only
+# Python >= 3.9 and must keep working on a stock python3 with no uv and no
+# site-packages.  `package = false` keeps this a dev-only project: uv manages
+# the environment but never builds or ships the artifact.
+[dependency-groups]
+dev = [
+    "pytest>=8.0",
+    "pytest-benchmark>=5.0",
+]
+
+[tool.uv]
+package = false
+
+[tool.pytest.ini_options]
+testpaths = ["benchmarks"]
