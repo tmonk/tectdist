@@ -12,10 +12,11 @@ jobs:
     steps:
       - name: Push a test image with GITHUB_TOKEN
         run: |
-          brew install oras >/dev/null 2>&1 || true
-          oras login ghcr.io -u "${{ github.actor }}" -p "${{ secrets.GITHUB_TOKEN }}"
+          curl -sL -o /tmp/oras.tar.gz https://github.com/oras-project/oras/releases/download/v1.2.2/oras_1.2.2_linux_amd64.tar.gz
+          tar -xzf /tmp/oras.tar.gz -C /tmp oras
+          /tmp/oras login ghcr.io -u "${{ github.actor }}" -p "${{ secrets.GITHUB_TOKEN }}"
           echo "test-content" > /tmp/tiny.txt
-          oras push "ghcr.io/tmonk/tectdist/vis-test:1" /tmp/tiny.txt
+          /tmp/oras push "ghcr.io/tmonk/tectdist/vis-test:1" /tmp/tiny.txt
           echo "push ok"
       - name: Try to make it public (various endpoints)
         run: |
