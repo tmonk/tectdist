@@ -639,27 +639,16 @@ class Tectdist < Formula
 
   def caveats
     <<~EOS
-      tectdist #{version} declares the pairing tectonic #{TECTONIC_VERSION}.x
-      + biber 2.17 (biblatex 3.17, .bcf 3.8).  The pairing is verified at
-      RUNTIME: every `tectdist` invocation compares the actual installed
-      tectonic and biber against the declaration and fails fast with
-      instructions if brew's tectonic has moved — run `tectdist doctor` for
-      details.  Homebrew's core `biber` (2.21) is NOT compatible with that
+      tectdist #{version} ships biber 2.17 matched to tectonic
+      #{TECTONIC_VERSION}'s biblatex (3.17), so biblatex works out of the
+      box.  Homebrew's core `biber` (2.21) is not compatible with that
       biblatex and must not replace the bundled one.
 
-      biber is built from source during a from-source install (measured
-      2m43s cold on the maintainer's M-class Mac).  Prebuilt bottles make
-      the normal install instant: `brew install tmonk/brew/tectdist` pours
-      a bottle in seconds when one matches your platform.  The tectdist
-      farm intentionally shadows
-      nothing: poppler, qpdf and ghostscript tools come from those formulae
-      themselves.  If another TeX installation already provides some farm
+      biber is built from source when no bottle matches your platform; with
+      a bottle the install pours in seconds.  The farm never shadows
+      poppler, qpdf or ghostscript — those tools come from their own
+      formulae.  If another TeX installation already provides some farm
       names, run:  brew link --overwrite tectdist
-
-      Upgrading: `brew upgrade` updates both tectonic and tectdist; the weekly
-      pairing check (see RELEASING.md) keeps the matched release available
-      before brew's tectonic moves.  Details in the project README, "Version
-      pairing".
     EOS
   end
 
