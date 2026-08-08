@@ -53,8 +53,9 @@ jobs:
 
       - name: Bottle
         run: |
-          # version is derived from the formula's release-asset URL
-          VERSION=$(grep -oE 'tectdist-[0-9]+\.[0-9]+\.[0-9]+' Formula/tectdist.rb | head -1 | sed 's/tectdist-//')
+          # version from the tapped formula (the checked-out formula at a tag
+          # push predates the sha-fill commit and would report the old release)
+          VERSION=$(brew info --json=v2 tmonk/brew/tectdist | python3 -c 'import json,sys; print(json.load(sys.stdin)["formulae"][0]["versions"]["stable"])')
           brew bottle --json --no-rebuild --root-url "https://github.com/tmonk/tectdist/releases/download/v${VERSION}" \
             tmonk/brew/tectdist
 
@@ -63,7 +64,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
-          VERSION=$(grep -oE 'tectdist-[0-9]+\.[0-9]+\.[0-9]+' Formula/tectdist.rb | head -1 | sed 's/tectdist-//')
+          VERSION=$(brew info --json=v2 tmonk/brew/tectdist | python3 -c 'import json,sys; print(json.load(sys.stdin)["formulae"][0]["versions"]["stable"])')
           ARCHIVE=$(ls *.bottle*.tar.gz)
           # attach under brew's fetch name ({name}-{version}.{tag}.bottle.tar.gz)
           FETCH_NAME=$(basename "${ARCHIVE/--/-}")
