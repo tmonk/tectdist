@@ -1,0 +1,31 @@
+name: fix-ghcr-visibility
+
+# One-off helper: set the ghcr.io/tmonk/tectdist container package to
+# public so anonymous `brew install` can fetch bottles.  Idempotent; the
+# normal bottles workflow also makes the package public after each push
+# (build-bottles.yml "Make package public" step).
+
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  make-public:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Make package public
+        run: |
+          NAME=$(gh api '/user/packages?package_type=container' --jq '.[] | select(.name | contains("tectdist")) | .name' | head -1)
+          if [ -n "$NAME" ]; then
+            ENC=$(python3 -c 'import sys, urllib.parse; print(urllib.parse.quote(sys.argv[1], safe=""))' "$NAME")
+            gh api -X POST "user/packages/container/${ENC}/visibility" -f visibility=public
+            echo "made public: $NAME"
+          else
+            echo "no tectdist container package found"
+            gh api '/user/packages?package_type=container' --jq '.[].name' || true
+          fi
