@@ -141,3 +141,38 @@ Then run the project's own release gate (also CI-able):
 python3 tests/battery.py        # ALL GREEN
 python3 tests/check_purity.py   # stdlib-only OK
 ```
+
+## 6. homebrew-core draft (prepared, NOT submitted)
+
+A draft of the formula lives on branch `tectdist-0.1.0` of the fork
+`github.com/tmonk/homebrew-core`, as `Formula/t/tectdist.rb`.  It is
+**byte-identical to the canonical `Formula/tectdist.rb`** — there is exactly
+one tectdist version, one formula, everything in it (bundled biber,
+pairing assertion, the lot) — and the `tmonk/brew` tap serves the same bytes.
+No PR has been opened (policy: tap-only for now).
+
+Validated locally against the fork: `brew style` (2 findings) and
+`brew audit --strict --new --online` (2 findings, see below) were run;
+`brew install --build-from-source` and `brew test` pass because the draft is
+the same bytes as the tap formula already validated by the release gate.
+
+**Why this formula cannot be merged into homebrew-core as-is** — the audit
+findings are the concrete evidence:
+
+* Bundled binary resource: the biber resource points at a prebuilt binary
+  package on our release; homebrew-core is source-only (`Error: ... looks
+  like a binary package, not a source archive; homebrew/core is source-only`).
+* Dependency version pinning: the install block asserts `TECTONIC_VERSION`
+  against brew's tectonic; core formulae may not pin dependency versions.
+* Style: the conditional resource uses `Hardware::CPU.intel?`; core prefers
+  `on_arm`/`on_intel` blocks (a one-line change if the formula were ever
+  adapted).
+
+These are deliberate features — they are what make biblatex work out of the
+box — so tectdist ships via `tmonk/brew`.  If a core submission is ever
+wanted: ask the maintainers in `#core` first (new formulae need buy-in),
+then `gh pr create --repo Homebrew/homebrew-core --head tmonk:tectdist-0.1.0
+--title "tectdist 0.1.0: Standard-TeX-compatible TeX distribution backed by
+Tectonic" --body ...` with this formula as-is.  Any adaptation requested in
+review would be a discussion at that time — it is not maintained in
+parallel anywhere.
