@@ -29,6 +29,12 @@ The remote repo history was rewritten once for the single-release v0.1.0
 * Users download source tarballs from canonical upstreams only (our
   release asset, `plk/biber` on GitHub, CPAN modules via metacpan), all
   sha256-pinned — no prebuilt binaries anywhere, no SourceForge.
+* **Tap bottles are a documented follow-up, not part of this plan**: first
+  tap installs build biber from source (~10-20 minutes) — the deliberate
+  tradeoff that keeps the formula core-clean.  Bottling the tap (a GH
+  Actions workflow that builds the formula on all four platforms and
+  pushes to ghcr) would restore fast installs; it is intentionally out of
+  scope for now.
 
 ## 2. Prepare a release (the procedure)
 
