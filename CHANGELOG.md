@@ -5,6 +5,21 @@ All notable changes to tectdist are documented here.  The format follows
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 `VERSION` lives in `src/tectdist/version.py`.
 
+## [Unreleased]
+
+- **Prebuilt bottles** for the tap: `.github/workflows/build-bottles.yml`
+  builds the formula from source on all four platforms (macOS arm64 + Intel,
+  Linux x86_64 + arm64) and publishes the bottles as assets of the v0.2.0
+  GitHub release (plus the maintainer's macOS 27 `arm64_golden_gate`
+  machine), so `brew install tmonk/brew/tectdist` pours a bottle in seconds
+  instead of building biber from source.  The bottle store is the release
+  itself — chosen after ghcr.io/tmonk/tectdist was ruled out (only the
+  account owner's `write:packages` PAT can make a user-namespace ghcr
+  package public; release assets are public by default and brew fetches them
+  flat-file, `{root_url}/{filename}`).  The from-source build stays as the
+  always-works fallback; measured **2m43s cold** (cleared caches) on an
+  M-class Mac — the earlier "~10-20 minutes" claim was dropped.
+
 ## [0.2.0] - 2026-08-08
 
 Packaging rework: biber is now BUILT FROM SOURCE inside the Homebrew formula
@@ -18,8 +33,9 @@ RUNTIME: every `tectdist` invocation compares the actual tectonic against the
 declaration and fails fast with instructions when brew's tectonic moves
 (`tectdist doctor` prints the full report).  New deps: perl, libxml2, libxslt,
 openssl@3, pkgconf.  The weekly pairing watcher now reads the declared pairing
-and also checks the formula mirrors it.  First installs build biber from
-source (~10-20 minutes); tap bottles are a documented follow-up.
+and also checks the formula mirrors it.  From-source installs build biber
+from source (~2m43s measured cold; see [Unreleased] for the published
+bottles that make installs pour in seconds).
 
 ## [0.1.0] - 2026-08-08
 

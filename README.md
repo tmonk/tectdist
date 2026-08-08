@@ -50,8 +50,19 @@ The formula installs the built zipapp plus the full tool farm, declares
 `tectonic`, `ghostscript`, `poppler`, `qpdf`, `perl`, `libxml2`, `libxslt`
 and `openssl@3` as dependencies, and needs no `--overwrite` against those
 formulae.  If another TeX installation already provides some farm names,
-run `brew link --overwrite tectdist`.  The first install builds biber from
-source (~10-20 minutes); tap bottles are a documented follow-up.
+run `brew link --overwrite tectdist`.
+
+**Prebuilt bottles** are published for all four platforms (macOS arm64 +
+Intel, Linux x86_64 + arm64, plus the maintainer's macOS 27 dev machine) as
+assets of the v0.2.0 GitHub release, so `brew install` pours a bottle in
+seconds instead of building biber from source (the bottle store is the
+release itself — public by default, flat-file `{root_url}/{filename}` fetch,
+chosen after ghcr was ruled out because only the account owner's
+`write:packages` PAT can make a user-namespace ghcr package public).
+From-source installs stay fully supported as the always-works fallback:
+measured **2m43s cold** (cleared caches, all deps re-downloaded) on an
+M-class Mac — most machines are well under 5 minutes, not the "~10-20
+minutes" this README previously claimed.
 
 ### Version pairing
 
@@ -270,12 +281,12 @@ appears in `build.py`'s output, the Homebrew formula, and the CHANGELOG.
 
 ## Platform support
 
-| platform | biber 2.17 | status |
-|---|---|---|
-| macOS arm64 | built from source (perl 5.42 + 119 pinned CPAN modules) | verified end-to-end (biblatex → PDF) on this release |
-| macOS Intel | built from source | same formula; not exercised locally (no Intel host) |
-| Linux x86_64 | built from source | same formula; not exercised locally |
-| Linux arm64 | built from source | same formula; not exercised locally |
+| platform | biber 2.17 | install | status |
+|---|---|---|---|
+| macOS arm64 (Apple silicon) | built from source in the formula | bottle `arm64_sequoia` (pours in seconds); source fallback | verified end-to-end (biblatex → PDF) on this release |
+| macOS Intel | built from source | bottle `sequoia` (CI-built on macos-15-intel); source fallback | CI-built and published; not exercised locally (no Intel host) |
+| Linux x86_64 | built from source | bottle `x86_64_linux`; source fallback | CI-built and published; not exercised locally |
+| Linux arm64 | built from source | bottle `arm64_linux`; source fallback | CI-built and published; not exercised locally |
 
 ## Limitations
 

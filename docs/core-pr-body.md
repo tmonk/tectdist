@@ -11,7 +11,11 @@ flag vocabulary, and proxies poppler/qpdf/ghostscript tools to those real
 formulae without shadowing them.
 
 `brew install tmonk/brew/tectdist` gives a user a working TeX system with a
-biblatex pipeline out of the box — no TeX Live, no extra packages.
+biblatex pipeline out of the box — no TeX Live, no extra packages.  The tap
+ships prebuilt bottles (published as assets of the release; the formula's
+`bottle do` block mirrors them), so installs pour in seconds; the bottle
+block here will be replaced by core-built bottles when CI merges this
+formula.
 
 ## Dependencies (all pure core formulae)
 

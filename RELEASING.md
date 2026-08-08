@@ -29,12 +29,12 @@ The remote repo history was rewritten once for the single-release v0.1.0
 * Users download source tarballs from canonical upstreams only (our
   release asset, `plk/biber` on GitHub, CPAN modules via metacpan), all
   sha256-pinned — no prebuilt binaries anywhere, no SourceForge.
-* **Tap bottles are a documented follow-up, not part of this plan**: first
-  tap installs build biber from source (~10-20 minutes) — the deliberate
-  tradeoff that keeps the formula core-clean.  Bottling the tap (a GH
-  Actions workflow that builds the formula on all four platforms and
-  pushes to ghcr) would restore fast installs; it is intentionally out of
-  scope for now.
+* **Bottles are published for the tap** (see §4c, "Bottles"): a GH Actions
+  workflow builds the formula from source on all four platforms and
+  publishes prebuilt bottles as assets of the release, so `brew install`
+  pours a bottle in seconds.  From-source installs (measured 2m43s cold on
+  the maintainer's M-class Mac — the old "~10-20 minutes" claim was
+  overstated) remain the always-works fallback.
 
 ## 2. Prepare a release (the procedure)
 
@@ -164,6 +164,55 @@ deduplicating while the previous issue is still open.  Manual runs:
    (the battery's pairing gate fails if formula and pairing.py diverge).
 5. Release as one unit (§2), sync the tap, then close the watcher issue.
 
+## 4c. Bottles (prebuilt, published as release assets)
+
+Prebuilt bottles make `brew install tmonk/brew/tectdist` pour in seconds;
+from-source installs (measured 2m43s cold on an M-class Mac) remain the
+always-works fallback.
+
+**Store = the release itself.**  Each platform's bottle archive is an asset
+of the versioned GitHub release; the formula's `bottle do` block declares
+`root_url "https://github.com/tmonk/tectdist/releases/download/vX.Y.Z"` and
+brew fetches flat-file (`{root_url}/{filename}`).  ghcr.io/tmonk/tectdist
+was evaluated and ruled out: `GITHUB_TOKEN` can push to a user-namespace
+ghcr package but can only make it private — setting visibility to public
+requires the account owner's own `write:packages` PAT, which the project
+does not use.  Release assets are public by default, need no registry
+tokens, and ride the existing release workflow.  (Known GitHub quirk:
+newly-uploaded release assets can briefly 404 from some edge backends;
+assets stabilize within an hour or two — the deterministic source tarball
+is unaffected and installs never block on the bottle.)
+
+**Building and publishing** — `.github/workflows/build-bottles.yml`
+(`workflow_dispatch` or on any `v*` tag push): on each of the four
+platforms (macos-15 → `arm64_sequoia`, macos-15-intel → `sequoia`,
+ubuntu-24.04 → `x86_64_linux`, ubuntu-24.04-arm → `arm64_linux`) it runs
+`brew install --build-bottle`, then `brew bottle --json --no-rebuild
+--root-url .../releases/download/vX.Y.Z`, uploads the archive to the
+release, prints the `bottle do` block, and keeps the archive as an action
+artifact.  macOS 13/ventura runners are retired (Dec 2025), so Intel macOS
+bottles are `sequoia` on `macos-15-intel`.
+
+**Adding the block** (after a release):
+
+```sh
+# download the four per-platform artifacts, then merge:
+python3 scripts/emit_bottle_block.py */ *.bottle.json   # all *.bottle.json in cwd
+# paste the output into Formula/tectdist.rb after `license`, run
+brew style --fix Formula/tectdist.rb
+# mirror byte-identically: tap formula + the core fork draft, then push all
+# three repos.  Re-run the fork audit: expect ZERO findings.
+```
+
+The block also carries `arm64_golden_gate` — the maintainer's macOS 27 dev
+machine, built locally with the same two commands (it is how the pour path
+is verified on this machine; core CI strips/replaces it with its own
+bottles on merge).
+
+**Pour verification**: uninstall + `rm -rf ~/Library/Caches/Homebrew` +
+reinstall; the log must show `Pouring tectdist--X.Y.Z.<tag>.bottle...tar.gz`
+and finish in seconds.
+
 ## 5. Post-release smoke test
 
 ```sh
@@ -212,6 +261,13 @@ eliminates both by construction, so the fork is clean:
 Verified on the fork: `brew style` 0 offenses, `brew audit --strict --new
 --online` clean (exit 0, no problems), `brew install --build-from-source`
 green, `brew test` green.
+
+The draft now also carries the tap's `bottle do` block (root_url pointing
+at our release, plus the maintainer's `arm64_golden_gate` entry).  Brew's
+audit does NOT flag a bottle block in a new formula and does NOT flag the
+unknown golden_gate tag — re-verified: ZERO findings with the block in
+place.  When the PR is opened, core CI replaces the block with core-built
+bottles on merge (standard practice); the tap keeps serving ours.
 
 ### 6.2. Review questions a maintainer will ask (with answers)
 

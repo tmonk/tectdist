@@ -647,8 +647,13 @@ class Tectdist < Formula
       details.  Homebrew's core `biber` (2.21) is NOT compatible with that
       biblatex and must not replace the bundled one.
 
-      biber is built from source during the first install (~10-20 minutes:
-      119 pinned CPAN modules).  The tectdist farm intentionally shadows
+      biber is built from source during a from-source install (measured
+      2m43s cold on the maintainer's M-class Mac, cleared caches — most
+      machines are well under 5 minutes, not the "~10-20 minutes" older
+      docs claimed).  Prebuilt bottles make the normal install instant:
+      `brew install tmonk/brew/tectdist` pours a bottle in seconds when one
+      matches your platform (published on the v0.2.0 release; see the
+      README "Installation").  The tectdist farm intentionally shadows
       nothing: poppler, qpdf and ghostscript tools come from those formulae
       themselves.  If another TeX installation already provides some farm
       names, run:  brew link --overwrite tectdist
