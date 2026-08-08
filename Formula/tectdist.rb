@@ -10,6 +10,19 @@ class Tectdist < Formula
   sha256 "a634fd3a6a10f47860c998f4e8ea4ebc7cb6d75bb7e674d8e19e3e47dc6639ab"
   license "AGPL-3.0-only"
 
+  # Prebuilt bottles are published as assets of the v0.2.1 GitHub release
+  # (flat-file {root_url}/{filename} fetch, public — no registry tokens).
+  # Built by .github/workflows/build-bottles.yml; the arm64_golden_gate
+  # entry is the maintainer's macOS 27 dev machine.
+  bottle do
+    root_url "https://github.com/tmonk/tectdist/releases/download/v0.2.1"
+    sha256 cellar: :any, arm64_golden_gate: "b2a8f0299005f48c5d27a6a8ffc656b4f87f6a9cb35f85b7754523909c3bcec5"
+    sha256 cellar: :any, arm64_sequoia:     "b65f109aee5629e6cc944c57ae5bba7c0cd2700ce6e0d934207eb40d15bf2a94"
+    sha256 cellar: :any, sequoia:           "9230f1fac07d0fa3025c366bc8866cb94e1ee75b875b85e5b777a4afd560f83d"
+    sha256 cellar: :any, arm64_linux:       "0e47840c8347e1283359a7376b69dcd62b3e6d257c064b84cd183e17298fca15"
+    sha256 cellar: :any, x86_64_linux:      "93eb06609265f315d4652fc14d71f7befb1753e5b04dda3c2fb61567c76cd734"
+  end
+
   # Version pairing (declared for this release — enforced at RUNTIME by the
   # software itself, not pinned at install time):
   #   tectonic 0.17 -> bundled biblatex 3.17 -> .bcf format 3.8 -> biber 2.17
