@@ -65,6 +65,66 @@ the `[0.1.0]` section of `CHANGELOG.md` as the body.  The source tarball is
 generated automatically from the tag; the formula sha256 in step 2 must match
 it.
 
+## 4a. Biber binary assets (provenance + integrity)
+
+The release carries two binary assets that the formula installs as bundled
+resources (users only ever download from github.com — never from SourceForge):
+
+| asset | upstream (SourceForge) | sha256 |
+| --- | --- | --- |
+| `biber-2.17-darwin-universal.tar.gz` | `https://sourceforge.net/projects/biblatex-biber/files/biblatex-biber/2.17/biber-darwin_universal.tar.gz` | `182e1efa074d8a2a23a8893f2a22440d4e463cce55e4ed02076ac4c0ee0614b2` |
+| `biber-2.17-linux-x86_64.tar.gz` | `https://sourceforge.net/projects/biblatex-biber/files/biblatex-biber/2.17/biber-linux_x86_64.tar.gz` | `129d2e0332a57e985ffa253e5e9fbd28ef99af5a068d1b141145211969aa8999` |
+
+These are the official prebuilt binaries the biber author distributes (the
+same files MacTeX / TeX Live ship).  Import once from the author's canonical
+SourceForge, upload to the release **as-is** (no recompression), and always
+check that the hosted asset sha256 equals the upstream sha256 (they must match
+exactly, byte for byte):
+
+```sh
+# upstream
+curl -L -O https://sourceforge.net/projects/biblatex-biber/files/biblatex-biber/2.17/biber-darwin_universal.tar.gz
+curl -L -O https://sourceforge.net/projects/biblatex-biber/files/biblatex-biber/2.17/biber-linux_x86_64.tar.gz
+shasum -a 256 biber-darwin_universal.tar.gz biber-linux_x86_64.tar.gz
+# upload as-is, then verify the hosted digests
+gh api repos/tmonk/tectdist/releases/tags/v0.1.0 --jq '.assets[] | "\(.name)  \(.digest)"'
+```
+
+## 4b. Bumping the pairing (tectonic <-> biber)
+
+Each tectdist release declares `TECTONIC_VERSION` (Formula/tectdist.rb) and
+REQUIRES it at install time: the install block asserts brew's tectonic minor
+version and fails fast with instructions if it has moved (a mismatched pair
+silently breaks biblatex).  The pairing chain:
+
+| tectonic | bundled biblatex | .bcf format | biber |
+| --- | --- | --- | --- |
+| 0.17 | 3.17 | 3.8 | 2.17 |
+
+**When to bump:** only when tectonic's bundled biblatex changes (i.e. brew's
+tectonic moves to a new minor).  Never chase "latest biber" — biber 2.21
+speaks .bcf 3.11 and aborts on the .bcf 3.8 that biblatex 3.17 writes.
+
+**How you are told:** the weekly GitHub Actions watcher
+(`.github/workflows/check-tectonic.yml`) compares brew's tectonic (parsed
+from the homebrew-core formula) against `TECTONIC_VERSION` and opens an issue
+("tectonic moved to X — biber/biblatex pairing needs a bump") the moment
+they diverge, deduplicating while the previous issue is still open.  Manual
+runs: `workflow_dispatch` on the Actions tab.
+
+**Procedure (triggered by the watcher issue):**
+
+1. Confirm the biblatex version bundled by the new tectonic (release notes /
+bundle listing) and pick the biber version matched to it (table above; the
+official biber tarballs live on the author's SourceForge under the version
+folder, e.g. `.../biblatex-biber/2.17/`).
+2. Download the new official binaries, verify shas, upload as release assets
+(as-is; hosted sha must equal upstream sha).
+3. Patch `Formula/tectdist.rb`: `TECTONIC_VERSION`, the biber resource
+urls + shas, `revision` bump; mirror the formula into the tap repo
+(`tmonk/homebrew-brew`).
+4. Release as one unit (this document), then close the watcher issue.
+
 ## 5. Post-release smoke test
 
 ```sh

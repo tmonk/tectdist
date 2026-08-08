@@ -23,7 +23,12 @@ from tectdist.flags import FORMULA_FARM_NAMES  # noqa: E402
 
 FORMULA = os.path.join(ROOT, "Formula", "tectdist.rb")
 LAUNCHER = "tectdist"
-MIN_BIN_ENTRIES = 62   # 61 farm names + the tectdist launcher link
+# Real binaries the formula installs into bin/ next to the farm symlinks
+# (not part of the farm list, but they occupy bin/ slots — biber is bundled
+# as a resource so the farm never symlinks it).
+BUNDLED_BINARIES = ("biber",)
+MIN_BIN_ENTRIES = 62   # 60 farm names + the tectdist launcher link + the
+                       # bundled biber binary
 
 
 def main():
@@ -47,9 +52,11 @@ def main():
         problems.append(f"farm missing names: {', '.join(missing)}")
     if extra:
         problems.append(f"farm has unexpected names: {', '.join(extra)}")
-    if len(farm) < MIN_BIN_ENTRIES:
-        problems.append(f"farm has {len(farm)} names; the test block asserts "
-                        f"at least {MIN_BIN_ENTRIES} bin entries")
+    if len(farm) + len(BUNDLED_BINARIES) < MIN_BIN_ENTRIES:
+        problems.append(f"farm + bundled binaries has "
+                        f"{len(farm) + len(BUNDLED_BINARIES)} entries; the "
+                        f"test block asserts at least {MIN_BIN_ENTRIES} "
+                        f"bin entries")
     if f":>=, {MIN_BIN_ENTRIES}" not in src:
         problems.append(f"test-block count assertion drifted from "
                         f"{MIN_BIN_ENTRIES}")
@@ -59,7 +66,9 @@ def main():
             print(f"check_formula.py: FAIL — {p}")
         return 1
     print(f"check_formula.py: OK — formula farm ({len(farm)} names incl. "
-          f"'{LAUNCHER}') matches flags.py; test threshold {MIN_BIN_ENTRIES}")
+          f"'{LAUNCHER}') matches flags.py; test threshold "
+          f"{MIN_BIN_ENTRIES} (incl. {len(BUNDLED_BINARIES)} bundled "
+          f"binary)")
     return 0
 
 

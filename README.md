@@ -16,13 +16,15 @@ and the dispatcher switches on the invoked name.
 
 | Tool | Needed for | Notes |
 |---|---|---|
-| `tectonic` | every compile | required; found via `TECTONIC`, `PATH`, else `/opt/homebrew/bin/tectonic` |
+| `tectonic` | every compile | required — this release REQUIRES tectonic 0.17.x (see [Version pairing](#version-pairing)); found via `TECTONIC`, `PATH`, else `/opt/homebrew/bin/tectonic` |
 | `ghostscript` (`gs`) | `epstopdf`, `eps2eps`, `ps2pdf`, `pdfcrop` | |
 | `poppler` tools | `pdfinfo`, `pdftotext`, `pdfunite`, `pdfimages`, `pdfseparate`, `pdftocairo`, `pdftoppm`, `pdftops` | passed through to the real binaries |
 | `qpdf` | `qpdf` | passed through |
+| `python@3.14` | the zipapp interpreter | Homebrew formula dependency (current core default); the repo tools also run on a stock `python3` ≥ 3.9, stdlib only |
 
-**Testing** additionally needs a Python 3 interpreter (≥ 3.9, stdlib only) —
-macOS's stock `/usr/bin/python3` works.
+`biber` 2.17 is **bundled** by the Homebrew formula (official binary,
+self-hosted release asset, sha256-pinned) — it is not an external
+requirement, and biblatex works out of the box.
 
 ## Install
 
@@ -43,6 +45,23 @@ The formula installs the built zipapp plus the full tool farm, declares
 `tectonic`, `ghostscript`, `poppler` and `qpdf` as dependencies, and needs no
 `--overwrite` against those formulae.  If another TeX installation already
 provides some farm names, run `brew link --overwrite tectdist`.
+
+### Version pairing
+
+Each tectdist release is one matched unit: it **requires a specific tectonic
+version** and bundles the biber that matches that tectonic's biblatex.
+
+| release | requires tectonic | bundled biblatex | bundled biber |
+|---|---|---|---|
+| 0.1.0 | 0.17.x | 3.17 (bcf 3.8) | 2.17 |
+
+The formula asserts the pairing at install time and fails fast with
+instructions if brew's tectonic has moved (a mismatched pair silently breaks
+biblatex).  A weekly GitHub Actions watcher opens an issue the moment brew's
+tectonic changes, so the matched next release is cut before users hit a
+mismatch on `brew upgrade` — see RELEASING.md, "Bumping the pairing".  In
+short: `brew upgrade` always lands a matched set, and the install-time
+assertion makes any drift loud instead of silent.
 
 ### From the repository
 
@@ -141,7 +160,8 @@ tectdist/
 |---|---|---|
 | Engines | `pdflatex latex xelatex lualatex platex uplatex pdftex tex etex luatex luahbtex dvilualatex dviluatex xetex pdfetex` | compile via Tectonic; accept the full web2c flag vocabulary |
 | Build driver | `latexmk` | classic interface (`-pdf`, `-outdir`, `-c/-C`, `.latexmkrc`, …) over the engine farm |
-| Stubs | `bibtex`, `biber makeindex xindy upmendex`, `dvips dvipdfm dvipdfmx xdvipdfmx dvitype dvicopy …`, `mktexlsr texhash mktexfmt fmtutil updmap tlmgr texconfig texdoc`, `tftopl pltotf vftovp gftopk …`, `mf mpost context …` | exit 0 with a note when the real binary isn't installed — `biber`/`makeindex`/`xindy`/`upmendex` proxy to the real system binary when present; `bibtex` runs inside the Tectonic compile (built-in BiBTeX) |
+| Bibliography | `biber` | **real bundled binary 2.17** (Homebrew formula; matched to Tectonic 0.17's biblatex 3.17, bcf 3.8) — biblatex works out of the box; non-Homebrew installs proxy to a real `biber` on PATH and are exit-0 notes otherwise |
+| Stubs | `bibtex bibtex8 bibtexu`, `makeindex xindy upmendex`, `dvips dvipdfm dvipdfmx xdvipdfmx dvitype dvicopy …`, `mktexlsr texhash mktexfmt fmtutil updmap tlmgr texconfig texdoc`, `tftopl pltotf vftovp gftopk …`, `mf mpost context …` | exit 0 with a note when the real binary isn't installed — `makeindex`/`xindy`/`upmendex` proxy to the real system binary when present; classic `\bibliography` is processed by Tectonic's built-in BiBTeX inside the compile |
 | Real tools | `epstopdf ps2pdf eps2eps pdfcrop` | implemented on Ghostscript (`gs`) |
 | Proxies | `pdfinfo pdftotext pdftoppm pdftocairo pdfunite pdfseparate pdftops pdfimages qpdf` | forwarded to the real system binary (poppler/qpdf) |
 | Lookup | `kpsewhich` | file lookup, `-var-value`, `-format=`, TEXINPUTS/BIBINPUTS/BSTINPUTS search |
@@ -235,6 +255,15 @@ latexmk --version       # latexmk (tectdist) 0.1.0 — Tectonic-backed build dri
 a stock `pdflatex` reports the underlying TeX system.  The version also
 appears in `build.py`'s output, the Homebrew formula, and the CHANGELOG.
 
+## Platform support
+
+| platform | biber 2.17 | status |
+|---|---|---|
+| macOS arm64 | official universal binary, thinned to arm64 at install | verified end-to-end (biblatex → PDF) on this release |
+| macOS Intel | x86_64 slice of the universal binary | artifact-verified; not exercised locally (no Intel host) |
+| Linux x86_64 | official ELF binary | artifact-verified; not exercised locally |
+| Linux arm64 | none exists upstream — formula installs an explanatory stub | biblatex degrades gracefully (empty bibliography + notice) |
+
 ## Limitations
 
 - One engine exists (Tectonic's XeTeX-based LaTeX engine): `xelatex`/
@@ -245,16 +274,19 @@ appears in `build.py`'s output, the Homebrew formula, and the CHANGELOG.
 - The bibliography for classic `\bibliography` documents is processed inside
   the Tectonic compile (Tectonic's built-in BiBTeX); a standalone `bibtex`
   call is a no-op stub that writes no `.bbl`.
-- `biber` is **proxied to the real system binary when one is installed**:
-  Tectonic 0.17 runs `biber` natively for biblatex documents (it looks it up
-  on PATH, runs it in a scratch dir and re-runs TeX), so the farm must not
-  shadow it.  Without a real `biber` on PATH the compile still succeeds but
-  the bibliography is empty, citations print their raw keys, and an honest
-  warning is shown.  Note that `biber` must match Tectonic's bundled
-  biblatex: Tectonic 0.17 ships biblatex 3.17 (bcf 3.8), which pairs with
-  `biber` 2.17 — a newer `biber` (e.g. Homebrew's current 2.21, which needs
-  biblatex 3.21) aborts the compile with a “versions are incompatible”
-  error.
+- **biblatex works out of the box**: the Homebrew formula bundles `biber`
+  2.17 (official binary, self-hosted release asset, sha256-pinned — users
+  never download from SourceForge), matched to the biblatex 3.17 that
+  Tectonic 0.17 bundles (bcf 3.8).  Tectonic runs `biber` natively for
+  biblatex documents (looks it up on PATH, runs it in a scratch dir and
+  re-runs TeX), so `\printbibliography` produces a real bibliography.
+  Homebrew's core `biber` (2.21) is NOT compatible with that biblatex and
+  must not replace the bundled one — the pairing is asserted at install
+  time (see [Version pairing](#version-pairing)).  On linux/arm64 no
+  official biber 2.17 binary exists, so the formula installs an explanatory
+  stub: biblatex compiles but the bibliography stays empty and citations
+  print their raw keys (install a TeX Live-compatible `biber` on PATH if
+  you need it).
 - Tectonic itself never runs `makeindex`; it only writes `.idx` files.  The
   engine dispatcher implements the rerun loop instead: after a compile that
   produced `.idx` files it runs a real `makeindex` binary (found on PATH,

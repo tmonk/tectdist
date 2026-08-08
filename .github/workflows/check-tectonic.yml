@@ -1,0 +1,71 @@
+name: check-tectonic-pairing
+
+# Weekly watcher: keeps the tectdist <-> tectonic version pairing in line
+# with Homebrew.  When brew's tectonic moves to a new minor (e.g. 0.18), its
+# bundled biblatex changes and the biber bundled by tectdist no longer
+# matches — so the matched pair (new TECTONIC_VERSION + new biber) must be
+# released before users hit a mismatch on `brew upgrade`.  This workflow
+# opens an issue the moment that happens.  See RELEASING.md, "Bumping the
+# pairing", for the release procedure the issue points at.
+
+on:
+  schedule:
+    - cron: "17 3 * * 1"   # weekly: Monday 03:17 UTC
+  workflow_dispatch: {}    # allow manual runs
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Compare brew's tectonic with the pairing pin
+        id: compare
+        run: |
+          set -euo pipefail
+          # brew's current tectonic version, from the homebrew-core formula
+          # (e.g. url ".../tectonic@0.17.0.tar.gz" -> 0.17.0)
+          core_ver=$(curl -fsSL \
+            https://raw.githubusercontent.com/Homebrew/homebrew-core/HEAD/Formula/t/tectonic.rb \
+            | grep -oE 'tectonic@[0-9]+(\.[0-9]+){1,2}' | head -1 | sed 's/tectonic@//')
+          # the pairing pin declared by the current release
+          # (0.17 -> biblatex 3.17 -> biber 2.17); TECTONIC_VERSION in
+          # Formula/tectdist.rb
+          our_ver=$(grep -oE 'TECTONIC_VERSION = "[0-9.]+"' Formula/tectdist.rb \
+            | grep -oE '[0-9.]+')
+          echo "core=$core_ver" >> "$GITHUB_OUTPUT"
+          echo "pin=$our_ver" >> "$GITHUB_OUTPUT"
+          pair=${core_ver%.*}
+          echo "brew tectonic: $core_ver (pair $pair) - tectdist pin: $our_ver"
+          if [ "$pair" != "$our_ver" ]; then
+            echo "mismatch=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Open pairing issue on mismatch
+        if: steps.compare.outputs.mismatch == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          core="${{ steps.compare.outputs.core }}"
+          pin="${{ steps.compare.outputs.pin }}"
+          title="tectonic moved to ${core} - biber/biblatex pairing needs a bump (tectdist pin is ${pin})"
+          # never open a duplicate while the previous one is still open
+          if gh issue list --state open --limit 100 --json title \
+              --jq '.[].title' | grep -qF -- "$title"; then
+            echo "issue already open: $title"
+            exit 0
+          fi
+          lines=(
+            "This is an automated pairing check (weekly, .github/workflows/check-tectonic.yml)."
+            ""
+            "Homebrew's tectonic moved to ${core} while tectdist's pairing pin (TECTONIC_VERSION in Formula/tectdist.rb) is ${pin} - a mismatched pair breaks biblatex, so the formula's install-time assertion now fails fast and users are protected, but the matched release should be cut soon."
+            ""
+            "Follow RELEASING.md, 'Bumping the pairing': verify tectonic ${core}'s bundled biblatex, pick the matched biber (never 'latest' - biber 2.21 breaks the bcf 3.8 format of biblatex 3.17), download the matched official binaries from the author's SourceForge, verify shas and upload them as release assets (hosted sha must equal upstream), bump TECTONIC_VERSION + biber resource shas + revision in the formula, mirror it into the tap repo, and release as one unit. Then close this issue."
+          )
+          body=$(printf '%s\n' "${lines[@]}")
+          gh issue create --title "$title" --body "$body"

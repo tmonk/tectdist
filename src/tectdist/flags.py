@@ -59,9 +59,11 @@ FARM_NAMES = (ENGINES + STUB_BIB + PROXY_OR_STUB + STUB_DVI + STUB_MNT_SILENT
               + STUB_SPECIAL + PROXIES + GS_TOOLS + ("kpsewhich", "latexmk"))
 
 # names the Homebrew formula must NOT symlink into the prefix bin: those are
-# provided by its own dependencies (poppler/qpdf/ghostscript), and shadowing
-# them would break the passthrough proxies.
-FORMULA_EXCLUDED = frozenset(PROXIES + ("dvipdf", "eps2eps", "ps2pdf"))
+# provided by its own dependencies (poppler/qpdf/ghostscript) or bundled by
+# the formula itself (biber, as a real binary resource), so the farm must
+# never shadow them.
+FORMULA_EXCLUDED = frozenset(PROXIES + ("dvipdf", "eps2eps", "ps2pdf",
+                                        "biber"))
 FORMULA_FARM_NAMES = tuple(n for n in FARM_NAMES if n not in FORMULA_EXCLUDED)
 
 # ---------------------------------------------------------------------------

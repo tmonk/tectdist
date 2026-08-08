@@ -29,22 +29,45 @@ First release: the complete Tectonic-backed TeX distribution.
   PATH entry.  No bash remains in the repository.
 - **Homebrew formula** (`Formula/tectdist.rb`): tap-ready, declares
   `tectonic`, `ghostscript`, `poppler` and `qpdf` as dependencies, installs
-  the zipapp plus the tool farm without shadowing the dependency binaries.
+  the zipapp plus the tool farm without shadowing the dependency binaries,
+  and now also bundles `biber` 2.17 as a real binary resource (below).
+
+### Changed
+
+- **biblatex works out of the box — `biber` 2.17 is bundled.**  The formula
+  installs the official prebuilt biber 2.17 binary as a bundled resource,
+  self-hosted as a sha256-pinned release asset (users only ever download
+  from github.com, never from SourceForge).  `bin/biber` is the real
+  binary, matched to the biblatex 3.17 that Tectonic 0.17 bundles (bcf
+  3.8); the farm no longer symlinks it.  On linux/arm64 (no official biber
+  2.17 binary exists) the formula installs an explanatory stub instead:
+  biblatex compiles but the bibliography stays empty and citations print
+  raw keys, with a clear notice.
+- **Each release requires a specific tectonic version (pairing).**  The
+  formula declares `TECTONIC_VERSION` (0.17) and asserts brew's tectonic
+  against it at install time, failing fast with instructions if brew's
+  tectonic has moved — a mismatched pair can never be installed silently.
+  A weekly GitHub Actions watcher (`.github/workflows/check-tectonic.yml`)
+  opens an issue the moment brew's tectonic changes so the matched release
+  is cut before users hit a mismatch on `brew upgrade`.
+- **python@3.12 → python@3.14** as the zipapp interpreter (current core
+  default).
 
 ### Added
 
-- **`biber`/`makeindex`/`xindy`/`upmendex` proxy to the real system binary.**
-  When a real binary of the same name is installed (TeX Live, MacTeX,
-  MiKTeX, homebrew) the farm forwards to it with the same argv, exactly like
-  the poppler/qpdf proxies — the farm never shadows a real tool even when it
+- **Deterministic source tarball release asset** (`tectdist-0.1.0.tar.gz`,
+  `git archive | gzip -n`) alongside the two biber binary assets; the
+  formula's sha256 is taken from the Homebrew mirror via `brew fetch`.
+
+- **`makeindex`/`xindy`/`upmendex` proxy to the real system binary.**  When
+  a real binary of the same name is installed (TeX Live, MacTeX, MiKTeX,
+  homebrew) the farm forwards to it with the same argv, exactly like the
+  poppler/qpdf proxies — the farm never shadows a real tool even when it
   comes first on PATH.  When the binary is absent the command stays an
-  honest exit-0 note.  For biblatex documents this makes Tectonic 0.17's
-  native biber support work end-to-end: Tectonic runs the proxied `biber`
-  itself (scratch dir + re-run), so `\printbibliography` produces a real
-  bibliography instead of an empty one with raw citation keys.  The proxied
-  `biber` must match Tectonic's bundled biblatex (Tectonic 0.17 = biblatex
-  3.17 = `biber` 2.17; a newer `biber` such as Homebrew's 2.21 aborts the
-  compile with a “versions are incompatible” error).
+  honest exit-0 note.  (`biber` used to be proxied the same way; since this
+  release the Homebrew formula ships the real matched binary itself — see
+  "Changed" above — while non-Homebrew installs keep the proxy/stub
+  behaviour.)
 - **makeindex rerun loop.**  Tectonic itself never runs `makeindex` (it only
   writes `.idx` files), so the engine dispatcher now performs the step: after
   a compile that produced `.idx` files it runs a real `makeindex` binary
