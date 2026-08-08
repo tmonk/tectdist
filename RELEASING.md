@@ -211,7 +211,9 @@ bottles on merge).
 
 **Pour verification**: uninstall + `rm -rf ~/Library/Caches/Homebrew` +
 reinstall; the log must show `Pouring tectdist--X.Y.Z.<tag>.bottle...tar.gz`
-and finish in seconds.
+and finish in seconds.  Verified on the v0.2.0 bottles (arm64_golden_gate
+poured in 5s on the maintainer's machine; 62 keg bin entries; doctor PAIR
+OK; biblatex E2E renders the citation; `brew test` green; battery 298/0/4).
 
 ## 5. Post-release smoke test
 
