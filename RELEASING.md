@@ -33,8 +33,7 @@ The remote repo history was rewritten once for the single-release v0.1.0
   workflow builds the formula from source on all four platforms and
   publishes prebuilt bottles as assets of the release, so `brew install`
   pours a bottle in seconds.  From-source installs (measured 2m43s cold on
-  the maintainer's M-class Mac — the old "~10-20 minutes" claim was
-  overstated) remain the always-works fallback.
+  the maintainer's M-class Mac) remain the always-works fallback.
 
 ## 2. Prepare a release (the procedure)
 
@@ -164,68 +163,31 @@ deduplicating while the previous issue is still open.  Manual runs:
    (the battery's pairing gate fails if formula and pairing.py diverge).
 5. Release as one unit (§2), sync the tap, then close the watcher issue.
 
-## 4c. Bottles (prebuilt, published as release assets)
+## 4c. Bottles
 
-Prebuilt bottles make `brew install tmonk/brew/tectdist` pour in seconds;
-from-source installs (measured 2m43s cold on an M-class Mac) remain the
-always-works fallback.
+`.github/workflows/build-bottles.yml` builds and bottles the formula on
+macOS arm64/Intel and Linux x86_64/arm64 (run it after a release) and
+uploads each archive to the release.  `brew install tmonk/brew/tectdist`
+then pours a bottle in seconds; from-source installs remain the fallback
+(measured 2m43s cold on an M-class Mac).
 
-**Store = the release itself.**  Each platform's bottle archive is an asset
-of the versioned GitHub release; the formula's `bottle do` block declares
-`root_url "https://github.com/tmonk/tectdist/releases/download/vX.Y.Z"` and
-brew fetches flat-file (`{root_url}/{filename}`).  ghcr.io/tmonk/tectdist
-was evaluated and ruled out: `GITHUB_TOKEN` can push to a user-namespace
-ghcr package but can only make it private — setting visibility to public
-requires the account owner's own `write:packages` PAT, which the project
-does not use.  Release assets are public by default, need no registry
-tokens, and ride the existing release workflow.  (Naming gotcha, solved:
- `brew bottle` emits `{name}--{version}.{tag}.bottle.tar.gz` (double
- hyphen) but brew's flat-file fetch requests `{name}-{version}.{tag}.
- bottle.tar.gz` (single hyphen) — Bottle::Filename#url_encode vs #to_str
- in Homebrew/brew.  Assets uploaded under the double-hyphen name 404 for
- brew even though the bytes are identical and direct curl/python downloads
- work; the workflow renames the archive to the single-hyphen name before
- attaching it to the release.  The fetch-name rule is the authoritative
- source of truth for asset naming — never rename assets on a hunch.)
-
-**Building and publishing** — `.github/workflows/build-bottles.yml`
-(`workflow_dispatch` or on any `v*` tag push): on each of the four
-platforms (macos-15 → `arm64_sequoia`, macos-15-intel → `sequoia`,
-ubuntu-24.04 → `x86_64_linux`, ubuntu-24.04-arm → `arm64_linux`) it runs
-`brew install --build-bottle`, then `brew bottle --json --no-rebuild
---root-url .../releases/download/vX.Y.Z`, uploads the archive to the
-release **under the single-hyphen fetch name** (`{name}-{version}.{tag}.
-bottle.tar.gz`), prints the `bottle do` block, and keeps the archive as an
-action artifact.  macOS 13/ventura runners are retired (Dec 2025), so Intel
-macOS bottles are `sequoia` on `macos-15-intel`.
-
-**Adding the block** (after a release):
+After a release, attach the `bottle do` block:
 
 ```sh
-# download the four per-platform artifacts, then merge:
-python3 scripts/emit_bottle_block.py */ *.bottle.json   # all *.bottle.json in cwd
-# paste the output into Formula/tectdist.rb after `license`, run
+# download the per-platform *.bottle.json artifacts, then:
+python3 scripts/emit_bottle_block.py *.bottle.json
+# paste the output into Formula/tectdist.rb after `license`
 brew style --fix Formula/tectdist.rb
-# mirror byte-identically: tap formula + the core fork draft, then push all
-# three repos.  Re-run the fork audit: expect ZERO findings.
+# mirror byte-identically to the tap formula + core fork draft, push all
+# three repos; the fork audit stays at ZERO findings
 ```
 
-The block also carries `arm64_golden_gate` — the maintainer's macOS 27 dev
-machine, built locally with the same two commands (it is how the pour path
-is verified on this machine; core CI strips/replaces it with its own
-bottles on merge).
+The block carries `arm64_golden_gate` (the maintainer's macOS 27 dev
+machine) in addition to the four CI platforms.
 
-**Pour verification**: uninstall + `rm -rf ~/Library/Caches/Homebrew` +
-reinstall; the log must show `Pouring tectdist-X.Y.Z.<tag>.bottle...tar.gz`
-and finish in seconds.  Verified on the v0.2.0 bottles with a fully cleared
-cache and zero cache tricks: fresh `brew install tmonk/brew/tectdist`
-poured the bottle from the release URL in **8.8s real** (deps gdbm/perl/
-libxml2/libxslt poured from core bottles too); 62 keg bin entries; doctor
-PAIR OK; biblatex E2E renders the citation; `brew test` green; battery
-298/0/4.  The definitive fetch that once 404'd ~30 times across local,
-raw, jsDelivr, and GitHub-runner tests succeeded instantly once the
-assets were attached under the single-hyphen fetch name — the double-
-hyphen names `brew bottle` emits are a trap; only the fetch name matters.
+Pour verification: uninstall, `rm -rf ~/Library/Caches/Homebrew`, reinstall
+— the log shows `Pouring tectdist-X.Y.Z.<tag>.bottle...tar.gz` and finishes
+in seconds (v0.2.0: 8.8s).
 
 ## 5. Post-release smoke test
 

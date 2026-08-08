@@ -55,14 +55,9 @@ run `brew link --overwrite tectdist`.
 **Prebuilt bottles** are published for all four platforms (macOS arm64 +
 Intel, Linux x86_64 + arm64, plus the maintainer's macOS 27 dev machine) as
 assets of the v0.2.0 GitHub release, so `brew install` pours a bottle in
-seconds instead of building biber from source (the bottle store is the
-release itself — public by default, flat-file `{root_url}/{filename}` fetch,
-chosen after ghcr was ruled out because only the account owner's
-`write:packages` PAT can make a user-namespace ghcr package public).
-From-source installs stay fully supported as the always-works fallback:
-measured **2m43s cold** (cleared caches, all deps re-downloaded) on an
-M-class Mac — most machines are well under 5 minutes, not the "~10-20
-minutes" this README previously claimed.
+seconds instead of building biber from source.  From-source installs stay
+fully supported as the always-works fallback (measured **2m43s cold** with
+cleared caches on an M-class Mac).
 
 ### Version pairing
 

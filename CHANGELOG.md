@@ -12,17 +12,9 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   Linux x86_64 + arm64) and publishes the bottles as assets of the v0.2.0
   GitHub release (plus the maintainer's macOS 27 `arm64_golden_gate`
   machine), so `brew install tmonk/brew/tectdist` pours a bottle in seconds
-  instead of building biber from source.  The bottle store is the release
-  itself — chosen after ghcr.io/tmonk/tectdist was ruled out (only the
-  account owner's `write:packages` PAT can make a user-namespace ghcr
-  package public; release assets are public by default and brew fetches them
-  flat-file, `{root_url}/{filename}`).  Bottle assets are attached under
-  brew's single-hyphen fetch name (`{name}-{version}.{tag}.bottle.tar.gz`
-  — `brew bottle` emits a double-hyphen local name; fetching the
-  double-hyphen asset name 404s for brew even though the bytes match).
-  The from-source build stays as the
+  instead of building biber from source.  The from-source build stays as the
   always-works fallback; measured **2m43s cold** (cleared caches) on an
-  M-class Mac — the earlier "~10-20 minutes" claim was dropped.
+  M-class Mac.
 
 ## [0.2.0] - 2026-08-08
 

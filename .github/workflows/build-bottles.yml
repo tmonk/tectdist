@@ -1,29 +1,10 @@
 name: bottles
 
 # Build and publish prebuilt bottles for the tap.
-# Run manually (workflow_dispatch) after a release, or automatically on any
-# v* tag push.  Each platform builds the formula from source (--build-bottle),
-# bottles it, and uploads the resulting archive to the versioned GitHub
-# release as an asset:
-#   https://github.com/tmonk/tectdist/releases/download/v0.2.0/tectdist-0.2.0.<platform>.bottle.tar.gz
-# The bottle store is the release itself (public by default, no registry
-# tokens needed): brew's flat-file bottle fetch is {root_url}/{filename}, and
-# the formula's `bottle do` block declares
-#   root_url "https://github.com/tmonk/tectdist/releases/download/v0.2.0"
-# so brew install pours the archive.  ghcr.io/tmonk/tectdist was evaluated
-# and ruled out: GITHUB_TOKEN cannot make a user-namespace ghcr package
-# public (only the account owner's write:packages PAT can), while release
-# assets are public by default.  See RELEASING.md "Bottles".
-#
-# NAMING RULE: `brew bottle` emits `{name}--{version}.{tag}.bottle.tar.gz`
-# (double hyphen), but brew's flat-file fetch requests `{name}-{version}.
-# {tag}.bottle.tar.gz` (single hyphen) — see Bottle::Filename#url_encode vs
-# #to_str in Homebrew/brew.  Assets uploaded under the double-hyphen name
-# are unfetchable by brew (404) even though the bytes are identical; the
-# upload step below renames the archive before attaching it to the release.
-#
-# The per-platform sha256s land in the workflow's "Bottle block" step output;
-# a maintainer pastes them into Formula/tectdist.rb.
+# Run after a release (workflow_dispatch) or automatically on any v* tag push.
+# Each platform builds from source, bottles, and uploads the archive to the
+# release under brew's fetch name {name}-{version}.{tag}.bottle.tar.gz.
+# See RELEASING.md §4c.
 
 on:
   workflow_dispatch: {}
@@ -84,9 +65,7 @@ jobs:
           set -euo pipefail
           VERSION=$(grep -oE 'tectdist-[0-9]+\.[0-9]+\.[0-9]+' Formula/tectdist.rb | head -1 | sed 's/tectdist-//')
           ARCHIVE=$(ls *.bottle*.tar.gz)
-          # brew fetches flat-file bottles as {name}-{version}.{tag}.bottle.tar.gz
-          # (single hyphen); brew bottle emits {name}--{version}... — rename so
-          # the asset name matches brew's fetch path (bytes are unchanged).
+          # attach under brew's fetch name ({name}-{version}.{tag}.bottle.tar.gz)
           FETCH_NAME=$(basename "${ARCHIVE/--/-}")
           cp "$ARCHIVE" "$FETCH_NAME"
           RELEASE="v${VERSION}"
