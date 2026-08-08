@@ -7,14 +7,27 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
-- **Prebuilt bottles** for the tap: `.github/workflows/build-bottles.yml`
-  builds the formula from source on all four platforms (macOS arm64 + Intel,
-  Linux x86_64 + arm64) and publishes the bottles as assets of the v0.2.0
-  GitHub release (plus the maintainer's macOS 27 `arm64_golden_gate`
-  machine), so `brew install tmonk/brew/tectdist` pours a bottle in seconds
-  instead of building biber from source.  The from-source build stays as the
-  always-works fallback; measured **2m43s cold** (cleared caches) on an
-  M-class Mac.
+## [0.2.1] - 2026-08-08
+
+Patch release — no pairing change (tectonic 0.17 / biblatex 3.17 / biber
+2.17 unchanged).
+
+### Changed
+
+- **Docs**: README, tap README, and formula caveats trimmed to standard
+  public-facing brevity — user-facing docs state what the software is and
+  how to use it (install commands, usage, features, limitations, license)
+  and nothing else.  The formula caveats now carry only the one genuinely
+  actionable warning: do not replace the bundled biber 2.17 with
+  Homebrew's core `biber` (2.21).
+- **Prebuilt bottles** rebuilt for this release: the
+  `.github/workflows/build-bottles.yml` pipeline builds the formula from
+  source on all four platforms (macOS arm64 + Intel, Linux x86_64 + arm64)
+  and publishes the bottles as assets of the v0.2.1 GitHub release (plus
+  the maintainer's macOS 27 `arm64_golden_gate` machine), so
+  `brew install tmonk/brew/tectdist` pours a bottle in seconds instead of
+  building biber from source.  The from-source build stays as the
+  always-works fallback.
 
 ## [0.2.0] - 2026-08-08
 
