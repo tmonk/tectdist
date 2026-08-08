@@ -639,16 +639,9 @@ class Tectdist < Formula
 
   def caveats
     <<~EOS
-      tectdist #{version} ships biber 2.17 matched to tectonic
-      #{TECTONIC_VERSION}'s biblatex (3.17), so biblatex works out of the
-      box.  Homebrew's core `biber` (2.21) is not compatible with that
-      biblatex and must not replace the bundled one.
-
-      biber is built from source when no bottle matches your platform; with
-      a bottle the install pours in seconds.  The farm never shadows
-      poppler, qpdf or ghostscript — those tools come from their own
-      formulae.  If another TeX installation already provides some farm
-      names, run:  brew link --overwrite tectdist
+      This release bundles biber 2.17, matched to its biblatex.  Do not
+      replace it with Homebrew's core `biber` (2.21) — it is not
+      compatible with that biblatex.
     EOS
   end
 
