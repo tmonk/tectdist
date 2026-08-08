@@ -18,11 +18,6 @@ brew tap tmonk/brew
 brew install tmonk/brew/tectdist
 ```
 
-Prebuilt bottles are published for macOS (arm64 + Intel) and Linux (x86_64 +
-arm64), so installs pour in seconds; the from-source build (measured 2m43s
-cold) remains the always-available fallback. The formula builds the matching
-biber 2.17 from source, so biblatex works out of the box on every platform.
-
 If another TeX installation already provides some farm names:
 
 ```sh
