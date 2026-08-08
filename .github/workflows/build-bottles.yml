@@ -76,7 +76,7 @@ jobs:
         run: |
           set -euo pipefail
           VERSION=$(grep -oE 'tectdist-[0-9]+\.[0-9]+\.[0-9]+' Formula/tectdist.rb | head -1 | sed 's/tectdist-//')
-          ARCHIVE=$(ls *.bottle.*.tar.gz)
+          ARCHIVE=$(ls *.bottle*.tar.gz)
           RELEASE="v${VERSION}"
           if gh release view "$RELEASE" >/dev/null 2>&1; then
             gh release upload "$RELEASE" "$ARCHIVE" --clobber
@@ -95,6 +95,6 @@ jobs:
         with:
           name: bottle-${{ matrix.platform }}
           path: |
-            *.bottle.*.tar.gz
+            *.bottle*.tar.gz
             *.bottle.json
           retention-days: 30
