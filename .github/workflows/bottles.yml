@@ -1,0 +1,110 @@
+name: bottles
+
+# Build and publish prebuilt bottles for the tap to ghcr.io/tmonk/tectdist.
+# Run manually (workflow_dispatch) after a release, or automatically on any
+# v* tag push.  Each platform builds the formula from source (--build-bottle)
+# and pushes the resulting bottle archive as an OCI blob under
+#   ghcr.io/tmonk/tectdist/tectdist:0.2.0.<platform>
+# The per-platform sha256s land in the workflow's "Bottle block" step output;
+# a maintainer pastes them into Formula/tectdist.rb (the formula's
+# `bottle do` block declares `root_url https://ghcr.io/v2/tmonk/tectdist`,
+# so brew install fetches from here).  See RELEASING.md "Bottles".
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: read
+  packages: write
+
+concurrency:
+  group: bottles
+  cancel-in-progress: false
+
+jobs:
+  bottle:
+    name: bottle-${{ matrix.platform }}
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: arm64_sequoia
+            runner: macos-15
+          - platform: x86_64_ventura
+            runner: macos-13
+          - platform: x86_64_linux
+            runner: ubuntu-24.04
+          - platform: arm64_linux
+            runner: ubuntu-24.04-arm
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Tap and install tooling
+        run: |
+          brew tap tmonk/brew
+          brew install oras
+
+      - name: Build from source with --build-bottle
+        run: |
+          brew install --build-bottle tmonk/brew/tectdist
+
+      - name: Bottle
+        run: |
+          brew bottle --json --root-url https://ghcr.io/v2/tmonk/tectdist \
+            tmonk/brew/tectdist
+
+      - name: Publish bottle to ghcr
+        env:
+          GHCR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BOTTLE_TAG: ${{ matrix.platform }}
+        run: |
+          set -euo pipefail
+          ARCHIVE=$(ls *.bottle.*.tar.gz)
+          oras login ghcr.io -u "${{ github.actor }}" -p "$GHCR_TOKEN"
+          oras push "ghcr.io/tmonk/tectdist/tectdist:0.2.0.${BOTTLE_TAG}" "$ARCHIVE"
+          echo "published ${ARCHIVE}"
+
+      - name: Make package public
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          for name in "tectdist" "tectdist/tectdist"; do
+            if gh api "GET /user/packages/container/${name}" >/dev/null 2>&1; then
+              gh api -X POST "user/packages/container/${name}/visibility" \
+                -f visibility=public
+              echo "made public: ${name}"
+            fi
+          done
+
+      - name: Emit bottle block
+        run: |
+          ls -la
+          for j in *.bottle.json; do
+            python3 - "$j" <<'EOF'
+import json, sys
+d = json.load(open(sys.argv[1]))
+for formula_key, info in d.items():
+    b = info["bottle"]
+    print("root_url:", b["root_url"], "| rebuild:", b["rebuild"])
+    for tag, t in sorted(b["tags"].items()):
+        print(f'        {tag}: "{t["sha256"]}"')
+EOF
+          done
+
+      - name: Upload bottle artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: bottle-${{ matrix.platform }}
+          path: |
+            *.bottle.*.tar.gz
+            *.bottle.json
+          retention-days: 30
