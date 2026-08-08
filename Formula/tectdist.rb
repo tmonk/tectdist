@@ -1,13 +1,13 @@
 class Tectdist < Formula
   desc "Standard-TeX-compatible TeX distribution backed by Tectonic"
   homepage "https://github.com/tmonk/tectdist"
-  url "https://github.com/tmonk/tectdist/releases/download/v0.1.0/tectdist-0.1.0.tar.gz"
-  # TEMP: v0.1.0 asset while v0.2.0 is in preparation (the release task flips
-  # this to the v0.2.0 deterministic tarball + mirror-verified sha256).  The
-  # asset is built deterministically from the tag (`git archive | gzip -n`),
-  # uploaded once, and immutable — verify with `brew fetch`, not curl (see
-  # RELEASING.md).
-  sha256 "0570fa6583bdf242e36ef385f52b1c1ac36ecb564e3ec1b358c05c35198796d0"
+  url "https://github.com/tmonk/tectdist/releases/download/v0.2.0/tectdist-0.2.0.tar.gz"
+  # sha256 of the release's source-tarball asset.  The asset is built
+  # deterministically from the tag (`git archive | gzip -n`), uploaded once,
+  # and immutable — unlike GitHub's codeload tarballs, which are regenerated
+  # over time and NOT byte-stable.  Verify with `brew fetch` rather than curl:
+  #   brew fetch --force tmonk/brew/tectdist
+  sha256 "8f3d598ebfa97e2c1755ed26379d4cfaab73419dbe11d194e4b9b3bff8d05a3b"
   license "AGPL-3.0-only"
 
   # Version pairing (declared for this release — enforced at RUNTIME by the
