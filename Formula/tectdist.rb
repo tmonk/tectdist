@@ -1,29 +1,14 @@
 class Tectdist < Formula
   desc "Standard-TeX-compatible TeX distribution backed by Tectonic"
   homepage "https://github.com/tmonk/tectdist"
-  url "https://github.com/tmonk/tectdist/releases/download/v0.2.0/tectdist-0.2.0.tar.gz"
+  url "https://github.com/tmonk/tectdist/releases/download/v0.2.1/tectdist-0.2.1.tar.gz"
   # sha256 of the release's source-tarball asset.  The asset is built
   # deterministically from the tag (`git archive | gzip -n`), uploaded once,
   # and immutable — unlike GitHub's codeload tarballs, which are regenerated
   # over time and NOT byte-stable.  Verify with `brew fetch` rather than curl:
   #   brew fetch --force tmonk/brew/tectdist
-  sha256 "8f3d598ebfa97e2c1755ed26379d4cfaab73419dbe11d194e4b9b3bff8d05a3b"
+  sha256 "a634fd3a6a10f47860c998f4e8ea4ebc7cb6d75bb7e674d8e19e3e47dc6639ab"
   license "AGPL-3.0-only"
-
-  # Prebuilt bottles are published as assets of the v0.2.0 GitHub release
-  # (public by default, flat-file {root_url}/{filename} fetch — no registry
-  # tokens needed).  Built by .github/workflows/build-bottles.yml; the
-  # arm64_golden_gate entry is the maintainer's macOS 27 dev machine (used
-  # for local pour verification).  core CI replaces this block with its own
-  # bottles on merge.
-  bottle do
-    root_url "https://github.com/tmonk/tectdist/releases/download/v0.2.0"
-    sha256 cellar: :any, arm64_golden_gate: "b493dfcfe7aa26231f901c9525558cc980d15622ad100e438b47bcbaba0d5b4b"
-    sha256 cellar: :any, arm64_sequoia:     "a6cf84fee9d0090e970e9ce1a0e007cdbbe34aae5a88c3eee0bd626b43fe2d00"
-    sha256 cellar: :any, sequoia:           "3f2c52b9b9020e2834c2b4e42d4ed0315af904b8072b3727c532e45f2918e675"
-    sha256 cellar: :any, arm64_linux:       "ea3ad62e7f6a53b579d5943dc9bab364146450ba3f0859c2f07356984d03b84e"
-    sha256 cellar: :any, x86_64_linux:      "fba3b757b4d0ad8803d9bc1bfe1d1f491bff0d00d47c30e947dffd4782fa7a50"
-  end
 
   # Version pairing (declared for this release — enforced at RUNTIME by the
   # software itself, not pinned at install time):
