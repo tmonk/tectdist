@@ -67,7 +67,7 @@ jobs:
         run: |
           # version is derived from the formula's release-asset URL
           VERSION=$(grep -oE 'tectdist-[0-9]+\.[0-9]+\.[0-9]+' Formula/tectdist.rb | head -1 | sed 's/tectdist-//')
-          brew bottle --json --root-url "https://github.com/tmonk/tectdist/releases/download/v${VERSION}" \
+          brew bottle --json --no-rebuild --root-url "https://github.com/tmonk/tectdist/releases/download/v${VERSION}" \
             tmonk/brew/tectdist
 
       - name: Upload bottle to release
