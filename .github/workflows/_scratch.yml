@@ -5,8 +5,30 @@ jobs:
   t:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Set up Homebrew
-        uses: Homebrew/actions/setup-homebrew@master
+      - name: Publish bottle to ghcr
+        env:
+          GHCR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BOTTLE_TAG: "x86_64_linux"
+        run: |
+          set -euo pipefail
+          ARCHIVE=$(ls *.bottle.*.tar.gz)
+          oras login ghcr.io -u "${{ github.actor }}" -p "$GHCR_TOKEN"
+          oras push "ghcr.io/tmonk/tectdist/tectdist:0.2.0.${BOTTLE_TAG}" "$ARCHIVE"
+          echo "published ${ARCHIVE}"
+      - name: Make package public
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          for name in "tectdist" "tectdist/tectdist"; do
+            if gh api "GET /user/packages/container/${name}" >/dev/null 2>&1; then
+              gh api -X POST "user/packages/container/${name}/visibility" \
+                -f visibility=public
+              echo "made public: ${name}"
+            fi
+          done
+      - name: Upload bottle artifact
+        uses: actions/upload-artifact@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          name: bottle-test
+          path: "*.bottle.*.tar.gz"
+          retention-days: 30
