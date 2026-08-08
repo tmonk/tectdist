@@ -16,7 +16,7 @@ jobs:
           tar -xzf /tmp/oras.tar.gz -C /tmp oras
           /tmp/oras login ghcr.io -u "${{ github.actor }}" -p "${{ secrets.GITHUB_TOKEN }}"
           echo "test-content" > /tmp/tiny.txt
-          /tmp/oras push "ghcr.io/tmonk/tectdist/vis-test:1" /tmp/tiny.txt
+          cd /tmp && /tmp/oras push "ghcr.io/tmonk/tectdist/vis-test:1" tiny.txt
           echo "push ok"
       - name: Try to make it public (various endpoints)
         run: |
