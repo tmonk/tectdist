@@ -5,6 +5,22 @@ All notable changes to tectdist are documented here.  The format follows
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 `VERSION` lives in `src/tectdist/version.py`.
 
+## [0.2.0] - 2026-08-08
+
+Packaging rework: biber is now BUILT FROM SOURCE inside the Homebrew formula
+(the plk/biber v2.17 source plus 119 sha256-pinned CPAN module resources,
+mirroring homebrew-core's own biber formula) instead of prebuilt binaries —
+no binary bundling, no linux/arm64 stub (a real biber 2.17 on all four
+platforms), and no install-time tectonic pin.  The tectonic↔biblatex↔biber
+pairing is DECLARED in `src/tectdist/pairing.py` (mirrored by the formula's
+`TECTONIC_VERSION`, guarded equal by a battery release gate) and enforced at
+RUNTIME: every `tectdist` invocation compares the actual tectonic against the
+declaration and fails fast with instructions when brew's tectonic moves
+(`tectdist doctor` prints the full report).  New deps: perl, libxml2, libxslt,
+openssl@3, pkgconf.  The weekly pairing watcher now reads the declared pairing
+and also checks the formula mirrors it.  First installs build biber from
+source (~10-20 minutes); tap bottles are a documented follow-up.
+
 ## [0.1.0] - 2026-08-08
 
 First release: the complete Tectonic-backed TeX distribution.

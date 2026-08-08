@@ -148,6 +148,7 @@ class Case:
     want_last: str | None = None   # final engine argv token
     stdout_exact: str | None = None
     stdout_contains: str | None = None
+    stdout_contains2: str | None = None
     stderr_contains: str | None = None
     pdf_contains: str | None = None   # pdftotext must find this in the PDF
     env: dict = field(default_factory=dict)
@@ -271,6 +272,44 @@ for q in ("-q", "-quiet", "-silent"):
                       want_args=["--chatter minimal"]))
 CASES.append(mock("batchmode -> chatter", SEC_VERHELP, ["-interaction=batchmode"],
                   want_args=["--chatter minimal"]))
+
+# --- B2. runtime pairing check + doctor (declared 0.17 + biber 2.17) --------
+# The battery's default fake engine prints nothing for --version, which the
+# pairing check treats as unparseable and skips, so the mock tier above is
+# unaffected.  These cases install tiny engine stubs that DO answer --version
+# and assert the fail-fast / doctor behaviour, plus the release gate that
+# keeps Formula/tectdist.rb and src/tectdist/pairing.py in lockstep.
+SEC_PAIR = sec("mock: pairing check & doctor")
+
+FAKE17 = "#!/bin/sh\nif [ \"$1\" = --version ]; then echo \"Tectonic 0.17.9 (stub)\"; exit 0; fi\nexit 0\n"
+FAKE18 = "#!/bin/sh\nif [ \"$1\" = --version ]; then echo \"Tectonic 0.18.0 (stub)\"; exit 0; fi\nexit 0\n"
+
+CASES.append(Case(name="pairing ok (tectonic 0.17.9)", section=SEC_PAIR, tier="mock",
+                  cmd=["$B/pdflatex", "tiny.tex"],
+                  setup={"fake17.sh": FAKE17}, chmod=["fake17.sh"],
+                  env={"TECTONIC": "$D/fake17.sh", "TECTDIST_SKIP_PAIRING": ""},
+                  want=0, want_args=["tiny.tex"]))
+CASES.append(Case(name="pairing fail-fast (tectonic 0.18.0)", section=SEC_PAIR, tier="mock",
+                  cmd=["$B/pdflatex", "tiny.tex"],
+                  setup={"fake18.sh": FAKE18}, chmod=["fake18.sh"],
+                  env={"TECTONIC": "$D/fake18.sh", "TECTDIST_SKIP_PAIRING": ""},
+                  want=1, stderr_contains="requires tectonic 0.17.x"))
+CASES.append(Case(name="pairing bypass env var", section=SEC_PAIR, tier="mock",
+                  cmd=["$B/pdflatex", "tiny.tex"],
+                  setup={"fake18.sh": FAKE18}, chmod=["fake18.sh"],
+                  env={"TECTONIC": "$D/fake18.sh", "TECTDIST_SKIP_PAIRING": "1"},
+                  want=0, want_args=["tiny.tex"]))
+CASES.append(Case(name="doctor ok", section=SEC_PAIR, tier="mock",
+                  cmd=["$B/tectdist", "doctor"],
+                  setup={"fake17.sh": FAKE17}, chmod=["fake17.sh"],
+                  env={"TECTONIC": "$D/fake17.sh"},
+                  want=0, stdout_contains="PAIR OK",
+                  stdout_contains2="declared:"))
+CASES.append(Case(name="doctor mismatch", section=SEC_PAIR, tier="mock",
+                  cmd=["$B/tectdist", "doctor"],
+                  setup={"fake18.sh": FAKE18}, chmod=["fake18.sh"],
+                  env={"TECTONIC": "$D/fake18.sh"},
+                  want=1, stdout_contains="MISMATCH"))
 
 # --- C. translation: exact engine argv --------------------------------------
 CASES.append(mock("synctex=1 -> --synctex", SEC_TRANS, ["-synctex=1"],
@@ -435,10 +474,23 @@ for x in STUB_MNT:
 # with no real binary installed the proxy-or-stub names fall back to an
 # exit-0 note (PATH is pinned so a machine with TeX tools doesn't proxy)
 def _has_real(prog):
-    return (shutil.which(prog)
-            or any(os.path.exists(p) for p in (f"/opt/homebrew/bin/{prog}",
-                                               f"/usr/local/bin/{prog}",
-                                               f"/usr/bin/{prog}")))
+    # like tools.resolve_real: a PATH hit that is the tectdist farm launcher
+    # itself (e.g. /opt/homebrew/bin/makeindex -> the keg's farm symlink) is
+    # not a real binary and must not gate indexer cases
+    self_real = os.path.realpath(os.path.join(BIN, "tectdist"))
+
+    def good(p):
+        if not p or not os.path.isfile(p) or not os.access(p, os.X_OK):
+            return False
+        rp = os.path.realpath(p)
+        return rp != self_real and os.path.basename(rp) != "tectdist"
+
+    for d in os.environ.get("PATH", "").split(os.pathsep):
+        if d and good(os.path.join(d, prog)):
+            return True
+    return any(good(p) for p in (f"/opt/homebrew/bin/{prog}",
+                                 f"/usr/local/bin/{prog}",
+                                 f"/usr/bin/{prog}"))
 
 def _absent_stub(prog, args, frag):
     c = Case(name=f"{prog} stub when absent", section=SEC_STUBS, tier="mock",
@@ -648,13 +700,13 @@ CASES.append(real("index end-to-end (makeindex)", SEC_REAL,
                   ["-interaction=nonstopmode"],
                   setup={"tiny.tex": INDEX_DOC},
                   want_files=["tiny.idx", "tiny.ind", "tiny.pdf"],
-                  skip_reason="" if have("makeindex") else "makeindex not found"))
+                  skip_reason="" if _has_real("makeindex") else "makeindex not found"))
 CASES.append(real("index end-to-end (upmendex)", SEC_REAL,
                   ["-interaction=nonstopmode"],
                   setup={"tiny.tex": INDEX_DOC},
                   want_files=["tiny.idx", "tiny.ind", "tiny.pdf"],
                   pdf_contains="alpha",
-                  skip_reason="" if have("upmendex") else "upmendex not found"))
+                  skip_reason="" if _has_real("upmendex") else "upmendex not found"))
 CASES.append(real("biblatex end-to-end (biber)", SEC_REAL,
                   ["-interaction=nonstopmode"],
                   setup={"tiny.tex": BIBLIO_DOC, "refs.bib": BIBLIO_BIB},
@@ -799,6 +851,11 @@ def run_case(case, work_root, fake, engine, tiny_pdf):
     if case.tier == "mock":
         env["TECTONIC"] = fake
         env["FAKELOG"] = os.path.join(d, "argv.log")
+        # the pairing check probes `tectonic --version`, which would pollute
+        # the recording fake engines; it is exercised only by its own
+        # section (SEC_PAIR) and against the real engine in [real] cases
+        if case.section != SEC_PAIR:
+            env["TECTDIST_SKIP_PAIRING"] = "1"
     env.update({k: v.replace("$D", d).replace("$ENGINE", engine) for k, v in case.env.items()})
     cwd = os.path.join(d, case.cwd) if case.cwd else d
     os.makedirs(cwd, exist_ok=True)
@@ -827,6 +884,8 @@ def run_case(case, work_root, fake, engine, tiny_pdf):
         problems.append(f"stdout {p.stdout.strip()!r} != {case.stdout_exact!r}")
     if case.stdout_contains and case.stdout_contains not in p.stdout:
         problems.append(f"stdout missing {case.stdout_contains!r}")
+    if case.stdout_contains2 and case.stdout_contains2 not in p.stdout:
+        problems.append(f"stdout missing {case.stdout_contains2!r}")
     if case.stderr_contains and case.stderr_contains not in p.stderr:
         problems.append(f"stderr missing {case.stderr_contains!r}")
     if case.pdf_contains:
@@ -862,6 +921,39 @@ def run_case(case, work_root, fake, engine, tiny_pdf):
 
 
 def main():
+    # --- release gate: Formula/tectdist.rb mirrors src/tectdist/pairing.py ---
+    # (the formula must declare the same pairing this software checks; see
+    # RELEASING.md "Bumping the pairing")
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                                    "..", "src"))
+    from tectdist import pairing as pairing_mod
+    repo = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    formula = os.path.join(repo, "Formula", "tectdist.rb")
+    gate_problems = []
+    if os.path.isfile(formula):
+        text = open(formula).read()
+        m = __import__("re").search(r'TECTONIC_VERSION = "([0-9.]+)"', text)
+        if not m or m.group(1) != pairing_mod.TECTONIC_VERSION:
+            gate_problems.append(
+                f"Formula TECTONIC_VERSION {m.group(1) if m else '(missing)'} "
+                f"!= pairing.py {pairing_mod.TECTONIC_VERSION}")
+        m2 = __import__("re").search(r'plk/biber/archive/refs/tags/v([0-9.]+)\.tar\.gz', text)
+        if not m2 or m2.group(1) != pairing_mod.BIBER_VERSION:
+            gate_problems.append(
+                f"Formula biber resource v{m2.group(1) if m2 else '(missing)'} "
+                f"!= pairing.py {pairing_mod.BIBER_VERSION}")
+        if not __import__("re").search(r'reject \{ \|n\| n == "biber" \}', text):
+            gate_problems.append("Formula install must exclude the biber resource "
+                                 "from the module loop (reject biber)")
+    else:
+        gate_problems.append(f"Formula not found at {formula}")
+    if gate_problems:
+        print("RELEASE GATE FAILED:")
+        for p in gate_problems:
+            print("  - " + p)
+        return 2
+
+    ap = argparse.ArgumentParser(description="tectdist acceptance battery (stdlib Python 3)")
     ap = argparse.ArgumentParser(description="tectdist acceptance battery (stdlib Python 3)")
     ap.add_argument("--mock-only", action="store_true",
                     help="skip the [real] engine sections")

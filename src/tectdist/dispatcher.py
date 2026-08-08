@@ -397,6 +397,27 @@ def main(argv=None):
         prog = "pdflatex"
     args = argv[1:]
 
+    # --- the tectdist meta-command -------------------------------------------
+    if invoked == "tectdist":
+        if any(a in ("-v", "-version", "-V", "--version") for a in args):
+            print(f"tectdist {VERSION} (Tectonic-backed TeX distribution)")
+            return 0
+        if any(a in ("-h", "-help", "--help") for a in args):
+            print(HELP_TEXT)
+            return 0
+        if args and args[0] == "doctor":
+            from . import pairing
+            report, ok = pairing.doctor()
+            print(report)
+            return 0 if ok else 1
+
+    # --- runtime pairing check (fails fast when brew's tectonic moved) ------
+    from . import pairing
+    ok, message = pairing.check()
+    if not ok:
+        warn(prog, message)
+        return 1
+
     # --- tool groups ---------------------------------------------------------
     if prog == "latexmk":
         from .latexmk import main as latexmk_main
@@ -417,15 +438,6 @@ def main(argv=None):
     if prog in PROXIES:
         from . import tools
         return tools.run_proxy(prog, args)
-
-    # --- the tectdist meta-command -------------------------------------------
-    if invoked == "tectdist":
-        if any(a in ("-v", "-version", "-V", "--version") for a in args):
-            print(f"tectdist {VERSION} (Tectonic-backed TeX distribution)")
-            return 0
-        if any(a in ("-h", "-help", "--help") for a in args):
-            print(HELP_TEXT)
-            return 0
 
     # --- engines -------------------------------------------------------------
     return run_engine(prog, args)

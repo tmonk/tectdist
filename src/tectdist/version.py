@@ -4,4 +4,4 @@ Single source of truth for the distribution version.  Reported by
 ``tectdist --version``, ``latexmk --version`` and the built artifact.
 """
 
-VERSION = "0.1.0"
+VERSION = "0.2.0"

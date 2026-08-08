@@ -24,11 +24,11 @@ from tectdist.flags import FORMULA_FARM_NAMES  # noqa: E402
 FORMULA = os.path.join(ROOT, "Formula", "tectdist.rb")
 LAUNCHER = "tectdist"
 # Real binaries the formula installs into bin/ next to the farm symlinks
-# (not part of the farm list, but they occupy bin/ slots — biber is bundled
-# as a resource so the farm never symlinks it).
+# (not part of the farm list, but they occupy bin/ slots — biber is built
+# from source as a resource so the farm never symlinks it).
 BUNDLED_BINARIES = ("biber",)
-MIN_BIN_ENTRIES = 62   # 60 farm names + the tectdist launcher link + the
-                       # bundled biber binary
+MIN_BIN_ENTRIES = 62   # 61 farm names (incl. the tectdist launcher link)
+                       # + the bundled biber wrapper
 
 
 def main():

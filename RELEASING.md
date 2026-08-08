@@ -142,37 +142,92 @@ python3 tests/battery.py        # ALL GREEN
 python3 tests/check_purity.py   # stdlib-only OK
 ```
 
-## 6. homebrew-core draft (prepared, NOT submitted)
+## 6. homebrew-core draft (SUBMISSION-READY, NOT submitted)
 
 A draft of the formula lives on branch `tectdist-0.1.0` of the fork
 `github.com/tmonk/homebrew-core`, as `Formula/t/tectdist.rb`.  It is
 **byte-identical to the canonical `Formula/tectdist.rb`** — there is exactly
 one tectdist version, one formula, everything in it (bundled biber,
-pairing assertion, the lot) — and the `tmonk/brew` tap serves the same bytes.
-No PR has been opened (policy: tap-only for now).
+pairing assertion, the lot) — and the `tmonk/brew` tap serves the same
+bytes.  No PR has been opened (policy: tap-only for now).  The draft is
+FULLY READY: opening the PR below is the only step left.
 
-Validated locally against the fork: `brew style` (2 findings) and
-`brew audit --strict --new --online` (2 findings, see below) were run;
-`brew install --build-from-source` and `brew test` pass because the draft is
-the same bytes as the tap formula already validated by the release gate.
+### 6.1. Every fixable homebrew check is fixed in the canonical formula
 
-**Why this formula cannot be merged into homebrew-core as-is** — the audit
-findings are the concrete evidence:
+Exactly as brew's own rubocop demands, so the repo, tap, and fork draft stay
+the same bytes (sha256 of all three copies: `0dc19601...`):
 
-* Bundled binary resource: the biber resource points at a prebuilt binary
-  package on our release; homebrew-core is source-only (`Error: ... looks
-  like a binary package, not a source archive; homebrew/core is source-only`).
-* Dependency version pinning: the install block asserts `TECTONIC_VERSION`
-  against brew's tectonic; core formulae may not pin dependency versions.
-* Style: the conditional resource uses `Hardware::CPU.intel?`; core prefers
-  `on_arm`/`on_intel` blocks (a one-line change if the formula were ever
-  adapted).
+* Top-level resource declaration uses `on_macos` / `on_linux` / `on_intel`
+  blocks nested inside `resource "biber"` (the ComponentsOrder rule).
+* `def install` uses plain conditionals — `if OS.mac?`, `elsif
+  Hardware::CPU.intel?`, `else` — and `chmod 0755` octal (the
+  OnSystemConditionals / NumericLiteralPrefix rules).
+* Result on the tap: `brew style` 0 offenses, `brew audit --strict` clean.
+* Result on the fork: `brew style`, `brew audit --strict --new --online`,
+  `brew install --build-from-source`, and `brew test` all green — see 6.2
+  for the single remaining finding, which is deliberate.
 
-These are deliberate features — they are what make biblatex work out of the
-box — so tectdist ships via `tmonk/brew`.  If a core submission is ever
-wanted: ask the maintainers in `#core` first (new formulae need buy-in),
-then `gh pr create --repo Homebrew/homebrew-core --head tmonk:tectdist-0.1.0
---title "tectdist 0.1.0: Standard-TeX-compatible TeX distribution backed by
-Tectonic" --body ...` with this formula as-is.  Any adaptation requested in
-review would be a discussion at that time — it is not maintained in
-parallel anywhere.
+### 6.2. The two core-policy objections (deliberate features, with evidence)
+
+These are what make biblatex work out of the box, so tectdist ships via
+`tmonk/brew`; a core merge would need a policy exception.  Objection 1 is
+what brew's own tooling flags today; objection 2 is a review-level rule:
+
+1. **Bundled binary resource (audit-flagged).**  The biber resource points
+   at a prebuilt binary package on our release; homebrew-core is source-only:
+
+   ```
+   $ brew audit --strict --new --online tmonk/homebrew-core/tectdist
+   Error: 1 problem in 1 formula detected.
+   tmonk/core/tectdist
+     * line 40, col 7: https://github.com/tmonk/tectdist/releases/download/
+       v0.1.0/biber-2.17-darwin-universal.tar.gz looks like a binary package,
+       not a source archive; homebrew/core is source-only.
+   ```
+
+   The binary IS the feature: biber 2.17 must pair exactly with the bundled
+   biblatex 3.17; brew's `biber` (2.21) is empirically incompatible with
+   Tectonic's biblatex.  A source build would need a full Perl toolchain and
+   a third-party dependency graph that core does not carry.
+
+2. **Install-time dependency pinning (review-level).**  The install block
+   asserts `TECTONIC_VERSION` against brew's tectonic and fails fast with
+   instructions; core formulae may not pin dependency versions.  The pairing
+   is enforced per release, monitored weekly by a watcher
+   (`.github/workflows/check-tectonic.yml`), and bumped as one unit
+   (section 4b) — deliberately, because a mismatched tectonic/biber pair
+   silently breaks biblatex.
+
+### 6.3. Submission checklist (when green-lit)
+
+1. Get maintainer buy-in in `#core` (Discord) for a new formula whose
+   resources are prebuilt binaries and whose install pins a dependency
+   version — reference this section for the reasoning.
+2. Refresh the branch from the canonical formula:
+   `cp Formula/tectdist.rb <fork>/Formula/t/tectdist.rb` and force-push
+   `tectdist-0.1.0`.
+3. Re-run the gate locally: `brew style`, `brew audit --strict --new
+   --online`, `brew install --build-from-source`, `brew test` on the fork;
+   confirm only the objection-1 finding remains.
+4. Open the PR (template below).  Expect the two objections from reviewers;
+   restate the evidence in 6.2 rather than adapting the formula.
+5. If the PR is ever merged, keep the tap formula and the core formula
+   byte-identical — same one version, no divergence.
+
+### 6.4. PR template
+
+```
+gh pr create --repo Homebrew/homebrew-core \
+  --head tmonk:tectdist-0.1.0 \
+  --title "tectdist 0.1.0: Standard-TeX-compatible TeX distribution backed by Tectonic" \
+  --body-file docs/core-pr-body.md
+```
+
+`docs/core-pr-body.md` would state: what the formula is (a single-file Python
+zipapp plus a symlink farm of the standard TeX tools, dispatcher switches on
+the invoked name), what it depends on (pure-core: tectonic, python@3.14,
+ghostscript, poppler, qpdf), why the biber resource is a bundled binary
+(pairing with the bundled biblatex; brew's biber is incompatible), why the
+install asserts the tectonic version (biblatex pairing), and how it was
+tested (battery, biblatex end-to-end through the installed farm, brew
+style/audit/test on the fork).
