@@ -360,7 +360,7 @@ def do_stub(prog, args):
     if prog == "tlmgr":
         first = args[0] if args else ""
         if first in ("--version", "-v", "version"):
-            print("tlmgr (tectdist): Tectonic 0.16.9 bundle manager")
+            print("tlmgr (tectdist): Tectonic 0.17.0 bundle manager")
             return 0
         if first in ("--help", "-h", "help", "--list"):
             return 0
@@ -400,7 +400,7 @@ def kpsewhich_main(args):
         elif a in ("-format", "-progname"):
             skip_next = True
         elif a in ("-version", "--version", "-v"):
-            print("kpsewhich (tectdist, Tectonic 0.16.9)")
+            print("kpsewhich (tectdist, Tectonic 0.17.0)")
             return 0
         elif a in ("-help", "--help", "-h"):
             print("usage: kpsewhich [options] filename...")
