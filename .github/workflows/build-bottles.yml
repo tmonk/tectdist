@@ -34,8 +34,8 @@ jobs:
         include:
           - platform: arm64_sequoia
             runner: macos-15
-          - platform: x86_64_ventura
-            runner: macos-13
+          - platform: x86_64_sequoia
+            runner: macos-15-intel
           - platform: x86_64_linux
             runner: ubuntu-24.04
           - platform: arm64_linux
