@@ -31,9 +31,13 @@ macOS's stock `/usr/bin/python3` works.
 Tap the repository and install:
 
 ```sh
-brew tap tmonk/tectdist
-brew install tmonk/tectdist/tectdist
+brew tap tmonk/brew
+brew install tmonk/brew/tectdist
 ```
+
+The tap is [github.com/tmonk/homebrew-brew](https://github.com/tmonk/homebrew-brew)
+(a `homebrew-` prefixed repo, as Homebrew expects); the formula it ships
+mirrors `Formula/tectdist.rb` in this repository.
 
 The formula installs the built zipapp plus the full tool farm, declares
 `tectonic`, `ghostscript`, `poppler` and `qpdf` as dependencies, and needs no
@@ -78,7 +82,7 @@ multi-gigabyte TeX Live install.
    - *Source checkout:* `python3 make_links.py` (and optionally
      `python3 install.py` to add `bin/` to PATH — not required for
      TeXifier).
-   - *Homebrew:* `brew tap tmonk/tectdist && brew install tmonk/tectdist/tectdist` —
+   - *Homebrew:* `brew tap tmonk/brew && brew install tmonk/brew/tectdist` —
      the farm lands in `/opt/homebrew/bin` (Apple Silicon) or
      `/usr/local/bin`.
 2. **Point TeXifier at the farm.**  Open Preferences (`Cmd-,`) → the
