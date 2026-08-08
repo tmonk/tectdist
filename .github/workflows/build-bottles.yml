@@ -1,14 +1,22 @@
 name: bottles
 
-# Build and publish prebuilt bottles for the tap to ghcr.io/tmonk/tectdist.
+# Build and publish prebuilt bottles for the tap.
 # Run manually (workflow_dispatch) after a release, or automatically on any
-# v* tag push.  Each platform builds the formula from source (--build-bottle)
-# and pushes the resulting bottle archive as an OCI blob under
-#   ghcr.io/tmonk/tectdist/tectdist:0.2.0.<platform>
+# v* tag push.  Each platform builds the formula from source (--build-bottle),
+# bottles it, and uploads the resulting archive to the versioned GitHub
+# release as an asset:
+#   https://github.com/tmonk/tectdist/releases/download/v0.2.0/tectdist--0.2.0.<platform>.bottle.1.tar.gz
+# The bottle store is the release itself (public by default, no registry
+# tokens needed): brew's flat-file bottle fetch is {root_url}/{filename}, and
+# the formula's `bottle do` block declares
+#   root_url "https://github.com/tmonk/tectdist/releases/download/v0.2.0"
+# so brew install pours the archive.  ghcr.io/tmonk/tectdist was evaluated
+# and ruled out: GITHUB_TOKEN cannot make a user-namespace ghcr package
+# public (only the account owner's write:packages PAT can), while release
+# assets are public by default.  See RELEASING.md "Bottles".
+#
 # The per-platform sha256s land in the workflow's "Bottle block" step output;
-# a maintainer pastes them into Formula/tectdist.rb (the formula's
-# `bottle do` block declares `root_url https://ghcr.io/v2/tmonk/tectdist`,
-# so brew install fetches from here).  See RELEASING.md "Bottles".
+# a maintainer pastes them into Formula/tectdist.rb.
 
 on:
   workflow_dispatch: {}
@@ -17,8 +25,7 @@ on:
       - "v*"
 
 permissions:
-  contents: read
-  packages: write
+  contents: write
 
 concurrency:
   group: bottles
@@ -48,10 +55,9 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Tap and install tooling
+      - name: Tap
         run: |
           brew tap tmonk/brew
-          brew install oras
 
       - name: Build from source with --build-bottle
         run: |
@@ -59,37 +65,29 @@ jobs:
 
       - name: Bottle
         run: |
-          brew bottle --json --root-url https://ghcr.io/v2/tmonk/tectdist \
+          # version is derived from the formula's release-asset URL
+          VERSION=$(grep -oE 'tectdist-[0-9]+\.[0-9]+\.[0-9]+' Formula/tectdist.rb | head -1 | sed 's/tectdist-//')
+          brew bottle --json --root-url "https://github.com/tmonk/tectdist/releases/download/v${VERSION}" \
             tmonk/brew/tectdist
 
-      - name: Publish bottle to ghcr
-        env:
-          GHCR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BOTTLE_TAG: ${{ matrix.platform }}
-        run: |
-          set -euo pipefail
-          ARCHIVE=$(ls *.bottle.*.tar.gz)
-          oras login ghcr.io -u "${{ github.actor }}" -p "$GHCR_TOKEN"
-          oras push "ghcr.io/tmonk/tectdist/tectdist:0.2.0.${BOTTLE_TAG}" "$ARCHIVE"
-          echo "published ${ARCHIVE}"
-
-      - name: Make package public
+      - name: Upload bottle to release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          for raw in "tectdist/tectdist" "tectdist"; do
-            ENC=$(python3 -c 'import sys, urllib.parse; print(urllib.parse.quote(sys.argv[1], safe=""))' "$raw")
-            if gh api -X POST "user/packages/container/${ENC}/visibility" -f visibility=public >/dev/null 2>&1; then
-              echo "made public: $raw"
-              exit 0
-            fi
-          done
-          echo "no candidate package found (check the pushed image path)" >&2
-          exit 1
+          set -euo pipefail
+          VERSION=$(grep -oE 'tectdist-[0-9]+\.[0-9]+\.[0-9]+' Formula/tectdist.rb | head -1 | sed 's/tectdist-//')
+          ARCHIVE=$(ls *.bottle.*.tar.gz)
+          RELEASE="v${VERSION}"
+          if gh release view "$RELEASE" >/dev/null 2>&1; then
+            gh release upload "$RELEASE" "$ARCHIVE" --clobber
+            echo "uploaded ${ARCHIVE} to release ${RELEASE}"
+          else
+            echo "release ${RELEASE} not found; attach the archive manually" >&2
+            exit 1
+          fi
 
       - name: Emit bottle block
         run: |
-          ls -la
           python3 scripts/emit_bottle_block.py
 
       - name: Upload bottle artifact
