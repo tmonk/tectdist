@@ -20,12 +20,12 @@ jobs:
     steps:
       - name: Make package public
         run: |
-          NAME=$(gh api '/user/packages?package_type=container' --jq '.[] | select(.name | contains("tectdist")) | .name' | head -1)
-          if [ -n "$NAME" ]; then
-            ENC=$(python3 -c 'import sys, urllib.parse; print(urllib.parse.quote(sys.argv[1], safe=""))' "$NAME")
-            gh api -X POST "user/packages/container/${ENC}/visibility" -f visibility=public
-            echo "made public: $NAME"
-          else
-            echo "no tectdist container package found"
-            gh api '/user/packages?package_type=container' --jq '.[].name' || true
-          fi
+          for raw in "tectdist/tectdist" "tectdist"; do
+            ENC=$(python3 -c 'import sys, urllib.parse; print(urllib.parse.quote(sys.argv[1], safe=""))' "$raw")
+            if gh api -X POST "user/packages/container/${ENC}/visibility" -f visibility=public >/dev/null 2>&1; then
+              echo "made public: $raw"
+              exit 0
+            fi
+          done
+          echo "no candidate package found (check the pushed image path)" >&2
+          exit 1
