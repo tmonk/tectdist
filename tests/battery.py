@@ -316,6 +316,21 @@ CASES.append(Case(name="doctor json", section=SEC_PAIR, tier="mock",
                   env={"TECTONIC": "$D/fake17.sh"},
                   want=0, stdout_contains='"ok": true',
                   stdout_contains2='"pair": "0.17"'))
+CASES.append(Case(name="independent lookup ignores pairing mismatch", section=SEC_PAIR,
+                  tier="mock", cmd=["$B/kpsewhich", "--version"],
+                  setup={"fake18.sh": FAKE18}, chmod=["fake18.sh"],
+                  env={"TECTONIC": "$D/fake18.sh"},
+                  want=0, stdout_contains="kpsewhich"))
+CASES.append(Case(name="engine version ignores pairing mismatch", section=SEC_PAIR,
+                  tier="mock", cmd=["$B/pdflatex", "--version"],
+                  setup={"fake18.sh": FAKE18}, chmod=["fake18.sh"],
+                  env={"TECTONIC": "$D/fake18.sh"},
+                  want=0, stdout_contains="Tectonic 0.18.0"))
+CASES.append(Case(name="latexmk version ignores pairing mismatch", section=SEC_PAIR,
+                  tier="mock", cmd=["$B/latexmk", "--version"],
+                  setup={"fake18.sh": FAKE18}, chmod=["fake18.sh"],
+                  env={"TECTONIC": "$D/fake18.sh"},
+                  want=0, stdout_contains="latexmk"))
 
 # --- C. translation: exact engine argv --------------------------------------
 CASES.append(mock("synctex=1 -> --synctex", SEC_TRANS, ["-synctex=1"],

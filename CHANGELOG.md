@@ -20,6 +20,9 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   redundant staging-tree copy while continuing to exclude caches and dotfiles.
 - `tectdist --help` is generated from the canonical tool tables, preventing
   the launcher help from drifting when the farm changes.
+- Pairing enforcement is scoped to engine compiles, so lookup, PDF utility,
+  stub, and version commands remain available while an engine mismatch is
+  being diagnosed.
 
 ## [0.2.1] - 2026-08-08
 

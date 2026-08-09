@@ -16,12 +16,13 @@ when brew's tectonic leaves the declared pair before a matched release ships.
 
 Design notes:
 
-* The hot path (every farm-tool invocation) checks only the tectonic half:
-  tectonic is the only member of the pair that brew can move.  The biber in
-  the keg is OUR build — its version cannot drift unless the keg is tampered
-  with.  Results are memoized to a per-user cache file keyed by the resolved
-  tectonic binary and its mtime, so an upgrade is detected on the very next
-  invocation and the check itself is otherwise free.
+* The engine-compile path checks only the tectonic half: tectonic is the only
+  member of the pair that brew can move.  The biber in the keg is OUR build —
+  its version cannot drift unless the keg is tampered with.  Results are
+  memoized to a per-user cache file keyed by the resolved tectonic binary and
+  its mtime, so an upgrade is detected on the very next compile and the check
+  itself is otherwise free.  Independent utilities remain usable while an
+  engine pairing is being diagnosed.
 
 * ``tectdist doctor`` performs the full check (tectonic + biber) and prints a
   human-readable report.
@@ -99,7 +100,19 @@ def _tectonic_binary_mtime(binary):
 def _resolved_tectonic():
     """Return the configured/path-resolved tectonic executable, if any."""
     import shutil
-    return os.environ.get("TECTONIC", "") or shutil.which("tectonic") or ""
+    configured = os.environ.get("TECTONIC", "")
+    if configured:
+        # Resolve a bare override such as TECTONIC=tectonic when possible,
+        # but preserve an invalid explicit path so the caller can report the
+        # engine error rather than silently selecting another binary.
+        return shutil.which(configured) or configured
+    found = shutil.which("tectonic")
+    if found:
+        return found
+    from .flags import TECTONIC_FALLBACK
+    return (TECTONIC_FALLBACK
+            if os.path.isfile(TECTONIC_FALLBACK)
+            and os.access(TECTONIC_FALLBACK, os.X_OK) else "")
 
 
 def tectonic_version(binary=None):
@@ -183,7 +196,7 @@ def _write_cache(cache, binary, mtime, pair):
 
 
 def check(dist="0.1.0"):
-    """Fast runtime pairing check used on every farm-tool invocation.
+    """Fast runtime pairing check used on every engine compile.
 
     Returns ``(ok, message)``.  ``ok`` is True when the declared tectonic pair
     matches the installed one (or the check cannot run at all — mocked

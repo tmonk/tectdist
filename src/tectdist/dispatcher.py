@@ -316,6 +316,18 @@ def run_engine(prog, args):
     built.  (biber needs no loop here: Tectonic 0.17 runs a real biber from
     PATH itself for biblatex documents.)
     """
+    # Pairing only matters when the engine is going to compile.  Version/help
+    # requests should remain useful during diagnosis, even when the installed
+    # engine is from a mismatched release.
+    info_request = any(a in ("-h", "-help", "--help", "-v", "-version",
+                             "-V", "--version") for a in args)
+    if not info_request:
+        from . import pairing
+        ok, message = pairing.check()
+        if not ok:
+            warn(prog, message)
+            return 1
+
     engine = resolve_engine()
     result = translate(args, prog)
     if result[2]:
@@ -438,13 +450,6 @@ def main(argv=None):
             report, ok = pairing.doctor(as_json="--json" in args[1:])
             print(report)
             return 0 if ok else 1
-
-    # --- runtime pairing check (fails fast when brew's tectonic moved) ------
-    from . import pairing
-    ok, message = pairing.check()
-    if not ok:
-        warn(prog, message)
-        return 1
 
     # --- tool groups ---------------------------------------------------------
     if prog == "latexmk":
