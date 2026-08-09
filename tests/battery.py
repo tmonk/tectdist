@@ -310,6 +310,12 @@ CASES.append(Case(name="doctor mismatch", section=SEC_PAIR, tier="mock",
                   setup={"fake18.sh": FAKE18}, chmod=["fake18.sh"],
                   env={"TECTONIC": "$D/fake18.sh"},
                   want=1, stdout_contains="MISMATCH"))
+CASES.append(Case(name="doctor json", section=SEC_PAIR, tier="mock",
+                  cmd=["$B/tectdist", "doctor", "--json"],
+                  setup={"fake17.sh": FAKE17}, chmod=["fake17.sh"],
+                  env={"TECTONIC": "$D/fake17.sh"},
+                  want=0, stdout_contains='"ok": true',
+                  stdout_contains2='"pair": "0.17"'))
 
 # --- C. translation: exact engine argv --------------------------------------
 CASES.append(mock("synctex=1 -> --synctex", SEC_TRANS, ["-synctex=1"],
@@ -416,6 +422,9 @@ for e in ENGINES:
 # --- F. latexmk interface ---------------------------------------------------
 CASES.append(Case(name="latexmk --version", section=SEC_LMK_MOCK, tier="mock",
                   cmd=["$B/latexmk", "--version"]))
+CASES.append(Case(name="latexmk dry run does not execute", section=SEC_LMK_MOCK,
+                  tier="mock", cmd=["$B/latexmk", "--dry-run", "tiny.tex"],
+                  want=0, stdout_contains="dry run:", no_files=["argv.log"]))
 CASES.append(mock("latexmk -pdf reaches engine", SEC_LMK_MOCK,
                   ["-pdf", "tiny.tex"], prog="latexmk", want_args=["tiny.tex"]))
 CASES.append(mock("latexmk forwards synctex+outdir", SEC_LMK_MOCK,

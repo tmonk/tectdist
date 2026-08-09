@@ -221,9 +221,48 @@ def check(dist="0.1.0"):
     return False, _message(dist, TECTONIC_VERSION, pair)
 
 
-def doctor():
-    """Full pairing report for `tectdist doctor`; exit code = verdict."""
+def doctor(as_json=False):
+    """Full pairing report for `tectdist doctor`; exit code = verdict.
+
+    ``as_json`` is intended for editor integrations and CI health checks.  It
+    returns the same verdict as the human report, with paths and parsed
+    versions included so callers do not need to scrape prose.
+    """
     from .version import VERSION
+
+    pair, text, binary = tectonic_version()
+    bv, btext = biber_version()
+    problems = []
+    if pair and pair != TECTONIC_VERSION:
+        problems.append("tectonic")
+    if bv and bv != BIBER_VERSION:
+        problems.append("biber")
+
+    if as_json:
+        import shutil
+        payload = {
+            "tectdist": VERSION,
+            "declared": {
+                "tectonic": TECTONIC_VERSION,
+                "biblatex": BIBLATEX_VERSION,
+                "biber": BIBER_VERSION,
+                "bcf": BCF_VERSION,
+            },
+            "installed": {
+                "tectonic": {
+                    "path": binary or None,
+                    "pair": pair or None,
+                    "version": text.splitlines()[0] if text else None,
+                },
+                "biber": {
+                    "path": shutil.which("biber") if btext else None,
+                    "version": btext.splitlines()[0] if btext else None,
+                },
+            },
+            "ok": not problems,
+            "problems": problems,
+        }
+        return json.dumps(payload, indent=2, sort_keys=True), not problems
 
     lines = [f"tectdist {VERSION} pairing report", ""]
     lines.append("  declared:   tectonic %s.x + biber %s "
@@ -231,25 +270,17 @@ def doctor():
                  (TECTONIC_VERSION, BIBER_VERSION, BIBLATEX_VERSION,
                   BCF_VERSION))
 
-    pair, text, _ = tectonic_version()
     if text:
         lines.append("  installed:  tectonic %s" % text.splitlines()[0])
     else:
         lines.append("  installed:  tectonic NOT FOUND")
 
-    bv, btext = biber_version()
     if btext:
         lines.append("  installed:  biber %s" % btext.splitlines()[0])
     else:
         lines.append("  installed:  biber NOT FOUND")
 
     lines.append("")
-    problems = []
-    if pair and pair != TECTONIC_VERSION:
-        problems.append("tectonic")
-    if bv and bv != BIBER_VERSION:
-        problems.append("biber")
-
     if not problems:
         lines.append("  verdict:    PAIR OK")
         report = "\n".join(lines)

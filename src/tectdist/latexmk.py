@@ -12,7 +12,7 @@ Supports the flag vocabulary that editors and CI actually use:
   jobname:   -jobname=NAME
   clean:     -c (remove aux files, keep PDF), -C (also remove the PDF)
   misc:      -q, -norc, -r FILE / -rc FILE, -pvc (runs once, warns),
-             --version, --help
+             -n/--dry-run, --version, --help
 
 A .latexmkrc / latexmkrc in the working directory is read for the common
 simple assignments: $pdf_mode, $pdflatex, $xelatex, $lualatex, $out_dir,
@@ -56,7 +56,7 @@ def usage(prog):
   -shell-escape, -no-shell-escape, -recorder         : forwarded to engine
   -outdir=DIR, -output-directory=DIR, -auxdir=DIR, -aux-directory=DIR
   -jobname=NAME
-  -c (clean aux), -C (clean all incl. PDF), -pvc (run once)
+  -c (clean aux), -C (clean all incl. PDF), -pvc (run once), -n/--dry-run
   -q, -norc, -r FILE, --version, --help""")
 
 
@@ -109,7 +109,7 @@ def main(argv=None):
 
     state = {"engine": "pdflatex", "forward": [], "outdir": "", "jobname": "",
              "mode": "run", "quiet": 0, "norc": 0, "rcfile": "", "input": "",
-             "run_once": 0, "rcfile_read": 0}
+             "run_once": 0, "rcfile_read": 0, "dry_run": 0}
 
     # --- rc file(s): read defaults first so CLI args override them ---------
     if state["norc"] == 0:
@@ -188,6 +188,8 @@ def main(argv=None):
             state["mode"] = "cleanall"
         elif a in ("-pvc", "-p", "-pv"):
             state["run_once"] = 1
+        elif a in ("-n", "--dry-run"):
+            state["dry_run"] = 1
         elif a in ("-q", "-quiet"):
             state["quiet"] = 1
         elif a == "-norc":
@@ -199,7 +201,7 @@ def main(argv=None):
             if os.path.isfile(state["rcfile"]):
                 read_rc(state["rcfile"], state)
                 state["rcfile_read"] = 1
-        elif a in ("-f", "-g", "-b", "-bibtex", "-bibtex-", "-x", "-n") \
+        elif a in ("-f", "-g", "-b", "-bibtex", "-bibtex-", "-x") \
                 or a.startswith("-bibtex-use=") or a.startswith("-bibtexuse="):
             pass
         elif a.startswith("-e"):
@@ -236,6 +238,11 @@ def main(argv=None):
         if not stem:
             print("latexmk: no input file; nothing to clean", file=sys.stderr)
             return 1
+        if state["dry_run"]:
+            action = "clean all" if state["mode"] == "cleanall" else "clean auxiliary files"
+            print(f"latexmk: dry run: would {action} for '{stem}' in "
+                  + ", ".join(dirs))
+            return 0
         for d in dirs:
             for ext in CLEAN_EXTS:
                 try:
@@ -292,10 +299,13 @@ def main(argv=None):
     if state["run_once"]:
         print("latexmk: -pvc: continuous preview not supported; running once.",
               file=sys.stderr)
-    print(f"latexmk: Running '{engine}' on '{input_f}'")
 
     full = (shlex.split(engine_cmd) if " " in engine_cmd else [engine_cmd]) \
         + cmd + [input_f]
+    if state["dry_run"]:
+        print("latexmk: dry run: " + shlex.join(full))
+        return 0
+    print(f"latexmk: Running '{engine}' on '{input_f}'")
     try:
         return subprocess.run(full).returncode
     except FileNotFoundError:

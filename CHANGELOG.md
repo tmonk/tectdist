@@ -7,6 +7,20 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Added
+
+- `latexmk -n` / `latexmk --dry-run` validates the input and prints the exact
+  Tectonic command without executing it.
+- `tectdist doctor --json` emits machine-readable pairing and installation
+  diagnostics for CI and editor integrations.
+
+### Improved
+
+- The zipapp builder now archives the source package directly, avoiding a
+  redundant staging-tree copy while continuing to exclude caches and dotfiles.
+- `tectdist --help` is generated from the canonical tool tables, preventing
+  the launcher help from drifting when the farm changes.
+
 ## [0.2.1] - 2026-08-08
 
 Patch release — no pairing change (tectonic 0.17 / biblatex 3.17 / biber

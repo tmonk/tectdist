@@ -40,6 +40,8 @@ python3 uninstall.py      # remove the PATH entry
 pdflatex -synctex=1 -interaction=nonstopmode main.tex   # like TeX Live
 latexmk -pdf -outdir=build main.tex                     # build driver
 kpsewhich -var-value TEXINPUTS                          # file lookup
+latexmk --dry-run -pdf main.tex                         # inspect the engine call
+tectdist doctor --json                                  # machine-readable health check
 ```
 
 Set `TECTONIC` to use a specific engine binary (default: `tectonic` on PATH,
@@ -143,7 +145,9 @@ compiles with a real Tectonic. Benchmarks live in
 - PDF output only: no DVI/PostScript; `dvips` & friends are stubs.
 - `tlmgr install …` exits non-zero; `mf`, `mpost` and `context` are stubs.
 - The `latexmk` shim reads a subset of `.latexmkrc` (`$pdf_mode`, `$out_dir`,
-  `$jobname`, …).
+  `$jobname`, …) and supports `-n`/`--dry-run` for editor and CI inspection.
+- `tectdist doctor --json` emits the pairing report as structured JSON for
+  integrations; the default `tectdist doctor` form remains human-readable.
 
 ## License
 

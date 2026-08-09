@@ -14,7 +14,6 @@ Usage:
 import argparse
 import os
 import shutil
-import subprocess
 import sys
 import tempfile
 import zipfile
@@ -40,27 +39,10 @@ def main():
 
     tmp = tempfile.mkdtemp(prefix="tdist-build-")
     try:
-        # stage <stage>/tectdist/... and a root __main__.py so the archive
-        # runs the `tectdist` package (relative imports work inside it)
-        stage_pkg = os.path.join(tmp, "tectdist")
-        shutil.copytree(PKG, stage_pkg)
-        with open(os.path.join(tmp, "__main__.py"), "w") as f:
-            f.write("import sys\n"
-                    "from tectdist.dispatcher import main\n"
-                    "if __name__ == '__main__':\n"
-                    "    sys.exit(main())\n")
-        for root, dirs, files in os.walk(stage_pkg):
-            for d in list(dirs):
-                if d == "__pycache__":
-                    shutil.rmtree(os.path.join(root, d))
-                    dirs.remove(d)
-            for fname in list(files):
-                if fname.startswith("."):   # .DS_Store and friends: no macOS
-                    os.remove(os.path.join(root, fname))   # metadata in the artifact
-                    files.remove(fname)
-        # deflated zipapp: same layout as `python -m zipapp` but compressed,
-        # which shrinks the artifact (46.8 KiB -> ~14 KiB) and speeds up cold
-        # reads; behaviour is identical (imports resolve the same)
+        # Deflated zipapp: walk the source package directly instead of first
+        # copying it to a staging tree.  This keeps builds simpler and avoids
+        # an unnecessary full-directory copy while still excluding generated
+        # caches and macOS metadata from the artifact.
         archive = os.path.join(tmp, "archive.zip")
         with zipfile.ZipFile(archive, "w", zipfile.ZIP_DEFLATED, compresslevel=6) as zf:
             zf.writestr("__main__.py",
@@ -68,10 +50,15 @@ def main():
                         "from tectdist.dispatcher import main\n"
                         "if __name__ == '__main__':\n"
                         "    sys.exit(main())\n")
-            for root, dirs, files in os.walk(stage_pkg):
+            package_root = os.path.dirname(PKG)
+            for root, dirs, files in os.walk(PKG):
+                dirs[:] = [d for d in dirs if d != "__pycache__"
+                           and not d.startswith(".")]
                 for fname in files:
+                    if fname.startswith("."):
+                        continue
                     full = os.path.join(root, fname)
-                    zf.write(full, os.path.relpath(full, tmp))
+                    zf.write(full, os.path.relpath(full, package_root))
         with open(out, "wb") as f:
             f.write(f"#!{args.python}\n".encode())
             with open(archive, "rb") as src:

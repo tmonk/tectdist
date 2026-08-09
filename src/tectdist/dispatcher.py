@@ -35,7 +35,8 @@ import sys
 from .flags import (ENGINES, IGNORED_FLAGS, MEMORY_KNOBS, PROXIES,
                     ENGINE_PATH_VARS, TECTONIC_FALLBACK,
                     STUB_BIB, PROXY_OR_STUB, STUB_DVI, STUB_MNT_SILENT,
-                    STUB_MNT_VERBOSE, STUB_FNT, STUB_MF, STUB_CONTEXT)
+                    STUB_MNT_VERBOSE, STUB_FNT, STUB_MF, STUB_CONTEXT,
+                    STUB_SPECIAL, GS_TOOLS)
 from .version import VERSION
 
 # Imported lazily on first use: subprocess/shutil/tools/latexmk are only
@@ -47,21 +48,29 @@ GS_TOOL_NAMES = {"epstopdf": "do_epstopdf",
                  "ps2pdf": "do_ps2pdf",
                  "pdfcrop": "do_pdfcrop"}
 
-HELP_TEXT = """tectdist: tectonic-backed TeX distribution.
-Available binaries (symlinked to tectdist):
-  engines: pdflatex latex xelatex lualatex platex uplatex pdftex tex etex
-           luatex luahbtex dvilualatex dviluatex xetex pdfetex
-  helpers: bibtex biber bibtex8 bibtexu makeindex xindy upmendex
-           dvips dvipdfm dvipdfmx dvipdf xdvipdfmx dvitype dvicopy
-           dvipos dvidvi mktexlsr texhash mktexfmt mktexpk mktextfm
-           fmtutil fmtutil-sys updmap updmap-sys texconfig tlmgr texdoc
-           tftopl pltotf vftovp vptovf gftopk gftype afm2tfm otftotfm
-           kpsewhich
-  real:    epstopdf eps2eps ps2pdf pdfcrop (via Ghostscript)
-           pdftotext pdfinfo pdfimages pdftoppm pdftocairo pdfunite
-           pdfseparate pdftops qpdf (proxied to system binaries)
-  driver:  latexmk
-Classic web2c flags are accepted; see the header of this script."""
+def help_text():
+    """Build the launcher help from the canonical farm-name tables."""
+    import textwrap
+
+    def group(label, names):
+        return textwrap.fill(
+            " ".join(names), width=78,
+            initial_indent=f"  {label}: ",
+            subsequent_indent=" " * (len(label) + 4))
+
+    helpers = (STUB_BIB + PROXY_OR_STUB + STUB_DVI + STUB_MNT_SILENT
+               + STUB_MNT_VERBOSE + STUB_FNT + STUB_MF + STUB_CONTEXT
+               + STUB_SPECIAL + ("kpsewhich",))
+    return "\n".join((
+        "tectdist: tectonic-backed TeX distribution.",
+        "Available binaries (symlinked to tectdist):",
+        group("engines", ENGINES),
+        group("helpers", helpers),
+        group("real", GS_TOOLS + PROXIES),
+        group("driver", ("latexmk",)),
+        "Diagnostics: tectdist doctor [--json]",
+        "Classic web2c flags are accepted; see the header of this script.",
+    ))
 
 
 def resolve_engine():
@@ -422,11 +431,11 @@ def main(argv=None):
             print(f"tectdist {VERSION} (Tectonic-backed TeX distribution)")
             return 0
         if any(a in ("-h", "-help", "--help") for a in args):
-            print(HELP_TEXT)
+            print(help_text())
             return 0
         if args and args[0] == "doctor":
             from . import pairing
-            report, ok = pairing.doctor()
+            report, ok = pairing.doctor(as_json="--json" in args[1:])
             print(report)
             return 0 if ok else 1
 
