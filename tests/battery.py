@@ -361,7 +361,9 @@ CASES.append(mock("TEXINPUTS -> search-path", SEC_TRANS, ["usefive.tex"],
 CASES.append(mock("BIBINPUTS -> search-path", SEC_TRANS, [],
                   env={"BIBINPUTS": "$D/styles"}, want_args=["search-path=$D/styles"]))
 CASES.append(mock("native -o forwarded", SEC_TRANS, ["-o", "nat"],
-                  want_args=["-o nat", "tiny.tex"]))
+                  want_args=["-o nat", "tiny.tex"], want_last="tiny.tex"))
+CASES.append(mock("native -o does not become an input", SEC_TRANS,
+                  ["-o", "nat"], want_last="tiny.tex"))
 CASES.append(mock("native --outdir= -> -o", SEC_TRANS, ["--outdir=nat2"],
                   want_args=["-o nat2"]))
 CASES.append(mock("native --chatter= forwarded", SEC_TRANS, ["--chatter=minimal"],
@@ -552,6 +554,29 @@ CASES.append(Case(name="index loop runs makeindex and reruns", section=SEC_LOOP,
                   tier="mock",
                   cmd=["$B/pdflatex", "-interaction=nonstopmode", "tiny.tex"],
                   setup={"engine.sh": LOOP_ENGINE, "fakebin/makeindex": FAKE_MK},
+                  chmod=["engine.sh", "fakebin/makeindex"],
+                  env={"TECTONIC": "$D/engine.sh",
+                       "PATH": "$D/fakebin:" + os.environ.get("PATH", "")},
+                  want_files=["tiny.idx", "tiny.ind", "tiny.pdf",
+                              "makeindex-ran.log"],
+                  want_runs=2, want_args=["search-path=."]))
+CHANGED_LOOP_ENGINE = """#!/bin/bash
+echo "$@" >> argv.log
+if [ -f tiny.idx ]; then
+  echo "%changed" >> tiny.idx
+  if [ -f tiny.ind ]; then
+    echo "%pdf" > tiny.pdf
+  fi
+else
+  touch tiny.idx
+fi
+exit 0
+"""
+CASES.append(Case(name="index loop notices changed existing idx", section=SEC_LOOP,
+                  tier="mock",
+                  cmd=["$B/pdflatex", "-interaction=nonstopmode", "tiny.tex"],
+                  setup={"tiny.idx": "%old\n", "engine.sh": CHANGED_LOOP_ENGINE,
+                         "fakebin/makeindex": FAKE_MK},
                   chmod=["engine.sh", "fakebin/makeindex"],
                   env={"TECTONIC": "$D/engine.sh",
                        "PATH": "$D/fakebin:" + os.environ.get("PATH", "")},

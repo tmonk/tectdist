@@ -17,11 +17,11 @@ when brew's tectonic leaves the declared pair before a matched release ships.
 Design notes:
 
 * The hot path (every farm-tool invocation) checks only the tectonic half:
-  ``tectonic --version`` is fast, and tectonic is the only member of the pair
-  that brew can move.  The biber in the keg is OUR build — its version cannot
-  drift unless the keg is tampered with.  Results are memoized to a per-user
-  cache file keyed by the tectonic binary's mtime, so an upgrade is detected
-  on the very next invocation and the check itself is otherwise free.
+  tectonic is the only member of the pair that brew can move.  The biber in
+  the keg is OUR build — its version cannot drift unless the keg is tampered
+  with.  Results are memoized to a per-user cache file keyed by the resolved
+  tectonic binary and its mtime, so an upgrade is detected on the very next
+  invocation and the check itself is otherwise free.
 
 * ``tectdist doctor`` performs the full check (tectonic + biber) and prints a
   human-readable report.
@@ -91,19 +91,24 @@ def _cache_path():
 
 def _tectonic_binary_mtime(binary):
     try:
-        return os.stat(binary).st_mtime
+        return os.stat(binary).st_mtime_ns
     except OSError:
         return None
 
 
-def tectonic_version():
+def _resolved_tectonic():
+    """Return the configured/path-resolved tectonic executable, if any."""
+    import shutil
+    return os.environ.get("TECTONIC", "") or shutil.which("tectonic") or ""
+
+
+def tectonic_version(binary=None):
     """Run the resolved tectonic and return (pair, full_version_text, binary).
 
     ``binary`` is the resolved engine path (TECTONIC env / PATH), so the
     caller can key the cache on it.
     """
-    import shutil
-    binary = os.environ.get("TECTONIC", "") or shutil.which("tectonic") or ""
+    binary = binary or _resolved_tectonic()
     if not binary:
         return "", "", ""
     try:
@@ -141,6 +146,42 @@ def subprocess_run(argv, timeout):
         return None
 
 
+def _read_cached(cache, binary, mtime):
+    """Return a recent cached pair for this exact executable, or ``None``."""
+    if not cache or mtime is None:
+        return None
+    try:
+        with open(cache) as f:
+            data = json.load(f)
+        if (data.get("declared") == [TECTONIC_VERSION, BIBER_VERSION]
+                and data.get("binary") == os.path.realpath(binary)
+                and data.get("mtime") == mtime
+                and time.time() - data.get("ts", 0) < _TTL_SECONDS):
+            pair = data.get("pair")
+            return pair if isinstance(pair, str) else ""
+    except (OSError, ValueError, TypeError):
+        pass
+    return None
+
+
+def _write_cache(cache, binary, mtime, pair):
+    """Best-effort atomic cache update; a cache must never break a compile."""
+    if not cache or mtime is None:
+        return
+    tmp = f"{cache}.{os.getpid()}.tmp"
+    try:
+        with open(tmp, "w") as f:
+            json.dump({"declared": [TECTONIC_VERSION, BIBER_VERSION],
+                       "binary": os.path.realpath(binary),
+                       "pair": pair, "mtime": mtime, "ts": time.time()}, f)
+        os.replace(tmp, cache)
+    except OSError:
+        try:
+            os.unlink(tmp)
+        except OSError:
+            pass
+
+
 def check(dist="0.1.0"):
     """Fast runtime pairing check used on every farm-tool invocation.
 
@@ -155,38 +196,28 @@ def check(dist="0.1.0"):
     if os.environ.get("TECTDIST_SKIP_PAIRING"):
         return True, ""
 
-    pair, text, binary = tectonic_version()
+    binary = _resolved_tectonic()
+    if not binary:
+        # no tectonic: nothing to verify
+        return True, ""
+
+    cache = _cache_path()
+    mtime = _tectonic_binary_mtime(binary)
+    cached_pair = _read_cached(cache, binary, mtime)
+    if cached_pair is not None:
+        if cached_pair == TECTONIC_VERSION:
+            return True, ""
+        return False, _message(dist, TECTONIC_VERSION, cached_pair)
+
+    pair, text, binary = tectonic_version(binary)
     if not pair:
         # no tectonic / unparseable (mocked engine): nothing to verify
         return True, ""
 
-    # memoized OK results, keyed by declared pairing + the tectonic binary's
-    # mtime (an upgrade replaces the binary and invalidates the cache).
-    cache = _cache_path()
-    if cache and os.path.isfile(cache):
-        try:
-            with open(cache) as f:
-                data = json.load(f)
-            mtime = _tectonic_binary_mtime(binary)
-            if (data.get("declared") == [TECTONIC_VERSION, BIBER_VERSION]
-                    and data.get("pair") == pair
-                    and (mtime is None or data.get("mtime") == mtime)
-                    and time.time() - data.get("ts", 0) < _TTL_SECONDS):
-                return True, ""
-        except (OSError, ValueError):
-            pass
-
     if pair == TECTONIC_VERSION:
-        try:
-            if cache:
-                mtime = _tectonic_binary_mtime(binary)
-                with open(cache, "w") as f:
-                    json.dump({"declared": [TECTONIC_VERSION, BIBER_VERSION],
-                               "pair": pair, "mtime": mtime,
-                               "ts": time.time()}, f)
-        except OSError:
-            pass
+        _write_cache(cache, binary, _tectonic_binary_mtime(binary), pair)
         return True, ""
+    _write_cache(cache, binary, _tectonic_binary_mtime(binary), pair)
     return False, _message(dist, TECTONIC_VERSION, pair)
 
 

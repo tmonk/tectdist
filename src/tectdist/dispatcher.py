@@ -92,7 +92,6 @@ def translate(args, prog):
     synctex = 0
     shell_escape = 0
     quiet = 0
-    native_o = 0
     endopts = 0
     help_wanted = 0
     pending = None
@@ -103,6 +102,13 @@ def translate(args, prog):
             jobname = value
         elif pending == "outdir":
             outdir = value
+        elif pending == "native_outdir":
+            # Tectonic's native `-o DIR` is equivalent to the classic
+            # output-directory spelling.  Normalising both forms here keeps
+            # the input list intact and lets the assembly code handle them
+            # consistently.
+            if value:
+                outdir = value
         elif pending == "includedir":
             extra += ["-Z", f"search-path={value}"]
         elif pending == "fmt":
@@ -218,12 +224,11 @@ def translate(args, prog):
             extra.append("--version")
         elif name in ("h", "help"):
             help_wanted = 1
-        elif name in ("o", "outdir"):
-            native_o = 1
+        elif name == "o":
             if hasval:
-                extra.append(a.split("=", 1)[0] + "=" + val)
+                outdir = val
             else:
-                extra.append(f"-{name}")
+                pending = "native_outdir"
         else:
             if hasval:
                 extra.append(a.split("=", 1)[0] + "=" + val)
@@ -265,15 +270,14 @@ def translate(args, prog):
 
     # Standard TeX writes output into the current directory unless told
     # otherwise; Tectonic defaults to the input's directory, so pin the cwd
-    # when no explicit -output-directory and no Tectonic-native -o/--outdir
-    # was given.
+    # when no explicit output directory was given.
     if outdir:
         try:
             os.makedirs(outdir, exist_ok=True)
         except OSError:
             pass
         cmd += ["-o", outdir]
-    elif not native_o and inputs:
+    elif inputs:
         cmd += ["-o", "."]
 
     cmd += extra + inputs
@@ -294,8 +298,8 @@ def run_engine(prog, args):
     """Engine path: translate and run Tectonic with the translated argv.
 
     Index support: Tectonic itself never runs makeindex (it only writes
-    ``.idx`` files).  After a successful compile that produced new ``.idx``
-    files, a real indexer (makeindex from PATH, falling back to upmendex —
+    ``.idx`` files).  After a successful compile that produced new or changed
+    ``.idx`` files, a real indexer (makeindex from PATH, falling back to upmendex —
     a drop-in-compatible replacement; never the farm stub itself) is run on
     each stem and Tectonic is re-run once so that ``\\printindex`` picks up
     the generated ``.ind`` files.  When no indexer is installed the compile
@@ -321,16 +325,28 @@ def run_engine(prog, args):
         pass
 
     def idx_files():
+        files = {}
         try:
-            return set(os.listdir(dest))
+            with os.scandir(dest) as entries:
+                for entry in entries:
+                    if not entry.name.endswith(".idx"):
+                        continue
+                    try:
+                        stat = entry.stat()
+                    except OSError:
+                        continue
+                    files[entry.name] = (stat.st_mtime_ns, stat.st_size)
         except OSError:
-            return set()
+            pass
+        return files
 
     before = idx_files()
     rc = run(full)
     if rc == 0:
-        new_idx = sorted(n for n in (idx_files() - before) if n.endswith(".idx"))
-        if new_idx:
+        after = idx_files()
+        changed_idx = sorted(name for name, stat in after.items()
+                             if before.get(name) != stat)
+        if changed_idx:
             from . import tools
             indexer = (tools.resolve_real("makeindex", prefer_path=True)
                        or tools.resolve_real("upmendex", prefer_path=True))
@@ -341,7 +357,7 @@ def run_engine(prog, args):
             else:
                 import subprocess
                 indexed = 0
-                for name in new_idx:
+                for name in changed_idx:
                     stem = os.path.splitext(name)[0]
                     proc = None
                     try:
@@ -387,6 +403,9 @@ def run(argv):
         return subprocess.run(argv).returncode
     except FileNotFoundError:
         warn(os.path.basename(argv[0]), f"{argv[0]}: command not found")
+        return 127
+    except OSError as exc:
+        warn(os.path.basename(argv[0]), f"cannot execute {argv[0]}: {exc}")
         return 127
 
 
@@ -441,4 +460,3 @@ def main(argv=None):
 
     # --- engines -------------------------------------------------------------
     return run_engine(prog, args)
-

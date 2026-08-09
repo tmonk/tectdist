@@ -6,7 +6,6 @@ All of these mirror the behaviour of the original bash dispatcher exactly:
 same messages, same exit codes, same argument handling.
 """
 
-import glob
 import os
 import shutil
 import subprocess
@@ -79,6 +78,7 @@ def resolve_real(prog, prefer_path=False):
         yield f"/usr/local/bin/{prog}"
         yield f"/usr/bin/{prog}"
         yield from path_candidates()
+        import glob
         for base in ("/opt/homebrew/opt", "/usr/local/opt"):
             for hit in sorted(glob.glob(f"{base}/*/bin/{prog}")):
                 yield hit
@@ -387,18 +387,21 @@ def kpsewhich_main(args):
     known_vars = ("TEXINPUTS", "BIBINPUTS", "BSTINPUTS", "INDEXSTYLE")
     var = ""
     name = ""
+    format_name = ""
     var_next = False
-    skip_next = False
+    skip_next = ""
     for a in args:
         if a.startswith("-var-value="):
             var = a[len("-var-value="):]
         elif a == "-var-value":
             var_next = True
-        elif (a.startswith("-format=") or a.startswith("-progname=")
+        elif a.startswith("-format="):
+            format_name = a.split("=", 1)[1]
+        elif (a.startswith("-progname=")
               or a.startswith("-interaction=") or a.startswith("-debug=")):
             pass
         elif a in ("-format", "-progname"):
-            skip_next = True
+            skip_next = a[1:]
         elif a in ("-version", "--version", "-v"):
             print("kpsewhich (tectdist, Tectonic 0.17.0)")
             return 0
@@ -406,18 +409,21 @@ def kpsewhich_main(args):
             print("usage: kpsewhich [options] filename...")
             return 0
         elif a.startswith("-"):
-            if var_next:
-                var = a[1:]
-                var_next = False
+            # A missing -var-value argument must not consume a later
+            # filename after another option; real kpsewhich treats this as
+            # an incomplete option rather than exposing an arbitrary value.
+            var_next = False
             if skip_next:
-                skip_next = False
+                skip_next = ""
         else:
             if var_next:
                 var = a
                 var_next = False
                 continue
             if skip_next:
-                skip_next = False
+                if skip_next == "format":
+                    format_name = a
+                skip_next = ""
                 continue
             if not name:
                 name = a
@@ -432,16 +438,28 @@ def kpsewhich_main(args):
     if os.path.isfile(name):
         print(name)
         return 0
-    # search TEXINPUTS / BIBINPUTS / BSTINPUTS directories
-    for pathvar in ("TEXINPUTS", "BIBINPUTS", "BSTINPUTS"):
+    # An empty path component has TeX's special meaning: search the current
+    # directory.  Honour the common -format selectors while retaining the
+    # broad search used by the classic command when no format is supplied.
+    format_paths = {
+        "tex": ("TEXINPUTS",),
+        "sty": ("TEXINPUTS",),
+        "cls": ("TEXINPUTS",),
+        "bib": ("BIBINPUTS",),
+        "bst": ("BSTINPUTS",),
+        "ist": ("INDEXSTYLE",),
+    }
+    pathvars = format_paths.get(format_name.lower(),
+                                ("TEXINPUTS", "BIBINPUTS", "BSTINPUTS",
+                                 "INDEXSTYLE"))
+    for pathvar in pathvars:
         value = os.environ.get(pathvar, "")
         if not value:
             continue
         for d in value.split(":"):
-            if not d:
-                continue
-            d = d.rstrip("/")
-            if os.path.isfile(os.path.join(d, name)):
-                print(os.path.join(d, name))
+            d = d.rstrip("/") or "."
+            candidate = os.path.join(d, name)
+            if os.path.isfile(candidate):
+                print(candidate)
                 return 0
     return 1
