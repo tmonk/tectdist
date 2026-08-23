@@ -40,6 +40,10 @@ the `[real]` tier.  Without them:
 uv run python tests/battery.py --mock-only    # mock tier only; real sections SKIP
 ```
 
+Want the farm on PATH as plain commands (`pdflatex`, `latexmk`, ...) from a
+checkout, without Homebrew? `python3 install.py` builds the farm and adds it
+to your shell config in one step (`python3 uninstall.py` reverses it).
+
 Performance work?  Measure before and after with the bench suite:
 
 ```sh
@@ -59,6 +63,7 @@ uv run pytest benchmarks/ --benchmark-only --benchmark-disable-gc \
 | `src/tectdist/tools.py` | proxies, Ghostscript tools, stubs, kpsewhich |
 | `src/tectdist/version.py` | `VERSION` — bump it with every release |
 | `tests/battery.py` | the acceptance battery |
+| `tests/check_install.py` | source-installer shell selection and idempotence checks |
 | `tests/check_purity.py` | zipapp import audit (stdlib-only promise) |
 | `benchmarks/` | pytest-benchmark suite (+ `baseline.json` / `after.json`) |
 | `pyproject.toml`, `uv.lock`, `.python-version` | the uv dev environment |
@@ -93,6 +98,7 @@ uv run pytest benchmarks/ --benchmark-only --benchmark-disable-gc \
 - `python3 tests/battery.py` → `ALL GREEN` on a stock `python3` (no uv needed)
 - `uv run python tests/battery.py --mock-only` → real sections `SKIP`, not fail
 - `uv run python tests/battery.py --jobs 4` → same result
+- `python3 tests/check_install.py` → one-command installer checks pass
 - `uv run pytest benchmarks/` → green (benchmarks + purity audit)
 - `uv run python build.py` && `./dist/tectdist --version` → matches `version.py`
 - `uv run python tests/check_purity.py` → `OK — stdlib-only`

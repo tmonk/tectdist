@@ -48,8 +48,8 @@ GS_TOOL_NAMES = {"epstopdf": "do_epstopdf",
                  "ps2pdf": "do_ps2pdf",
                  "pdfcrop": "do_pdfcrop"}
 
-def help_text():
-    """Build the launcher help from the canonical farm-name tables."""
+def tools_text():
+    """Build the exhaustive tool list from the canonical farm-name tables."""
     import textwrap
 
     def group(label, names):
@@ -62,14 +62,32 @@ def help_text():
                + STUB_MNT_VERBOSE + STUB_FNT + STUB_MF + STUB_CONTEXT
                + STUB_SPECIAL + ("kpsewhich",))
     return "\n".join((
-        "tectdist: tectonic-backed TeX distribution.",
-        "Available binaries (symlinked to tectdist):",
+        "tectdist-compatible commands:",
         group("engines", ENGINES),
         group("helpers", helpers),
         group("real", GS_TOOLS + PROXIES),
         group("driver", ("latexmk",)),
-        "Diagnostics: tectdist doctor [--json]",
-        "Classic web2c flags are accepted; see the header of this script.",
+    ))
+
+
+def help_text():
+    """Return a short, task-oriented first-use guide."""
+    return "\n".join((
+        f"tectdist {VERSION} — use LaTeX without installing TeX Live",
+        "",
+        "Usage:",
+        "  tectdist FILE.tex [OPTIONS]       compile a document",
+        "  tectdist doctor [--json]          check the installation",
+        "  tectdist tools                    list compatible TeX commands",
+        "  tectdist --version                show the version",
+        "",
+        "Drop-in commands such as pdflatex, latexmk, kpsewhich and biber are",
+        "also available. Run `tectdist tools` for the complete list.",
+        "",
+        "Examples:",
+        "  tectdist main.tex",
+        "  pdflatex -synctex=1 main.tex",
+        "  latexmk -pdf -outdir=build main.tex",
     ))
 
 
@@ -439,11 +457,17 @@ def main(argv=None):
 
     # --- the tectdist meta-command -------------------------------------------
     if invoked == "tectdist":
-        if any(a in ("-v", "-version", "-V", "--version") for a in args):
+        if not args or args[0] in ("help",):
+            print(help_text())
+            return 0
+        if args[0] in ("version", "-v", "-version", "-V", "--version"):
             print(f"tectdist {VERSION} (Tectonic-backed TeX distribution)")
             return 0
-        if any(a in ("-h", "-help", "--help") for a in args):
+        if args[0] in ("-h", "-help", "--help"):
             print(help_text())
+            return 0
+        if args[0] == "tools":
+            print(tools_text())
             return 0
         if args and args[0] == "doctor":
             from . import pairing

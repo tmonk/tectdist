@@ -7,41 +7,16 @@ jobs:
   pour:
     runs-on: macos-15
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - name: Set up Homebrew
-        uses: Homebrew/actions/setup-homebrew@master
-      - name: Plain curl probe (independent of brew)
+        uses: Homebrew/actions/setup-homebrew@c8707045ccae42888fe98e86f2ee8938bc7cc193 # 2026.08.03.2
+
+      - name: Fresh install from the tap and verify the published bottle
         run: |
           set -euo pipefail
-          URL="https://github.com/tmonk/tectdist/releases/download/v0.2.0/tectdist-0.2.0.arm64_sequoia.bottle.tar.gz"
-          WANT="a6cf84fee9d0090e970e9ce1a0e007cdbbe34aae5a88c3eee0bd626b43fe2d00"
-          curl -sL -o /tmp/probe.tar.gz "$URL"
-          GOT=$(shasum -a 256 /tmp/probe.tar.gz | cut -d' ' -f1)
-          echo "plain-curl status: OK sha_match=$([ "$GOT" = "$WANT" ] && echo yes || echo NO)"
-
-      - name: Fresh install from the tap (must pour the bottle)
-        run: |
-          set +e
           brew tap tmonk/brew
-          brew install tmonk/brew/tectdist > /tmp/install.log 2>&1
-          INSTALL_EXIT=$?
-          echo "=== install exit: $INSTALL_EXIT ==="
-          echo "=== install log (bottle-related lines) ==="
-          grep -iE 'pour|fetching|built from source|error|✘' /tmp/install.log | head -15
-          echo "=== verdict ==="
-          if grep -qi 'Pouring tectdist' /tmp/install.log; then
-            echo "POURED: bottle was poured"
-          elif grep -qi 'Download failed' /tmp/install.log; then
-            echo "DOWNLOAD FAILED: bottle fetch 404"
-          elif grep -qi 'bottle' /tmp/install.log; then
-            echo "WARN: bottle-related line found but not 'Pouring tectdist'"
-          else
-            echo "NO BOTTLE POUR LINE — likely built from source"
-          fi
-          if [ $INSTALL_EXIT -eq 0 ]; then
-            echo "=== functionality ==="
-            tectdist doctor
-            biber --version
-            ls "$(brew --prefix)"/Cellar/tectdist/0.2.0/bin | wc -l
-          fi
-          exit 0
+          brew install tmonk/brew/tectdist 2>&1 | tee /tmp/tectdist-install.log
+          grep -q "Pouring tectdist" /tmp/tectdist-install.log
+          tectdist doctor
+          biber --version | grep -q "biber version: 2.17"
+          test "$(find "$(brew --prefix tectdist)/bin" -maxdepth 1 -type l -o -type f | wc -l | tr -d ' ')" -ge 62

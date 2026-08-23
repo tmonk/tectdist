@@ -89,3 +89,53 @@ in *every* paired run.
 - `py_compile` clean on CPython 3.12 (dev) and 3.9 (floor).
 - No behavioural change: the mock tier asserts exit codes *and* exact engine
   argv — all green.
+
+## vs TeX Live
+
+`benchmarks/test_texlive.py` compiles `helpers.PAPER` — a package-heavy
+document (geometry, amsmath, hyperref, xcolor, booktabs, listings,
+fancyhdr) whose hyperref outline needs a rerun to resolve — through
+tectdist's single command and through TeX Live's `latexmk`, back-to-back on
+the same machine. It's skipped, not failed, unless both are on PATH:
+
+```sh
+uv run pytest benchmarks/test_texlive.py -v
+```
+
+**Why `latexmk`, not a bare `pdflatex`, is the TeX Live baseline:** a single
+raw `pdflatex` pass on this document leaves a stale PDF outline (TeX Live
+warns `Rerun to get /PageLabels entry`) — it is not a finished, correct
+compile. tectdist's single command always reruns automatically until
+references converge (Tectonic's own behaviour), so the fair comparison is
+against TeX Live's own answer to "one command, fully-resolved PDF":
+`latexmk`. `helpers.find_texlive_latexmk()` locates a `latexmk` next to a
+non-tectdist `pdflatex` on PATH, so this works whether tectdist is
+installed via Homebrew, a source checkout, or shadows `pdflatex` on PATH
+entirely.
+
+Warm both sides' caches before measuring — a manual
+`bin/pdflatex -interaction=nonstopmode` on any `.tex` file for Tectonic's
+bundle, one prior `latexmk` run for TeX Live's formats — so neither run
+pays a one-time init cost.
+
+### Results (paper.tex, 20 samples, both fully warm, 2026-08-23)
+
+Median wall time per fully-resolved compile, milliseconds (lower is better).
+
+| | median | p95 | min | max |
+|---|---|---|---|---|
+| tectdist (`pdflatex paper.tex`, Tectonic) | **467** | 510 | 454 | 522 |
+| TeX Live (`latexmk -pdf paper.tex`, TinyTeX 2026) | 710 | 842 | 664 | 929 |
+
+tectdist compiled this document **34% faster** than TeX Live's own
+multi-pass driver, measured on a warm TinyTeX 2026 install (macOS,
+arm64) — not because tectdist's Python launcher is unusually fast (its own
+overhead is ~26 ms, confirmed by timing `tectdist --version` and by `bin/
+pdflatex` matching a direct `tectonic` invocation to within noise) but
+because Tectonic's single rerun-until-stable pass beats `latexmk` invoking
+a full second `pdflatex` process from scratch.
+
+These numbers are specific to this document, this TeX Live install, and
+this machine; a stripped-down TeX Live, a different package set, or a
+cold Tectonic bundle cache will shift them. Re-run the command above on
+your own setup for a number that means something for your workflow.

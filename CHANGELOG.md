@@ -16,6 +16,36 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Improved
 
+- The README is now user-facing only: `tectdist doctor` is demoted from the
+  install quick-start to a troubleshooting note, the flag-translation table,
+  source-build instructions, and dev-environment section moved out (source
+  builds are documented in CONTRIBUTING.md instead), and a measured
+  performance headline replaces the old "Requirements"/"What you get" tables.
+- Added `benchmarks/test_texlive.py`, a reproducible head-to-head compile
+  benchmark against a real (non-tectdist) TeX Live `latexmk` on a
+  package-heavy document; see BENCHMARKS.md's "vs TeX Live" section for
+  methodology and measured numbers (34% faster on a warm TinyTeX 2026
+  install, for an equally fully-resolved PDF).
+- Installation and first use now follow one obvious path: Homebrew needs one
+  command, `tectdist FILE.tex` is documented as the simplest compile command,
+  and running bare `tectdist` prints a short task-oriented guide.
+- `python3 install.py` now builds the command farm itself, selects the correct
+  config for zsh, bash, fish, or other POSIX shells, and finishes with the two
+  commands a new user should try. Source setup no longer requires a separate
+  `make_links.py` step.
+- The exhaustive launcher list moved to `tectdist tools`; the default help and
+  README now lead with installation, health checking, and document compilation.
+- `uv.lock` now records the same 0.2.1 project version as `pyproject.toml` and
+  the runtime, so a first `uv` development command does not rewrite the lock.
+- CI now runs the build, purity check, formula check, and mock acceptance
+  suite on Python 3.9. The bottle smoke test now fails on a missing pour or
+  failed command.
+- `tectdist doctor` now reports missing Tectonic or biber dependencies as
+  unhealthy instead of incorrectly returning `PAIR OK`.
+- `install.py` emits a POSIX-single-quoted PATH entry, so unusual checkout
+  paths containing shell metacharacters cannot execute when an rc file loads.
+- The documented one-sample benchmark smoke mode now reports that sample for
+  all percentiles instead of crashing during percentile calculation.
 - The zipapp builder now archives the source package directly, avoiding a
   redundant staging-tree copy while continuing to exclude caches and dotfiles.
 - `tectdist --help` is generated from the canonical tool tables, preventing

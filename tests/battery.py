@@ -258,7 +258,19 @@ for v in ("-version", "-v", "-V", "--version"):
 for h in ("-help", "-h", "--help"):
     CASES.append(mock(f"help {h}", SEC_VERHELP, [h]))
 CASES.append(Case(name="tectdist --help", section=SEC_VERHELP, tier="mock",
-                  cmd=["$B/tectdist", "--help"]))
+                  cmd=["$B/tectdist", "--help"], stdout_contains="Usage:",
+                  stdout_contains2="tectdist main.tex"))
+CASES.append(Case(name="tectdist no args", section=SEC_VERHELP, tier="mock",
+                  cmd=["$B/tectdist"], stdout_contains="Usage:"))
+CASES.append(Case(name="tectdist help", section=SEC_VERHELP, tier="mock",
+                  cmd=["$B/tectdist", "help"], stdout_contains="Usage:"))
+CASES.append(Case(name="tectdist tools", section=SEC_VERHELP, tier="mock",
+                  cmd=["$B/tectdist", "tools"], stdout_contains="pdflatex",
+                  stdout_contains2="latexmk"))
+CASES.append(Case(name="tectdist version", section=SEC_VERHELP, tier="mock",
+                  cmd=["$B/tectdist", "version"], stdout_contains="tectdist 0.2.1"))
+CASES.append(mock("tectdist direct compile", SEC_DISP, [], prog="tectdist",
+                  want_args=["-o .", "tiny.tex"], want_last="tiny.tex"))
 CASES.append(Case(name="tectdist -V", section=SEC_VERHELP, tier="mock",
                   cmd=["$B/tectdist", "-V"]))
 for q in ("-q", "-quiet", "-silent"):
@@ -310,6 +322,17 @@ CASES.append(Case(name="doctor mismatch", section=SEC_PAIR, tier="mock",
                   setup={"fake18.sh": FAKE18}, chmod=["fake18.sh"],
                   env={"TECTONIC": "$D/fake18.sh"},
                   want=1, stdout_contains="MISMATCH"))
+CASES.append(Case(name="doctor missing tectonic", section=SEC_PAIR, tier="mock",
+                  cmd=["$B/tectdist", "doctor"],
+                  env={"TECTONIC": "$D/not-installed"},
+                  want=1, stdout_contains="tectonic-missing",
+                  stdout_contains2="tectonic NOT FOUND"))
+CASES.append(Case(name="doctor missing biber", section=SEC_PAIR, tier="mock",
+                  cmd=[sys.executable, "$B/tectdist", "doctor"],
+                  setup={"fake17.sh": FAKE17}, chmod=["fake17.sh"],
+                  env={"TECTONIC": "$D/fake17.sh", "PATH": "$D"},
+                  want=1, stdout_contains="biber-missing",
+                  stdout_contains2="biber NOT FOUND"))
 CASES.append(Case(name="doctor json", section=SEC_PAIR, tier="mock",
                   cmd=["$B/tectdist", "doctor", "--json"],
                   setup={"fake17.sh": FAKE17}, chmod=["fake17.sh"],

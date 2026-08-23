@@ -246,9 +246,17 @@ def doctor(as_json=False):
     pair, text, binary = tectonic_version()
     bv, btext = biber_version()
     problems = []
-    if pair and pair != TECTONIC_VERSION:
+    # ``doctor`` is a health check, rather than the permissive compile-path
+    # probe (which deliberately lets the normal engine-not-found error speak
+    # for itself).  A missing dependency must therefore be unhealthy instead
+    # of accidentally producing a reassuring "PAIR OK" result.
+    if not pair:
+        problems.append("tectonic-missing")
+    elif pair != TECTONIC_VERSION:
         problems.append("tectonic")
-    if bv and bv != BIBER_VERSION:
+    if not bv:
+        problems.append("biber-missing")
+    elif bv != BIBER_VERSION:
         problems.append("biber")
 
     if as_json:
@@ -300,10 +308,20 @@ def doctor(as_json=False):
         return report, True
     lines.append("  verdict:    MISMATCH (%s)" % ", ".join(problems))
     report = "\n".join(lines)
-    if pair and pair != TECTONIC_VERSION:
+    if not pair:
+        report += ("\n\ntectonic is required but was not found or did not "
+                   "report a parseable version. Install the matching "
+                   f"tectonic {TECTONIC_VERSION}.x release and run "
+                   "`tectdist doctor` again.")
+    elif pair != TECTONIC_VERSION:
         report += "\n\n" + _message(VERSION, TECTONIC_VERSION,
                                     pair or "your tectonic version")
-    elif bv and bv != BIBER_VERSION:
+    elif not bv:
+        report += ("\n\nbiber is required for the supported biblatex "
+                   "workflow but was not found or did not report a "
+                   "parseable version. Install the formula-provided biber "
+                   f"{BIBER_VERSION} and run `tectdist doctor` again.")
+    elif bv != BIBER_VERSION:
         report += ("\n\nbiber %s is not the %s this release declares; the "
                    "keg's bin/biber must not be shadowed by another biber "
                    "earlier on PATH." % (bv, BIBER_VERSION))

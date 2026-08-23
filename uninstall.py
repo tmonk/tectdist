@@ -4,7 +4,7 @@ idempotent: scans the usual rc files (or a file given on the command line)
 and strips the marker comment plus the export line it introduced.
 
 Run:
-    python3 uninstall.py            # removes from ~/.zshrc, ~/.bashrc, ~/.bash_profile
+    python3 uninstall.py            # checks common zsh, bash, fish and POSIX configs
     python3 uninstall.py ~/.bashrc  # or a specific rc file
 """
 
@@ -12,7 +12,8 @@ import os
 import sys
 
 MARKER = "# tectdist (Tectonic-backed TeX distribution)"
-DEFAULTS = ("~/.zshrc", "~/.bashrc", "~/.bash_profile")
+DEFAULTS = ("~/.zshrc", "~/.bashrc", "~/.bash_profile", "~/.profile",
+            "~/.config/fish/config.fish")
 
 
 def clean_rc(path):

@@ -6,7 +6,7 @@ import sys
 
 import pytest
 
-from helpers import BIN, FAKE_ENGINE, ROOT, TINY, find_engine, run_cmd
+from helpers import BIN, FAKE_ENGINE, PAPER, ROOT, TINY, find_engine, run_cmd
 
 
 @pytest.fixture(scope="session")
@@ -41,3 +41,10 @@ def scratch(tmp_path):
 @pytest.fixture(scope="session")
 def have_engine():
     return bool(find_engine())
+
+
+@pytest.fixture
+def paper_scratch(tmp_path):
+    """A scratch dir with paper.tex, the package-heavy comparison document."""
+    (tmp_path / "paper.tex").write_text(PAPER)
+    return tmp_path
