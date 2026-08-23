@@ -1,12 +1,12 @@
 # tectdist
 
-Use LaTeX without installing TeX Live. tectdist runs documents through
-[Tectonic](https://tectonic-typesetting.github.io) while providing the familiar
-commands expected by editors, build systems and CI: `pdflatex`, `latexmk`,
-`biber`, `kpsewhich` and more, so nothing needs reconfiguring the way it
-would to point at Tectonic's own CLI directly — and it compiles documents
-[34% faster than TeX Live's own `latexmk`](BENCHMARKS.md#vs-tex-live) in
-one command, with no manual reruns.
+Use LaTeX without installing TeX Live. tectdist compiles your documents
+through [Tectonic](https://tectonic-typesetting.github.io), a modern,
+self-contained LaTeX engine — but answers to the same commands
+(`pdflatex`, `latexmk`, `biber`, `kpsewhich`) as a normal TeX Live
+install, so your editor and existing documents just work, unchanged. It's
+also [34% faster than TeX Live's own `latexmk`](BENCHMARKS.md#vs-tex-live)
+at producing a finished PDF, with no manual reruns needed.
 
 ## Install
 
