@@ -2,11 +2,11 @@
 
 ## Compatibility
 
-tectdist translates the classic web2c command-line interface — engine flags
-like `-synctex`, `-output-directory`, `-jobname` and `-shell-escape`,
-`latexmk`'s common workflows, and `kpsewhich` lookups — onto Tectonic, so
-existing editor and CI configs keep working unchanged. Run `tectdist tools`
-for the full list of compatible command names.
+tectdist translates the classic web2c command-line interface onto Tectonic:
+engine flags like `-synctex`, `-output-directory`, `-jobname` and
+`-shell-escape`, `latexmk`'s common workflows, and `kpsewhich` lookups all
+keep working, so existing editor and CI configs need no changes. Run
+`tectdist tools` for the full list of compatible command names.
 
 ## Limitations
 

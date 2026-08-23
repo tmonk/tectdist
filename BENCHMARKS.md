@@ -14,13 +14,13 @@ uv run pytest benchmarks/ --benchmark-only --benchmark-disable-gc \
     --benchmark-json=benchmarks/after.json      # after
 ```
 
-The `benchmarks/*.json` snapshots are generated locally (gitignored) —
+The `benchmarks/*.json` snapshots are generated locally (gitignored);
 regenerate both together when re-measuring.
 
 ## Methodology
 
 - **What is timed:** wall time of the full operation via
-  `time.perf_counter()` — a complete `subprocess.run()` for anything that
+  `time.perf_counter()`: a complete `subprocess.run()` for anything that
   spawns the farm, so interpreter startup, imports, dispatch, translation
   and engine spawn are all included.  In-process cases (translate, proxy
   lookup, kpsewhich parse+search) time the function directly.
@@ -35,7 +35,7 @@ regenerate both together when re-measuring.
 - **Engine:** the e2e cases use the real Tectonic engine with a warmed
   bundle cache.  They are engine-dominated: their wall time tracks machine
   load far more than the shim (observed compile range across runs:
-  187–1254 ms for the same code).  Treat their Δ% as noise, not signal.
+  187-1254 ms for the same code).  Treat their Δ% as noise, not signal.
 
 ## Results (paired run, 2026-08-07, uv-managed CPython 3.12)
 
@@ -88,13 +88,13 @@ in *every* paired run.
   tests/check_purity.py`.
 - `py_compile` clean on CPython 3.12 (dev) and 3.9 (floor).
 - No behavioural change: the mock tier asserts exit codes *and* exact engine
-  argv — all green.
+  argv, all green.
 
 ## vs TeX Live
 
-`benchmarks/test_texlive.py` compiles `helpers.PAPER` — a package-heavy
-document (geometry, amsmath, hyperref, xcolor, booktabs, listings,
-fancyhdr) whose hyperref outline needs a rerun to resolve — through
+`benchmarks/test_texlive.py` compiles `helpers.PAPER` (a package-heavy
+document: geometry, amsmath, hyperref, xcolor, booktabs, listings,
+fancyhdr, whose hyperref outline needs a rerun to resolve) through
 tectdist's single command and through TeX Live's `latexmk`, back-to-back on
 the same machine. It's skipped, not failed, unless both are on PATH:
 
@@ -104,7 +104,7 @@ uv run pytest benchmarks/test_texlive.py -v
 
 **Why `latexmk`, not a bare `pdflatex`, is the TeX Live baseline:** a single
 raw `pdflatex` pass on this document leaves a stale PDF outline (TeX Live
-warns `Rerun to get /PageLabels entry`) — it is not a finished, correct
+warns `Rerun to get /PageLabels entry`): it is not a finished, correct
 compile. tectdist's single command always reruns automatically until
 references converge (Tectonic's own behaviour), so the fair comparison is
 against TeX Live's own answer to "one command, fully-resolved PDF":
@@ -113,9 +113,9 @@ non-tectdist `pdflatex` on PATH, so this works whether tectdist is
 installed via Homebrew, a source checkout, or shadows `pdflatex` on PATH
 entirely.
 
-Warm both sides' caches before measuring — a manual
+Warm both sides' caches before measuring: a manual
 `bin/pdflatex -interaction=nonstopmode` on any `.tex` file for Tectonic's
-bundle, one prior `latexmk` run for TeX Live's formats — so neither run
+bundle, one prior `latexmk` run for TeX Live's formats, so neither run
 pays a one-time init cost.
 
 ### Results (paper.tex, 20 samples, both fully warm, 2026-08-23)
@@ -129,11 +129,11 @@ Median wall time per fully-resolved compile, milliseconds (lower is better).
 
 tectdist compiled this document **34% faster** than TeX Live's own
 multi-pass driver, measured on a warm TinyTeX 2026 install (macOS,
-arm64) — not because tectdist's Python launcher is unusually fast (its own
-overhead is ~26 ms, confirmed by timing `tectdist --version` and by `bin/
-pdflatex` matching a direct `tectonic` invocation to within noise) but
-because Tectonic's single rerun-until-stable pass beats `latexmk` invoking
-a full second `pdflatex` process from scratch.
+arm64). This is not because tectdist's Python launcher is unusually fast
+(its own overhead is ~26 ms, confirmed by timing `tectdist --version` and
+by `bin/pdflatex` matching a direct `tectonic` invocation to within noise),
+but because Tectonic's single rerun-until-stable pass beats `latexmk`
+invoking a full second `pdflatex` process from scratch.
 
 These numbers are specific to this document, this TeX Live install, and
 this machine; a stripped-down TeX Live, a different package set, or a

@@ -11,7 +11,7 @@ flag vocabulary, and proxies poppler/qpdf/ghostscript tools to those real
 formulae without shadowing them.
 
 `brew install tmonk/brew/tectdist` gives a user a working TeX system with a
-biblatex pipeline out of the box — no TeX Live, no extra packages.  The tap
+biblatex pipeline out of the box, no TeX Live, no extra packages.  The tap
 ships prebuilt bottles (published as assets of the release; the formula's
 `bottle do` block mirrors them), so installs pour in seconds; the bottle
 block here will be replaced by core-built bottles when CI merges this
@@ -25,7 +25,7 @@ formula.
 ## Why biber is built from source inside the formula
 
 The formula builds **biber 2.17** from source (the `plk/biber` v2.17 source
-tarball plus the CPAN module resources listed below — the same resource set
+tarball plus the CPAN module resources listed below, the same resource set
 homebrew-core's own `biber` formula carries), rather than adding
 `depends_on "biber"`.  Reason: the version pairing.  Tectonic 0.17 bundles
 biblatex 3.17, which writes `.bcf` format 3.8; homebrew-core's `biber`
@@ -36,12 +36,12 @@ package that can silently break biblatex on any `brew upgrade`.  Building
 the matched biber into the formula keeps the pair as one release unit.
 
 The biber resources are source tarballs (GitHub for `plk/biber`, metacpan
-for the 119 modules), all sha256-pinned — no prebuilt binaries.
+for the 119 modules), all sha256-pinned; no prebuilt binaries.
 
 ## Why `depends_on "perl"`
 
 biber 2.17's `Build.PL` requires perl ≥ 5.32.  macOS system perl is 5.30.3
-on macOS ≤ 15 (5.34.1 on newer) — a version-dependent source of truth.  The
+on macOS ≤ 15 (5.34.1 on newer), a version-dependent source of truth.  The
 formula uses the brew `perl` formula deterministically on every platform
 and stages the full module closure unconditionally (the same set core's
 `biber` formula already carries on Linux).

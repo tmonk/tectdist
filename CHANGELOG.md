@@ -56,13 +56,13 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [0.2.1] - 2026-08-08
 
-Patch release — no pairing change (tectonic 0.17 / biblatex 3.17 / biber
+Patch release, no pairing change (tectonic 0.17 / biblatex 3.17 / biber
 2.17 unchanged).
 
 ### Changed
 
 - **Docs**: README, tap README, and formula caveats trimmed to standard
-  public-facing brevity — user-facing docs state what the software is and
+  public-facing brevity: user-facing docs state what the software is and
   how to use it (install commands, usage, features, limitations, license)
   and nothing else.  The formula caveats now carry only the one genuinely
   actionable warning: do not replace the bundled biber 2.17 with
@@ -80,7 +80,7 @@ Patch release — no pairing change (tectonic 0.17 / biblatex 3.17 / biber
 
 Packaging rework: biber is now BUILT FROM SOURCE inside the Homebrew formula
 (the plk/biber v2.17 source plus 119 sha256-pinned CPAN module resources,
-mirroring homebrew-core's own biber formula) instead of prebuilt binaries —
+mirroring homebrew-core's own biber formula) instead of prebuilt binaries:
 no binary bundling, no linux/arm64 stub (a real biber 2.17 on all four
 platforms), and no install-time tectonic pin.  The tectonic↔biblatex↔biber
 pairing is DECLARED in `src/tectdist/pairing.py` (mirrored by the formula's
@@ -108,7 +108,7 @@ First release: the complete Tectonic-backed TeX distribution.
   `src/tectdist/`, the launcher is `bin/tectdist` (the symlink farm points
   at it), the Homebrew formula is `Formula/tectdist.rb` (class `Tectdist`),
   and all `--version` output reports `tectdist 0.1.0`.  Behaviour is
-  unchanged — this is a rename only.
+  unchanged; this is a rename only.
 - **Compilable single-file executable.**  `python3 build.py` produces
   `dist/tectdist`, a self-contained zipapp that behaves identically to the
   source tree (same dispatch, same `--version`, same farm semantics).
@@ -122,7 +122,7 @@ First release: the complete Tectonic-backed TeX distribution.
 
 ### Changed
 
-- **biblatex works out of the box — `biber` 2.17 is bundled.**  The formula
+- **biblatex works out of the box: `biber` 2.17 is bundled.**  The formula
   installs the official prebuilt biber 2.17 binary as a bundled resource,
   self-hosted as a sha256-pinned release asset (users only ever download
   from github.com, never from SourceForge).  `bin/biber` is the real
@@ -134,7 +134,7 @@ First release: the complete Tectonic-backed TeX distribution.
 - **Each release requires a specific tectonic version (pairing).**  The
   formula declares `TECTONIC_VERSION` (0.17) and asserts brew's tectonic
   against it at install time, failing fast with instructions if brew's
-  tectonic has moved — a mismatched pair can never be installed silently.
+  tectonic has moved; a mismatched pair can never be installed silently.
   A weekly GitHub Actions watcher (`.github/workflows/check-tectonic.yml`)
   opens an issue the moment brew's tectonic changes so the matched release
   is cut before users hit a mismatch on `brew upgrade`.
@@ -150,11 +150,11 @@ First release: the complete Tectonic-backed TeX distribution.
 - **`makeindex`/`xindy`/`upmendex` proxy to the real system binary.**  When
   a real binary of the same name is installed (TeX Live, MacTeX, MiKTeX,
   homebrew) the farm forwards to it with the same argv, exactly like the
-  poppler/qpdf proxies — the farm never shadows a real tool even when it
+  poppler/qpdf proxies: the farm never shadows a real tool even when it
   comes first on PATH.  When the binary is absent the command stays an
   honest exit-0 note.  (`biber` used to be proxied the same way; since this
-  release the Homebrew formula ships the real matched binary itself — see
-  "Changed" above — while non-Homebrew installs keep the proxy/stub
+  release the Homebrew formula ships the real matched binary itself (see
+  "Changed" above) while non-Homebrew installs keep the proxy/stub
   behaviour.)
 - **makeindex rerun loop.**  Tectonic itself never runs `makeindex` (it only
   writes `.idx` files), so the engine dispatcher now performs the step: after
@@ -165,7 +165,7 @@ First release: the complete Tectonic-backed TeX distribution.
   The loop now also falls back to `upmendex` (a drop-in-compatible
   replacement) before warning.
 - **Acceptance battery** (`tests/battery.py`): a parallel, time-bounded,
-  stdlib-only suite with two tiers — `[mock]` checks against a recording
+  stdlib-only suite with two tiers: `[mock]` checks against a recording
   fake engine (exit codes *and* exact engine argv, no TeX needed) and
   `[real]` end-to-end checks (real compiles, real gs/poppler tools).  Each
   case runs in an isolated scratch directory; `--jobs N` and `--mock-only`
@@ -175,7 +175,7 @@ First release: the complete Tectonic-backed TeX distribution.
   `tectdist --version` and `latexmk --version`.
 - **Benchmark suite + uv dev environment:** a pytest-benchmark suite
   (`benchmarks/`, results in `BENCHMARKS.md`) run entirely through uv
-  (`pyproject.toml`, `uv.lock`, `.python-version`) — dev-only, the runtime
+  (`pyproject.toml`, `uv.lock`, `.python-version`), dev-only, the runtime
   stays stdlib-only; shim-overhead optimised via lazy imports, lazy proxy
   globs and a deflated zipapp (startup −39%, artifact −57%, stub −46%).
   `tests/check_purity.py` audits the built zipapp for third-party imports.
@@ -194,7 +194,7 @@ First release: the complete Tectonic-backed TeX distribution.
   (no more deleting `stem.*` files from the working directory).
 - `-auxdir` (TeXShop-style) is translated like `-aux-directory`.
 - `-jobname` values containing path separators are sanitized to their
-  basename — artifacts can no longer be renamed outside the output dir
+  basename, so artifacts can no longer be renamed outside the output dir
   (also true for `latexmk` clean modes).
 - `-fmt`/`-format` values other than `latex` warn and are dropped instead of
   making Tectonic try to generate a nonexistent format.
@@ -226,7 +226,7 @@ First release: the complete Tectonic-backed TeX distribution.
   `biber`, the empty-bibliography consequence) so pipelines keep running.
 - `latexmk` now finds its engines through the *invoked* path (matching the
   old `dirname "$0"` behaviour), with a PATH fallback when the farm is not
-  in the same directory — so the built artifact works from any layout.
+  in the same directory, so the built artifact works from any layout.
 - The poppler/qpdf proxies no longer recurse into themselves when a tectdist
   farm shadows the real binaries; they also fall back to Homebrew `opt`
   directories.

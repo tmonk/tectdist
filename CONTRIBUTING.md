@@ -21,7 +21,7 @@ verifiable.
 
 ## Development setup
 
-The dev environment is managed by [uv](https://docs.astral.sh/uv/) —
+The dev environment is managed by [uv](https://docs.astral.sh/uv/),
 **dev-only**: the package, installers, battery and built artifact run on a
 stock `python3` with no uv and no site-packages.
 
@@ -61,7 +61,7 @@ uv run pytest benchmarks/ --benchmark-only --benchmark-disable-gc \
 | `src/tectdist/dispatcher.py` | argv[0] dispatch, engine resolution, flag translation |
 | `src/tectdist/latexmk.py` | the latexmk-compatible driver |
 | `src/tectdist/tools.py` | proxies, Ghostscript tools, stubs, kpsewhich |
-| `src/tectdist/version.py` | `VERSION` — bump it with every release |
+| `src/tectdist/version.py` | `VERSION`, bump it with every release |
 | `tests/battery.py` | the acceptance battery |
 | `tests/check_install.py` | source-installer shell selection and idempotence checks |
 | `tests/check_purity.py` | zipapp import audit (stdlib-only promise) |
@@ -89,7 +89,7 @@ uv run pytest benchmarks/ --benchmark-only --benchmark-disable-gc \
    ```
 5. **Performance changes?** Measure before and after with the bench suite
    (`uv run pytest benchmarks/ --benchmark-only`; see BENCHMARKS.md) and note
-   the deltas — the shim-overhead cases should not regress.
+   the deltas; the shim-overhead cases should not regress.
 6. **Bump `VERSION`** in `src/tectdist/version.py` and add a CHANGELOG entry.
 
 ## Testing checklist
@@ -101,7 +101,7 @@ uv run pytest benchmarks/ --benchmark-only --benchmark-disable-gc \
 - `python3 tests/check_install.py` → one-command installer checks pass
 - `uv run pytest benchmarks/` → green (benchmarks + purity audit)
 - `uv run python build.py` && `./dist/tectdist --version` → matches `version.py`
-- `uv run python tests/check_purity.py` → `OK — stdlib-only`
+- `uv run python tests/check_purity.py` → prints `OK` (stdlib-only)
 - `uv run python -m py_compile src/tectdist/*.py` → clean
 - `python3 -m py_compile src/tectdist/*.py` → clean on stock 3.9/3.14
 

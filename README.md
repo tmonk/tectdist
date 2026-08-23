@@ -2,7 +2,7 @@
 
 Use LaTeX without installing TeX Live. tectdist compiles your documents
 through [Tectonic](https://tectonic-typesetting.github.io), a modern,
-self-contained LaTeX engine — but answers to the same commands
+self-contained LaTeX engine, but answers to the same commands
 (`pdflatex`, `latexmk`, `biber`, `kpsewhich`) as a normal TeX Live
 install, so your editor and existing documents just work, unchanged. It's
 also [34% faster than TeX Live's own `latexmk`](BENCHMARKS.md#vs-tex-live)
@@ -36,8 +36,8 @@ latexmk -pdf -outdir=build main.tex
 ```
 
 The first compile downloads the required TeX support files and caches them for
-later runs. If something doesn't work — a command isn't found, or another TeX
-install is in the way — run `tectdist doctor` for a health check, or
+later runs. If something doesn't work (a command isn't found, or another TeX
+install is in the way), run `tectdist doctor` for a health check, or
 `brew link --overwrite tectdist` to make Homebrew's links win.
 
 ## TeXifier
@@ -51,5 +51,5 @@ Typeset as usual. No command-line PATH setup is needed for TeXifier.
 
 ## License
 
-AGPL-3.0-only — see [LICENSE](LICENSE). Full compatibility details and
+AGPL-3.0-only, see [LICENSE](LICENSE). Full compatibility details and
 known limitations are in [COMPATIBILITY.md](COMPATIBILITY.md).
