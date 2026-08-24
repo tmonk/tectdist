@@ -1,0 +1,31 @@
+name: performance smoke
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    # Repository owners attach a stable labelled host. Hosted CI remains a
+    # correctness/smoke signal and is never release-performance evidence.
+    runs-on: [self-hosted, tectdist-perf]
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.11'
+      - name: Build launcher
+        run: python make_links.py
+      - name: Smoke benchmark (requires configured direct control)
+        env:
+          TECTDIST_BENCH_DIRECT_TECTONIC: tectonic
+        run: >-
+          python -m benchmarks.runner.cli --candidate ./bin/pdflatex
+          --document tiny --trials 3 --output benchmark-results/smoke.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: performance-smoke
+          path: benchmark-results/smoke.json

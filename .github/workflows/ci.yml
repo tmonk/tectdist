@@ -27,3 +27,11 @@ jobs:
           ./dist/tectdist --version
           python tests/check_purity.py --no-build
           python tests/battery.py --mock-only
+          python tests/check_benchmark_manifest.py
+          python scripts/generate_native_flags.py --check
+      - name: Native dispatcher
+        run: |
+          cargo fmt --check
+          cargo test --workspace
+          cargo build --release -p tectdist-cli
+          TECTDIST_NATIVE=target/release/tectdist python tests/differential.py
