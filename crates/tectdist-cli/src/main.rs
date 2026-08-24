@@ -2,6 +2,8 @@ use std::env;
 use std::ffi::OsString;
 use std::fs;
 use std::path::{Path, PathBuf};
+use std::io::Write as IoWrite;
+use std::os::unix::net::UnixStream;
 use std::process::Command;
 use std::time::{Duration, Instant, SystemTime, UNIX_EPOCH};
 use tectdist_core::{CompilationPlan, EngineSelection, IndexStrategy, ResolvedExternalEngine};
@@ -1693,10 +1695,96 @@ fn main() {
     std::process::exit(status);
 }
 
+/// Attempt one compile through the resident supervisor via IPC.
+/// Returns Ok(exit_status) on a completed compile; Err when the supervisor
+/// is unavailable or refuses the request (caller falls back).
+#[cfg(unix)]
+fn supervisor_compile(name: &str, rest: &[OsString]) -> Result<i32, String> {
+    use std::io::{BufRead, BufReader};
+
+    let socket_path = match env::var("TECTDIST_SUPERVISOR_SOCKET") {
+        Ok(explicit) => PathBuf::from(explicit),
+        Err(_) => {
+            let tmp = env::var("TMPDIR").unwrap_or_else(|_| "/tmp".into());
+            let uid = unsafe { libc::getuid() };
+            PathBuf::from(tmp)
+                .join(format!(".tectdist-{uid}"))
+                .join("supervisor.sock")
+        }
+    };
+    let mut stream = UnixStream::connect(&socket_path)
+        .map_err(|_| "supervisor socket not found".to_string())?;
+
+    let cwd = env::current_dir().map_err(|e| e.to_string())?;
+    let mut argv_json = Vec::new();
+    argv_json.push(serde_json::Value::String(name.to_string()));
+    for argument in rest {
+        argv_json.push(serde_json::Value::String(
+            argument.to_string_lossy().into_owned(),
+        ));
+    }
+
+    // Derive the job source file the same way the supervisor does.
+    let job = rest
+        .iter()
+        .rev()
+        .find_map(|argument| {
+            let text = argument.to_string_lossy();
+            text.ends_with(".tex").then(|| {
+                PathBuf::from(&*text)
+                    .file_name()
+                    .map(|n| n.to_string_lossy().into_owned())
+                    .unwrap_or_else(|| text.into_owned())
+            })
+        })
+        .unwrap_or_default();
+
+    let request = serde_json::json!({
+        "protocol_version": 1,
+        "type": "compile",
+        "profile": "basictex-2026",
+        "cwd": cwd,
+        "argv": argv_json,
+        "job": job,
+    });
+    stream
+        .write_all(request.to_string().as_bytes())
+        .and_then(|_| stream.write_all(b"\n"))
+        .map_err(|e| e.to_string())?;
+    stream.flush().map_err(|e| e.to_string())?;
+
+    let mut reader = BufReader::new(stream.try_clone().map_err(|e| e.to_string())?);
+    let mut line = String::new();
+    reader.read_line(&mut line).map_err(|e| e.to_string())?;
+    let value: serde_json::Value =
+        serde_json::from_str(line.trim()).map_err(|e| e.to_string())?;
+    if value["ok"].as_bool() != Some(true) {
+        return Err(value["error"]
+            .as_str()
+            .unwrap_or("supervisor refused")
+            .to_string());
+    }
+    Ok(value["compile_accepted"]["exit_status"]
+        .as_i64()
+        .map(|code| code as i32)
+        .unwrap_or(1))
+}
+
 /// Execute one command through the pinned BasicTeX image (plan B1).
 /// Arguments are forwarded unchanged: the reference binary is the semantic
 /// authority in this profile.
 fn run_basictex_engine(name: &str, rest: &[OsString]) -> Result<i32, String> {
+    // Resident-supervisor fast path (plan §6.1): when a supervisor is
+    // running for this user, route the compile through it — the supervisor
+    // serves exact engines from the pinned image, with fork-server workers
+    // and (later) preamble snapshots. Any failure falls through to direct
+    // execution below, preserving BT100 semantics.
+    if env::var("TECTDIST_NO_SUPERVISOR").is_err() {
+        match supervisor_compile(name, rest) {
+            Ok(status) => return Ok(status),
+            Err(_) => { /* supervisor unavailable: direct execution */ }
+        }
+    }
     let root = env::var("TECTDIST_BASICTEX_ROOT").map_err(|_| {
         "TECTDIST_PROFILE=basictex-2026 requires TECTDIST_BASICTEX_ROOT to point at the image root"
             .to_string()

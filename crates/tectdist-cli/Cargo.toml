@@ -12,6 +12,7 @@ tectdist-tools = { path = "../tectdist-tools" }
 
 [target.'cfg(unix)'.dependencies]
 libc = "0.2"
+serde_json = "1"
 
 [features]
 default = ["embedded"]

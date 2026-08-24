@@ -84,6 +84,19 @@ server), reporting p50/p95 over ≥100 children with warm caches.
 - [x] Child-creation latency measured: **1.5 ms p50 (< 2 ms gate PASS)**;
       end-to-end fork-child one-pager 18.8 ms vs 37.6 ms cold = 2.0×
       (see reference/basictex-2026/forkserver-measurement.json)
+- [x] Hook application automated: scripts/forkserver_apply_patch.py inserts
+      the serve() call into the generated <engine>ini.c post-format-load site
+      (idempotent, reusable after clean rebuilds)
+- [x] X2 preamble-snapshot round: article-preloaded format via first-line
+      `&preamble` + \dump; 9/9 children succeed at 15 ms median; pure-fork
+      control 0.01 ms proves fork cost is negligible
+- [ ] KNOWN ISSUE: launching the parent with `-fmt=<snapshot>` instead of a
+      first-line `&<format>` reference does NOT reach the hook (flow differs
+      in web2c-generated mainbody between the &-load branch and preloaded
+      path). Workaround in place: always pass the format via first-line
+      reference. Root-causing the generated-code flow difference is queued.
+- [ ] XeTeX / LuaHBTeX servers
+- [ ] Integration of worker routing with the full BT100 differential battery
 - [x] Preamble-snapshot round: article-preloaded format + fork children
       compile 9/9 successfully at 15.0 ms median; pure-fork control measures
       0.01 ms — the residual is post-preamble engine work (fonts, PDF out),

@@ -377,8 +377,38 @@ impl EngineWorker {
 
     fn compile(&self, job: &str) -> Result<(i32, u64), String> {
         let start = std::time::Instant::now();
-        let mut stream = UnixStream::connect(&self.socket)
-            .map_err(|error| format!("connect engine: {error}"))?;
+        let alive = unsafe { libc::kill(self.child.id() as libc::pid_t, 0) } == 0;
+        eprintln!(
+            "worker.compile: sock={} exists={} engine_alive={}",
+            self.socket.display(),
+            self.socket.exists(),
+            alive
+        );
+        // The engine may need a brief moment after printing its banner
+        // before the socket is fully usable; retry briefly on ENOENT.
+        let mut stream = None;
+        let mut last_error = String::new();
+        for attempt in 0..40 {
+            match UnixStream::connect(&self.socket) {
+                Ok(value) => {
+                    stream = Some(value);
+                    break;
+                }
+                Err(error) => {
+                    let pid = self.child.id();
+                    let alive = unsafe { libc::kill(pid as libc::pid_t, 0) } == 0;
+                    last_error = format!(
+                        "attempt {attempt}: sock_exists={} alive={} {error}",
+                        self.socket.exists(),
+                        alive
+                    );
+                    std::thread::sleep(std::time::Duration::from_millis(5));
+                }
+            }
+        }
+        let mut stream = stream.ok_or_else(|| {
+            format!("connect engine: {last_error}")
+        })?;
         stream
             .write_all(format!("compile {job}\n").as_bytes())
             .map_err(|e| e.to_string())?;
