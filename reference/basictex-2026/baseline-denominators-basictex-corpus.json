@@ -1,0 +1,242 @@
+{
+  "schema_version": 1,
+  "budget_rule": "x10_budget = 0.10 * paired reference median",
+  "results": {
+    "ams-math": {
+      "sequence": [
+        "pdflatex {job}.tex"
+      ],
+      "trials": 3,
+      "reference_median_ms": 79.1,
+      "candidate_median_ms": 85.3,
+      "candidate_mode": "basictex-profile",
+      "speedup_vs_reference": 0.928,
+      "x10_budget_ms": 7.9,
+      "_samples": {
+        "reference_ms": [
+          75.492375,
+          80.878875,
+          79.135833
+        ],
+        "candidate_ms": [
+          86.881958,
+          82.229542,
+          85.254125
+        ]
+      }
+    },
+    "article-basic": {
+      "sequence": [
+        "pdflatex {job}.tex"
+      ],
+      "trials": 3,
+      "reference_median_ms": 61.0,
+      "candidate_median_ms": 67.9,
+      "candidate_mode": "basictex-profile",
+      "speedup_vs_reference": 0.898,
+      "x10_budget_ms": 6.1,
+      "_samples": {
+        "reference_ms": [
+          63.232708,
+          58.615167,
+          61.03175
+        ],
+        "candidate_ms": [
+          69.312667,
+          65.674083,
+          67.927125
+        ]
+      }
+    },
+    "bibtex-doc": {
+      "sequence": [
+        "pdflatex {job}.tex",
+        "bibtex {job}",
+        "pdflatex {job}.tex",
+        "pdflatex {job}.tex"
+      ],
+      "trials": 3,
+      "reference_median_ms": 179.3,
+      "candidate_median_ms": 207.1,
+      "candidate_mode": "basictex-profile",
+      "speedup_vs_reference": 0.866,
+      "x10_budget_ms": 17.9,
+      "_samples": {
+        "reference_ms": [
+          182.949333,
+          179.290875,
+          173.131208
+        ],
+        "candidate_ms": [
+          210.834791,
+          206.751834,
+          207.068958
+        ]
+      }
+    },
+    "dvi-dvips": {
+      "sequence": [
+        "latex {job}.tex",
+        "dvips {job}.dvi"
+      ],
+      "trials": 3,
+      "reference_median_ms": 62.1,
+      "candidate_median_ms": 77.1,
+      "candidate_mode": "basictex-profile",
+      "speedup_vs_reference": 0.805,
+      "x10_budget_ms": 6.2,
+      "_samples": {
+        "reference_ms": [
+          59.774875,
+          63.58925,
+          62.093875
+        ],
+        "candidate_ms": [
+          77.100458,
+          79.977792,
+          77.002125
+        ]
+      }
+    },
+    "lualatex-doc": {
+      "sequence": [
+        "lualatex {job}.tex"
+      ],
+      "trials": 3,
+      "reference_median_ms": 255.7,
+      "candidate_median_ms": 262.3,
+      "candidate_mode": "basictex-profile",
+      "speedup_vs_reference": 0.975,
+      "x10_budget_ms": 25.6,
+      "_samples": {
+        "reference_ms": [
+          250.081083,
+          256.7675,
+          255.659375
+        ],
+        "candidate_ms": [
+          261.694042,
+          276.861875,
+          262.269875
+        ]
+      }
+    },
+    "metapost-figure": {
+      "sequence": [
+        "mpost fig.mp"
+      ],
+      "trials": 3,
+      "reference_median_ms": 30.2,
+      "candidate_median_ms": 38.8,
+      "candidate_mode": "basictex-profile",
+      "speedup_vs_reference": 0.778,
+      "x10_budget_ms": 3.0,
+      "_samples": {
+        "reference_ms": [
+          29.218,
+          30.215458,
+          31.884459
+        ],
+        "candidate_ms": [
+          38.848167,
+          37.44575,
+          39.533666
+        ]
+      }
+    },
+    "plain-tex": {
+      "sequence": [
+        "tex {job}.tex"
+      ],
+      "trials": 3,
+      "reference_median_ms": 11.2,
+      "candidate_median_ms": 18.7,
+      "candidate_mode": "basictex-profile",
+      "speedup_vs_reference": 0.598,
+      "x10_budget_ms": 1.1,
+      "_samples": {
+        "reference_ms": [
+          10.289291,
+          11.188833,
+          11.664333
+        ],
+        "candidate_ms": [
+          18.246042,
+          19.46725,
+          18.704833
+        ]
+      }
+    },
+    "report-book-refs": {
+      "sequence": [
+        "pdflatex {job}.tex",
+        "pdflatex {job}.tex"
+      ],
+      "trials": 3,
+      "reference_median_ms": 123.1,
+      "candidate_median_ms": 139.2,
+      "candidate_mode": "basictex-profile",
+      "speedup_vs_reference": 0.884,
+      "x10_budget_ms": 12.3,
+      "_samples": {
+        "reference_ms": [
+          121.277583,
+          130.096334,
+          123.054042
+        ],
+        "candidate_ms": [
+          139.43425,
+          135.834958,
+          139.202083
+        ]
+      }
+    },
+    "stress-book-50p": {
+      "sequence": [
+        "pdflatex {job}.tex",
+        "pdflatex {job}.tex"
+      ],
+      "trials": 3,
+      "reference_median_ms": 177.2,
+      "candidate_median_ms": 193.2,
+      "candidate_mode": "basictex-profile",
+      "speedup_vs_reference": 0.917,
+      "x10_budget_ms": 17.7,
+      "_samples": {
+        "reference_ms": [
+          177.173125,
+          176.40525,
+          179.512083
+        ],
+        "candidate_ms": [
+          190.681667,
+          193.208,
+          199.250042
+        ]
+      }
+    },
+    "xelatex-fonts": {
+      "sequence": [
+        "xelatex {job}.tex"
+      ],
+      "trials": 3,
+      "reference_median_ms": 200.8,
+      "candidate_median_ms": 208.4,
+      "candidate_mode": "basictex-profile",
+      "speedup_vs_reference": 0.964,
+      "x10_budget_ms": 20.1,
+      "_samples": {
+        "reference_ms": [
+          200.783958,
+          200.795291,
+          201.016416
+        ],
+        "candidate_ms": [
+          208.37275,
+          206.902833,
+          209.54675
+        ]
+      }
+    }
+  }
+}

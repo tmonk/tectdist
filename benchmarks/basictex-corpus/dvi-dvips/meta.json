@@ -1,0 +1,11 @@
+{
+  "sequence": [
+    "latex {job}.tex",
+    "dvips {job}.dvi"
+  ],
+  "expect_pages_floor": 1,
+  "expect_artifacts": [
+    "main.dvi",
+    "main.ps"
+  ]
+}

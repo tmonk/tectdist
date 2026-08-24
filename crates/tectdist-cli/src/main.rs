@@ -1631,6 +1631,22 @@ fn main() {
     if name == "kpsewhich" {
         std::process::exit(kpsewhich(rest));
     }
+    // BasicTeX profile (plan B1): exact reference engines, arguments passed
+    // through untranslated so BasicTeX semantics are preserved verbatim.
+    if env::var("TECTDIST_PROFILE").as_deref() == Ok("basictex-2026") {
+        match run_basictex_engine(&name, &rest) {
+            Ok(status) => {
+                trace_span("basictex.engine", Duration::from_millis(0), Some(status));
+                std::process::exit(status);
+            }
+            Err(error) => {
+                eprintln!("tectdist: {error}");
+                eprintln!(
+                    "tectdist: falling back to the built-in engine path; the result remains exact but is not BasicTeX-accelerated."
+                );
+            }
+        }
+    }
     if tectdist_tools::GS_TOOLS.contains(&name.as_ref()) {
         let self_path = Path::new(&arg0)
             .canonicalize()
@@ -1670,22 +1686,6 @@ fn main() {
             program
         );
         std::process::exit(2);
-    }
-    // BasicTeX profile (plan B1): exact reference engines, arguments passed
-    // through untranslated so BasicTeX semantics are preserved verbatim.
-    if env::var("TECTDIST_PROFILE").as_deref() == Ok("basictex-2026") {
-        match run_basictex_engine(&name, &rest) {
-            Ok(status) => {
-                trace_span("basictex.engine", Duration::from_millis(0), Some(status));
-                std::process::exit(status);
-            }
-            Err(error) => {
-                eprintln!("tectdist: {error}");
-                eprintln!(
-                    "tectdist: falling back to the built-in engine path; the result remains exact but is not BasicTeX-accelerated."
-                );
-            }
-        }
     }
     let total_started = Instant::now();
     let status = execute_engine(program, rest);

@@ -1,0 +1,6 @@
+{
+  "sequence": [
+    "tex {job}.tex"
+  ],
+  "expect_pages_floor": 1
+}

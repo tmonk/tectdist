@@ -1,0 +1,10 @@
+{
+  "sequence": [
+    "mpost fig.mp"
+  ],
+  "expect_pages_floor": null,
+  "expect_artifacts": [
+    "fig.1"
+  ],
+  "is_metapost": true
+}

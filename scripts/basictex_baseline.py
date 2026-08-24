@@ -48,7 +48,8 @@ SEQUENCES = {
 def run_sequence(binary_dir, work, commands, env):
     start = time.perf_counter_ns()
     status = 0
-    jobname = next((entry.stem for entry in Path(work).glob("*.tex")), "main")
+    jobname = next((entry.stem for entry in list(Path(work).glob("*.tex")) +
+                    list(Path(work).glob("*.mp"))), "main")
     for command in commands:
         expanded_command = command.replace("{job}", jobname)
         parts = expanded_command.split()
@@ -62,6 +63,15 @@ def run_sequence(binary_dir, work, commands, env):
     return status, (time.perf_counter_ns() - start) / 1e6
 
 
+def copy_project(doc_source: Path, destination: Path):
+    if doc_source.is_dir():
+        for item in doc_source.iterdir():
+            if item.is_file() and item.suffix in {".tex", ".bib", ".ist", ".mp"}:
+                shutil.copy(item, destination / item.name)
+    else:
+        shutil.copy(doc_source, destination / doc_source.name)
+
+
 def measure(reference_bin, candidate_bin, doc_source, commands, trials, env):
     reference_times = []
     candidate_times = []
@@ -69,13 +79,14 @@ def measure(reference_bin, candidate_bin, doc_source, commands, trials, env):
     for name in {command.split()[0] for command in commands} | {"tectdist"}:
         os.symlink(candidate_bin.resolve(), link_dir / name)
     env = dict(env)
-    env["PATH"] = f"{link_dir}:{env['PATH']}"
+    # Exact BasicTeX helpers must serve internal invocations (mpost -> etex,
+    # htlatex -> latex, ...) on BOTH sides; top-level dispatch happens through
+    # absolute paths, so this never redirects the measured process.
+    env["PATH"] = f"{reference_bin}:{env['PATH']}"
     for trial in range(trials):
         # Reference project.
         reference_work = Path(tempfile.mkdtemp(prefix="bt100-ref-"))
-        for item in doc_source.parent.iterdir():
-            if item.is_file() and item.suffix in {".tex", ".bib", ".ist"}:
-                shutil.copy(item, reference_work / item.name)
+        copy_project(doc_source, reference_work)
         status, elapsed = run_sequence(reference_bin, reference_work,
                                        commands, env)
         shutil.rmtree(reference_work, ignore_errors=True)
@@ -85,9 +96,7 @@ def measure(reference_bin, candidate_bin, doc_source, commands, trials, env):
 
         # Candidate project: same commands resolved through the tectdist farm.
         candidate_work = Path(tempfile.mkdtemp(prefix="bt100-cand-"))
-        for item in doc_source.parent.iterdir():
-            if item.is_file() and item.suffix in {".tex", ".bib", ".ist"}:
-                shutil.copy(item, candidate_work / item.name)
+        copy_project(doc_source, candidate_work)
         status, elapsed = run_sequence(link_dir, candidate_work,
                                        commands, env)
         shutil.rmtree(candidate_work, ignore_errors=True)
@@ -106,6 +115,14 @@ def main(argv=None):
                         default=str(ROOT / "target/release/tectdist"))
     parser.add_argument("--trials", type=int, default=5)
     parser.add_argument("--documents", nargs="*", default=None)
+    parser.add_argument("--corpus", choices=("compact", "basictex"),
+                        default="compact",
+                        help="compact corpus uses built-in sequences; "
+                             "basictex corpus reads meta.json sequences")
+    parser.add_argument("--candidate-mode", choices=("default", "basictex-profile"),
+                        default=None,
+                        help="candidate execution mode (default: basictex-"
+                             "profile for the basictex corpus, else default)")
     ns = parser.parse_args(argv)
 
     reference_bin = (Path(ns.reference) / "bin/universal-darwin").resolve()
@@ -117,24 +134,55 @@ def main(argv=None):
 
     classification = json.load(open(
         ROOT / "reference/basictex-2026/corpus-classification.json"))
+    candidate_mode = ns.candidate_mode or (
+        "basictex-profile" if ns.corpus == "basictex" else "default")
+
     env = dict(os.environ)
     env["TEXMFROOT"] = str(Path(ns.reference).resolve())
+    if candidate_mode == "basictex-profile":
+        # The BT100 product executes exact reference engines; the candidate
+        # environment selects that profile explicitly.
+        env["TECTDIST_PROFILE"] = "basictex-2026"
+        env["TECTDIST_BASICTEX_ROOT"] = str(Path(ns.reference).resolve())
 
-    documents = ns.documents or [
-        name for name, verdict in classification["documents"].items()
-        if verdict == "basictex-core"
-    ]
+    unused_marker = None
+    if ns.corpus == "basictex":
+        corpus_root = ROOT / "benchmarks/basictex-corpus"
+        documents = sorted(
+            entry.name for entry in corpus_root.iterdir()
+            if (entry / "meta.json").is_file())
+        document_sequences = {
+            entry.name: json.loads((entry / "meta.json").read_text())["sequence"]
+            for entry in corpus_root.iterdir()
+            if (entry / "meta.json").is_file()
+        }
+    else:
+        documents = ns.documents or [
+            name for name, verdict in classification["documents"].items()
+            if verdict == "basictex-core"
+        ]
+        document_sequences = {name: SEQUENCES.get(name) for name in documents}
+
     results = {}
     for document in sorted(documents):
-        commands = SEQUENCES.get(document)
+        commands = document_sequences.get(document)
         if not commands:
             print(f"baseline: no declared sequence for '{document}'; skipped")
             continue
-        source = ROOT / f"benchmarks/corpus/{document}/main.tex"
+        source_dir = ((ROOT / "benchmarks/basictex-corpus" / document)
+                      if ns.corpus == "basictex"
+                      else ROOT / f"benchmarks/corpus/{document}")
+        source = source_dir / "main.tex"
         if not source.is_file():
-            print(f"baseline: no source for '{document}'; skipped")
-            continue
-        samples, error = measure(reference_bin, candidate_bin, source,
+            # MetaPost-style corpora use a different primary file.
+            candidates = sorted(source_dir.glob("*.tex")) + \
+                sorted(source_dir.glob("*.mp"))
+            if not candidates:
+                print(f"baseline: no source for '{document}'; skipped")
+                continue
+            source = candidates[0]
+        samples, error = measure(reference_bin, candidate_bin,
+                                 source_dir if ns.corpus == "basictex" else source,
                                  commands, ns.trials, env)
         if error:
             print(f"baseline: {document}: FAILED — {error}")
@@ -146,6 +194,7 @@ def main(argv=None):
             "trials": ns.trials,
             "reference_median_ms": round(ref_median, 1),
             "candidate_median_ms": round(cand_median, 1),
+            "candidate_mode": candidate_mode,
             "speedup_vs_reference": round(ref_median / cand_median, 3),
             "x10_budget_ms": round(0.10 * ref_median, 1),
             "_samples": samples,
@@ -153,7 +202,8 @@ def main(argv=None):
         print(f"baseline: {document}: reference {ref_median:.0f} ms | "
               f"tectdist {cand_median:.0f} ms | budget {results[document]['x10_budget_ms']} ms")
 
-    out_path = ROOT / "reference/basictex-2026/baseline-denominators.json"
+    suffix = "" if ns.corpus == "compact" else "-basictex-corpus"
+    out_path = ROOT / f"reference/basictex-2026/baseline-denominators{suffix}.json"
     payload = {
         "schema_version": 1,
         "budget_rule": "x10_budget = 0.10 * paired reference median",
