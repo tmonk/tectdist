@@ -9,6 +9,7 @@
     "dirty": {"type": "boolean"},
     "runner_commit": {"type": "string"},
     "qualification": {"type": "boolean"},
+    "trial_class": {"enum": ["ordinary", "expensive"]},
     "session_id": {"type": "string"},
     "timestamp_utc": {"type": "string"},
     "platform": {"type": "object"},

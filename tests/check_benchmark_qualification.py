@@ -24,6 +24,10 @@ provenance.update({
     "TECTDIST_BUNDLE_ID": "bundle-1",
     "TECTDIST_BUNDLE_MANIFEST_SHA256": "abc123",
     "TECTDIST_FORMAT_CACHE_ID": "format-1",
+    "TECTDIST_TEXLIVE_SOURCE": "fixture://texlive",
+    "TECTDIST_TEXLIVE_ID": "texlive-1",
+    "TECTDIST_TEXLIVE_MANIFEST_SHA256": "def456",
+    "TECTDIST_TEXLIVE_FORMAT_ID": "pdflatex-format-1",
     "TECTDIST_BENCH_DIRECT_TECTONIC": "/bin/true",
 })
 incomplete = subprocess.run(
@@ -31,8 +35,15 @@ incomplete = subprocess.run(
      "--qualification", "--warmups", "5", "--trials", "30", "--output", "/tmp/unused.json"],
     cwd=ROOT, env=provenance, capture_output=True, text=True)
 assert incomplete.returncode != 0
-assert "previous-tectdist" in incomplete.stderr
 assert "texlive-latexmk" in incomplete.stderr
+
+too_few_expensive = subprocess.run(
+    [sys.executable, "-m", "benchmarks.runner.cli", "--candidate", "/bin/true",
+     "--qualification", "--expensive-case", "--warmups", "1", "--trials", "14",
+     "--output", "/tmp/unused.json"], cwd=ROOT, env=provenance,
+    capture_output=True, text=True)
+assert too_few_expensive.returncode != 0
+assert "15 paired trials" in too_few_expensive.stderr
 
 cold = subprocess.run(
     [sys.executable, "-m", "benchmarks.runner.cli", "--candidate", "/bin/true",

@@ -18,11 +18,11 @@ def paired_summary(differences, iterations=2000):
     if not differences:
         return {"count": 0}
     rng = random.Random(0)
-    means = []
+    medians = []
     for _ in range(iterations):
         sample = [differences[rng.randrange(len(differences))]
                   for _ in differences]
-        means.append(statistics.mean(sample))
+        medians.append(statistics.median(sample))
     return {"count": len(differences), "median_difference_ms": statistics.median(differences),
             "mean_difference_ms": statistics.mean(differences),
-            "ci95_ms": [percentile(means, .025), percentile(means, .975)]}
+            "ci95_ms": [percentile(medians, .025), percentile(medians, .975)]}

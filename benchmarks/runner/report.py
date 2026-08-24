@@ -2,9 +2,10 @@
 import argparse
 import json
 from pathlib import Path
+import random
 import statistics
 
-from .statistics import paired_summary, percentile
+from .statistics import percentile
 
 
 def differences(run):
@@ -68,6 +69,32 @@ def candidate_spans(samples):
     return result
 
 
+def suite_summary(runs, iterations=2000):
+    """Sum per-document medians and bootstrap a complete-suite difference."""
+    candidate_median = sum(timing_summary(run)["candidate_median"] for run in runs)
+    candidate_p95 = sum(timing_summary(run)["candidate_p95"] for run in runs)
+    competitor_median = sum(timing_summary(run)["competitor_median"] for run in runs)
+    competitor_p95 = sum(timing_summary(run)["competitor_p95"] for run in runs)
+    per_document = [differences(run) for run in runs]
+    rng = random.Random(0)
+    bootstrapped = []
+    for _ in range(iterations):
+        total = 0
+        for values in per_document:
+            sample = [values[rng.randrange(len(values))] for _ in values]
+            total += statistics.median(sample)
+        bootstrapped.append(total)
+    difference = candidate_median - competitor_median
+    return {
+        "candidate_median": candidate_median, "candidate_p95": candidate_p95,
+        "competitor_median": competitor_median, "competitor_p95": competitor_p95,
+        "difference": difference,
+        "percent": difference / competitor_median * 100 if competitor_median else None,
+        "ci95": [percentile(bootstrapped, .025), percentile(bootstrapped, .975)],
+        "pairs": sum(len(values) for values in per_document),
+    }
+
+
 def render(payloads):
     rows = []
     aggregates = {}
@@ -86,7 +113,7 @@ def render(payloads):
                          timings["competitor_median"], timings["competitor_p95"],
                          summary.get("median_difference_ms"), timings["median_percent"], ci))
             if run.get("claim"):
-                aggregates.setdefault(platform, []).extend(differences(run))
+                aggregates.setdefault((platform, timings["competitor"]), []).append(run)
             good, count = correctness(run.get("samples", []))
             passed += good
             total += count
@@ -110,13 +137,16 @@ def render(payloads):
                       candidate_display, competitor_display, display,
                       percent_display, interval))
     lines.extend(["", "## Claim-corpus aggregate", "",
-                  "| platform | pairs | median Δ ms | 95% CI (ms) |",
-                  "|---|---:|---:|---|"])
-    for platform, values in sorted(aggregates.items()):
-        summary = paired_summary(values)
-        ci = summary["ci95_ms"]
-        lines.append("| %s | %d | %.3f | [%.3f, %.3f] |" %
-                     (platform, summary["count"], summary["median_difference_ms"], ci[0], ci[1]))
+                  "| platform | competitor | documents/pairs | tectdist suite median/p95 ms | competitor suite median/p95 ms | Δ ms | Δ % | 95% CI (ms) |",
+                  "|---|---|---:|---:|---:|---:|---:|---|"])
+    for (platform, competitor), runs in sorted(aggregates.items()):
+        summary = suite_summary(runs)
+        ci = summary["ci95"]
+        lines.append("| %s | %s | %d/%d | %.3f / %.3f | %.3f / %.3f | %.3f | %.2f%% | [%.3f, %.3f] |" %
+                     (platform, competitor, len(runs), summary["pairs"],
+                      summary["candidate_median"], summary["candidate_p95"],
+                      summary["competitor_median"], summary["competitor_p95"],
+                      summary["difference"], summary["percent"], ci[0], ci[1]))
     lines.extend(["", "## Candidate trace spans", "",
                   "| platform | span | samples | median ms |",
                   "|---|---|---:|---:|"])

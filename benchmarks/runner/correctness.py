@@ -38,7 +38,10 @@ def validate(pdf, expected_pages=None, expected_text=(), log_text="", forbid_log
         return {"ok": False, "errors": errors}
     qpdf = _command("qpdf")
     if qpdf:
-        checked = subprocess.run([qpdf, "--check", pdf], capture_output=True, text=True)
+        # qpdf uses exit 3 for recoverable warnings. Keep those diagnostics,
+        # but reject only actual structural errors (exit 2).
+        checked = subprocess.run([qpdf, "--warning-exit-0", "--check", pdf],
+                                 capture_output=True, text=True, errors="replace")
         if checked.returncode:
             errors.append("qpdf structural check failed: " + checked.stderr.strip())
     text, text_error = _pdf_text(pdf)

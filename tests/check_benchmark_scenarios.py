@@ -7,6 +7,7 @@ import sys
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from benchmarks.runner.cli import (_resource_metrics, _stage_counts, command_for,
                                    competitor_applicable)
+from benchmarks.runner.competitors import _executable
 from benchmarks.runner.scenarios import environment, prepare
 
 
@@ -55,9 +56,20 @@ assert command_for("candidate", ["candidate"], "main.tex", {"requires_shell_esca
     "candidate", "-shell-escape", "main.tex"]
 assert command_for("direct-tectonic", ["tectonic"], "main.tex", {"requires_shell_escape": True}) == [
     "tectonic", "--keep-intermediates", "--keep-logs", "-Z", "shell-escape", "main.tex"]
+assert command_for("previous-tectdist", ["tectdist"], "main.tex", {}) == [
+    "tectdist", "--keep-intermediates", "--keep-logs", "main.tex"]
+assert command_for("texlive-latexmk", ["latexmk"], "main.tex", {"requires": []}) == [
+    "latexmk", "-pdf", "-interaction=nonstopmode", "-halt-on-error", "main.tex"]
+assert command_for("texlive-latexmk", ["latexmk"], "main.tex", {"requires": ["fontspec"]}) == [
+    "latexmk", "-xelatex", "-interaction=nonstopmode", "-halt-on-error", "main.tex"]
 assert not competitor_applicable("direct-tectonic", {"requires_index": True})
 assert not competitor_applicable("direct-tectonic", {"requires_glossary": True})
 assert competitor_applicable("direct-tectonic", {"requires_bibliography": True})
 assert competitor_applicable("texlive-latexmk", {"requires_index": True})
+
+resolved, wrapped_environment = _executable([
+    "/usr/bin/env", "PATH=/controlled/bin", "/controlled/bin/latexmk", "-pdf"])
+assert resolved == "/controlled/bin/latexmk"
+assert wrapped_environment["PATH"] == "/controlled/bin"
 
 print("check_benchmark_scenarios: OK")

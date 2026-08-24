@@ -50,7 +50,13 @@ def manifest(path):
 
 def command_for(name, command, main, document):
     """Use the compatible spelling required by each concrete competitor."""
-    arguments = ["--keep-intermediates", "--keep-logs"] if name == "direct-tectonic" else []
+    if name in ("direct-tectonic", "previous-tectdist"):
+        arguments = ["--keep-intermediates", "--keep-logs"]
+    elif name == "texlive-latexmk":
+        mode = "-xelatex" if "fontspec" in document.get("requires", ()) else "-pdf"
+        arguments = [mode, "-interaction=nonstopmode", "-halt-on-error"]
+    else:
+        arguments = []
     if document.get("requires_shell_escape"):
         arguments += ["-Z", "shell-escape"] if name == "direct-tectonic" else ["-shell-escape"]
     return list(command) + arguments + [main]
@@ -153,7 +159,7 @@ def sample(command, cwd, environment=None):
     cache_root = Path(cache_value) if cache_value else None
     cache_before = _tree_size(cache_root)
     result = subprocess.run(command, cwd=cwd, capture_output=True, text=True,
-                            env=environment)
+                            errors="replace", env=environment)
     cache_growth = _tree_size(cache_root) - cache_before if cache_root else None
     try:
         after = resource.getrusage(resource.RUSAGE_CHILDREN)
@@ -193,14 +199,22 @@ def main(argv=None):
     parser.add_argument("--warmups", type=int, default=1)
     parser.add_argument("--qualification", action="store_true",
                         help="enforce release-grade trial and provenance inputs")
+    parser.add_argument("--expensive-case", action="store_true",
+                        help="use the plan's 15-pair threshold for book-scale workloads")
     parser.add_argument("--output", required=True)
     ns = parser.parse_args(argv)
     if ns.qualification:
-        if ns.trials < 30 or ns.warmups < 5:
-            raise SystemExit("qualification mode requires at least 5 warmups and 30 paired trials")
+        minimum_trials = 15 if ns.expensive_case else 30
+        minimum_warmups = 1 if ns.expensive_case else 5
+        if ns.trials < minimum_trials or ns.warmups < minimum_warmups:
+            raise SystemExit("qualification mode requires at least %d warmups and %d paired trials" %
+                             (minimum_warmups, minimum_trials))
         missing = [name for name in ("TECTDIST_BUNDLE_SOURCE", "TECTDIST_BUNDLE_ID",
                                      "TECTDIST_BUNDLE_MANIFEST_SHA256",
-                                     "TECTDIST_FORMAT_CACHE_ID")
+                                     "TECTDIST_FORMAT_CACHE_ID",
+                                     "TECTDIST_TEXLIVE_SOURCE", "TECTDIST_TEXLIVE_ID",
+                                     "TECTDIST_TEXLIVE_MANIFEST_SHA256",
+                                     "TECTDIST_TEXLIVE_FORMAT_ID")
                    if not os.environ.get(name)]
         if missing:
             raise SystemExit("qualification mode requires " + ", ".join(missing))
@@ -217,7 +231,10 @@ def main(argv=None):
     if len(competitors) < 2:
         raise SystemExit("configure at least one competitor with TECTDIST_BENCH_*")
     if ns.qualification:
-        required = {"direct-tectonic", "previous-tectdist", "texlive-latexmk"}
+        # Product-speed claims compare independent complete implementations.
+        # Engine-only and previous-tectdist controls remain available for
+        # diagnostics, but are not substitutes for a TeX Live control.
+        required = {"texlive-latexmk"}
         missing = sorted(required.difference(competitors))
         if missing:
             raise SystemExit("qualification mode requires competitors: " + ", ".join(missing))
@@ -226,6 +243,7 @@ def main(argv=None):
         raise SystemExit("qualification mode requires a clean, identified repository revision")
     output = {"schema_version": 1, "repository_commit": repository_commit,
               "dirty": dirty, "runner_commit": repository_commit, "qualification": ns.qualification,
+              "trial_class": "expensive" if ns.expensive_case else "ordinary",
               "session_id": str(uuid.uuid4()),
               "timestamp_utc": utc_now(), "platform": collect(), "runs": []}
     rng = random.Random(0)
