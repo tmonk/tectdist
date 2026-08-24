@@ -1,0 +1,235 @@
+{
+  "schema_version": 1,
+  "budget_rule": "x10_budget = 0.10 * paired reference median",
+  "results": {
+    "bibtex": {
+      "sequence": [
+        "pdflatex {job}.tex",
+        "bibtex {job}",
+        "pdflatex {job}.tex",
+        "pdflatex {job}.tex"
+      ],
+      "trials": 3,
+      "reference_median_ms": 176.2,
+      "candidate_median_ms": 467.0,
+      "speedup_vs_reference": 0.377,
+      "x10_budget_ms": 17.6,
+      "_samples": {
+        "reference_ms": [
+          176.248959,
+          185.531542,
+          174.961917
+        ],
+        "candidate_ms": [
+          461.530125,
+          474.942209,
+          466.973625
+        ]
+      }
+    },
+    "graphics": {
+      "sequence": [
+        "pdflatex {job}.tex"
+      ],
+      "trials": 3,
+      "reference_median_ms": 66.6,
+      "candidate_median_ms": 154.6,
+      "speedup_vs_reference": 0.431,
+      "x10_budget_ms": 6.7,
+      "_samples": {
+        "reference_ms": [
+          65.45875,
+          66.922667,
+          66.592709
+        ],
+        "candidate_ms": [
+          180.071167,
+          154.628083,
+          151.250625
+        ]
+      }
+    },
+    "index": {
+      "sequence": [
+        "pdflatex {job}.tex",
+        "makeindex {job}",
+        "pdflatex {job}.tex"
+      ],
+      "trials": 3,
+      "reference_median_ms": 116.8,
+      "candidate_median_ms": 359.0,
+      "speedup_vs_reference": 0.325,
+      "x10_budget_ms": 11.7,
+      "_samples": {
+        "reference_ms": [
+          116.777958,
+          132.178917,
+          116.048875
+        ],
+        "candidate_ms": [
+          353.313625,
+          366.928625,
+          358.968375
+        ]
+      }
+    },
+    "paper": {
+      "sequence": [
+        "pdflatex {job}.tex",
+        "pdflatex {job}.tex"
+      ],
+      "trials": 3,
+      "reference_median_ms": 296.5,
+      "candidate_median_ms": 488.1,
+      "speedup_vs_reference": 0.607,
+      "x10_budget_ms": 29.7,
+      "_samples": {
+        "reference_ms": [
+          303.26375,
+          296.531584,
+          287.023375
+        ],
+        "candidate_ms": [
+          502.59975,
+          466.140667,
+          488.129
+        ]
+      }
+    },
+    "references": {
+      "sequence": [
+        "pdflatex {job}.tex",
+        "pdflatex {job}.tex"
+      ],
+      "trials": 3,
+      "reference_median_ms": 104.9,
+      "candidate_median_ms": 264.4,
+      "speedup_vs_reference": 0.397,
+      "x10_budget_ms": 10.5,
+      "_samples": {
+        "reference_ms": [
+          102.856792,
+          107.536875,
+          104.855833
+        ],
+        "candidate_ms": [
+          264.397167,
+          257.788709,
+          288.300333
+        ]
+      }
+    },
+    "shell-escape": {
+      "sequence": [
+        "pdflatex -shell-escape {job}.tex"
+      ],
+      "trials": 3,
+      "reference_median_ms": 56.2,
+      "candidate_median_ms": 149.7,
+      "speedup_vs_reference": 0.375,
+      "x10_budget_ms": 5.6,
+      "_samples": {
+        "reference_ms": [
+          55.504667,
+          56.169666,
+          56.315875
+        ],
+        "candidate_ms": [
+          149.698125,
+          151.933584,
+          145.705041
+        ]
+      }
+    },
+    "thesis": {
+      "sequence": [
+        "pdflatex {job}.tex",
+        "pdflatex {job}.tex"
+      ],
+      "trials": 3,
+      "reference_median_ms": 116.9,
+      "candidate_median_ms": 271.8,
+      "speedup_vs_reference": 0.43,
+      "x10_budget_ms": 11.7,
+      "_samples": {
+        "reference_ms": [
+          118.055875,
+          113.403667,
+          116.853167
+        ],
+        "candidate_ms": [
+          271.818583,
+          268.425459,
+          274.104458
+        ]
+      }
+    },
+    "tikz": {
+      "sequence": [
+        "pdflatex {job}.tex",
+        "pdflatex {job}.tex"
+      ],
+      "trials": 3,
+      "reference_median_ms": 334.0,
+      "candidate_median_ms": 458.7,
+      "speedup_vs_reference": 0.728,
+      "x10_budget_ms": 33.4,
+      "_samples": {
+        "reference_ms": [
+          334.014125,
+          315.071167,
+          395.5215
+        ],
+        "candidate_ms": [
+          453.181667,
+          498.007291,
+          458.696375
+        ]
+      }
+    },
+    "tiny": {
+      "sequence": [
+        "pdflatex {job}.tex"
+      ],
+      "trials": 3,
+      "reference_median_ms": 50.7,
+      "candidate_median_ms": 138.7,
+      "speedup_vs_reference": 0.366,
+      "x10_budget_ms": 5.1,
+      "_samples": {
+        "reference_ms": [
+          51.778,
+          50.718958,
+          50.034041
+        ],
+        "candidate_ms": [
+          143.277375,
+          137.828,
+          138.652333
+        ]
+      }
+    },
+    "unicode-fonts": {
+      "sequence": [
+        "xelatex {job}.tex"
+      ],
+      "trials": 3,
+      "reference_median_ms": 216.6,
+      "candidate_median_ms": 343.7,
+      "speedup_vs_reference": 0.63,
+      "x10_budget_ms": 21.7,
+      "_samples": {
+        "reference_ms": [
+          264.4085,
+          216.649208,
+          215.73275
+        ],
+        "candidate_ms": [
+          361.934542,
+          343.745458,
+          331.793625
+        ]
+      }
+    }
+  }
+}

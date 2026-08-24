@@ -15,3 +15,4 @@ benchmarks/*.json
 benchmark-results/
 benchmarks/external/
 target/
+reference/basictex-2026/installer/

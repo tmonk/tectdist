@@ -1,0 +1,2950 @@
+{
+  "00texlive.config": {
+    "revision": "",
+    "depends": [
+      "minrelease/2016",
+      "release/2026"
+    ],
+    "run_file_count": 0,
+    "bin_file_count": 0
+  },
+  "00texlive.installation": {
+    "revision": "",
+    "depends": [
+      "opt_autobackup:1",
+      "opt_backupdir:tlpkg/backups",
+      "opt_create_formats:1",
+      "opt_desktop_integration:1",
+      "opt_file_assocs:1",
+      "opt_generate_updmap:0",
+      "opt_install_docfiles:0",
+      "opt_install_srcfiles:0",
+      "opt_location:http://mirror.ctan.org/systems/texlive/tlnet",
+      "opt_post_code:1",
+      "opt_sys_bin:/usr/local/bin",
+      "opt_sys_info:/usr/local/share/info",
+      "opt_sys_man:/usr/local/share/man",
+      "opt_w32_multi_user:1",
+      "setting_available_architectures:universal-darwin"
+    ],
+    "run_file_count": 0,
+    "bin_file_count": 0
+  },
+  "ae": {
+    "revision": "15878",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "amscls": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "amsfonts": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "amsmath": {
+    "revision": "78101",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "anysize": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "arabxetex": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "atbegshi": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "attachfile2": {
+    "revision": "77682",
+    "depends": [
+      "attachfile2.ARCH"
+    ],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "attachfile2.universal-darwin": {
+    "revision": "57908",
+    "depends": [],
+    "run_file_count": 0,
+    "bin_file_count": 1
+  },
+  "atveryend": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "automata": {
+    "revision": "19717",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "auxhook": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "babel": {
+    "revision": "77829",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "babel-basque": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "babel-czech": {
+    "revision": "30261",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "babel-danish": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "babel-dutch": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "babel-english": {
+    "revision": "77682",
+    "depends": [
+      "hyphen-english"
+    ],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "babel-finnish": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "babel-french": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "babel-german": {
+    "revision": "77815",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "babel-hungarian": {
+    "revision": "77586",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "babel-italian": {
+    "revision": "77371",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "babel-norsk": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "babel-polish": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "babel-portuges": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "babel-spanish": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "babel-swedish": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "babelbib": {
+    "revision": "76790",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "bbcard": {
+    "revision": "19440",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "beamer": {
+    "revision": "78101",
+    "depends": [
+      "amscls",
+      "amsfonts",
+      "amsmath",
+      "atbegshi",
+      "etoolbox",
+      "geometry",
+      "hyperref",
+      "iftex",
+      "pgf",
+      "translator",
+      "xcolor"
+    ],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "bibtex": {
+    "revision": "77830",
+    "depends": [
+      "bibtex.ARCH",
+      "kpathsea"
+    ],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "bibtex.universal-darwin": {
+    "revision": "77928",
+    "depends": [],
+    "run_file_count": 0,
+    "bin_file_count": 1
+  },
+  "bidi-atbegshi": {
+    "revision": "62009",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "bidicontour": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "bidipagegrid": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "bidipresentation": {
+    "revision": "35267",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "bidishadowtext": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "bigintcalc": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "bitset": {
+    "revision": "77682",
+    "depends": [
+      "bigintcalc"
+    ],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "blockdraw_mp": {
+    "revision": "15878",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "bookmark": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "booktabs": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "bpolynomial": {
+    "revision": "15878",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "breqn": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "businesscard-qrcode": {
+    "revision": "76924",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "caption": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "carlisle": {
+    "revision": "59577",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "cite": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "cm": {
+    "revision": "57963",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "cmap": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "cmarrows": {
+    "revision": "24378",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "collection-basic": {
+    "revision": "72890",
+    "depends": [
+      "amsfonts",
+      "bibtex",
+      "cm",
+      "colorprofiles",
+      "dvipdfmx",
+      "dvips",
+      "ec",
+      "enctex",
+      "etex",
+      "etex-pkg",
+      "extractbb",
+      "glyphlist",
+      "graphics-def",
+      "hyph-utf8",
+      "hyphen-base",
+      "hyphenex",
+      "ifplatform",
+      "iftex",
+      "knuth-lib",
+      "knuth-local",
+      "kpathsea",
+      "lua-alt-getopt",
+      "luahbtex",
+      "luatex",
+      "makeindex",
+      "metafont",
+      "mflogo",
+      "mfware",
+      "modes",
+      "pdftex",
+      "plain",
+      "tex",
+      "tex-ini-files",
+      "texlive-common",
+      "texlive-en",
+      "texlive-msg-translations",
+      "texlive-scripts",
+      "texlive.infra",
+      "tlshell",
+      "unicode-data",
+      "xdvi"
+    ],
+    "run_file_count": 0,
+    "bin_file_count": 0
+  },
+  "collection-latex": {
+    "revision": "77034",
+    "depends": [
+      "ae",
+      "amscls",
+      "amsmath",
+      "atbegshi",
+      "atveryend",
+      "auxhook",
+      "babel",
+      "babel-english",
+      "babelbib",
+      "bigintcalc",
+      "bitset",
+      "bookmark",
+      "carlisle",
+      "collection-basic",
+      "colortbl",
+      "epstopdf-pkg",
+      "etexcmds",
+      "etoolbox",
+      "fancyhdr",
+      "firstaid",
+      "fix2col",
+      "geometry",
+      "gettitlestring",
+      "graphics",
+      "graphics-cfg",
+      "grfext",
+      "hopatch",
+      "hycolor",
+      "hypcap",
+      "hyperref",
+      "intcalc",
+      "kvdefinekeys",
+      "kvoptions",
+      "kvsetkeys",
+      "l3backend",
+      "l3kernel",
+      "l3packages",
+      "latex",
+      "latex-bin",
+      "latex-fonts",
+      "latex-lab",
+      "latexconfig",
+      "letltxmacro",
+      "ltxcmds",
+      "ltxmisc",
+      "lua-uni-algos",
+      "mfnfss",
+      "mptopdf",
+      "natbib",
+      "oberdiek",
+      "pagesel",
+      "pdfescape",
+      "pdftexcmds",
+      "pslatex",
+      "psnfss",
+      "pspicture",
+      "refcount",
+      "rerunfilecheck",
+      "stringenc",
+      "tools",
+      "uniquecounter",
+      "url"
+    ],
+    "run_file_count": 0,
+    "bin_file_count": 0
+  },
+  "collection-latexrecommended": {
+    "revision": "77082",
+    "depends": [
+      "anysize",
+      "attachfile2",
+      "beamer",
+      "booktabs",
+      "breqn",
+      "caption",
+      "cite",
+      "cmap",
+      "collection-latex",
+      "crop",
+      "ctable",
+      "eso-pic",
+      "euenc",
+      "euler",
+      "everysel",
+      "everyshi",
+      "extsizes",
+      "fancybox",
+      "fancyref",
+      "fancyvrb",
+      "filehook",
+      "float",
+      "fontspec",
+      "footnotehyper",
+      "fp",
+      "grffile",
+      "hologo",
+      "index",
+      "infwarerr",
+      "jknapltx",
+      "koma-script",
+      "l3experimental",
+      "latexbug",
+      "lineno",
+      "listings",
+      "ltx-talk",
+      "lua-unicode-math",
+      "lwarp",
+      "mathspec",
+      "mathtools",
+      "mdwtools",
+      "memoir",
+      "metalogo",
+      "microtype",
+      "newfloat",
+      "ntgclass",
+      "parskip",
+      "pdfcolfoot",
+      "pdflscape",
+      "pdfmanagement-testphase",
+      "pdfpages",
+      "polyglossia",
+      "psfrag",
+      "ragged2e",
+      "rcs",
+      "sansmath",
+      "section",
+      "seminar",
+      "sepnum",
+      "setspace",
+      "subfig",
+      "textcase",
+      "thumbpdf",
+      "translator",
+      "typehtml",
+      "ucharcat",
+      "underscore",
+      "unicode-math",
+      "xcolor",
+      "xfrac",
+      "xkeyval",
+      "xltxtra",
+      "xunicode"
+    ],
+    "run_file_count": 0,
+    "bin_file_count": 0
+  },
+  "collection-metapost": {
+    "revision": "73627",
+    "depends": [
+      "automata",
+      "bbcard",
+      "blockdraw_mp",
+      "bpolynomial",
+      "cmarrows",
+      "collection-basic",
+      "drv",
+      "dviincl",
+      "emp",
+      "epsincl",
+      "expressg",
+      "exteps",
+      "featpost",
+      "feynmf",
+      "feynmp-auto",
+      "fiziko",
+      "garrigues",
+      "gmp",
+      "hatching",
+      "hershey-mp",
+      "huffman",
+      "latexmp",
+      "mcf2graph",
+      "metago",
+      "metaobj",
+      "metaplot",
+      "metapost",
+      "metapost-colorbrewer",
+      "metauml",
+      "mfpic",
+      "mfpic4ode",
+      "minim-hatching",
+      "mp-geom2d",
+      "mp-neuralnetwork",
+      "mp3d",
+      "mparrows",
+      "mpattern",
+      "mpchess",
+      "mpcolornames",
+      "mpgraphics",
+      "mpkiviat",
+      "mptrees",
+      "piechartmp",
+      "repere",
+      "roex",
+      "roundrect",
+      "shapes",
+      "slideshow",
+      "splines",
+      "suanpan",
+      "textpath",
+      "threeddice"
+    ],
+    "run_file_count": 0,
+    "bin_file_count": 0
+  },
+  "collection-xetex": {
+    "revision": "77786",
+    "depends": [
+      "arabxetex",
+      "bidi-atbegshi",
+      "bidicontour",
+      "bidipagegrid",
+      "bidipresentation",
+      "bidishadowtext",
+      "businesscard-qrcode",
+      "collection-basic",
+      "cqubeamer",
+      "fixlatvian",
+      "font-change-xetex",
+      "fontbook",
+      "fontwrap",
+      "interchar",
+      "na-position",
+      "philokalia",
+      "ptext",
+      "simple-resume-cv",
+      "simple-thesis-dissertation",
+      "tetragonos",
+      "ucharclasses",
+      "unicode-bidi",
+      "unimath-plain-xetex",
+      "unisugar",
+      "xebaposter",
+      "xechangebar",
+      "xecolor",
+      "xecyr",
+      "xeindex",
+      "xelatex-dev",
+      "xesearch",
+      "xespotcolor",
+      "xetex",
+      "xetex-itrans",
+      "xetex-pstricks",
+      "xetex-tibetan",
+      "xetexconfig",
+      "xetexfontinfo",
+      "xetexko",
+      "xevlna",
+      "zbmath-review-template"
+    ],
+    "run_file_count": 0,
+    "bin_file_count": 0
+  },
+  "colorprofiles": {
+    "revision": "49086",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "colortbl": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "cqubeamer": {
+    "revision": "54512",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "crop": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "ctable": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "ctablestack": {
+    "revision": "78101",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "dehyph": {
+    "revision": "48599",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "drv": {
+    "revision": "29349",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "dviincl": {
+    "revision": "29349",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "dvipdfmx": {
+    "revision": "77942",
+    "depends": [
+      "dvipdfmx.ARCH",
+      "extractbb",
+      "glyphlist",
+      "texlive-scripts-extra"
+    ],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "dvipdfmx.universal-darwin": {
+    "revision": "77987",
+    "depends": [],
+    "run_file_count": 0,
+    "bin_file_count": 1
+  },
+  "dvips": {
+    "revision": "77830",
+    "depends": [
+      "dvips.ARCH"
+    ],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "dvips.universal-darwin": {
+    "revision": "77928",
+    "depends": [],
+    "run_file_count": 0,
+    "bin_file_count": 1
+  },
+  "ec": {
+    "revision": "25033",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "emp": {
+    "revision": "23483",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "enctex": {
+    "revision": "34957",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "epsincl": {
+    "revision": "29349",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "epstopdf": {
+    "revision": "71782",
+    "depends": [
+      "epstopdf.ARCH"
+    ],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "epstopdf-pkg": {
+    "revision": "77682",
+    "depends": [
+      "epstopdf"
+    ],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "epstopdf.universal-darwin": {
+    "revision": "57908",
+    "depends": [],
+    "run_file_count": 0,
+    "bin_file_count": 1
+  },
+  "eso-pic": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "etex": {
+    "revision": "77830",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "etex-pkg": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "etexcmds": {
+    "revision": "78101",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "etoolbox": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "euenc": {
+    "revision": "19795",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "euler": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "eurosym": {
+    "revision": "78101",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "everysel": {
+    "revision": "57489",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "everyshi": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "expressg": {
+    "revision": "29349",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "exteps": {
+    "revision": "19859",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "extractbb": {
+    "revision": "77855",
+    "depends": [
+      "extractbb.ARCH"
+    ],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "extractbb.universal-darwin": {
+    "revision": "72890",
+    "depends": [],
+    "run_file_count": 0,
+    "bin_file_count": 1
+  },
+  "extsizes": {
+    "revision": "78101",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "fancybox": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "fancyhdr": {
+    "revision": "78101",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "fancyref": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "fancyvrb": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "featpost": {
+    "revision": "35346",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "feynmf": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "feynmp-auto": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "filehook": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "firstaid": {
+    "revision": "76740",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "fix2col": {
+    "revision": "38770",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "fixlatvian": {
+    "revision": "21631",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "fiziko": {
+    "revision": "61944",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "float": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "font-change-xetex": {
+    "revision": "40404",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "fontbook": {
+    "revision": "23608",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "fontspec": {
+    "revision": "77682",
+    "depends": [
+      "euenc",
+      "iftex",
+      "l3kernel",
+      "l3packages",
+      "lm",
+      "xunicode"
+    ],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "fontwrap": {
+    "revision": "15878",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "footnotehyper": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "fp": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "garrigues": {
+    "revision": "15878",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "geometry": {
+    "revision": "77682",
+    "depends": [
+      "graphics",
+      "iftex"
+    ],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "gettitlestring": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "glyphlist": {
+    "revision": "54074",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "gmp": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "graphics": {
+    "revision": "75374",
+    "depends": [
+      "graphics-cfg",
+      "graphics-def"
+    ],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "graphics-cfg": {
+    "revision": "41448",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "graphics-def": {
+    "revision": "76719",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "grfext": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "grffile": {
+    "revision": "78101",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "hatching": {
+    "revision": "23818",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "hershey-mp": {
+    "revision": "70885",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "hologo": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "hopatch": {
+    "revision": "65491",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "huffman": {
+    "revision": "67071",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "hycolor": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "hypcap": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "hyperref": {
+    "revision": "77682",
+    "depends": [
+      "atbegshi",
+      "auxhook",
+      "bitset",
+      "etexcmds",
+      "gettitlestring",
+      "hycolor",
+      "iftex",
+      "infwarerr",
+      "intcalc",
+      "kvdefinekeys",
+      "kvoptions",
+      "kvsetkeys",
+      "letltxmacro",
+      "ltxcmds",
+      "pdfescape",
+      "pdftexcmds",
+      "refcount",
+      "rerunfilecheck",
+      "stringenc",
+      "url",
+      "zapfding"
+    ],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "hyph-utf8": {
+    "revision": "78069",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "hyphen-base": {
+    "revision": "78076",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "hyphen-basque": {
+    "revision": "78069",
+    "depends": [
+      "hyph-utf8",
+      "hyphen-base"
+    ],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "hyphen-czech": {
+    "revision": "78069",
+    "depends": [
+      "hyph-utf8",
+      "hyphen-base"
+    ],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "hyphen-danish": {
+    "revision": "78069",
+    "depends": [
+      "hyph-utf8",
+      "hyphen-base"
+    ],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "hyphen-dutch": {
+    "revision": "78069",
+    "depends": [
+      "hyph-utf8",
+      "hyphen-base"
+    ],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "hyphen-english": {
+    "revision": "78069",
+    "depends": [
+      "hyph-utf8",
+      "hyphen-base"
+    ],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "hyphen-finnish": {
+    "revision": "78069",
+    "depends": [
+      "hyph-utf8",
+      "hyphen-base"
+    ],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "hyphen-french": {
+    "revision": "78069",
+    "depends": [
+      "hyph-utf8",
+      "hyphen-base"
+    ],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "hyphen-german": {
+    "revision": "78069",
+    "depends": [
+      "dehyph",
+      "hyph-utf8",
+      "hyphen-base"
+    ],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "hyphen-hungarian": {
+    "revision": "78069",
+    "depends": [
+      "hyph-utf8",
+      "hyphen-base"
+    ],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "hyphen-italian": {
+    "revision": "78069",
+    "depends": [
+      "hyph-utf8",
+      "hyphen-base"
+    ],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "hyphen-norwegian": {
+    "revision": "78069",
+    "depends": [
+      "hyph-utf8",
+      "hyphen-base"
+    ],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "hyphen-polish": {
+    "revision": "78069",
+    "depends": [
+      "hyph-utf8",
+      "hyphen-base"
+    ],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "hyphen-portuguese": {
+    "revision": "78069",
+    "depends": [
+      "hyph-utf8",
+      "hyphen-base"
+    ],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "hyphen-spanish": {
+    "revision": "78069",
+    "depends": [
+      "hyph-utf8",
+      "hyphen-base"
+    ],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "hyphen-swedish": {
+    "revision": "78069",
+    "depends": [
+      "hyph-utf8",
+      "hyphen-base"
+    ],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "hyphenex": {
+    "revision": "57387",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "ifplatform": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "iftex": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "index": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "infwarerr": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "intcalc": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "interchar": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "jknapltx": {
+    "revision": "19440",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "knuth-lib": {
+    "revision": "57963",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "knuth-local": {
+    "revision": "57963",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "koma-script": {
+    "revision": "77575",
+    "depends": [
+      "etoolbox",
+      "xpatch"
+    ],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "kpathsea": {
+    "revision": "77861",
+    "depends": [
+      "kpathsea.ARCH"
+    ],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "kpathsea.universal-darwin": {
+    "revision": "77928",
+    "depends": [],
+    "run_file_count": 0,
+    "bin_file_count": 1
+  },
+  "kvdefinekeys": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "kvoptions": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "kvsetkeys": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "l3backend": {
+    "revision": "76924",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "l3backend-dev": {
+    "revision": "77954",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "l3experimental": {
+    "revision": "76637",
+    "depends": [
+      "l3kernel"
+    ],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "l3kernel": {
+    "revision": "77438",
+    "depends": [
+      "l3backend",
+      "lua-uni-algos"
+    ],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "l3kernel-dev": {
+    "revision": "77953",
+    "depends": [
+      "l3backend-dev",
+      "lua-uni-algos"
+    ],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "l3packages": {
+    "revision": "76637",
+    "depends": [
+      "l3kernel"
+    ],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "latex": {
+    "revision": "76924",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "latex-amsmath-dev": {
+    "revision": "77483",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "latex-base-dev": {
+    "revision": "77483",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "latex-bin": {
+    "revision": "77830",
+    "depends": [
+      "babel",
+      "cm",
+      "dehyph",
+      "firstaid",
+      "graphics",
+      "hyph-utf8",
+      "hyphen-base",
+      "knuth-lib",
+      "l3backend",
+      "l3kernel",
+      "latex",
+      "latex-bin.ARCH",
+      "latex-fonts",
+      "latexconfig",
+      "lm",
+      "lua-uni-algos",
+      "luahbtex",
+      "luaotfload",
+      "luatex",
+      "pdftex",
+      "tex-ini-files",
+      "unicode-data"
+    ],
+    "run_file_count": 0,
+    "bin_file_count": 0
+  },
+  "latex-bin-dev": {
+    "revision": "77830",
+    "depends": [
+      "babel",
+      "cm",
+      "dehyph",
+      "hyph-utf8",
+      "hyphen-base",
+      "knuth-lib",
+      "l3backend-dev",
+      "l3kernel-dev",
+      "latex-base-dev",
+      "latex-bin-dev.ARCH",
+      "latex-firstaid-dev",
+      "latex-fonts",
+      "latex-graphics-dev",
+      "latexconfig",
+      "lm",
+      "luahbtex",
+      "luaotfload",
+      "luatex",
+      "pdftex",
+      "tex-ini-files",
+      "unicode-data"
+    ],
+    "run_file_count": 0,
+    "bin_file_count": 0
+  },
+  "latex-bin-dev.universal-darwin": {
+    "revision": "57908",
+    "depends": [],
+    "run_file_count": 0,
+    "bin_file_count": 1
+  },
+  "latex-bin.universal-darwin": {
+    "revision": "57908",
+    "depends": [],
+    "run_file_count": 0,
+    "bin_file_count": 1
+  },
+  "latex-firstaid-dev": {
+    "revision": "77483",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "latex-fonts": {
+    "revision": "28888",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "latex-graphics-dev": {
+    "revision": "76722",
+    "depends": [
+      "graphics-cfg"
+    ],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "latex-lab": {
+    "revision": "76739",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "latex-lab-dev": {
+    "revision": "77531",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "latex-tools-dev": {
+    "revision": "77483",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "latexbug": {
+    "revision": "78101",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "latexconfig": {
+    "revision": "68923",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "latexmp": {
+    "revision": "55643",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "letltxmacro": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "lineno": {
+    "revision": "77875",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "listings": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "lm": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "lm-math": {
+    "revision": "67718",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "ltx-talk": {
+    "revision": "77950",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "ltxcmds": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "ltxmisc": {
+    "revision": "75878",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "lua-alt-getopt": {
+    "revision": "56414",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "lua-uni-algos": {
+    "revision": "76195",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "lua-unicode-math": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "luahbtex": {
+    "revision": "77830",
+    "depends": [
+      "cm",
+      "etex",
+      "hyph-utf8",
+      "hyphen-base",
+      "knuth-lib",
+      "luahbtex.ARCH",
+      "luatex",
+      "plain",
+      "tex-ini-files",
+      "unicode-data"
+    ],
+    "run_file_count": 0,
+    "bin_file_count": 0
+  },
+  "luahbtex.universal-darwin": {
+    "revision": "78048",
+    "depends": [],
+    "run_file_count": 0,
+    "bin_file_count": 1
+  },
+  "lualibs": {
+    "revision": "67994",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "luamml": {
+    "revision": "78219",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "luaotfload": {
+    "revision": "74324",
+    "depends": [
+      "lm",
+      "lua-alt-getopt",
+      "lua-uni-algos",
+      "lualibs",
+      "luaotfload.ARCH"
+    ],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "luaotfload.universal-darwin": {
+    "revision": "57908",
+    "depends": [],
+    "run_file_count": 0,
+    "bin_file_count": 1
+  },
+  "luatex": {
+    "revision": "78218",
+    "depends": [
+      "cm",
+      "etex",
+      "hyph-utf8",
+      "hyphen-base",
+      "knuth-lib",
+      "luatex.ARCH",
+      "plain",
+      "tex-ini-files",
+      "unicode-data"
+    ],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "luatex.universal-darwin": {
+    "revision": "78048",
+    "depends": [],
+    "run_file_count": 0,
+    "bin_file_count": 1
+  },
+  "luatexbase": {
+    "revision": "77682",
+    "depends": [
+      "ctablestack"
+    ],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "lwarp": {
+    "revision": "78111",
+    "depends": [
+      "lwarp.ARCH"
+    ],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "lwarp.universal-darwin": {
+    "revision": "57908",
+    "depends": [],
+    "run_file_count": 0,
+    "bin_file_count": 1
+  },
+  "make4ht": {
+    "revision": "78133",
+    "depends": [
+      "make4ht.ARCH",
+      "tex4ht"
+    ],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "make4ht.universal-darwin": {
+    "revision": "57908",
+    "depends": [],
+    "run_file_count": 0,
+    "bin_file_count": 1
+  },
+  "makecmds": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "makeindex": {
+    "revision": "75712",
+    "depends": [
+      "makeindex.ARCH"
+    ],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "makeindex.universal-darwin": {
+    "revision": "77928",
+    "depends": [],
+    "run_file_count": 0,
+    "bin_file_count": 1
+  },
+  "mathspec": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "mathtools": {
+    "revision": "77682",
+    "depends": [
+      "amsmath"
+    ],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "mcf2graph": {
+    "revision": "76506",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "mdwtools": {
+    "revision": "15878",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "memoir": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "metafont": {
+    "revision": "77830",
+    "depends": [
+      "kpathsea",
+      "metafont.ARCH",
+      "modes"
+    ],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "metafont.universal-darwin": {
+    "revision": "77928",
+    "depends": [],
+    "run_file_count": 0,
+    "bin_file_count": 1
+  },
+  "metago": {
+    "revision": "78101",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "metalogo": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "metaobj": {
+    "revision": "15878",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "metaplot": {
+    "revision": "15878",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "metapost": {
+    "revision": "77830",
+    "depends": [
+      "kpathsea",
+      "metapost.ARCH"
+    ],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "metapost-colorbrewer": {
+    "revision": "48753",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "metapost.universal-darwin": {
+    "revision": "78048",
+    "depends": [],
+    "run_file_count": 0,
+    "bin_file_count": 1
+  },
+  "metauml": {
+    "revision": "49923",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "mflogo": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "mfnfss": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "mfpic": {
+    "revision": "28444",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "mfpic4ode": {
+    "revision": "75712",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "mfware": {
+    "revision": "77830",
+    "depends": [
+      "mfware.ARCH"
+    ],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "mfware.universal-darwin": {
+    "revision": "77928",
+    "depends": [],
+    "run_file_count": 0,
+    "bin_file_count": 1
+  },
+  "microtype": {
+    "revision": "78228",
+    "depends": [
+      "etoolbox"
+    ],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "minim-hatching": {
+    "revision": "70885",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "modes": {
+    "revision": "77365",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "mp-geom2d": {
+    "revision": "77019",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "mp-neuralnetwork": {
+    "revision": "73627",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "mp3d": {
+    "revision": "29349",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "mparrows": {
+    "revision": "39729",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "mpattern": {
+    "revision": "15878",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "mpchess": {
+    "revision": "78101",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "mpcolornames": {
+    "revision": "23252",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "mpgraphics": {
+    "revision": "29776",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "mpkiviat": {
+    "revision": "75712",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "mptopdf": {
+    "revision": "78010",
+    "depends": [
+      "mptopdf.ARCH",
+      "pdftex",
+      "plain"
+    ],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "mptopdf.universal-darwin": {
+    "revision": "57908",
+    "depends": [],
+    "run_file_count": 0,
+    "bin_file_count": 1
+  },
+  "mptrees": {
+    "revision": "70887",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "na-position": {
+    "revision": "55559",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "natbib": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "newfloat": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "ntgclass": {
+    "revision": "77239",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "oberdiek": {
+    "revision": "71916",
+    "depends": [
+      "auxhook",
+      "grfext",
+      "grffile",
+      "iftex",
+      "infwarerr",
+      "kvoptions",
+      "pdftexcmds"
+    ],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "pagesel": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "parskip": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "pdfcolfoot": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "pdfescape": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "pdflscape": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "pdfmanagement-testphase": {
+    "revision": "77467",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "pdfpages": {
+    "revision": "77682",
+    "depends": [
+      "eso-pic",
+      "graphics",
+      "oberdiek",
+      "tools"
+    ],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "pdftex": {
+    "revision": "77868",
+    "depends": [
+      "cm",
+      "dehyph",
+      "etex",
+      "hyph-utf8",
+      "hyphen-base",
+      "knuth-lib",
+      "kpathsea",
+      "pdftex.ARCH",
+      "plain",
+      "tex-ini-files"
+    ],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "pdftex.universal-darwin": {
+    "revision": "78096",
+    "depends": [],
+    "run_file_count": 0,
+    "bin_file_count": 1
+  },
+  "pdftexcmds": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "pgf": {
+    "revision": "78101",
+    "depends": [
+      "atveryend",
+      "fp",
+      "graphics",
+      "pdftexcmds",
+      "xcolor"
+    ],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "philokalia": {
+    "revision": "45356",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "piechartmp": {
+    "revision": "19440",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "plain": {
+    "revision": "75712",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "polyglossia": {
+    "revision": "76990",
+    "depends": [
+      "etoolbox",
+      "filehook",
+      "fontspec",
+      "iftex",
+      "makecmds",
+      "xkeyval"
+    ],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "psfrag": {
+    "revision": "15878",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "pslatex": {
+    "revision": "67469",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "psnfss": {
+    "revision": "77682",
+    "depends": [
+      "graphics",
+      "symbol",
+      "zapfding"
+    ],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "pspicture": {
+    "revision": "15878",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "ptext": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "ragged2e": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "rcs": {
+    "revision": "15878",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "refcount": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "repere": {
+    "revision": "66998",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "rerunfilecheck": {
+    "revision": "77682",
+    "depends": [
+      "atveryend",
+      "uniquecounter"
+    ],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "revtex": {
+    "revision": "67271",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "roex": {
+    "revision": "45818",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "roundrect": {
+    "revision": "39796",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "sansmath": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "scheme-basic": {
+    "revision": "54191",
+    "depends": [
+      "collection-basic",
+      "collection-latex"
+    ],
+    "run_file_count": 0,
+    "bin_file_count": 0
+  },
+  "scheme-infraonly": {
+    "revision": "54191",
+    "depends": [
+      "hyphen-base",
+      "kpathsea",
+      "texlive-scripts",
+      "texlive.infra"
+    ],
+    "run_file_count": 0,
+    "bin_file_count": 0
+  },
+  "scheme-minimal": {
+    "revision": "54191",
+    "depends": [
+      "collection-basic"
+    ],
+    "run_file_count": 0,
+    "bin_file_count": 0
+  },
+  "scheme-small": {
+    "revision": "77510",
+    "depends": [
+      "babel-basque",
+      "babel-czech",
+      "babel-danish",
+      "babel-dutch",
+      "babel-english",
+      "babel-finnish",
+      "babel-french",
+      "babel-german",
+      "babel-hungarian",
+      "babel-italian",
+      "babel-norsk",
+      "babel-polish",
+      "babel-portuges",
+      "babel-spanish",
+      "babel-swedish",
+      "collection-basic",
+      "collection-latex",
+      "collection-latexrecommended",
+      "collection-metapost",
+      "collection-xetex",
+      "ec",
+      "epstopdf",
+      "eurosym",
+      "hyphen-basque",
+      "hyphen-czech",
+      "hyphen-danish",
+      "hyphen-dutch",
+      "hyphen-english",
+      "hyphen-finnish",
+      "hyphen-french",
+      "hyphen-german",
+      "hyphen-hungarian",
+      "hyphen-italian",
+      "hyphen-norwegian",
+      "hyphen-polish",
+      "hyphen-portuguese",
+      "hyphen-spanish",
+      "hyphen-swedish",
+      "l3backend-dev",
+      "l3kernel-dev",
+      "latex-amsmath-dev",
+      "latex-base-dev",
+      "latex-bin-dev",
+      "latex-firstaid-dev",
+      "latex-graphics-dev",
+      "latex-lab",
+      "latex-lab-dev",
+      "latex-tools-dev",
+      "lm",
+      "ltx-talk",
+      "lua-unicode-math",
+      "lualibs",
+      "luamml",
+      "luaotfload",
+      "luatexbase",
+      "make4ht",
+      "pdfmanagement-testphase",
+      "revtex",
+      "synctex",
+      "tagpdf",
+      "tex4ebook",
+      "tex4ht",
+      "times",
+      "tipa",
+      "ulem",
+      "unicode-math",
+      "upquote",
+      "zapfding"
+    ],
+    "run_file_count": 0,
+    "bin_file_count": 0
+  },
+  "section": {
+    "revision": "20180",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "seminar": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "sepnum": {
+    "revision": "20186",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "setspace": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "shapes": {
+    "revision": "42428",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "simple-resume-cv": {
+    "revision": "43057",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "simple-thesis-dissertation": {
+    "revision": "43058",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "slideshow": {
+    "revision": "15878",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "splines": {
+    "revision": "15878",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "stringenc": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "suanpan": {
+    "revision": "15878",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "subfig": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "symbol": {
+    "revision": "77161",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "synctex": {
+    "revision": "66203",
+    "depends": [
+      "synctex.ARCH"
+    ],
+    "run_file_count": 0,
+    "bin_file_count": 0
+  },
+  "synctex.universal-darwin": {
+    "revision": "78096",
+    "depends": [],
+    "run_file_count": 0,
+    "bin_file_count": 1
+  },
+  "tagpdf": {
+    "revision": "77539",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "tetragonos": {
+    "revision": "49732",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "tex": {
+    "revision": "77830",
+    "depends": [
+      "cm",
+      "hyphen-base",
+      "knuth-lib",
+      "kpathsea",
+      "plain",
+      "tex.ARCH"
+    ],
+    "run_file_count": 0,
+    "bin_file_count": 0
+  },
+  "tex-ini-files": {
+    "revision": "73863",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "tex.universal-darwin": {
+    "revision": "77928",
+    "depends": [],
+    "run_file_count": 0,
+    "bin_file_count": 1
+  },
+  "tex4ebook": {
+    "revision": "78132",
+    "depends": [
+      "make4ht",
+      "tex4ebook.ARCH",
+      "tex4ht"
+    ],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "tex4ebook.universal-darwin": {
+    "revision": "57908",
+    "depends": [],
+    "run_file_count": 0,
+    "bin_file_count": 1
+  },
+  "tex4ht": {
+    "revision": "77990",
+    "depends": [
+      "tex4ht.ARCH"
+    ],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "tex4ht.universal-darwin": {
+    "revision": "77928",
+    "depends": [],
+    "run_file_count": 0,
+    "bin_file_count": 1
+  },
+  "texlive-common": {
+    "revision": "77830",
+    "depends": [],
+    "run_file_count": 0,
+    "bin_file_count": 0
+  },
+  "texlive-en": {
+    "revision": "78030",
+    "depends": [],
+    "run_file_count": 0,
+    "bin_file_count": 0
+  },
+  "texlive-msg-translations": {
+    "revision": "77993",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "texlive-scripts": {
+    "revision": "78213",
+    "depends": [
+      "texlive-scripts.ARCH",
+      "texlive.infra"
+    ],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "texlive-scripts-extra": {
+    "revision": "78162",
+    "depends": [
+      "texlive-scripts-extra.ARCH"
+    ],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "texlive-scripts-extra.universal-darwin": {
+    "revision": "71749",
+    "depends": [],
+    "run_file_count": 0,
+    "bin_file_count": 1
+  },
+  "texlive-scripts.universal-darwin": {
+    "revision": "64356",
+    "depends": [],
+    "run_file_count": 0,
+    "bin_file_count": 1
+  },
+  "texlive.infra": {
+    "revision": "78218",
+    "depends": [
+      "texlive.infra.ARCH"
+    ],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "texlive.infra.universal-darwin": {
+    "revision": "70811",
+    "depends": [],
+    "run_file_count": 0,
+    "bin_file_count": 1
+  },
+  "textcase": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "textpath": {
+    "revision": "15878",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "threeddice": {
+    "revision": "20675",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "thumbpdf": {
+    "revision": "62518",
+    "depends": [
+      "thumbpdf.ARCH"
+    ],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "thumbpdf.universal-darwin": {
+    "revision": "57908",
+    "depends": [],
+    "run_file_count": 0,
+    "bin_file_count": 1
+  },
+  "times": {
+    "revision": "77161",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "tipa": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "tlshell": {
+    "revision": "78053",
+    "depends": [
+      "tlshell.ARCH"
+    ],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "tlshell.universal-darwin": {
+    "revision": "57908",
+    "depends": [],
+    "run_file_count": 0,
+    "bin_file_count": 1
+  },
+  "tools": {
+    "revision": "76708",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "translator": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "typehtml": {
+    "revision": "17134",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "ucharcat": {
+    "revision": "38907",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "ucharclasses": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "ulem": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "underscore": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "unicode-bidi": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "unicode-data": {
+    "revision": "76413",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "unicode-math": {
+    "revision": "77682",
+    "depends": [
+      "fontspec",
+      "lm-math"
+    ],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "unimath-plain-xetex": {
+    "revision": "72498",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "uniquecounter": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "unisugar": {
+    "revision": "22357",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "upquote": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "url": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "xcolor": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "xdvi": {
+    "revision": "62387",
+    "depends": [
+      "xdvi.ARCH"
+    ],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "xdvi.universal-darwin": {
+    "revision": "77928",
+    "depends": [],
+    "run_file_count": 0,
+    "bin_file_count": 1
+  },
+  "xebaposter": {
+    "revision": "75290",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "xechangebar": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "xecolor": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "xecyr": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "xeindex": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "xelatex-dev": {
+    "revision": "71363",
+    "depends": [
+      "babel",
+      "cm",
+      "hyphen-base",
+      "knuth-lib",
+      "l3backend-dev",
+      "l3kernel-dev",
+      "latex-base-dev",
+      "latex-firstaid-dev",
+      "latex-fonts",
+      "lm",
+      "tex-ini-files",
+      "unicode-data",
+      "xelatex-dev.ARCH",
+      "xetex"
+    ],
+    "run_file_count": 0,
+    "bin_file_count": 0
+  },
+  "xelatex-dev.universal-darwin": {
+    "revision": "57908",
+    "depends": [],
+    "run_file_count": 0,
+    "bin_file_count": 1
+  },
+  "xesearch": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "xespotcolor": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "xetex": {
+    "revision": "77830",
+    "depends": [
+      "babel",
+      "cm",
+      "dvipdfmx",
+      "etex",
+      "firstaid",
+      "hyphen-base",
+      "knuth-lib",
+      "l3backend",
+      "l3kernel",
+      "latex",
+      "latex-fonts",
+      "lm",
+      "plain",
+      "tex-ini-files",
+      "unicode-data",
+      "xetex.ARCH",
+      "xetexconfig"
+    ],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "xetex-itrans": {
+    "revision": "55475",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "xetex-pstricks": {
+    "revision": "17055",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "xetex-tibetan": {
+    "revision": "28847",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "xetex.universal-darwin": {
+    "revision": "77987",
+    "depends": [],
+    "run_file_count": 0,
+    "bin_file_count": 1
+  },
+  "xetexconfig": {
+    "revision": "45845",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "xetexfontinfo": {
+    "revision": "15878",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "xetexko": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "xevlna": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "xfrac": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "xkeyval": {
+    "revision": "77682",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "xltxtra": {
+    "revision": "77682",
+    "depends": [
+      "metalogo"
+    ],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "xpatch": {
+    "revision": "77682",
+    "depends": [
+      "etoolbox"
+    ],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "xunicode": {
+    "revision": "77682",
+    "depends": [
+      "tipa"
+    ],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "zapfding": {
+    "revision": "77161",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  },
+  "zbmath-review-template": {
+    "revision": "59693",
+    "depends": [],
+    "run_file_count": 1,
+    "bin_file_count": 0
+  }
+}

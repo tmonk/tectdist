@@ -1,0 +1,20 @@
+fmtutil.cnf: dvilualatex luatex language.dat,language.dat.lua dvilualatex.ini
+fmtutil.cnf: dvilualatex-dev luatex language.dat,language.dat.lua dvilualatex.ini
+fmtutil.cnf: dviluatex luatex language.def,language.dat.lua dviluatex.ini
+fmtutil.cnf: etex pdftex language.def -translate-file=cp227.tcx *etex.ini
+fmtutil.cnf: latex pdftex language.dat -translate-file=cp227.tcx *latex.ini
+fmtutil.cnf: latex-dev pdftex language.dat -translate-file=cp227.tcx *latex.ini
+fmtutil.cnf: luahbtex luahbtex language.def,language.dat.lua luatex.ini
+fmtutil.cnf: lualatex luahbtex language.dat,language.dat.lua lualatex.ini
+fmtutil.cnf: lualatex-dev luahbtex language.dat,language.dat.lua lualatex.ini
+fmtutil.cnf: luatex luatex language.def,language.dat.lua luatex.ini
+fmtutil.cnf: mf mf-nowin - -translate-file=cp227.tcx mf.ini
+fmtutil.cnf: mptopdf pdftex - -translate-file=cp227.tcx mptopdf.tex
+fmtutil.cnf: pdfetex pdftex language.def -translate-file=cp227.tcx *pdfetex.ini
+fmtutil.cnf: pdflatex pdftex language.dat -translate-file=cp227.tcx *pdflatex.ini
+fmtutil.cnf: pdflatex-dev pdftex language.dat -translate-file=cp227.tcx *pdflatex.ini
+fmtutil.cnf: pdftex pdftex language.def -translate-file=cp227.tcx *pdfetex.ini
+fmtutil.cnf: tex tex - tex.ini
+fmtutil.cnf: xelatex xetex language.dat -etex xelatex.ini
+fmtutil.cnf: xelatex-dev xetex language.dat -etex xelatex.ini
+fmtutil.cnf: xetex xetex language.def -etex xetex.ini
