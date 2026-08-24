@@ -37,6 +37,10 @@ enum Request {
         profile: String,
         argv: Vec<String>,
         cwd: PathBuf,
+        /// Explicit job source file (e.g. main.tex); derived from argv when
+        /// absent.
+        #[serde(default)]
+        job: Option<String>,
         #[serde(default)]
         snapshot_key: Option<String>,
     },
@@ -133,6 +137,11 @@ struct SupervisorState {
     /// by entry count until real COW parents land.
     snapshots: Mutex<HashMap<String, SnapshotRecord>>,
     snapshot_max_entries: usize,
+    /// Exact-engine fork-server worker (plan X1): a resident pdfTeX process
+    /// holding the preloaded format; compile requests are forwarded over its
+    /// private socket. None until first use; reset on any failure.
+    engine_worker: Mutex<Option<EngineWorker>>,
+    use_forkserver: bool,
     /// Two-tier tool identity (plan §11.2): (size, mtime) as the cheap
     /// candidate check, content digest computed once per candidate change.
     /// BasicTeX image binaries are immutable within a profile, so the cached
@@ -178,7 +187,11 @@ impl SupervisorState {
             .ok()
             .and_then(|value| value.parse().ok())
             .unwrap_or(32);
+        let use_forkserver =
+            std::env::var("TECTDIST_USE_FORKSERVER").as_deref() == Ok("1");
         Self {
+            use_forkserver,
+            engine_worker: Mutex::new(None),
             image_root: PathBuf::from(
                 std::env::var("TECTDIST_BASICTEX_ROOT").unwrap_or_default(),
             ),
@@ -286,6 +299,109 @@ impl SupervisorState {
     }
 }
 
+
+
+// ------------------------------------------------------------------
+// Exact-engine fork-server worker (plan X1): resident pdfTeX holding the
+// preloaded format; compiles run as copy-on-write children.
+// ------------------------------------------------------------------
+
+struct EngineWorker {
+    child: std::process::Child,
+    socket: PathBuf,
+}
+
+impl Drop for EngineWorker {
+    fn drop(&mut self) {
+        // Ensure the resident engine never outlives the supervisor.
+        let _ = self.child.kill();
+        let _ = self.child.wait();
+        let _ = std::fs::remove_file(&self.socket);
+    }
+}
+
+impl EngineWorker {
+    /// Spawn the fork-server engine from the pinned image inside the project
+    /// directory. A reusable base format (`latex` from the image) is seeded
+    /// beside the sources so the first-line reference resolves locally;
+    /// preamble snapshots (X2) replace it with richer formats later.
+    fn spawn(image_root: &Path, cwd: &Path) -> Result<Self, String> {
+        let bin_dir = image_root.join("bin/forkproto");
+        let binary = bin_dir.join("pdftex");
+        if !binary.is_file() {
+            return Err(format!("fork-server binary missing: {}", binary.display()));
+        }
+        let base_format = image_root
+            .join("texmf-var/web2c/pdftex/latex.fmt");
+        if !base_format.is_file() {
+            return Err("image lacks texmf-var/web2c/pdftex/latex.fmt".to_string());
+        }
+        std::fs::copy(&base_format, cwd.join("tectdist-latex.fmt"))
+            .map_err(|error| format!("seed format: {error}"))?;
+        let socket = cwd.join(".tectdist-engine.sock");
+        // Remove a stale socket from a previous crashed worker.
+        let _ = std::fs::remove_file(&socket);
+        let child = std::process::Command::new(binary)
+            .arg("-fmt=tectdist-latex")
+            .arg("-interaction=batchmode")
+            .current_dir(cwd)
+            .env("TEXMFCNF", image_root)
+            .env("TEXMFROOT", image_root)
+            .env("TECTDIST_FORKSERVER_SOCKET", &socket)
+            .env("TECTDIST_FORK_JOB", "job.tex")
+            .spawn()
+            .map_err(|error| format!("spawn fork server: {error}"))?;
+        Ok(EngineWorker { child, socket })
+    }
+
+    fn wait_ready(&mut self) -> Result<(), String> {
+        let deadline = std::time::Instant::now() + std::time::Duration::from_secs(5);
+        loop {
+            if self.socket.exists() {
+                if let Some(status) = self.child.try_wait()
+                    .map_err(|e| e.to_string())?
+                {
+                    return Err(format!("fork server exited early: {status}"));
+                }
+                return Ok(());
+            }
+            if let Some(status) = self.child.try_wait().map_err(|e| e.to_string())? {
+                return Err(format!("fork server exited early: {status}"));
+            }
+            if std::time::Instant::now() > deadline {
+                return Err("fork server socket did not appear".to_string());
+            }
+            std::thread::sleep(std::time::Duration::from_millis(10));
+        }
+    }
+
+    fn compile(&self, job: &str) -> Result<(i32, u64), String> {
+        let start = std::time::Instant::now();
+        let mut stream = UnixStream::connect(&self.socket)
+            .map_err(|error| format!("connect engine: {error}"))?;
+        stream
+            .write_all(format!("compile {job}\n").as_bytes())
+            .map_err(|e| e.to_string())?;
+        stream
+            .set_read_timeout(Some(std::time::Duration::from_secs(300)))
+            .map_err(|e| e.to_string())?;
+        let mut reader = BufReader::new(stream);
+        let mut line = String::new();
+        reader.read_line(&mut line).map_err(|e| e.to_string())?;
+        let value: serde_json::Value =
+            serde_json::from_str(line.trim()).map_err(|e| e.to_string())?;
+        let exit = value["exit"].as_i64().unwrap_or(1) as i32;
+        Ok((exit, start.elapsed().as_millis() as u64))
+    }
+
+    fn shutdown(mut self) {
+        if let Ok(mut stream) = UnixStream::connect(&self.socket) {
+            let _ = stream.write_all(b"quit\n");
+        }
+        let _ = self.child.wait();
+        let _ = std::fs::remove_file(&self.socket);
+    }
+}
 
 // ------------------------------------------------------------------
 // Action broker (plan X3 / X10-120..123): content-addressed reuse of
@@ -529,7 +645,7 @@ fn handle_request(
                 },
             }
         }
-        Request::Compile { request_id, profile, argv, cwd, snapshot_key } => {
+        Request::Compile { request_id, profile, argv, cwd, job, snapshot_key } => {
             state.compiles_started.fetch_add(1, Ordering::Relaxed);
             // Snapshot keys participate in telemetry now; workers consume the
             // actual COW parent in milestone X2.
@@ -544,10 +660,22 @@ fn handle_request(
                     payload: Payload::Empty,
                 };
             }
-            // Milestone X2 replaces this with snapshot-based workers; the
-            // scaffold executes the exact profile engine directly so BT100
-            // semantics hold from day one.
-            let outcome = run_profile_compile(&profile, &argv, &cwd);
+            // Milestone X1 fast path: when enabled and the pinned image
+            // provides a fork-server engine, route through the resident
+            // worker. Any failure escalates to the exact one-shot path below,
+            // preserving BT100 (plan §6.1 item 7).
+            let mut outcome = if state.use_forkserver && profile == "basictex-2026" {
+                let job = derive_job_name(&argv, &cwd);
+                match state.forkserver_compile(&cwd, &job) {
+                    Ok((exit_status, duration_ms)) => Ok((exit_status, duration_ms)),
+                    Err(error) => {
+                        eprintln!("supervisor: fork server unavailable ({error}); using one-shot execution");
+                        run_profile_compile(&profile, &argv, &cwd)
+                    }
+                }
+            } else {
+                run_profile_compile(&profile, &argv, &cwd)
+            };
             state.release_lock(&cwd);
             match outcome {
                 Ok((exit_status, duration_ms)) => {
@@ -584,6 +712,57 @@ fn handle_request(
 /// Execute one compile through the pinned BasicTeX image (exact fallback
 /// semantics until dedicated workers land). The first argument names the
 /// engine/tool; the remainder are forwarded unchanged.
+/// Derive the job source file from compile argv (last .tex argument),
+/// falling back to a directory scan.
+fn derive_job_name(argv: &[String], cwd: &Path) -> String {
+    for argument in argv.iter().rev() {
+        let text = argument.clone();
+        if text.ends_with(".tex") && !text.contains('=') {
+            return PathBuf::from(&text)
+                .file_name()
+                .map(|name| name.to_string_lossy().into_owned())
+                .unwrap_or(text);
+        }
+    }
+    let candidates = || -> Option<String> {
+        std::fs::read_dir(cwd)
+            .ok()?
+            .flatten()
+            .filter_map(|entry| {
+                let name = entry.file_name().to_string_lossy().into_owned();
+                name.ends_with(".tex").then_some(name)
+            })
+            .next()
+    };
+    candidates().unwrap_or_else(|| "main.tex".to_string())
+}
+
+impl SupervisorState {
+    /// Route one compile through the resident fork-server engine, spawning it
+    /// on first use. Returns None when the fast path is disabled.
+    fn forkserver_compile(
+        &self,
+        cwd: &Path,
+        job: &str,
+    ) -> Result<(i32, u64), String> {
+        let mut guard = self.engine_worker.lock().expect("engine worker poisoned");
+        if guard.is_none() {
+            *guard = Some(EngineWorker::spawn(&self.image_root, cwd)?);
+        }
+        let worker = guard.as_ref().unwrap();
+        match worker.compile(job) {
+            Ok(result) => Ok(result),
+            Err(error) => {
+                // Worker is wedged or dead: discard it and escalate.
+                if let Some(worker) = guard.take() {
+                    worker.shutdown();
+                }
+                Err(error)
+            }
+        }
+    }
+}
+
 fn run_profile_compile(profile: &str, argv: &[String], cwd: &Path) -> Result<(i32, u64), String> {
     if profile != "basictex-2026" {
         return Err(format!("unsupported profile '{profile}'"));
@@ -657,13 +836,29 @@ fn serve(socket: &Path) -> Result<(), String> {
     }
     println!("supervisor: listening on {}", socket.display());
 
+    // Non-blocking accept so the shutdown flag is honoured promptly even
+    // with no incoming traffic (a blocking accept would only observe the
+    // flag after the next connection).
+    listener
+        .set_nonblocking(true)
+        .map_err(|error| format!("nonblocking: {error}"))?;
+
     let state = Arc::new(SupervisorState::new());
     let running = Arc::new(std::sync::atomic::AtomicBool::new(true));
-    for stream in listener.incoming() {
+    loop {
         if !running.load(Ordering::SeqCst) {
             break;
         }
-        let Ok(stream) = stream else { continue };
+        let stream = match listener.accept() {
+            Ok((stream, _)) => stream,
+            Err(error) if error.kind() == std::io::ErrorKind::WouldBlock => {
+                std::thread::sleep(std::time::Duration::from_millis(10));
+                continue;
+            }
+            Err(error) => return Err(format!("accept: {error}")),
+        };
+        // Accepted sockets may inherit O_NONBLOCK on some platforms.
+        let _ = stream.set_nonblocking(false);
         let state = Arc::clone(&state);
         let running = Arc::clone(&running);
         // One thread per connection keeps concurrent clients responsive;

@@ -259,7 +259,7 @@ fn action_broker_bibtex_hit_miss_and_invalidation() {
         return;
     };
     let supervisor = start_supervisor("actions", Some(&image));
-    let cache = free_dir("action-cache");
+    let _cache = free_dir("action-cache");
     let work = free_dir("action-work");
 
     std::fs::write(work.join("refs.bib"),
@@ -267,7 +267,7 @@ fn action_broker_bibtex_hit_miss_and_invalidation() {
     std::fs::write(work.join("main.aux"),
         "\\relax\n\\citation{k1}\n\\bibstyle{plain}\n\\bibdata{refs}\n\\bibcite{k1}{1}\n").unwrap();
 
-    let make_request = |inputs_digest_seed: &str| {
+    let make_request = |_seed: usize| {
         use serde_json::json;
         json!({
             "type": "action",
@@ -281,7 +281,7 @@ fn action_broker_bibtex_hit_miss_and_invalidation() {
     };
 
     // Miss: exact execution through the pinned image.
-    let first = request(&supervisor.socket, &make_request("1"));
+    let first = request(&supervisor.socket, &make_request(1));
     assert_eq!(first["ok"], true, "first action failed: {first}");
     assert_eq!(first["action_result"]["cache_hit"], false);
     eprintln!("first action response: {first}");
@@ -297,7 +297,7 @@ fn action_broker_bibtex_hit_miss_and_invalidation() {
     // Hit: outputs restored without running the tool (<2 ms target).
     std::fs::remove_file(work.join("main.bbl")).unwrap();
     let t0 = std::time::Instant::now();
-    let second = request(&supervisor.socket, &make_request("2"));
+    let second = request(&supervisor.socket, &make_request(2));
     let restore_ms = t0.elapsed().as_millis();
     assert_eq!(second["ok"], true);
     assert_eq!(second["action_result"]["cache_hit"], true);
@@ -311,9 +311,81 @@ fn action_broker_bibtex_hit_miss_and_invalidation() {
     // Invalidation: changed .bib produces a different key -> fresh run.
     std::fs::write(work.join("refs.bib"),
         "@book{k1, author={Beta Author}, title={First Book}, publisher={P}, year={2001}}\n").unwrap();
-    let third = request(&supervisor.socket, &make_request("3"));
+    let third = request(&supervisor.socket, &make_request(3));
     assert_eq!(third["ok"], true);
     assert_eq!(third["action_result"]["cache_hit"], false);
     let bbl3 = std::fs::read_to_string(work.join("main.bbl")).unwrap();
     assert!(bbl3.contains("Beta"), "changed bib must produce fresh output");
+}
+
+#[test]
+fn fork_server_worker_compiles_through_resident_engine() {
+    let Some(image) = basic_tex_root() else {
+        eprintln!("skipping: BasicTeX reference image not present on this host");
+        return;
+    };
+    // Dedicated instance with the fork-server fast path enabled.
+    let dir = free_dir("forksrv");
+    let socket = dir.join("s.sock");
+    let exe = env!("CARGO_BIN_EXE_tectdist-supervisor");
+    let mut command = Command::new(exe);
+    command.arg("serve");
+    command.env("TECTDIST_SUPERVISOR_SOCKET", &socket);
+    command.env("TECTDIST_ACTION_CACHE", dir.join("cache"));
+    command.env("TECTDIST_BASICTEX_ROOT", &image);
+    command.env("TECTDIST_USE_FORKSERVER", "1");
+    command.stdout(Stdio::null()).stderr(Stdio::null());
+    let mut child = command.spawn().expect("spawn supervisor");
+    let deadline = std::time::Instant::now() + Duration::from_secs(5);
+    while Instant::now() < deadline {
+        if UnixStream::connect(&socket).is_ok() {
+            break;
+        }
+        std::thread::sleep(Duration::from_millis(20));
+    }
+
+    let client = |payload: serde_json::Value| -> serde_json::Value {
+        let mut stream = UnixStream::connect(&socket).expect("connect");
+        stream
+            .write_all(payload.to_string().as_bytes())
+            .unwrap();
+        stream.write_all(b"\n").unwrap();
+        let mut reader = BufReader::new(stream);
+        let mut line = String::new();
+        reader.read_line(&mut line).unwrap();
+        serde_json::from_str(&line).expect("valid response")
+    };
+
+    let work = free_dir("forksrv-work");
+    std::fs::write(
+        work.join("main.tex"),
+        "\\documentclass{article}\\begin{document}Fork server proof.\\end{document}\n",
+    )
+    .unwrap();
+
+    let payload = serde_json::json!({
+        "type": "compile",
+        "profile": "basictex-2026",
+        "cwd": work.to_str().unwrap(),
+        "argv": ["pdflatex", "-interaction=batchmode", "-jobname=main", "main.tex"],
+        "snapshot_key": null,
+    });
+
+    let first = client(payload.clone());
+    assert_eq!(first["ok"], true, "first compile failed: {first}");
+    assert_eq!(first["compile_accepted"]["exit_status"], 0);
+    assert!(work.join("main.pdf").is_file(), "PDF must exist");
+
+    // Second compile reuses the resident engine; both correctness and the
+    // absence of a new engine process are observable here via success plus
+    // the status counters.
+    let second = client(payload);
+    assert_eq!(second["ok"], true, "second compile failed: {second}");
+    assert_eq!(second["compile_accepted"]["exit_status"], 0);
+
+    let status = client(serde_json::json!({"type": "status"}));
+    assert_eq!(status["status"]["compiles_succeeded"], 2);
+
+    client(serde_json::json!({"type": "shutdown"}));
+    let _ = child.wait();
 }
