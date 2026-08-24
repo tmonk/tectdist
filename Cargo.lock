@@ -3057,6 +3057,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "tectdist-bib"
+version = "0.2.2"
+
+[[package]]
 name = "tectdist-cli"
 version = "0.2.2"
 dependencies = [
