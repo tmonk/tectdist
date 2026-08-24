@@ -38,6 +38,7 @@ fn start_supervisor(tag: &str, image_root: Option<&Path>) -> Supervisor {
     command.arg("serve");
     // Isolated instances get their own explicit socket path.
     command.env("TECTDIST_SUPERVISOR_SOCKET", &socket);
+    command.env("TECTDIST_ACTION_CACHE", dir.join("action-cache"));
     if let Some(root) = image_root {
         command.env("TECTDIST_BASICTEX_ROOT", root);
     }
