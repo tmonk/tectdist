@@ -16,6 +16,7 @@
 //! Responses carry `"ok"` plus payload fields; every response echoes
 //! `"request_id"` when the request supplied one.
 mod checkpoint;
+mod output_graph;
 use checkpoint::{CheckpointChain, CheckpointRecord};
 
 use serde::{Deserialize, Serialize};
