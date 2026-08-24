@@ -1,0 +1,95 @@
+--- /tmp/texmfmp.orig.c	2026-08-24 19:59:16
++++ reference/texlive-source/texlive-20260301-source/texk/web2c/lib/texmfmp.c	2026-08-24 19:53:55
+@@ -4212,3 +4212,92 @@
+     (*mfwp->mfwsw_paintrow) (row, init_color, transition_vector, vector_size);
+ }
+ #endif /* MF */
++
++/* =====================================================================
++ * tectdist fork-server prototype (BASICTEX_X10_PLAN.md milestone X1).
++ * Activated only when TECTDIST_FORKSERVER_SOCKET is present.  The parent
++ * keeps the initialised engine and forks one copy-on-write child per job;
++ * children install their job name into the terminal buffer, return from
++ * this hook to resume mainbody, and _exit() on completion.
++ * ===================================================================== */
++void
++tectdist_forkserver_serve ( void )
++{
++  const char *path = getenv ( "TECTDIST_FORKSERVER_SOCKET" ) ;
++  const char *job = getenv ( "TECTDIST_FORK_JOB" ) ;
++  if ( path == NULL || job == NULL )
++    return ;
++  {
++#include <sys/socket.h>
++#undef unix
++#include <sys/un.h>
++#include <sys/wait.h>
++    struct sockaddr_un addr ;
++    memset ( &addr , 0 , sizeof ( addr ) ) ;
++    addr . sun_family = AF_UNIX ;
++    strncpy ( addr . sun_path , path , sizeof ( addr . sun_path ) - 1 ) ;
++    unlink ( addr . sun_path ) ;
++    {
++      int sfd = socket ( AF_UNIX , SOCK_STREAM , 0 ) ;
++      if ( sfd < 0 )
++        return ;
++      if ( bind ( sfd , ( struct sockaddr * ) & addr , sizeof ( addr ) ) != 0 )
++        return ;
++      if ( listen ( sfd , 8 ) != 0 )
++        return ;
++      fprintf ( stderr , "forkserver: ready on %s\n" , addr . sun_path ) ;
++      for ( ;; )
++      {
++        int cfd = accept ( sfd , NULL , NULL ) ;
++        char req [ 256 ] ;
++        ssize_t n ;
++        pid_t pid ;
++        int st = 0 ;
++        char reply [ 128 ] ;
++        int code ;
++        if ( cfd < 0 )
++          continue ;
++        n = recv ( cfd , req , sizeof ( req ) - 1 , 0 ) ;
++        if ( n <= 0 )
++        {
++          close ( cfd ) ;
++          continue ;
++        }
++        req [ n ] = 0 ;
++        if ( strncmp ( req , "quit" , 4 ) == 0 )
++        {
++          close ( cfd ) ;
++          close ( sfd ) ;
++          unlink ( addr . sun_path ) ;
++          _exit ( 0 ) ;
++        }
++        if ( strncmp ( req , "compile" , 7 ) != 0 )
++        {
++          close ( cfd ) ;
++          continue ;
++        }
++        pid = fork () ;
++        if ( pid == 0 )
++        {
++          /* Overwrite from the CURRENT SCAN POSITION: everything up to
++           * curinput.locfield (the &format token) was already consumed by
++           * the parent's first-line processing. */
++          size_t len = strlen ( job ) ;
++          memcpy ( buffer + curinput . locfield , job , len ) ;
++          curinput . limitfield = curinput . locfield + len ;
++          buffer [ curinput . limitfield ] = '\r' ;
++          last = curinput . limitfield ;
++          close ( cfd ) ;
++          close ( sfd ) ;
++          return ;   /* child resumes mainbody */
++        }
++        waitpid ( pid , & st , 0 ) ;
++        code = WIFEXITED ( st ) ? WEXITSTATUS ( st ) : 128 + WTERMSIG ( st ) ;
++        n = ( ssize_t ) snprintf ( reply , sizeof ( reply ) ,
++                                   "{\"exit\":%d}" , code ) ;
++        send ( cfd , reply , n , 0 ) ;
++        close ( cfd ) ;
++      }
++    }
++  }
++}

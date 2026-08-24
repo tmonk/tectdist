@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "date": "2026-08-24",
+  "host": "Apple M3 Max, macOS arm64",
+  "engine": "pdfTeX 3.141592653-2.6-1.40.29 built from texlive-20260301-source (sha512 7b244504...bbde), TECTDIST_FORKSERVER patch",
+  "workload": "one-page article via &pdflatex, batchmode",
+  "trials": 7,
+  "fork_server_child_ms": {"median": 18.78, "min": 17.80},
+  "cold_reference_exec_ms": {"median": 37.59, "min": 36.72},
+  "speedup_median": 2.0,
+  "child_creation_ms_p50": 1.5,
+  "gates": {
+    "child_creation_lt_2ms": true
+  },
+  "notes": [
+    "Child time includes fork + full article.cls initialisation + typeset + PDF write.",
+    "The frozen X10 tiny budget (<=5.1 ms vs BasicTeX reference) additionally requires the X2 preamble snapshot to remove per-child class/package initialisation (~13 ms here).",
+    "Pristine parent survived 7 sequential children plus quit; zero stale-output concerns as no state is shared post-fork."
+  ]
+}
