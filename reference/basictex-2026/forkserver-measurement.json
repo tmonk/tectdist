@@ -5,8 +5,14 @@
   "engine": "pdfTeX 3.141592653-2.6-1.40.29 built from texlive-20260301-source (sha512 7b244504...bbde), TECTDIST_FORKSERVER patch",
   "workload": "one-page article via &pdflatex, batchmode",
   "trials": 7,
-  "fork_server_child_ms": {"median": 18.78, "min": 17.80},
-  "cold_reference_exec_ms": {"median": 37.59, "min": 36.72},
+  "fork_server_child_ms": {
+    "median": 18.78,
+    "min": 17.8
+  },
+  "cold_reference_exec_ms": {
+    "median": 37.59,
+    "min": 36.72
+  },
   "speedup_median": 2.0,
   "child_creation_ms_p50": 1.5,
   "gates": {
@@ -16,5 +22,16 @@
     "Child time includes fork + full article.cls initialisation + typeset + PDF write.",
     "The frozen X10 tiny budget (<=5.1 ms vs BasicTeX reference) additionally requires the X2 preamble snapshot to remove per-child class/package initialisation (~13 ms here).",
     "Pristine parent survived 7 sequential children plus quit; zero stale-output concerns as no state is shared post-fork."
-  ]
+  ],
+  "preamble_snapshot_round": {
+    "setup": "preamble.fmt built via -ini &pdflatex + \\documentclass{article}\\dump; fork-server parent loads it via &preamble",
+    "children_successful": "9/9",
+    "child_median_ms": 15.02,
+    "child_min_ms": 14.22,
+    "pure_fork_plus_exit_ms": {
+      "median": 0.01,
+      "min": 0.01
+    },
+    "finding": "Fork itself is free on this host; the ~14 ms residual per child is real engine work remaining after preamble elimination: per-child font loading/PDF output/log flush/start-input. Reaching the frozen 5.1 ms tiny budget therefore depends on plan sections 14.3/14.4 (engine hot loops, PDF backend fast path), not on cheaper forking."
+  }
 }

@@ -84,3 +84,8 @@ server), reporting p50/p95 over ≥100 children with warm caches.
 - [x] Child-creation latency measured: **1.5 ms p50 (< 2 ms gate PASS)**;
       end-to-end fork-child one-pager 18.8 ms vs 37.6 ms cold = 2.0×
       (see reference/basictex-2026/forkserver-measurement.json)
+- [x] Preamble-snapshot round: article-preloaded format + fork children
+      compile 9/9 successfully at 15.0 ms median; pure-fork control measures
+      0.01 ms — the residual is post-preamble engine work (fonts, PDF out),
+      confirming the route to the 5.1 ms budget runs through §14.3/14.4
+      rather than further fork optimisation
