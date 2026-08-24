@@ -969,6 +969,55 @@ fn generated_auxiliary(
     })
 }
 
+/// Run the embedded MakeIndex tool inside `directory` with `arguments`
+/// (argv[0] excluded). Returns the process-equivalent exit status.
+fn run_embedded_makeindex(
+    directory: &Path,
+    arguments: &[OsString],
+) -> std::io::Result<std::process::ExitStatus> {
+    let saved_directory = env::current_dir()?;
+    let mut full_arguments: Vec<std::ffi::CString> = Vec::with_capacity(arguments.len() + 1);
+    full_arguments.push(std::ffi::CString::new("makeindex").unwrap());
+    for value in arguments {
+        full_arguments.push(std::ffi::CString::new(value.as_encoded_bytes())
+            .map_err(|_| std::io::Error::other("argument contains interior NUL"))?);
+    }
+    env::set_current_dir(directory)?;
+    let outcome = tectdist_makeindex::run(&full_arguments);
+    // Restore the caller's directory before surfacing the outcome.
+    env::set_current_dir(saved_directory)?;
+    let code =
+        outcome.map_err(|message| std::io::Error::other(format!("embedded makeindex: {message}")))?;
+    #[cfg(unix)]
+    {
+        use std::os::unix::process::ExitStatusExt;
+        Ok(std::process::ExitStatus::from_raw((code as i32) << 8))
+    }
+    #[cfg(not(unix))]
+    {
+        let _ = code;
+        Err(std::io::Error::other("embedded makeindex requires unix"))
+    }
+}
+
+/// Conservative index/glossary expectation detector (plan X5.1/X7.3 spirit):
+/// only explicit index or glossary setup in the primary source triggers the
+/// XDV-first flow. False negatives simply keep the previous two-full-session
+/// behaviour; false positives cost one extra short XDV session.
+fn index_run_expected(input: &Option<PathBuf>) -> bool {
+    let Some(input) = input else {
+        return false;
+    };
+    let Ok(source) = fs::read_to_string(input) else {
+        return false;
+    };
+    source.contains("\\makeindex")
+        || source.contains("\\makeglossary")
+        || source.contains("\\usepackage{makeidx}")
+        || source.contains("\\usepackage{imakeidx}")
+        || source.contains("\\usepackage{glossaries}")
+}
+
 fn rerun_after_index(
     plan: &CompilationPlan,
     executor: &dyn Executor,
@@ -980,9 +1029,15 @@ fn rerun_after_index(
         // directory scan would add latency and could choose another document's
         // index in a shared directory.
         if let Some(index) = generated_auxiliary(plan, generated_files, "idx") {
-            (index, false)
+            (Some(index), false)
+        } else if let Some(glo) = generated_auxiliary(plan, generated_files, "glo") {
+            (Some(glo), true)
+        } else if plan.first_pass_xdv {
+            // XDV-first pass but no index/glossary artifacts: the detector was
+            // conservative; only the final PDF conversion remains.
+            (None, false)
         } else {
-            (generated_auxiliary(plan, generated_files, "glo")?, true)
+            return None;
         }
     } else {
         let after = index_fingerprint(plan);
@@ -991,56 +1046,101 @@ fn rerun_after_index(
         {
             return None;
         }
-        (after?.0, false)
+        (Some(after?.0), false)
     };
+    if index.is_none() {
+        // No indexer needed; continue straight to the final PDF session.
+        return finish_index_continuation(plan, executor);
+    }
+    let index = index.unwrap();
     let self_path = env::current_exe().ok()?;
     let indexer =
         find_real_tool("makeindex", &self_path).or_else(|| find_real_tool("upmendex", &self_path));
-    let Some(indexer) = indexer else {
+    // Embedded MakeIndex first (plan X5.3): the pinned upstream tool compiled
+    // into this binary, run against a copy-on-write fork so its global state
+    // and EXIT paths cannot affect the host process. Falls back to an
+    // external makeindex/upmendex when explicitly requested or unavailable.
+    let use_embedded = env::var_os("TECTDIST_EXTERNAL_MAKEINDEX").is_none();
+    if !use_embedded && indexer.is_none() {
         eprintln!("tectdist: the document produced an index (.idx) but neither makeindex nor upmendex is available; the index will not be built.");
         return None;
-    };
+    }
     let index_started = Instant::now();
     let stem = index.file_stem()?.to_os_string();
     let stem_text = stem.to_string_lossy();
-    let mut command = Command::new(&indexer);
-    command.current_dir(&plan.output_dir);
+    let mut arguments: Vec<OsString> = Vec::new();
     if glossary {
         let style = format!("{stem_text}.ist");
         let transcript = format!("{stem_text}.glg");
         let output = format!("{stem_text}.gls");
         let input = format!("{stem_text}.glo");
-        command.args(["-s", &style, "-t", &transcript, "-o", &output, &input]);
-    } else {
-        command.arg(stem);
-    }
-    let status = match run_external_tool(&mut command) {
-        Ok(status) => status,
-        Err(error) => {
-            let exit = if error.kind() == std::io::ErrorKind::TimedOut {
-                124
-            } else {
-                127
-            };
-            trace_span("indexer.run", index_started.elapsed(), Some(exit));
-            eprintln!(
-                "tectdist: {} could not run for '{}': {error}",
-                indexer.display(),
-                index.display()
-            );
-            return Some(exit);
+        for value in ["-s", &style, "-t", &transcript, "-o", &output, &input] {
+            arguments.push(value.into());
         }
+    } else {
+        arguments.push(stem.clone());
+    }
+
+    let attempted = if use_embedded {
+        run_embedded_makeindex(&plan.output_dir, &arguments)
+    } else {
+        Err(std::io::Error::other("embedded makeindex disabled"))
+    };
+    let status = match attempted {
+        Ok(status) => Ok(status),
+        Err(error) => {
+            if use_embedded {
+                eprintln!("tectdist: embedded makeindex unavailable ({error}); trying external fallback");
+            }
+            let Some(ref indexer) = indexer else {
+                eprintln!(
+                    "tectdist: the document produced an index (.idx) but neither makeindex nor upmendex is available; the index will not be built."
+                );
+                return None;
+            };
+            let mut command = Command::new(&indexer);
+            command.current_dir(&plan.output_dir);
+            command.args(&arguments);
+            run_external_tool(&mut command)
+        }
+    };
+
+    let Ok(status) = status else {
+        // Distinguish a configured-timeout kill (124) from any other spawn or
+        // wait failure so callers see the documented semantics.
+        let timed_out = status.as_ref().is_err_and(|error| {
+            error.kind() == std::io::ErrorKind::TimedOut
+        });
+        let exit = if timed_out { 124 } else { 127 };
+        trace_span("indexer.run", index_started.elapsed(), Some(exit));
+        eprintln!(
+            "tectdist: {} could not run for '{}': {}",
+            if use_embedded { "makeindex" } else { "makeindex/upmendex" },
+            index.display(),
+            status.as_ref().err().map(ToString::to_string).unwrap_or_default()
+        );
+        return Some(exit);
     };
     trace_span("indexer.run", index_started.elapsed(), status.code());
     if !status.success() {
         eprintln!(
             "tectdist: {} failed on '{}'",
-            indexer.display(),
+            indexer.as_ref().map(|path| path.display().to_string())
+                .unwrap_or_else(|| "embedded makeindex".to_string()),
             index.display()
         );
         return Some(status.code().unwrap_or(128));
     }
+    finish_index_continuation(plan, executor)
+}
+
+fn finish_index_continuation(
+    plan: &CompilationPlan,
+    executor: &dyn Executor,
+) -> Option<i32> {
     let mut rerun = plan.clone();
+    // The continuation session emits the final PDF (plan X5.1).
+    rerun.first_pass_xdv = false;
     // The generated .ind/.gls lives in the output directory, which may be
     // separate from the source root. Both executors understand this explicit
     // Tectonic search-path option.
@@ -1079,6 +1179,7 @@ fn rerun_after_index(
     );
     Some(result.status)
 }
+
 
 fn latexmk(arguments: Vec<OsString>) -> i32 {
     let mut engine = OsString::from("pdflatex");
@@ -1269,6 +1370,7 @@ fn execute_engine(program: OsString, arguments: Vec<OsString>) -> i32 {
             .and_then(|input| input.file_stem().map(PathBuf::from))
             .map(IndexStrategy::ExpectedStem)
             .unwrap_or(IndexStrategy::NoIndexCheck),
+        first_pass_xdv: index_run_expected(&translation.input),
         diagnostics: Vec::new(),
     };
     if let EngineSelection::External(engine) = &plan.engine {

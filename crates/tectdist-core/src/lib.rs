@@ -46,6 +46,10 @@ pub struct CompilationPlan {
     pub job_name: Option<OsString>,
     pub engine_args: Vec<OsString>,
     pub index_strategy: IndexStrategy,
+    /// Plan X5.2: when an index/glossary run is expected, the first session
+    /// stops at the XDV stage so no PDF conversion is performed that would
+    /// immediately be discarded; the continuation session emits the final PDF.
+    pub first_pass_xdv: bool,
     pub diagnostics: Vec<Diagnostic>,
 }
 

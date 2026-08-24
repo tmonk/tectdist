@@ -313,7 +313,11 @@ impl Executor for EmbeddedTectonicExecutor {
             .format_name(format)
             .format_cache_path(&context.format_cache)
             .output_dir(&plan.output_dir)
-            .output_format(tectonic::driver::OutputFormat::Pdf)
+            .output_format(if plan.first_pass_xdv {
+                tectonic::driver::OutputFormat::Xdv
+            } else {
+                tectonic::driver::OutputFormat::Pdf
+            })
             .keep_logs(retention.keep_logs())
             .keep_intermediates(retention.keep_intermediates())
             .synctex(synctex)
@@ -334,19 +338,31 @@ impl Executor for EmbeddedTectonicExecutor {
 
         let pass_duration = pass_started.elapsed();
         let stage_records = observing_status.finish();
-        let output = plan
-            .output_dir
-            .join(input.file_stem().ok_or_else(|| {
-                io::Error::new(io::ErrorKind::InvalidInput, "input has no file stem")
-            })?)
-            .with_extension("pdf");
-        if !output.is_file() {
+        let stem_os = input.file_stem().ok_or_else(|| {
+            io::Error::new(io::ErrorKind::InvalidInput, "input has no file stem")
+        })?;
+        let output = plan.output_dir.join(stem_os).with_extension("pdf");
+        if !plan.first_pass_xdv && !output.is_file() {
             return Err(io::Error::new(
                 io::ErrorKind::NotFound,
                 "embedded Tectonic completed without a PDF output",
             ));
         }
-        let mut generated_files = vec![output.clone()];
+        // The XDV intermediate is the deliverable of an XDV-first pass.
+        let xdv_output = plan.output_dir.join(stem_os).with_extension("xdv");
+        if plan.first_pass_xdv && !xdv_output.is_file() {
+            return Err(io::Error::new(
+                io::ErrorKind::NotFound,
+                "embedded Tectonic completed without an XDV output",
+            ));
+        }
+        let mut generated_files = Vec::new();
+        if output.is_file() {
+            generated_files.push(output.clone());
+        }
+        if plan.first_pass_xdv && xdv_output.is_file() {
+            generated_files.push(xdv_output);
+        }
         let mut events = vec![
             ExecutionEvent {
                 name: "engine.embedded",

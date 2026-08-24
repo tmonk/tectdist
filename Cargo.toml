@@ -6,6 +6,7 @@ members = [
   "crates/tectdist-tools",
   "crates/tectdist-cli",
   "crates/tectdist-bench",
+  "crates/tectdist-makeindex",
 ]
 
 [profile.release]

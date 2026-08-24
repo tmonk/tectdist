@@ -3063,6 +3063,7 @@ dependencies = [
  "libc",
  "tectdist-core",
  "tectdist-engine",
+ "tectdist-makeindex",
  "tectdist-tools",
 ]
 
@@ -3078,6 +3079,15 @@ dependencies = [
  "tectonic",
  "tectonic_bridge_core",
  "tectonic_bundles",
+]
+
+[[package]]
+name = "tectdist-makeindex"
+version = "0.2.2"
+dependencies = [
+ "cc",
+ "libc",
+ "tempfile",
 ]
 
 [[package]]

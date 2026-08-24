@@ -381,6 +381,7 @@ fn native_external_path_runs_indexer_then_reruns_engine() {
     fs::write(directory.join("sample.tex"), "\\documentclass{article}").unwrap();
     let old_path = std::env::var("PATH").unwrap_or_default();
     let status = Command::new(binary())
+        .env("TECTDIST_EXTERNAL_MAKEINDEX", "1")
         .current_dir(&directory)
         .env("TECTONIC", &engine)
         .env("TECTDIST_ENGINE_MODE", "external")
@@ -414,6 +415,7 @@ fn native_indexer_timeout_is_reported() {
     fs::write(directory.join("sample.tex"), "\\documentclass{article}").unwrap();
     let old_path = std::env::var("PATH").unwrap_or_default();
     let output = Command::new(binary())
+        .env("TECTDIST_EXTERNAL_MAKEINDEX", "1")
         .current_dir(&directory)
         .env("TECTONIC", &engine)
         .env("TECTDIST_ENGINE_MODE", "external")
@@ -753,6 +755,7 @@ fn embedded_indexer_failure_is_not_reported_as_success() {
     let trace = directory.join("trace.jsonl");
     let old_path = std::env::var("PATH").unwrap_or_default();
     let output = Command::new(binary())
+        .env("TECTDIST_EXTERNAL_MAKEINDEX", "1")
         .current_dir(&directory)
         .env("PATH", format!("{}:{old_path}", directory.display()))
         .env("TECTDIST_TRACE_FILE", &trace)
@@ -791,6 +794,7 @@ fn embedded_glossary_uses_makeindex_style_arguments() {
     }
     let old_path = std::env::var("PATH").unwrap_or_default();
     let output = Command::new(binary())
+        .env("TECTDIST_EXTERNAL_MAKEINDEX", "1")
         .current_dir(&directory)
         .env("PATH", format!("{}:{old_path}", directory.display()))
         .arg("main.tex")
