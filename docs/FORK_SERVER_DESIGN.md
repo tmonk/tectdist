@@ -148,6 +148,15 @@ Findings:
    the serving parent; children resume with the project fmt preloaded via
    a first-line &reference to a supervisor-managed copy.
 
+Confirmed env requirement (empirical): mid-ini &load of pdflatex.fmt
+fails unless TEXFORMATS explicitly includes the directory holding the fmt
+(default cnf chains resolve through SELFAUTOPARENT, which breaks when the
+engine binary runs outside its installed tree). The supervisor's offline
+builder must therefore set:
+  TEXMFROOT=<image>, TEXMFCNF=<image>, TEXMFCNF-style TEXFORMATS including
+  <image>/texmf-var/web2c/pdftex (or place fmts in cwd — '.' is searched).
+With that env, &pdflatex loads correctly and the \dump path is viable.
+
 Next actions queued:
 - Study mylatexformat.sty + fmtutil joint behaviour; replicate its exact
   token/state handling in the supervisor's offline format builder.
