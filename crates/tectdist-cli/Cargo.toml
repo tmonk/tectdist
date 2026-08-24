@@ -9,6 +9,9 @@ tectdist-core = { path = "../tectdist-core" }
 tectdist-engine = { path = "../tectdist-engine" }
 tectdist-tools = { path = "../tectdist-tools" }
 
+[target.'cfg(unix)'.dependencies]
+libc = "0.2"
+
 [features]
 default = ["embedded"]
 embedded = ["tectdist-engine/embedded"]

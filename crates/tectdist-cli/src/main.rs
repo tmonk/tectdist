@@ -1,7 +1,6 @@
 use std::env;
 use std::ffi::OsString;
 use std::fs;
-use std::io::Write;
 use std::path::{Path, PathBuf};
 use std::process::Command;
 use std::time::{Duration, Instant, SystemTime, UNIX_EPOCH};
@@ -123,28 +122,97 @@ fn command_first_line(command: &Path, argument: &str) -> Option<String> {
         })
 }
 
-/// Append an opt-in JSON-lines timing span. This deliberately mirrors the
+/// Buffered opt-in JSON-lines timing sink. This deliberately mirrors the
 /// Python reference's `TECTDIST_TRACE_FILE` contract without adding a runtime
 /// logging dependency to the native fast path.
-fn trace_span(name: &str, elapsed: std::time::Duration, status: Option<i32>) {
-    let Some(path) = env::var_os("TECTDIST_TRACE_FILE") else {
-        return;
-    };
-    let end_ns = SystemTime::now()
-        .duration_since(UNIX_EPOCH)
-        .map(|duration| duration.as_nanos())
-        .unwrap_or(0);
-    let duration_ns = elapsed.as_nanos();
-    let start_ns = end_ns.saturating_sub(duration_ns);
-    let status = status
-        .map(|value| format!(",\"status\":{value}"))
-        .unwrap_or_default();
-    let line = format!(
-        "{{\"schema_version\":1,\"span\":\"{name}\",\"start_ns\":{start_ns},\"duration_ns\":{duration_ns}{status}}}\n"
-    );
-    if let Ok(mut file) = fs::OpenOptions::new().create(true).append(true).open(path) {
-        let _ = file.write_all(line.as_bytes());
+///
+/// Spans are accumulated in memory and written once at process exit (or when
+/// the buffer grows large), so tracing never opens the trace file per span.
+/// Timestamps are derived from elapsed durations, so buffered records carry
+/// the same start/duration values an unbuffered writer would have produced.
+mod trace_sink {
+    use super::{Duration, SystemTime, UNIX_EPOCH};
+    use std::io::Write;
+    use std::path::PathBuf;
+    use std::sync::{Mutex, OnceLock};
+
+    /// Flush before this many buffered bytes to bound memory on long runs.
+    const FLUSH_THRESHOLD_BYTES: usize = 1 << 20;
+
+    struct State {
+        resolved: bool,
+        path: Option<PathBuf>,
+        buffer: String,
     }
+
+    static STATE: OnceLock<Mutex<State>> = OnceLock::new();
+
+    extern "C" fn flush_at_exit() {
+        flush();
+    }
+
+    fn state() -> &'static Mutex<State> {
+        STATE.get_or_init(|| {
+            #[cfg(unix)]
+            unsafe {
+                // std::process::exit skips destructors; atexit still runs.
+                libc::atexit(flush_at_exit);
+            }
+            Mutex::new(State { resolved: false, path: None, buffer: String::new() })
+        })
+    }
+
+    fn write_buffer(path: &PathBuf, buffer: &mut String) {
+        if buffer.is_empty() {
+            return;
+        }
+        if let Ok(mut file) = std::fs::OpenOptions::new().create(true).append(true).open(path) {
+            let _ = file.write_all(buffer.as_bytes());
+        }
+        buffer.clear();
+    }
+
+    pub fn flush() {
+        if let Ok(mut state) = state().lock() {
+            if let Some(path) = state.path.clone() {
+                write_buffer(&path, &mut state.buffer);
+            }
+        }
+    }
+
+    pub fn record(name: &str, elapsed: Duration, status: Option<i32>) -> Option<()> {
+        let end_ns = SystemTime::now()
+            .duration_since(UNIX_EPOCH)
+            .map(|duration| duration.as_nanos())
+            .unwrap_or(0);
+        let duration_ns = elapsed.as_nanos();
+        let start_ns = end_ns.saturating_sub(duration_ns);
+        let status_field = status
+            .map(|value| format!(",\"status\":{value}"))
+            .unwrap_or_default();
+        let line = format!(
+            "{{\"schema_version\":1,\"span\":\"{name}\",\"start_ns\":{start_ns},\"duration_ns\":{duration_ns}{status_field}}}\n"
+        );
+        let mut state = state().lock().ok()?;
+        if !state.resolved {
+            state.resolved = true;
+            state.path = std::env::var_os("TECTDIST_TRACE_FILE").map(PathBuf::from);
+        }
+        match state.path.clone() {
+            None => {}
+            Some(path) => {
+                state.buffer.push_str(&line);
+                if state.buffer.len() >= FLUSH_THRESHOLD_BYTES {
+                    write_buffer(&path, &mut state.buffer);
+                }
+            }
+        }
+        Some(())
+    }
+}
+
+fn trace_span(name: &str, elapsed: std::time::Duration, status: Option<i32>) {
+    let _ = trace_sink::record(name, elapsed, status);
 }
 
 fn doctor(json: bool) -> i32 {
@@ -324,21 +392,63 @@ fn external_tool_timeout() -> Duration {
 
 fn run_external_tool(command: &mut Command) -> std::io::Result<std::process::ExitStatus> {
     let mut child = command.spawn()?;
-    let deadline = Instant::now() + external_tool_timeout();
-    loop {
-        if let Some(status) = child.try_wait()? {
-            return Ok(status);
+    let timeout = external_tool_timeout();
+    if !cfg!(unix) {
+        // Portable fallback: bounded polling on platforms without a direct
+        // kill-from-watchdog facility.
+        let deadline = Instant::now() + timeout;
+        loop {
+            if let Some(status) = child.try_wait()? {
+                return Ok(status);
+            }
+            if Instant::now() >= deadline {
+                let _ = child.kill();
+                let _ = child.wait();
+                return Err(std::io::Error::new(
+                    std::io::ErrorKind::TimedOut,
+                    "external tool exceeded configured timeout",
+                ));
+            }
+            std::thread::sleep(Duration::from_millis(5));
         }
-        if Instant::now() >= deadline {
-            let _ = child.kill();
-            let _ = child.wait();
-            return Err(std::io::Error::new(
-                std::io::ErrorKind::TimedOut,
-                "external tool exceeded configured timeout",
-            ));
-        }
-        std::thread::sleep(Duration::from_millis(5));
     }
+    // Blocking wait with a watchdog that kills on deadline (plan X2.4): the
+    // waiting thread never polls, removing quantisation and wakeups.
+    use std::sync::atomic::{AtomicBool, Ordering};
+    use std::sync::Arc;
+    use std::thread;
+    let pid = child.id();
+    let done = Arc::new(AtomicBool::new(false));
+    let killed = Arc::new(AtomicBool::new(false));
+    let watchdog_done = done.clone();
+    let watchdog_killed = killed.clone();
+    let watchdog = thread::spawn(move || {
+        let start = Instant::now();
+        while start.elapsed() < timeout {
+            if watchdog_done.load(Ordering::Relaxed) {
+                return;
+            }
+            thread::sleep(Duration::from_millis(2).min(timeout / 4));
+        }
+        if !watchdog_done.load(Ordering::Relaxed)
+            && !watchdog_killed.swap(true, Ordering::Relaxed)
+        {
+            // The exited-but-unreaped window is tiny; an ESRCH here is harmless.
+            unsafe {
+                libc::kill(pid as libc::pid_t, libc::SIGKILL);
+            }
+        }
+    });
+    let status = child.wait();
+    done.store(true, Ordering::Relaxed);
+    let _ = watchdog.join();
+    if killed.load(Ordering::Relaxed) {
+        return Err(std::io::Error::new(
+            std::io::ErrorKind::TimedOut,
+            "external tool exceeded configured timeout",
+        ));
+    }
+    status
 }
 
 fn ghostscript_tool(name: &str, arguments: &[OsString], self_path: &Path) -> i32 {
@@ -940,7 +1050,18 @@ fn rerun_after_index(
     ]);
     let rerun_started = Instant::now();
     let result = match executor.execute(&rerun) {
-        Ok(result) => result,
+        Ok(result) => {
+            // Trace the continuation's stage events so context reuse is
+            // observable alongside the primary pass.
+            for event in &result.events {
+                trace_span(
+                    event.name,
+                    std::time::Duration::from_nanos(event.duration_ns.min(u64::MAX as u128) as u64),
+                    Some(result.status),
+                );
+            }
+            result
+        }
         Err(error) => {
             trace_span(
                 "engine.rerun_after_index",
@@ -965,6 +1086,7 @@ fn latexmk(arguments: Vec<OsString>) -> i32 {
     let mut input: Option<OsString> = None;
     let mut clean = None;
     let mut dry_run = false;
+    let mut silent = false;
     let mut pending: Option<&str> = None;
     for argument in arguments {
         let text = argument.to_string_lossy();
@@ -985,7 +1107,10 @@ fn latexmk(arguments: Vec<OsString>) -> i32 {
             "-c" => clean = Some(false),
             "-C" => clean = Some(true),
             "-n" | "--dry-run" => dry_run = true,
-            "-q" | "-quiet" => forwarded.push(OsString::from("-interaction=batchmode")),
+            "-q" | "-quiet" | "-silent" => {
+                silent = true;
+                forwarded.push(OsString::from("-interaction=batchmode"));
+            }
             "-interaction" => pending = Some("interaction"),
             "-synctex" => pending = Some("synctex"),
             "-outdir" | "-out-directory" | "-output-directory" | "-auxdir" | "-aux-directory" => {
@@ -1091,7 +1216,11 @@ fn latexmk(arguments: Vec<OsString>) -> i32 {
         println!("latexmk: dry run: {}", engine.to_string_lossy());
         return 0;
     }
-    println!("latexmk: Running '{}'", engine.to_string_lossy());
+    // Compatibility chatter costs nothing when suppressed and is hidden in
+    // silent/quiet modes or whenever stdout is not a terminal (plan X2.5).
+    if !silent && std::io::IsTerminal::is_terminal(&std::io::stdout()) {
+        println!("latexmk: Running '{}'", engine.to_string_lossy());
+    }
     execute_engine(engine, command)
 }
 
@@ -1160,7 +1289,10 @@ fn execute_engine(program: OsString, arguments: Vec<OsString>) -> i32 {
     } else {
         #[cfg(feature = "embedded")]
         {
-            &EmbeddedTectonicExecutor
+            // Leaked once per process so the EngineContext (config, bundle,
+            // format cache) is shared across engine invocations, including
+            // index continuation (plan X2.1).
+            &*Box::leak(Box::new(EmbeddedTectonicExecutor::default()))
         }
         #[cfg(not(feature = "embedded"))]
         {

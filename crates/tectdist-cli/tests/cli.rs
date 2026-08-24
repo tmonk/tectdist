@@ -645,10 +645,11 @@ fn embedded_biblatex_runs_biber_and_records_artifacts() {
     assert!(trace.contains("artifact.bbl"));
     for stage in [
         "engine.config",
-        "bundle.open",
-        "format_cache.resolve",
         "engine.session_create",
         "engine.pass",
+        "engine.stage.tex_pass",
+        "engine.stage.external_tool",
+        "engine.stage.xdvipdfmx",
     ] {
         let line = trace
             .lines()

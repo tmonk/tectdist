@@ -9,6 +9,86 @@ permissions:
   contents: read
 
 jobs:
+  # Separate smoke, regression, and qualification jobs (plan X0.3/X10-004).
+  # Only the qualification job may update public benchmark evidence; it is
+  # the only one allowed to refresh the accepted baseline.
+  smoke:
+    runs-on: [self-hosted, tectdist-perf]
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.11'
+      - name: Build native release candidate
+        run: cargo build --release --locked --workspace
+      - name: Link farm at the native release binary
+        run: python make_links.py --target "$PWD/target/release/tectdist"
+      - name: Untraced smoke subset
+        env:
+          TECTDIST_BENCH_DIRECT_TECTONIC: tectonic
+        run: >-
+          python -m benchmarks.runner.cli --candidate ./bin/pdflatex
+          --document tiny --document index --document biblatex
+          --scenario warm-clean --trials 5 --warmups 2
+          --output benchmark-results/smoke.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: nightly-smoke
+          path: benchmark-results/smoke.json
+
+  regression:
+    runs-on: [self-hosted, tectdist-perf]
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.11'
+      - name: Build native release candidate
+        run: cargo build --release --locked --workspace
+      - name: Record candidate binary identity
+        run: |
+          mkdir -p benchmark-results
+          python3 - <<'PY' | tee benchmark-results/candidate-sha256.txt
+          import hashlib, pathlib
+          data = pathlib.Path("target/release/tectdist").read_bytes()
+          print(hashlib.sha256(data).hexdigest(), "target/release/tectdist")
+          PY
+      - name: Link farm at the native release binary
+        run: python make_links.py --target "$PWD/target/release/tectdist"
+      - name: Nightly regression over the compact corpus (untraced timed + traced diagnostics)
+        # Native candidate versus direct Tectonic and TeX Live latexmk
+        # controls. Real-document expansion lands with corpus workstream X18.
+        env:
+          TECTDIST_BENCH_DIRECT_TECTONIC: tectonic
+          TECTDIST_BENCH_LATEXMK: latexmk
+        run: >-
+          python -m benchmarks.runner.cli --candidate ./bin/pdflatex
+          --scenario warm-clean --trials 15 --warmups 3 --diagnose
+          --output benchmark-results/regression.json
+      - name: Gate against the accepted baseline
+        run: |
+          if [ ! -f benchmarks/baseline/nightly-baseline.json ]; then
+            echo "no accepted nightly baseline yet; bootstrapping from this run"
+            mkdir -p benchmarks/baseline
+            cp benchmark-results/regression.json benchmarks/baseline/nightly-baseline.json
+            exit 0
+          fi
+          python -m benchmarks.runner.gates \
+            --baseline benchmarks/baseline/nightly-baseline.json \
+            --current benchmark-results/regression.json \
+            --p50-threshold-pct 3 --p95-threshold-pct 5
+      - name: Stage-budget report (plan X1.4)
+        run: >-
+          python -m benchmarks.runner.stage_budget benchmark-results/regression.json
+          --min-coverage 95 | tee benchmark-results/stage-budget.md
+      - uses: actions/upload-artifact@v4
+        with:
+          name: nightly-regression
+          path: |
+            benchmark-results/regression.json
+            benchmark-results/stage-budget.md
+            benchmark-results/candidate-sha256.txt
+
   qualification:
     runs-on: [self-hosted, tectdist-perf]
     steps:
@@ -16,15 +96,38 @@ jobs:
       - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
         with:
           python-version: '3.11'
-      - run: python make_links.py
-      - name: Run paired qualification subset
+      - name: Build native release candidate
+        run: cargo build --release --locked --workspace
+      - name: Link farm at the native release binary
+        run: python make_links.py --target "$PWD/target/release/tectdist"
+      - name: Paired qualification with independent TeX Live control
+        # Qualification mode enforces a clean tagged revision, declared
+        # bundle/format/TeX Live provenance, and >=30 balanced paired trials.
+        # Host configuration supplies the provenance variables below.
         env:
           TECTDIST_BENCH_DIRECT_TECTONIC: tectonic
+          TECTDIST_BENCH_LATEXMK: latexmk
+          TECTDIST_BUNDLE_SOURCE: ${{ vars.TECTDIST_BUNDLE_SOURCE }}
+          TECTDIST_BUNDLE_ID: ${{ vars.TECTDIST_BUNDLE_ID }}
+          TECTDIST_BUNDLE_MANIFEST_SHA256: ${{ vars.TECTDIST_BUNDLE_MANIFEST_SHA256 }}
+          TECTDIST_FORMAT_CACHE_ID: ${{ vars.TECTDIST_FORMAT_CACHE_ID }}
+          TECTDIST_TEXLIVE_SOURCE: ${{ vars.TECTDIST_TEXLIVE_SOURCE }}
+          TECTDIST_TEXLIVE_ID: ${{ vars.TECTDIST_TEXLIVE_ID }}
+          TECTDIST_TEXLIVE_MANIFEST_SHA256: ${{ vars.TECTDIST_TEXLIVE_MANIFEST_SHA256 }}
+          TECTDIST_TEXLIVE_FORMAT_ID: ${{ vars.TECTDIST_TEXLIVE_FORMAT_ID }}
         run: >-
-          python -m benchmarks.runner.cli --candidate ./bin/pdflatex --trials 30
-          --output benchmark-results/nightly.json
-      - run: python -m benchmarks.runner.report benchmark-results/nightly.json --output benchmark-results/summary.md
+          python -m benchmarks.runner.cli --candidate ./bin/pdflatex
+          --scenario warm-clean --qualification
+          --trials 30 --warmups 5
+          --output "benchmark-results/qualification-${GITHUB_SHA}.json"
+      - name: Regenerate public summary from raw JSON
+        run: >-
+          python -m benchmarks.runner.report
+          "benchmark-results/qualification-${GITHUB_SHA}.json"
+          --output benchmark-results/summary.md
       - uses: actions/upload-artifact@v4
         with:
-          name: nightly-performance-results
-          path: benchmark-results/
+          name: nightly-qualification-${{ github.sha }}
+          path: |
+            benchmark-results/qualification-*.json
+            benchmark-results/summary.md

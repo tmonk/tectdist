@@ -32,9 +32,11 @@ def validate(payload):
                 for field in ("wall_time_ms", "exit_status", "process_count",
                               "process_count_method", "engine_pass_count",
                               "external_tool_count", "correctness", "trace_spans",
-                              "resources"):
+                              "resources", "measurement_class"):
                     if field not in sample:
                         errors.append("sample missing field: " + field)
+                if sample.get("measurement_class") not in ("untraced-timed", "traced-diagnostic"):
+                    errors.append("sample measurement_class is unknown")
                 resources = sample.get("resources", {})
                 for field in ("download_observed", "bytes_downloaded",
                               "download_duration_ms", "decompression_duration_ms",

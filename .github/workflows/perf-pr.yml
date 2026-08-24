@@ -11,21 +11,49 @@ jobs:
   smoke:
     # Repository owners attach a stable labelled host. Hosted CI remains a
     # correctness/smoke signal and is never release-performance evidence.
+    #
+    # Benchmarks the exact native release binary (plan X0.3/X10-003): the
+    # Python launcher is never timed, and the candidate SHA-256 is recorded
+    # beside the results.
     runs-on: [self-hosted, tectdist-perf]
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
       - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
         with:
           python-version: '3.11'
-      - name: Build launcher
-        run: python make_links.py
-      - name: Smoke benchmark (requires configured direct control)
+      - name: Build native release candidate
+        run: cargo build --release --locked --workspace
+      - name: Record candidate binary identity
+        run: |
+          mkdir -p benchmark-results
+          python3 - <<'PY' | tee benchmark-results/candidate-sha256.txt
+          import hashlib, pathlib
+          data = pathlib.Path("target/release/tectdist").read_bytes()
+          print(hashlib.sha256(data).hexdigest(), "target/release/tectdist")
+          PY
+      - name: Link farm at the native release binary
+        run: python make_links.py --target "$PWD/target/release/tectdist"
+      - name: Untraced smoke benchmark (requires configured direct control)
         env:
           TECTDIST_BENCH_DIRECT_TECTONIC: tectonic
         run: >-
           python -m benchmarks.runner.cli --candidate ./bin/pdflatex
-          --document tiny --trials 3 --output benchmark-results/smoke.json
+          --document tiny --document index --document biblatex
+          --scenario warm-clean --trials 5 --warmups 2
+          --output benchmark-results/smoke.json
+      - name: Baseline gates (when an accepted baseline exists)
+        run: |
+          if [ -f benchmarks/baseline/pr-baseline.json ]; then
+            python -m benchmarks.runner.gates \
+              --baseline benchmarks/baseline/pr-baseline.json \
+              --current benchmark-results/smoke.json \
+              --p50-threshold-pct 3 --p95-threshold-pct 5
+          else
+            echo "no accepted PR baseline yet; skipping gate comparison"
+          fi
       - uses: actions/upload-artifact@v4
         with:
           name: performance-smoke
-          path: benchmark-results/smoke.json
+          path: |
+            benchmark-results/smoke.json
+            benchmark-results/candidate-sha256.txt

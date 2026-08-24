@@ -145,44 +145,126 @@ def _resource_metrics(spans, environment, cache_growth=None):
     }
 
 
-def sample(command, cwd, environment=None):
-    try:
-        import resource
-        before = resource.getrusage(resource.RUSAGE_CHILDREN)
-    except ImportError:  # pragma: no cover - non-POSIX runner
-        before = None
-    start = time.perf_counter_ns()
-    trace_file = Path(cwd) / ".tectdist-trace.jsonl"
-    environment = dict(os.environ if environment is None else environment)
-    environment["TECTDIST_TRACE_FILE"] = str(trace_file)
-    cache_value = environment.get("TECTONIC_CACHE_DIR") or environment.get("XDG_CACHE_HOME")
-    cache_root = Path(cache_value) if cache_value else None
-    cache_before = _tree_size(cache_root)
-    result = subprocess.run(command, cwd=cwd, capture_output=True, text=True,
-                            errors="replace", env=environment)
-    cache_growth = _tree_size(cache_root) - cache_before if cache_root else None
-    try:
-        after = resource.getrusage(resource.RUSAGE_CHILDREN)
-    except (ImportError, NameError):  # pragma: no cover - non-POSIX runner
-        after = None
-    spans = _read_trace(trace_file)
+def supervisor_command():
+    """Locate the native benchmark supervisor for per-child resource metrics.
+
+    Explicit configuration wins (TECTDIST_BENCH_SUPERVISOR); otherwise a built
+    workspace artifact is used when present. Without it the runner falls back
+    to cumulative RUSAGE_CHILDREN deltas and labels the method accordingly.
+    """
+    configured = os.environ.get("TECTDIST_BENCH_SUPERVISOR")
+    if configured:
+        return configured if Path(configured).is_file() else None
+    for profile in ("release", "debug"):
+        path = ROOT / "target" / profile / "tectdist-bench"
+        if path.is_file() and os.access(path, os.X_OK):
+            return str(path)
+    return None
+
+
+def _base_payload(wall_ms, result, spans):
     process_count, process_count_method = _process_count_from_trace(spans)
     engine_passes, external_tools = _stage_counts(spans)
-    payload = {"wall_time_ms": (time.perf_counter_ns() - start) / 1_000_000,
-            "exit_status": result.returncode, "stdout": result.stdout,
-            "stderr": result.stderr, "process_count": process_count,
+    return {"wall_time_ms": wall_ms,
+            "exit_status": result.returncode if result is not None else None,
+            "stdout": result.stdout if result is not None else "",
+            "stderr": result.stderr if result is not None else "",
+            "process_count": process_count,
             "process_count_method": process_count_method,
             "engine_pass_count": engine_passes,
             "external_tool_count": external_tools}
-    if before is not None and after is not None:
+
+
+def _child_rusage_delta():
+    try:
+        import resource
+        return resource.getrusage(resource.RUSAGE_CHILDREN)
+    except ImportError:  # pragma: no cover - non-POSIX runner
+        return None
+
+
+def sample(command, cwd, environment=None):
+    """One untraced timed build.
+
+    The timed path never sets ``TECTDIST_TRACE_FILE``: candidate-only trace
+    writes must not appear inside product wall time (plan X0.1). Cache-tree
+    sizing also happens strictly outside the measured interval. When the
+    native supervisor is available, per-child CPU and peak RSS come from
+    wait4 around child execution only instead of cumulative RUSAGE_CHILDREN.
+    """
+    environment = dict(os.environ if environment is None else environment)
+    environment.pop("TECTDIST_TRACE_FILE", None)
+    cache_value = environment.get("TECTONIC_CACHE_DIR") or environment.get("XDG_CACHE_HOME")
+    cache_root = Path(cache_value) if cache_value else None
+    cache_before = _tree_size(cache_root)  # outside the timed interval
+
+    supervisor = supervisor_command()
+    metrics_path = None
+    before = _child_rusage_delta()
+    start = time.perf_counter_ns()
+    if supervisor:
+        handle, metrics_path = tempfile.mkstemp(prefix="tectdist-metrics-", suffix=".json")
+        os.close(handle)
+        wrapped = [supervisor, "--output", metrics_path, "--"] + list(command)
+        result = subprocess.run(wrapped, cwd=cwd, capture_output=True, text=True,
+                                errors="replace", env=environment)
+    else:
+        result = subprocess.run(command, cwd=cwd, capture_output=True, text=True,
+                                errors="replace", env=environment)
+    wall_ms = (time.perf_counter_ns() - start) / 1_000_000
+    cache_growth = _tree_size(cache_root) - cache_before if cache_root else None  # untimed
+    after = _child_rusage_delta()
+
+    payload = _base_payload(wall_ms, result, [])
+    payload["measurement_class"] = "untraced-timed"
+    payload["trace_spans"] = []
+    payload["resources"] = _resource_metrics([], environment, cache_growth)
+    metrics = None
+    if metrics_path is not None:
+        try:
+            metrics = json.loads(Path(metrics_path).read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            metrics = None
+        finally:
+            Path(metrics_path).unlink(missing_ok=True)
+    if metrics and "error" not in metrics:
+        payload["wall_time_ms"] = metrics["wall_time_ms"]
+        payload["user_cpu_ms"] = metrics.get("user_cpu_ms")
+        payload["system_cpu_ms"] = metrics.get("system_cpu_ms")
+        payload["peak_rss"] = metrics.get("peak_rss")
+        payload["peak_rss_unit"] = metrics.get("peak_rss_unit")
+        payload["resource_method"] = metrics.get("resource_method", "wait4-direct-child")
+    elif before is not None and after is not None:
+        # Fallback: cumulative children delta. Peak RSS is a running maximum
+        # across every child this runner has ever waited on, never a clean
+        # per-build figure.
         payload["user_cpu_ms"] = (after.ru_utime - before.ru_utime) * 1000
         payload["system_cpu_ms"] = (after.ru_stime - before.ru_stime) * 1000
-        # ru_maxrss is KiB on Linux and bytes on macOS; record the platform
-        # unit alongside the unmodified value rather than guessing.
         payload["peak_rss"] = after.ru_maxrss
         payload["peak_rss_unit"] = "bytes" if os.uname().sysname == "Darwin" else "KiB"
+        payload["resource_method"] = "rusage-children-cumulative"
+    return payload
+
+
+def traced_diagnostic_sample(command, cwd, environment=None):
+    """One untimed traced repetition on a separate identical project copy.
+
+    Stage data comes from here only; these records are excluded from paired
+    statistics and must never support a product-speed claim (plan X0.1).
+    """
+    environment = dict(os.environ if environment is None else environment)
+    trace_file = Path(cwd) / ".tectdist-trace.jsonl"
+    environment["TECTDIST_TRACE_FILE"] = str(trace_file)
+    start = time.perf_counter_ns()
+    result = subprocess.run(command, cwd=cwd, capture_output=True, text=True,
+                            errors="replace", env=environment)
+    wall_ms = (time.perf_counter_ns() - start) / 1_000_000
+    spans = _read_trace(trace_file)
+    payload = _base_payload(wall_ms, result, spans)
+    payload["measurement_class"] = "traced-diagnostic"
+    payload["excluded_from_claims"] = True
     payload["trace_spans"] = spans
-    payload["resources"] = _resource_metrics(spans, environment, cache_growth)
+    payload["resources"] = _resource_metrics(spans, environment)
     return payload
 
 
@@ -201,6 +283,10 @@ def main(argv=None):
                         help="enforce release-grade trial and provenance inputs")
     parser.add_argument("--expensive-case", action="store_true",
                         help="use the plan's 15-pair threshold for book-scale workloads")
+    parser.add_argument("--pair-seed", type=int, default=0,
+                        help="seed for randomising the sequence of balanced AB/BA pairs")
+    parser.add_argument("--diagnose", action="store_true",
+                        help="add untimed traced diagnostic repetitions for the candidate")
     parser.add_argument("--output", required=True)
     ns = parser.parse_args(argv)
     if ns.qualification:
@@ -244,9 +330,12 @@ def main(argv=None):
     output = {"schema_version": 1, "repository_commit": repository_commit,
               "dirty": dirty, "runner_commit": repository_commit, "qualification": ns.qualification,
               "trial_class": "expensive" if ns.expensive_case else "ordinary",
-              "session_id": str(uuid.uuid4()),
+              "balance_seed": ns.pair_seed, "session_id": str(uuid.uuid4()),
               "timestamp_utc": utc_now(), "platform": collect(), "runs": []}
-    rng = random.Random(0)
+    pair_rng = random.Random(ns.pair_seed)
+    if not supervisor_command():
+        print("tectdist-bench: native supervisor not found; using cumulative "
+              "RUSAGE_CHILDREN fallback (build target/release/tectdist-bench)")
     for document in docs:
         if ns.scenario not in document.get("scenarios", []):
             continue
@@ -256,10 +345,23 @@ def main(argv=None):
                 continue
             if not competitor_applicable(competitor_name, document):
                 continue
+            # Balanced AB/BA stratification (plan X0.4): each tool runs first
+            # in exactly half the timed trials; the extra orientation for odd
+            # trial counts is chosen at random; the sequence of balanced pairs
+            # is then shuffled with a recorded seed.
+            half = ns.trials // 2
+            extra = (["candidate", competitor_name] if pair_rng.random() < 0.5
+                     else [competitor_name, "candidate"])
+            orders = ([["candidate", competitor_name]] * half +
+                      [[competitor_name, "candidate"]] * half)
+            if ns.trials % 2:
+                orders.append(extra)
+            pair_rng.shuffle(orders)
             samples = []
+            diagnostics = []
             for ignored in range(ns.warmups + ns.trials):
-                order = ["candidate", competitor_name]
-                rng.shuffle(order)
+                order = (orders[(ignored - ns.warmups) % len(orders)]
+                         if ignored >= ns.warmups else orders[ignored % len(orders)])
                 results = {}
                 with tempfile.TemporaryDirectory(prefix="tectdist-bench-") as temporary:
                     for name in order:
@@ -274,7 +376,6 @@ def main(argv=None):
                             if seeded["exit_status"] != 0:
                                 raise SystemExit("warm-existing-output setup failed for %s/%s" %
                                                  (document["id"], name))
-                            (work / ".tectdist-trace.jsonl").unlink(missing_ok=True)
                         run = sample(command, work, run_environment)
                         pdf = work / (Path(document["main"]).stem + ".pdf")
                         run["correctness"] = validate(str(pdf), document.get("expected_pages"),
@@ -292,6 +393,20 @@ def main(argv=None):
                                              (document["id"], name,
                                               "; ".join(run["correctness"]["errors"])))
                         results[name] = run
+                    if ns.diagnose and ignored >= ns.warmups:
+                        # Untimed traced repetition on a separate identical
+                        # project copy; excluded from paired statistics.
+                        traced_work = Path(temporary) / "candidate-traced"
+                        prepare(source, traced_work, ns.scenario, document["main"])
+                        traced_command = command_for("candidate", competitors["candidate"],
+                                                     document["main"], document)
+                        diagnostic = traced_diagnostic_sample(
+                            traced_command, traced_work,
+                            scenario_environment(traced_work, ns.scenario))
+                        if diagnostic["exit_status"] != 0:
+                            raise SystemExit("traced diagnostic failed for %s" % document["id"])
+                        diagnostics.append({"order": order,
+                                            "tools": {"candidate": diagnostic}})
                 if ignored >= ns.warmups:
                     samples.append({"order": order, "tools": results})
             differences = [s["tools"]["candidate"]["wall_time_ms"] - s["tools"][competitor_name]["wall_time_ms"] for s in samples]
@@ -300,7 +415,10 @@ def main(argv=None):
                                    "document": document["id"],
                                    "claim": bool(document.get("claim")),
                                    "scenario": ns.scenario, "cold_source": ns.cold_source,
+                                   "balance_seed": ns.pair_seed,
                                    "samples": samples, "summary": paired_summary(differences)})
+            if diagnostics:
+                output["runs"][-1]["traced_diagnostics"] = diagnostics
     result_errors = validate_result(output)
     if result_errors:
         raise SystemExit("invalid benchmark result:\n- " + "\n- ".join(result_errors))

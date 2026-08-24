@@ -3052,11 +3052,15 @@ dependencies = [
 [[package]]
 name = "tectdist-bench"
 version = "0.2.2"
+dependencies = [
+ "libc",
+]
 
 [[package]]
 name = "tectdist-cli"
 version = "0.2.2"
 dependencies = [
+ "libc",
  "tectdist-core",
  "tectdist-engine",
  "tectdist-tools",
@@ -3073,6 +3077,7 @@ dependencies = [
  "tectdist-core",
  "tectonic",
  "tectonic_bridge_core",
+ "tectonic_bundles",
 ]
 
 [[package]]

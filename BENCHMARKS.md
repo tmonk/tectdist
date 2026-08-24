@@ -37,6 +37,12 @@ The aggregate is the sum of per-document medians and p95 values so every
 project has equal weight. Its interval is bootstrapped over paired samples
 within each project, then summed: **[-614.528, -543.497] ms**.
 
+The exact raw result behind this table is published beside the generated
+summary: `benchmark-results/rust-vs-texlive-{tiny,references,paper,bibtex,
+biblatex,index,thesis}-macos-arm64.json` (immutable paired samples; the
+generated Markdown in `rust-vs-texlive-corpus-macos-arm64.md` is derived only
+from those bundles). No percentage above is manually typed.
+
 ## Stuttgart ITP3 QFT stress result
 
 The optional fixture pins the University of Stuttgart ITP3 QFT source at

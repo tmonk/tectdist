@@ -3,3 +3,12 @@ name = "tectdist-bench"
 version = "0.2.2"
 edition = "2021"
 license = "AGPL-3.0-only"
+
+[dependencies]
+
+[target.'cfg(unix)'.dependencies]
+libc = "0.2"
+
+[[bin]]
+name = "tectdist-bench"
+path = "src/main.rs"

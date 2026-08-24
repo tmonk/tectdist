@@ -13,3 +13,15 @@ lto = "thin"
 codegen-units = 1
 panic = "abort"
 strip = "symbols"
+
+# True maximum-performance build (plan X2.6). Fat LTO and ThinLTO must be
+# compared end to end rather than assumed; this profile is the fat-LTO
+# candidate used for qualification comparisons.
+[profile.max-performance]
+inherits = "release"
+lto = "fat"
+codegen-units = 1
+panic = "abort"
+strip = "symbols"
+debug = 1
+incremental = false
