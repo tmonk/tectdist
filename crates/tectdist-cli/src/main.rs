@@ -240,6 +240,16 @@ fn doctor(json: bool) -> i32 {
         env::var("TECTDIST_BUNDLE_MANIFEST_SHA256").unwrap_or_else(|_| "unknown".into());
     let format_cache_identity =
         env::var("TECTDIST_FORMAT_CACHE_ID").unwrap_or_else(|_| "runtime-default".into());
+    let basictex_profile = env::var("TECTDIST_PROFILE").unwrap_or_else(|_| "default".into());
+    let basictex_root = env::var("TECTDIST_BASICTEX_ROOT").unwrap_or_default();
+    let image_digest = PathBuf::from(&basictex_root)
+        .join("image-manifest.json")
+        .read_file_ok()
+        .and_then(|text| {
+            text.split("\"image_files_sha256\": \"").nth(1)
+                .and_then(|rest| rest.split('"').next().map(str::to_string))
+        })
+        .unwrap_or_default();
     let tectonic_ok = tectonic.as_deref().and_then(version_pair).as_deref() == Some(TECTONIC_PAIR);
     let biber_ok = biber.as_deref().and_then(version_pair).as_deref() == Some(BIBER_PAIR);
     let ok = tectonic_ok && biber_ok;
@@ -252,14 +262,23 @@ fn doctor(json: bool) -> i32 {
                 .replace('\\', "\\\\")
                 .replace('"', "\\\"")
         };
-        println!("{{\"tectdist\":\"0.2.2\",\"executor\":{{\"mode\":\"{}\",\"embedded\":{},\"external_fallback_available\":true}},\"declared\":{{\"tectonic\":\"{}\",\"biber\":\"{}\"}},\"bundle\":{{\"source\":\"{}\",\"identity\":\"{}\",\"manifest_sha256\":\"{}\",\"format_cache_identity\":\"{}\"}},\"engine\":\"{}\",\"biber\":\"{}\",\"ok\":{}}}", mode, embedded, TECTONIC_PAIR, BIBER_PAIR, esc(Some(bundle_source)), esc(Some(bundle_identity)), esc(Some(bundle_manifest)), esc(Some(format_cache_identity)), esc(tectonic), esc(biber), ok);
+            println!("{{\"tectdist\":\"0.2.2\",\"executor\":{{\"mode\":\"{}\",\"embedded\":{},\"external_fallback_available\":true}},\"profile\":{{\"name\":\"{}\",\"basictex_root\":\"{}\",\"image_files_sha256\":\"{}\"}},\"declared\":{{\"tectonic\":\"{}\",\"biber\":\"{}\"}},\"bundle\":{{\"source\":\"{}\",\"identity\":\"{}\",\"manifest_sha256\":\"{}\",\"format_cache_identity\":\"{}\"}},\"engine\":\"{}\",\"biber\":\"{}\",\"ok\":{}}}", mode, embedded, esc(Some(basictex_profile)), esc(Some(basictex_root)), esc(Some(image_digest)), TECTONIC_PAIR, BIBER_PAIR, esc(Some(bundle_source)), esc(Some(bundle_identity)), esc(Some(bundle_manifest)), esc(Some(format_cache_identity)), esc(tectonic), esc(biber), ok);
     } else {
-        println!("tectdist 0.2.2 doctor\n  executor:   {} (embedded: {}; external fallback: yes)\n  declared:   tectonic {}.x + biber {}\n  bundle:     {} from {} (manifest: {}; format cache: {})\n  engine:     {}\n  biber:      {}\n  verdict:    {}", mode, embedded, TECTONIC_PAIR, BIBER_PAIR, bundle_identity, bundle_source, bundle_manifest, format_cache_identity, tectonic.unwrap_or_else(|| "NOT FOUND".into()), biber.unwrap_or_else(|| "NOT FOUND".into()), if ok { "PAIR OK" } else { "MISMATCH" });
+        println!("tectdist 0.2.2 doctor\n  executor:   {} (embedded: {}; external fallback: yes)\n  profile:    {} (root: {}; image: {})\n  declared:   tectonic {}.x + biber {}\n  bundle:     {} from {} (manifest: {}; format cache: {})\n  engine:     {}\n  biber:      {}\n  verdict:    {}", mode, embedded, basictex_profile, basictex_root, if image_digest.is_empty() { "not configured" } else { &image_digest }, TECTONIC_PAIR, BIBER_PAIR, bundle_identity, bundle_source, bundle_manifest, format_cache_identity, tectonic.unwrap_or_else(|| "NOT FOUND".into()), biber.unwrap_or_else(|| "NOT FOUND".into()), if ok { "PAIR OK" } else { "MISMATCH" });
     }
     if ok {
         0
     } else {
         1
+    }
+}
+
+trait ReadFileOk {
+    fn read_file_ok(&self) -> Option<String>;
+}
+impl ReadFileOk for PathBuf {
+    fn read_file_ok(&self) -> Option<String> {
+        fs::read_to_string(self).ok()
     }
 }
 
@@ -1652,8 +1671,58 @@ fn main() {
         );
         std::process::exit(2);
     }
+    // BasicTeX profile (plan B1): exact reference engines, arguments passed
+    // through untranslated so BasicTeX semantics are preserved verbatim.
+    if env::var("TECTDIST_PROFILE").as_deref() == Ok("basictex-2026") {
+        match run_basictex_engine(&name, &rest) {
+            Ok(status) => {
+                trace_span("basictex.engine", Duration::from_millis(0), Some(status));
+                std::process::exit(status);
+            }
+            Err(error) => {
+                eprintln!("tectdist: {error}");
+                eprintln!(
+                    "tectdist: falling back to the built-in engine path; the result remains exact but is not BasicTeX-accelerated."
+                );
+            }
+        }
+    }
     let total_started = Instant::now();
     let status = execute_engine(program, rest);
     trace_span("process.total", total_started.elapsed(), Some(status));
     std::process::exit(status);
+}
+
+/// Execute one command through the pinned BasicTeX image (plan B1).
+/// Arguments are forwarded unchanged: the reference binary is the semantic
+/// authority in this profile.
+fn run_basictex_engine(name: &str, rest: &[OsString]) -> Result<i32, String> {
+    let root = env::var("TECTDIST_BASICTEX_ROOT").map_err(|_| {
+        "TECTDIST_PROFILE=basictex-2026 requires TECTDIST_BASICTEX_ROOT to point at the image root"
+            .to_string()
+    })?;
+    let root_path = PathBuf::from(&root);
+    let platform_dir = root_path
+        .join("bin")
+        .read_dir()
+        .map_err(|error| format!("cannot read BasicTeX bin directory: {error}"))?
+        .filter_map(|entry| entry.ok())
+        .find(|entry| entry.path().is_dir())
+        .ok_or_else(|| "no platform directory under BasicTeX bin/".to_string())?;
+    let binary = platform_dir.path().join(name);
+    if !binary.exists() {
+        return Err(format!("BasicTeX image has no binary for '{name}'"));
+    }
+    let started = Instant::now();
+    let status = Command::new(binary)
+        .args(rest)
+        .env("TEXMFROOT", &root)
+        .status()
+        .map_err(|error| format!("cannot launch BasicTeX {name}: {error}"))?;
+    trace_span(
+        "engine.basictex",
+        started.elapsed(),
+        Some(status.code().unwrap_or(128)),
+    );
+    Ok(status.code().unwrap_or(128))
 }
