@@ -2,9 +2,9 @@
 
 The release is prepared locally (annotated tag at HEAD), but pushing to
 GitHub and publishing to Homebrew are manual steps done by a maintainer
-with push access.  Current release: **v0.2.1** (patch, docs to standard
-public-facing brevity, bottles rebuilt; pairing unchanged).  Previous:
-v0.2.0 (biber 2.17 built from source, pairing enforced at runtime).
+with push access.  Current release: **v0.2.2** (pins Biber to a compatible
+Perl ABI, strengthens `doctor`, and adds full Homebrew acceptance coverage).
+Previous: v0.2.1 (public-facing docs and rebuilt bottles; pairing unchanged).
 
 The remote repo history was rewritten once for the single-release v0.1.0
 (a squashed `release: v0.1.0` commit); backups of the superseded history

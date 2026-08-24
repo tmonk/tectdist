@@ -134,20 +134,39 @@ def tectonic_version(binary=None):
     return "", "", binary
 
 
-def biber_version():
-    """Run biber --version (only used by `tectdist doctor`)."""
+def biber_status():
+    """Run ``biber --version`` and return its usable health information.
+
+    A path lookup alone is not a health check: a brewed biber may be present
+    but fail before it can print its version, for example when a bottle's
+    XS modules were built for a different Perl ABI.  Keep the distinction so
+    ``tectdist doctor`` can tell a missing program from a broken one.
+
+    Returns ``(version, version_text, binary, error)``.  ``error`` is empty
+    only when biber ran successfully; it is deliberately concise because it
+    is displayed in both human and JSON doctor reports.
+    """
     import shutil
     binary = shutil.which("biber")
     if not binary:
-        return "", ""
+        return "", "", "", ""
     try:
         proc = subprocess_run([binary, "--version"], timeout=30)
-        text = proc.stdout if proc and proc.stdout else ""
-        if proc is not None and proc.returncode == 0:
-            return biber_version_of(text), text.strip()
+        if proc is None:
+            return "", "", binary, "could not execute or timed out"
+        text = (proc.stdout or "").strip()
+        if proc.returncode != 0:
+            detail = (proc.stderr or "").strip() or text
+            error = f"exited with status {proc.returncode}"
+            if detail:
+                error += f": {detail.splitlines()[0]}"
+            return "", text, binary, error
+        version = biber_version_of(text)
+        if not version:
+            return "", text, binary, "did not report a parseable version"
+        return version, text, binary, ""
     except Exception:  # pragma: no cover - defensive
-        pass
-    return "", ""
+        return "", "", binary, "could not execute"
 
 
 def subprocess_run(argv, timeout):
@@ -244,7 +263,7 @@ def doctor(as_json=False):
     from .version import VERSION
 
     pair, text, binary = tectonic_version()
-    bv, btext = biber_version()
+    bv, btext, biber_binary, biber_error = biber_status()
     problems = []
     # ``doctor`` is a health check, rather than the permissive compile-path
     # probe (which deliberately lets the normal engine-not-found error speak
@@ -254,8 +273,10 @@ def doctor(as_json=False):
         problems.append("tectonic-missing")
     elif pair != TECTONIC_VERSION:
         problems.append("tectonic")
-    if not bv:
+    if not biber_binary:
         problems.append("biber-missing")
+    elif biber_error:
+        problems.append("biber-failed")
     elif bv != BIBER_VERSION:
         problems.append("biber")
 
@@ -276,8 +297,9 @@ def doctor(as_json=False):
                     "version": text.splitlines()[0] if text else None,
                 },
                 "biber": {
-                    "path": shutil.which("biber") if btext else None,
+                    "path": biber_binary or None,
                     "version": btext.splitlines()[0] if btext else None,
+                    "error": biber_error or None,
                 },
             },
             "ok": not problems,
@@ -296,7 +318,9 @@ def doctor(as_json=False):
     else:
         lines.append("  installed:  tectonic NOT FOUND")
 
-    if btext:
+    if biber_error:
+        lines.append("  installed:  biber FAILED (%s)" % biber_error)
+    elif btext:
         lines.append("  installed:  biber %s" % btext.splitlines()[0])
     else:
         lines.append("  installed:  biber NOT FOUND")
@@ -316,11 +340,17 @@ def doctor(as_json=False):
     elif pair != TECTONIC_VERSION:
         report += "\n\n" + _message(VERSION, TECTONIC_VERSION,
                                     pair or "your tectonic version")
-    elif not bv:
+    elif not biber_binary:
         report += ("\n\nbiber is required for the supported biblatex "
                    "workflow but was not found or did not report a "
                    "parseable version. Install the formula-provided biber "
                    f"{BIBER_VERSION} and run `tectdist doctor` again.")
+    elif biber_error:
+        report += ("\n\nbiber was found but could not run. This commonly "
+                   "means its Perl modules were built for a different Perl "
+                   "version. Reinstall a tectdist bottle built for the "
+                   "formula's bundled Perl, then run `tectdist doctor` "
+                   "again.")
     elif bv != BIBER_VERSION:
         report += ("\n\nbiber %s is not the %s this release declares; the "
                    "keg's bin/biber must not be shadowed by another biber "

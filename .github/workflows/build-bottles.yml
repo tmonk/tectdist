@@ -51,6 +51,10 @@ jobs:
         run: |
           brew install --build-bottle tmonk/brew/tectdist
 
+      - name: Verify the installed formula before bottling it
+        run: |
+          brew test tmonk/brew/tectdist
+
       - name: Bottle
         run: |
           # version from the tapped formula (the checked-out formula at a tag

@@ -1,7 +1,7 @@
 class Tectdist < Formula
   desc "Standard-TeX-compatible TeX distribution backed by Tectonic"
   homepage "https://github.com/tmonk/tectdist"
-  url "https://github.com/tmonk/tectdist/releases/download/v0.2.1/tectdist-0.2.1.tar.gz"
+  url "https://github.com/tmonk/tectdist/releases/download/v0.2.2/tectdist-0.2.2.tar.gz"
   # sha256 of the release's source-tarball asset.  The asset is built
   # deterministically from the tag (`git archive | gzip -n`), uploaded once,
   # and immutable — unlike GitHub's codeload tarballs, which are regenerated
@@ -9,19 +9,9 @@ class Tectdist < Formula
   #   brew fetch --force tmonk/brew/tectdist
   sha256 "a634fd3a6a10f47860c998f4e8ea4ebc7cb6d75bb7e674d8e19e3e47dc6639ab"
   license "AGPL-3.0-only"
-
-  # Prebuilt bottles are published as assets of the v0.2.1 GitHub release
-  # (flat-file {root_url}/{filename} fetch, public — no registry tokens).
-  # Built by .github/workflows/build-bottles.yml; the arm64_golden_gate
-  # entry is the maintainer's macOS 27 dev machine.
-  bottle do
-    root_url "https://github.com/tmonk/tectdist/releases/download/v0.2.1"
-    sha256 cellar: :any, arm64_golden_gate: "b2a8f0299005f48c5d27a6a8ffc656b4f87f6a9cb35f85b7754523909c3bcec5"
-    sha256 cellar: :any, arm64_sequoia:     "b65f109aee5629e6cc944c57ae5bba7c0cd2700ce6e0d934207eb40d15bf2a94"
-    sha256 cellar: :any, sequoia:           "9230f1fac07d0fa3025c366bc8866cb94e1ee75b875b85e5b777a4afd560f83d"
-    sha256 cellar: :any, arm64_linux:       "0e47840c8347e1283359a7376b69dcd62b3e6d257c064b84cd183e17298fca15"
-    sha256 cellar: :any, x86_64_linux:      "93eb06609265f315d4652fc14d71f7befb1753e5b04dda3c2fb61567c76cd734"
-  end
+  # The v0.2.1 bottles were built with Perl 5.42 and cannot safely be poured
+  # with the versioned Perl runtime below. Build from source until replacement
+  # bottles are produced by build-bottles.yml and this block is regenerated.
 
   # Version pairing (declared for this release — enforced at RUNTIME by the
   # software itself, not pinned at install time):
@@ -40,9 +30,10 @@ class Tectdist < Formula
   depends_on "libxml2"
   depends_on "libxslt"
   depends_on "openssl@3"   # Net::SSLeay (LWP https, e.g. biber -r remote datasources)
-  depends_on "perl"        # biber 2.17 requires perl >= 5.32 (its Build.PL); macOS
-  # system perl is 5.30.3 on macOS <= 15, so brew perl is
-  # used deterministically everywhere
+  # biber ships XS modules. Keep its interpreter on a fixed Perl ABI: an
+  # unversioned `perl` dependency can advance after a bottle was built and
+  # make those modules fail to load ("Perl API version ... does not match").
+  depends_on "perl@5.44"
   depends_on "poppler"     # pdfinfo / pdftotext / pdfunite / ... (proxied)
   depends_on "python@3.14" # the zipapp interpreter (current core default)
   depends_on "qpdf"        # proxied
@@ -546,6 +537,10 @@ class Tectdist < Formula
   # proxies always find the real binaries.  biber is also not in the farm: the
   # formula builds the real biber 2.17 and installs it as bin/biber.
   def install
+    # Build every CPAN module and biber itself with the exact Perl that will
+    # execute the installed wrapper. Do this explicitly rather than relying
+    # on Homebrew's ambient PATH, which can contain the unversioned perl.
+    ENV.prepend_path "PATH", formula_opt_bin("perl@5.44")
     ENV["ALIEN_INSTALL_TYPE"] = "system" # XML::LibXML/LibXSLT: system libs via pkgconf
     ENV["OPENSSL_PREFIX"] = formula_opt_prefix("openssl@3")
     ENV["PERL_MM_USE_DEFAULT"] = "1"
@@ -647,6 +642,7 @@ class Tectdist < Formula
     assert_match "tectdist", shell_output("#{bin}/tectdist --version")
     assert_match "latexmk", shell_output("#{bin}/latexmk --version")
     assert_match "biber version: 2.17", shell_output("#{bin}/biber --version")
+    assert_match "PAIR OK", shell_output("#{bin}/tectdist doctor")
     # 61 farm names + the biber wrapper (keep in sync with the `farm` list
     # above; tests/check_formula.py guards against drift)
     assert_operator Dir[bin/"*"].count, :>=, 62, "symlink farm incomplete"
