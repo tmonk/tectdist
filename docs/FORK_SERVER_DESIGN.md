@@ -185,6 +185,18 @@ Blocked / open:
 - \dump-based project formats: generation must avoid mid-ini &load quirks;
   follow mylatexformat.sty's exact technique or use fmtutil with a custom
   cnf fragment.
+
+Further findings (session v7): direct -ini "&pdflatex <pre>\dump" fails
+with "Must increase the hyph_size" — the &loaded format's hyphenation
+tables conflict with new pattern initialisation during preamble processing.
+mylatexformat.sty solves this with specific variable sizing, delayed
+\openout handling, and catcode group management (see mylatexformat.dtx
+lines ~756-930 for the full implementation).
+
+Conclusion: project-format generation requires a dedicated .ltx builder
+file modeled on mylatexformat.sty, NOT a simple preamble-extract+\dump.
+This is a well-scoped engineering task but needs careful TeX internals
+work; scripts/basictex_project_format.py provides the CLI scaffolding.
 - [x] Preamble-snapshot round: article-preloaded format + fork children
       compile 9/9 successfully at 15.0 ms median; pure-fork control measures
       0.01 ms — the residual is post-preamble engine work (fonts, PDF out),
