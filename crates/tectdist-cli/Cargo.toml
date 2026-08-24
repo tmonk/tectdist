@@ -1,0 +1,18 @@
+[package]
+name = "tectdist-cli"
+version = "0.2.2"
+edition = "2021"
+license = "AGPL-3.0-only"
+
+[dependencies]
+tectdist-core = { path = "../tectdist-core" }
+tectdist-engine = { path = "../tectdist-engine" }
+tectdist-tools = { path = "../tectdist-tools" }
+
+[features]
+default = ["embedded"]
+embedded = ["tectdist-engine/embedded"]
+
+[[bin]]
+name = "tectdist"
+path = "src/main.rs"

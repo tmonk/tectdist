@@ -1,0 +1,15 @@
+[workspace]
+resolver = "2"
+members = [
+  "crates/tectdist-core",
+  "crates/tectdist-engine",
+  "crates/tectdist-tools",
+  "crates/tectdist-cli",
+  "crates/tectdist-bench",
+]
+
+[profile.release]
+lto = "thin"
+codegen-units = 1
+panic = "abort"
+strip = "symbols"

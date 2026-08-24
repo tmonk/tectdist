@@ -1,0 +1,8 @@
+[package]
+name = "tectdist-core"
+version = "0.2.2"
+edition = "2021"
+license = "AGPL-3.0-only"
+
+[lib]
+path = "src/lib.rs"
