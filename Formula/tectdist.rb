@@ -7,7 +7,7 @@ class Tectdist < Formula
   # and immutable — unlike GitHub's codeload tarballs, which are regenerated
   # over time and NOT byte-stable.  Verify with `brew fetch` rather than curl:
   #   brew fetch --force tmonk/brew/tectdist
-  sha256 "a634fd3a6a10f47860c998f4e8ea4ebc7cb6d75bb7e674d8e19e3e47dc6639ab"
+  sha256 "ddf730878d71af53f467fd658f176a342e532c73c98298ab99e5ccbf211569c3"
   license "AGPL-3.0-only"
   # The v0.2.1 bottles were built with Perl 5.42 and cannot safely be poured
   # with the versioned Perl runtime below. Build from source until replacement
