@@ -1,0 +1,9 @@
+# Tectonic revision performance matrix (plan X3.1).
+# One entry per line: tag=<tectonic tag> or rev=<commit>.
+# The currently pinned release is the baseline entry; historical revisions
+# run against the current bundle through the bundle-location environment
+# adapter documented in docs/ORDER_OF_MAGNITUDE_PERFORMANCE_PLAN.md §X3.2.
+tag=tectonic@0.17.0
+# Historical entries below are opt-in: uncomment and run on the perf host.
+# rev=<upstream commit known good>
+# rev=<upstream commit suspected of regression>
