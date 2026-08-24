@@ -1,0 +1,69 @@
+name: bt100-compatibility
+
+on:
+  workflow_dispatch:
+    inputs:
+      pairs:
+        description: 'Interaction pairs to sample'
+        default: '300'
+  schedule:
+    - cron: '3 5 * * *'
+
+permissions:
+  contents: read
+
+jobs:
+  ledger-and-smoke:
+    runs-on: [self-hosted, tectdist-perf]
+    strategy:
+      matrix:
+        shard: [0, 1, 2, 3]
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.11'
+      - name: Build native candidate
+        run: cargo build --release --locked -p tectdist-cli -p tectdist-supervisor
+      - name: Regenerate ledger from the frozen TLPDB
+        run: python3 scripts/basictex_ledger.py
+      - name: Minimal-load smoke (shard ${{ matrix.shard }})
+        run: |
+          python3 scripts/basictex_smoke.py \
+            --reference "reference/basictex-2026/installer/expanded/BasicTeX-2026-Start.pkg/Payload/usr/local/texlive/2026basic" \
+            --candidate ./target/release/tectdist \
+            --shard "${{ matrix.shard }}/4" \
+            --output "reference/basictex-2026/bt100-report-shard${{ matrix.shard }}.json" \
+            --markdown "reference/basictex-2026/bt100-report-shard${{ matrix.shard }}.md"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: bt100-smoke-shard-${{ matrix.shard }}
+          path: |
+            reference/basictex-2026/bt100-report-shard*.json
+            reference/basictex-2026/bt100-report-shard*.md
+
+  interactions:
+    runs-on: [self-hosted, tectdist-perf]
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.11'
+      - name: Build native candidate
+        run: cargo build --release --locked -p tectdist-cli
+      - name: Interaction sample
+        env:
+          PAIRS: ${{ github.event.inputs.pairs || '300' }}
+        run: |
+          python3 scripts/basictex_interactions.py \
+            --reference "reference/basictex-2026/installer/expanded/BasicTeX-2026-Start.pkg/Payload/usr/local/texlive/2026basic" \
+            --candidate ./target/release/tectdist \
+            --pairs "$PAIRS" \
+            --output reference/basictex-2026/bt100-interactions.json \
+            --markdown reference/basictex-2026/bt100-interactions.md
+      - uses: actions/upload-artifact@v4
+        with:
+          name: bt100-interactions
+          path: |
+            reference/basictex-2026/bt100-interactions.json
+            reference/basictex-2026/bt100-interactions.md

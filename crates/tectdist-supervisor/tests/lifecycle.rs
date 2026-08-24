@@ -173,3 +173,80 @@ fn project_lock_refuses_concurrent_same_project_compiles() {
     let status = request(&supervisor.socket, r#"{"type":"status"}"#);
     assert_eq!(status["status"]["active_locks"].as_array().map(Vec::len), Some(0));
 }
+
+#[test]
+fn snapshot_registry_lru_and_touch() {
+    let supervisor = start_supervisor("snapshots", None);
+    let socket = &supervisor.socket;
+
+    // Register three snapshots with a max of 2 (env set at spawn time would
+    // be needed; default is 32, so use explicit release for eviction here).
+    use serde_json::json;
+    for key in ["snap-a", "snap-b"] {
+        let response = request(
+            socket,
+            &json!({"type": "snapshot_register", "key": key,
+                    "bytes_estimate": 1000}).to_string(),
+        );
+        assert_eq!(response["ok"], true);
+    }
+    let listing = request(socket, r#"{"type":"snapshots"}"#);
+    assert_eq!(listing["snapshots"]["entries"].as_array().map(Vec::len), Some(2));
+
+    // Touch keeps a key alive; unknown keys error.
+    let touched = request(socket, r#"{"type":"snapshot_touch","key":"snap-a"}"#);
+    assert_eq!(touched["ok"], true);
+    let missing = request(socket, r#"{"type":"snapshot_touch","key":"nope"}"#);
+    assert_eq!(missing["ok"], false);
+
+    // Release removes exactly the requested key.
+    let released = request(socket, r#"{"type":"snapshot_release","key":"snap-b"}"#);
+    assert_eq!(released["ok"], true);
+    let after = request(socket, r#"{"type":"snapshots"}"#);
+    let keys: Vec<&str> = after["snapshots"]["entries"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .map(|entry| entry["key"].as_str().unwrap())
+        .collect();
+    assert_eq!(keys, vec!["snap-a"]);
+}
+
+#[test]
+fn compile_reports_snapshot_hit_telemetry() {
+    let Some(image) = basic_tex_root() else {
+        eprintln!("skipping: BasicTeX reference image not present on this host");
+        return;
+    };
+    let supervisor = start_supervisor("snap-compile", Some(&image));
+    let work = free_dir("snap-work");
+    std::fs::write(
+        work.join("main.tex"),
+        "\\documentclass{article}\\begin{document}x\\end{document}",
+    )
+    .unwrap();
+
+    use serde_json::json;
+    let compile = json!({
+        "type": "compile",
+        "profile": "basictex-2026",
+        "cwd": work.to_str().unwrap(),
+        "argv": ["pdflatex", "-interaction=batchmode", "main.tex"],
+        "snapshot_key": "snap-key-1",
+    })
+    .to_string();
+    let register = request(
+        &supervisor.socket,
+        &json!({"type": "snapshot_register", "key": "snap-key-1",
+                "bytes_estimate": 4096}).to_string(),
+    );
+    assert_eq!(register["ok"], true);
+
+    let first = request(&supervisor.socket, &compile);
+    assert_eq!(first["ok"], true, "compile failed: {first}");
+    assert_eq!(first["compile_accepted"]["snapshot_hit"], true);
+
+    let second = request(&supervisor.socket, &compile);
+    assert_eq!(second["ok"], true);
+    assert_eq!(second["compile_accepted"]["snapshot_hit"], true);
+}

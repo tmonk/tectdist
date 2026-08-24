@@ -37,6 +37,24 @@ enum Request {
         profile: String,
         argv: Vec<String>,
         cwd: PathBuf,
+        #[serde(default)]
+        snapshot_key: Option<String>,
+    },
+    SnapshotRegister {
+        request_id: Option<u64>,
+        key: String,
+        bytes_estimate: u64,
+    },
+    SnapshotTouch {
+        request_id: Option<u64>,
+        key: String,
+    },
+    SnapshotRelease {
+        request_id: Option<u64>,
+        key: String,
+    },
+    Snapshots {
+        request_id: Option<u64>,
     },
 }
 
@@ -71,7 +89,20 @@ enum Payload {
     CompileAccepted {
         exit_status: i32,
         duration_ms: u64,
+        #[serde(skip_serializing_if = "Option::is_none")]
+        snapshot_hit: Option<bool>,
     },
+    Snapshots {
+        entries: Vec<SnapshotEntry>,
+        evicted: Vec<String>,
+    },
+}
+
+#[derive(Debug, Serialize)]
+struct SnapshotEntry {
+    key: String,
+    bytes_estimate: u64,
+    age_seconds: u64,
 }
 
 struct SupervisorState {
@@ -81,17 +112,89 @@ struct SupervisorState {
     compiles_failed: AtomicU64,
     /// Project locks keyed by canonicalised project path.
     project_locks: Mutex<HashMap<PathBuf, u64>>,
+    /// Preamble-snapshot registry (plan X2 scaffold): keys with LRU eviction
+    /// by entry count until real COW parents land.
+    snapshots: Mutex<HashMap<String, SnapshotRecord>>,
+    snapshot_max_entries: usize,
+}
+
+#[derive(Debug, Clone)]
+struct SnapshotRecord {
+    bytes_estimate: u64,
+    last_used: std::time::Instant,
 }
 
 impl SupervisorState {
     fn new() -> Self {
+        let snapshot_max_entries = std::env::var("TECTDIST_SNAPSHOT_MAX")
+            .ok()
+            .and_then(|value| value.parse().ok())
+            .unwrap_or(32);
         Self {
             started: std::time::Instant::now(),
             compiles_started: AtomicU64::new(0),
             compiles_succeeded: AtomicU64::new(0),
             compiles_failed: AtomicU64::new(0),
             project_locks: Mutex::new(HashMap::new()),
+            snapshots: Mutex::new(HashMap::new()),
+            snapshot_max_entries,
         }
+    }
+
+    /// Register or refresh a snapshot key; evict least-recently-used entries
+    /// beyond the configured limit. Returns evicted keys for telemetry.
+    fn snapshot_register(
+        &self,
+        key: &str,
+        bytes_estimate: u64,
+    ) -> Vec<String> {
+        let mut snapshots = self.snapshots.lock().expect("snapshots poisoned");
+        snapshots.insert(
+            key.to_string(),
+            SnapshotRecord { bytes_estimate, last_used: std::time::Instant::now() },
+        );
+        let mut evicted = Vec::new();
+        while snapshots.len() > self.snapshot_max_entries {
+            let lru_key = snapshots
+                .iter()
+                .min_by_key(|(_, record)| record.last_used)
+                .map(|(key, _)| key.clone());
+            match lru_key {
+                Some(key) => {
+                    snapshots.remove(&key);
+                    evicted.push(key);
+                }
+                None => break,
+            }
+        }
+        evicted
+    }
+
+    fn snapshot_touch(&self, key: &str) -> bool {
+        match self.snapshots.lock().expect("snapshots poisoned").get_mut(key) {
+            Some(record) => {
+                record.last_used = std::time::Instant::now();
+                true
+            }
+            None => false,
+        }
+    }
+
+    fn snapshot_release(&self, key: &str) -> bool {
+        self.snapshots.lock().expect("snapshots poisoned").remove(key).is_some()
+    }
+
+    fn snapshot_list(&self) -> Vec<SnapshotEntry> {
+        self.snapshots
+            .lock()
+            .expect("snapshots poisoned")
+            .iter()
+            .map(|(key, record)| SnapshotEntry {
+                key: key.clone(),
+                bytes_estimate: record.bytes_estimate,
+                age_seconds: record.last_used.elapsed().as_secs(),
+            })
+            .collect()
     }
 
     fn status(&self) -> Payload {
@@ -166,8 +269,51 @@ fn handle_request(
                 payload: Payload::Empty,
             }
         }
-        Request::Compile { request_id, profile, argv, cwd } => {
+        Request::Snapshots { request_id } => Response {
+            ok: true,
+            request_id,
+            error: None,
+            payload: Payload::Snapshots {
+                entries: state.snapshot_list(),
+                evicted: Vec::new(),
+            },
+        },
+        Request::SnapshotRegister { request_id, key, bytes_estimate } => {
+            let evicted = state.snapshot_register(&key, bytes_estimate);
+            Response {
+                ok: true,
+                request_id,
+                error: None,
+                payload: Payload::Snapshots {
+                    entries: state.snapshot_list(),
+                    evicted,
+                },
+            }
+        }
+        Request::SnapshotTouch { request_id, key } => {
+            let found = state.snapshot_touch(&key);
+            Response {
+                ok: found,
+                request_id,
+                error: if found { None } else { Some("unknown snapshot key".into()) },
+                payload: Payload::Empty,
+            }
+        }
+        Request::SnapshotRelease { request_id, key } => {
+            let found = state.snapshot_release(&key);
+            Response {
+                ok: found,
+                request_id,
+                error: if found { None } else { Some("unknown snapshot key".into()) },
+                payload: Payload::Empty,
+            }
+        }
+        Request::Compile { request_id, profile, argv, cwd, snapshot_key } => {
             state.compiles_started.fetch_add(1, Ordering::Relaxed);
+            // Snapshot keys participate in telemetry now; workers consume the
+            // actual COW parent in milestone X2.
+            let snapshot_hit =
+                snapshot_key.as_ref().map(|key| state.snapshot_touch(key));
             if let Err(error) = state.acquire_lock(&cwd) {
                 state.compiles_failed.fetch_add(1, Ordering::Relaxed);
                 return Response {
@@ -193,7 +339,11 @@ fn handle_request(
                         ok: true,
                         request_id,
                         error: None,
-                        payload: Payload::CompileAccepted { exit_status, duration_ms },
+                        payload: Payload::CompileAccepted {
+                            exit_status,
+                            duration_ms,
+                            snapshot_hit,
+                        },
                     }
                 }
                 Err(error) => {
