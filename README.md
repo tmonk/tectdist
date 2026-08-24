@@ -4,9 +4,10 @@ Use LaTeX without installing TeX Live. tectdist compiles your documents
 through [Tectonic](https://tectonic-typesetting.github.io), a modern,
 self-contained LaTeX engine, but answers to the same commands
 (`pdflatex`, `latexmk`, `biber`, `kpsewhich`) as a normal TeX Live
-install, so your editor and existing documents just work, unchanged. It's
-also [34% faster than TeX Live's own `latexmk`](BENCHMARKS.md#vs-tex-live)
-at producing a finished PDF, with no manual reruns needed.
+install, so your editor and existing documents just work, unchanged. Current
+performance evidence, its correctness checks, and its scope are published in
+[BENCHMARKS.md](BENCHMARKS.md); no unqualified performance claim is made
+outside the supported benchmark corpus.
 
 ## Install
 
@@ -18,6 +19,16 @@ brew install tmonk/brew/tectdist
 
 That's it. Homebrew installs the engine and supporting PDF and bibliography
 tools too.
+
+To exercise this performance branch directly from a checkout, install the
+default embedded native build with:
+
+```sh
+python3 install.py
+```
+
+Use `python3 install.py --external-only` to build the native external-Tectonic
+fallback, or `--python-reference` only for differential migration testing.
 
 ## Use
 

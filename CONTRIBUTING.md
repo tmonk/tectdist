@@ -6,11 +6,10 @@ verifiable.
 
 ## Ground rules
 
-- **No third-party dependencies.**  Everything (package, build, tools, tests)
-  is Python 3 stdlib, compatible with stock `python3` ≥ 3.9 (macOS
-  `/usr/bin/python3`).
-- **No bash.**  The old bash dispatcher was rewritten into
-  `src/tectdist/`; all new code is Python.
+- **Keep runtime dependencies deliberate.**  The Python reference remains
+  standard-library-only; the native path uses the pinned Rust/Tectonic lockfile.
+- **No bash.**  The reference dispatcher is Python and the native dispatcher
+  is Rust; do not add shell wrappers to either hot path.
 - **Drop-in behaviour is sacred.**  The web2c flag vocabulary and the
   exit-code/argv semantics are covered by the battery; do not change them
   without updating tests.
@@ -51,6 +50,30 @@ uv run pytest benchmarks/ --benchmark-only --benchmark-disable-gc \
     --benchmark-json=benchmarks/baseline.json   # before your change
 uv run pytest benchmarks/ --benchmark-only --benchmark-disable-gc \
     --benchmark-json=benchmarks/after.json      # after; see BENCHMARKS.md
+```
+
+## Performance contract
+
+Read [the technical plan](docs/TECHNICAL_PLAN.md) before changing a measured
+path. A performance result counts only when the document passes the layered
+correctness oracle; cold and warm scenarios are separate; and competitor
+comparisons must be paired and randomised. Record raw results, process count,
+engine passes, and relevant trace spans. Do not edit public percentage claims
+by hand—generate them from raw result bundles.
+
+The corpus is deliberately self-contained and compact. Add a focused fixture
+only when it covers a compatibility or performance class not already present;
+do not vendor or fetch large third-party document trees.
+
+The native migration can be checked locally with:
+
+```sh
+brew install rust pkgconf icu4c@78 freetype harfbuzz graphite2 libpng
+export PKG_CONFIG_PATH="$(brew --prefix icu4c@78)/lib/pkgconfig:$(brew --prefix freetype)/lib/pkgconfig:$(brew --prefix harfbuzz)/lib/pkgconfig:$(brew --prefix graphite2)/lib/pkgconfig:$(brew --prefix libpng)/lib/pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}"
+cargo test --locked --workspace
+cargo test --locked --workspace --no-default-features
+python3 build.py --native -o /tmp/tectdist-native
+TECTDIST_NATIVE=/tmp/tectdist-native python3 tests/differential.py
 ```
 
 ## Where things live
