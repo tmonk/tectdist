@@ -133,6 +133,37 @@ struct SupervisorState {
     /// by entry count until real COW parents land.
     snapshots: Mutex<HashMap<String, SnapshotRecord>>,
     snapshot_max_entries: usize,
+    /// Two-tier tool identity (plan §11.2): (size, mtime) as the cheap
+    /// candidate check, content digest computed once per candidate change.
+    /// BasicTeX image binaries are immutable within a profile, so the cached
+    /// digest is valid until the candidate changes.
+    tool_digests: Mutex<HashMap<PathBuf, (u64, i64, String)>>,
+}
+
+impl SupervisorState {
+    fn tool_digest(&self, binary: &Path) -> Result<String, String> {
+        let metadata = std::fs::metadata(binary)
+            .map_err(|error| format!("stat {}: {error}", binary.display()))?;
+        let mtime = metadata
+            .modified()
+            .ok()
+            .and_then(|time| time.duration_since(std::time::UNIX_EPOCH).ok())
+            .map(|duration| duration.as_secs() as i64)
+            .unwrap_or(0);
+        let candidate = (metadata.len(), mtime);
+        let mut cache = self.tool_digests.lock().expect("tool digests poisoned");
+        if let Some((cached_size, cached_mtime, cached_digest)) =
+            cache.get(binary)
+        {
+            if *cached_size == candidate.0 && *cached_mtime == candidate.1 {
+                return Ok(cached_digest.clone());
+            }
+        }
+        let digest = sha256_file(binary)?;
+        cache
+            .insert(binary.to_path_buf(), (candidate.0, candidate.1, digest.clone()));
+        Ok(digest)
+    }
 }
 
 #[derive(Debug, Clone)]
@@ -157,6 +188,7 @@ impl SupervisorState {
             compiles_failed: AtomicU64::new(0),
             project_locks: Mutex::new(HashMap::new()),
             snapshots: Mutex::new(HashMap::new()),
+            tool_digests: Mutex::new(HashMap::new()),
             snapshot_max_entries,
         }
     }
@@ -310,7 +342,7 @@ fn run_action(
     outputs: &[PathBuf],
 ) -> Result<(bool, i32), String> {
     let binary = state.image_tool(tool)?;
-    let tool_digest = sha256_file(&binary)?;
+    let tool_digest = state.tool_digest(&binary)?;
 
     let mut input_pairs: Vec<(String, String)> = Vec::new();
     for input in inputs {

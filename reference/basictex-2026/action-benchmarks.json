@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "gate": "restore < 2 ms p50",
+  "trials_per_hit": 20,
+  "results": [
+    {
+      "helper": "bibtex",
+      "cold_miss_ms": 34,
+      "hit_p50_ms": 0.59,
+      "hit_min_ms": 0.57,
+      "invalidation_ok": true,
+      "gate_2ms_restore": true,
+      "verdict": "pass"
+    },
+    {
+      "helper": "makeindex",
+      "cold_miss_ms": 22,
+      "hit_p50_ms": 0.55,
+      "hit_min_ms": 0.54,
+      "invalidation_ok": true,
+      "gate_2ms_restore": true,
+      "verdict": "pass"
+    },
+    {
+      "helper": "mpost",
+      "cold_miss_ms": 205,
+      "hit_p50_ms": 0.62,
+      "hit_min_ms": 0.56,
+      "invalidation_ok": true,
+      "gate_2ms_restore": true,
+      "verdict": "pass"
+    }
+  ],
+  "passed": 3,
+  "total": 3
+}
