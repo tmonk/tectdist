@@ -8,6 +8,7 @@ members = [
   "crates/tectdist-bench",
   "crates/tectdist-makeindex",
   "crates/tectdist-bib",
+  "crates/tectdist-supervisor",
 ]
 
 [profile.release]

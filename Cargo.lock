@@ -3095,6 +3095,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "tectdist-supervisor"
+version = "0.2.2"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
 name = "tectdist-tools"
 version = "0.2.2"
 
