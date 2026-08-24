@@ -10,9 +10,14 @@ class Tectdist < Formula
   sha256 "ddf730878d71af53f467fd658f176a342e532c73c98298ab99e5ccbf211569c3"
   license "AGPL-3.0-only"
 
-  # The v0.2.1 bottles were built with Perl 5.42 and cannot safely be poured
-  # with the versioned Perl runtime below. Build from source until replacement
-  # bottles are produced by build-bottles.yml and this block is regenerated.
+  # Prebuilt bottles use the same pinned Perl ABI as the formula below.
+  bottle do
+    root_url "https://github.com/tmonk/tectdist/releases/download/v0.2.2"
+    sha256 cellar: :any, arm64_sequoia: "c730ec5a4deb82475716012ed1ef8bda7850c0d885d2faee02d7acdcc2c60de6"
+    sha256 cellar: :any, sequoia:       "fb25f791bc588320055edee1a589f8e8d157220ffa69271587eb88ae61092788"
+    sha256 cellar: :any, arm64_linux:   "81b8c0471fa7b1d158d8d6546f33cdfffcf8048fc77fdcd965542dcea94ff89f"
+    sha256 cellar: :any, x86_64_linux:  "638e33c906c3b8e051930053a293710739e85a844889871394bbd8f04b56901f"
+  end
 
   # Version pairing (declared for this release — enforced at RUNTIME by the
   # software itself, not pinned at install time):
