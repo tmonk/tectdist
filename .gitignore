@@ -12,3 +12,6 @@ __pycache__/
 .venv/
 out/
 benchmarks/*.json
+benchmark-results/
+benchmarks/external/
+target/

@@ -1,141 +1,62 @@
 # Benchmarks
 
-Performance is measured by a [pytest-benchmark](https://pytest-benchmark.readthedocs.io/)
-suite under the uv-managed dev environment.  The numbers below compare the
-pre-optimisation baseline with the optimised tree (lazy
-imports, lazy proxy globs, deflated zipapp), both measured back-to-back on
-the same machine, same interpreter (uv-managed CPython 3.12), same flags.
+Performance evidence is generated from the compact, versioned corpus in
+`benchmarks/corpus/manifest.toml`. A benchmarked compile counts only when the
+layered oracle accepts its PDF; cold and warm scenarios are separate.
+
+Run a local paired smoke comparison against direct Tectonic:
 
 ```sh
-uv sync
-uv run pytest benchmarks/ --benchmark-only --benchmark-disable-gc \
-    --benchmark-json=benchmarks/baseline.json   # before
-uv run pytest benchmarks/ --benchmark-only --benchmark-disable-gc \
-    --benchmark-json=benchmarks/after.json      # after
+TECTONIC="$(command -v tectonic)" \
+TECTDIST_BENCH_DIRECT_TECTONIC="$(command -v tectonic)" \
+python -m benchmarks.runner.cli --candidate ./bin/tectdist \
+  --document tiny --scenario warm-clean --trials 3 --warmups 1 \
+  --output benchmark-results/smoke.json
+python -m benchmarks.runner.report benchmark-results/smoke.json \
+  --output benchmark-results/summary.md \
+  --badge-output benchmark-results/badge.json
 ```
 
-The `benchmarks/*.json` snapshots are generated locally (gitignored);
-regenerate both together when re-measuring.
-
-## Methodology
-
-- **What is timed:** wall time of the full operation via
-  `time.perf_counter()`: a complete `subprocess.run()` for anything that
-  spawns the farm, so interpreter startup, imports, dispatch, translation
-  and engine spawn are all included.  In-process cases (translate, proxy
-  lookup, kpsewhich parse+search) time the function directly.
-- **Robustness:** each case runs 1 warmup + N samples (default 15; heavy
-  e2e cases 3; the battery 2; override with `TECTDIST_BENCH_SAMPLES=N`).
-  Reported stats are the **median, p50 and p95** of the raw samples, which
-  stay meaningful under system load.  The pytest-benchmark bookkeeping call
-  is bounded via `pedantic(rounds=…)`.
-- **Interpreter:** subprocesses resolve `python3` from the `uv run` PATH
-  (the uv-managed CPython 3.12).  On a stock system `python3` (e.g. 3.14)
-  absolute numbers are higher, but the *relative* deltas below hold.
-- **Engine:** the e2e cases use the real Tectonic engine with a warmed
-  bundle cache.  They are engine-dominated: their wall time tracks machine
-  load far more than the shim (observed compile range across runs:
-  187-1254 ms for the same code).  Treat their Δ% as noise, not signal.
-
-## Results (paired run, 2026-08-07, uv-managed CPython 3.12)
-
-Median wall time per operation, milliseconds (lower is better).
-
-| case | before med | p50 | p95 | after med | p50 | p95 | Δ |
-|---|---|---|---|---|---|---|---|
-| shim/startup warm: `tectdist --version` | 24.5 | 24.5 | 25.8 | 15.0 | 15.0 | 15.8 | **−38.9%** |
-| shim/startup artifact: `dist/tectdist --version` | 43.1 | 43.1 | 45.5 | 18.6 | 18.6 | 21.3 | **−56.8%** |
-| shim/startup latexmk: `--version` | 32.8 | 32.8 | 40.2 | 23.9 | 23.9 | 25.9 | **−27.1%** |
-| shim/startup stub: `mktexlsr` | 41.6 | 41.6 | 53.5 | 22.3 | 22.3 | 23.1 | **−46.3%** |
-| shim/startup kpsewhich: `--version` | 28.0 | 28.0 | 30.3 | 23.4 | 23.4 | 24.6 | **−16.3%** |
-| shim/startup cold (post-sync): `tectdist --version` | 97.2 | 97.2 | 103.8 | 70.7 | 70.7 | 73.1 | **−27.3%** |
-| shim/translation + spawn: pdflatex web2c flags (fake engine) | 44.8 | 44.8 | 55.8 | 40.4 | 40.4 | 43.5 | **−9.9%** |
-| shim/translate in-process (CPU only) | 0.01 | 0.01 | 0.01 | 0.01 | 0.01 | 0.01 | −11.1% |
-| shim/proxy lookup in-process (candidates+globs) | 1.19 | 1.19 | 1.31 | 1.01 | 1.01 | 1.12 | **−14.7%** |
-| shim/proxy invocation: `pdfinfo -v` (real poppler) | 40.4 | 40.4 | 45.4 | 32.9 | 32.9 | 34.4 | **−18.6%** |
-| shim/kpsewhich subprocess: file lookup | 24.0 | 24.0 | 25.8 | 23.2 | 23.2 | 24.4 | −3.1% |
-| shim/kpsewhich in-process (CPU only) | 0.01 | 0.01 | 0.01 | 0.01 | 0.01 | 0.01 | +0.0% |
-| e2e/compile: `pdflatex tiny.tex` (real tectonic) | 376.0 | 376.0 | 429.0 | 187.7 | 187.7 | 189.2 | noise* |
-| e2e/latexmk: driver + compile (real tectonic) | 414.0 | 414.0 | 425.1 | 203.3 | 203.3 | 208.7 | noise* |
-| e2e/battery: full acceptance battery (272 checks) | 12057.0 | 12057.0 | 12205.8 | 5550.1 | 5550.1 | 5631.0 | noise* |
-
-\* engine-dominated: the machine was simply lighter during the “after” run
-(see methodology).  In the first paired run (heavier load) the same e2e cases
-swung the other way (+1.5%…+151%) with the same code; the shim cases improved
-in *every* paired run.
-
-## What changed
-
-- **Lazy imports** (`src/tectdist/dispatcher.py`): only `os`, `sys`, `flags`
-  and `version` import eagerly.  `subprocess` (~5 ms), `shutil` (~1.5 ms),
-  `tools` and `latexmk` are imported on the dispatch paths that need them, so
-  every pure-shim invocation (`--version`, stubs, help) skips them.  This is
-  the bulk of the startup wins (−39% warm, −57% artifact, −46% stub).
-- **Lazy proxy globs** (`src/tectdist/tools.py`): `run_proxy` checks the
-  fixed locations first and only evaluates the `/opt/*/bin` globs on a miss
-  (previously the globs ran eagerly on every call).  Proxy lookup −15%,
-  proxy invocation −19%.
-- **Deflated zipapp** (`build.py`): the artifact is written with
-  `ZIP_DEFLATED` instead of stored, shrinking `dist/tectdist` from
-  46.8 KiB to 14.0 KiB and speeding up cold reads (layout, shebang and
-  behaviour unchanged).
-
-## Verification
-
-- Acceptance battery stays green before and after: **272/0/0** (`--jobs 4`),
-  also `--mock-only` 223/0/49.
-- `dist/tectdist` import audit (stdlib-only) passes: `uv run python
-  tests/check_purity.py`.
-- `py_compile` clean on CPython 3.12 (dev) and 3.9 (floor).
-- No behavioural change: the mock tier asserts exit codes *and* exact engine
-  argv, all green.
-
-## vs TeX Live
-
-`benchmarks/test_texlive.py` compiles `helpers.PAPER` (a package-heavy
-document: geometry, amsmath, hyperref, xcolor, booktabs, listings,
-fancyhdr, whose hyperref outline needs a rerun to resolve) through
-tectdist's single command and through TeX Live's `latexmk`, back-to-back on
-the same machine. It's skipped, not failed, unless both are on PATH:
+Measure a startup/dispatch budget separately from a document compile:
 
 ```sh
-uv run pytest benchmarks/test_texlive.py -v
+python -m benchmarks.runner.micro --trials 30 --warmups 5 \
+  --output benchmark-results/native-version.json \
+  --command ./target/release/tectdist --version
 ```
 
-**Why `latexmk`, not a bare `pdflatex`, is the TeX Live baseline:** a single
-raw `pdflatex` pass on this document leaves a stale PDF outline (TeX Live
-warns `Rerun to get /PageLabels entry`): it is not a finished, correct
-compile. tectdist's single command always reruns automatically until
-references converge (Tectonic's own behaviour), so the fair comparison is
-against TeX Live's own answer to "one command, fully-resolved PDF":
-`latexmk`. `helpers.find_texlive_latexmk()` locates a `latexmk` next to a
-non-tectdist `pdflatex` on PATH, so this works whether tectdist is
-installed via Homebrew, a source checkout, or shadows `pdflatex` on PATH
-entirely.
+An optional real-world stress workload is pinned from the University of
+Stuttgart ITP3 QFT benchmark. It is 742,627 bytes, stays outside the default
+claim aggregate, and is fetched only on request:
 
-Warm both sides' caches before measuring: a manual
-`bin/pdflatex -interaction=nonstopmode` on any `.tex` file for Tectonic's
-bundle, one prior `latexmk` run for TeX Live's formats, so neither run
-pays a one-time init cost.
+```sh
+python3 scripts/fetch_itp3_fixture.py
+TECTDIST_BENCH_DIRECT_TECTONIC="$(command -v tectonic)" \
+python3 -m benchmarks.runner.cli \
+  --manifest benchmarks/external-manifests/itp3-qft.toml \
+  --candidate ./target/release/tectdist --scenario warm-clean \
+  --trials 3 --warmups 1 --output benchmark-results/itp3-smoke.json
+```
 
-### Results (paper.tex, 20 samples, both fully warm, 2026-08-23)
+For qualification, use the declared corpus scenarios, at least 30 paired
+trials for ordinary documents, independent sessions, and explicitly configured
+competitors. Invoke `--qualification` with `TECTDIST_BUNDLE_SOURCE`,
+`TECTDIST_BUNDLE_ID`, `TECTDIST_BUNDLE_MANIFEST_SHA256`, and
+`TECTDIST_FORMAT_CACHE_ID` set to immutable values; it rejects weak trial
+counts or missing provenance. A `cold-empty-cache` run must also declare
+either `--cold-source controlled-local` or `--cold-source public-network` so
+network observations cannot be presented as compiler-only measurements. The
+raw JSON records tool and bundle identity, binary size, platform, randomised
+order, timing, CPU/RSS where available, process-count provenance, trace
+spans, download/decompression observations, correctness results, hashes, and
+bootstrap confidence intervals. Generated tables include both tools' medians
+and p95 values plus paired absolute and percentage differences.
 
-Median wall time per fully-resolved compile, milliseconds (lower is better).
+Direct Tectonic is not an index/glossary orchestrator, so those cases are not
+misrepresented as direct-engine comparisons; qualification compares them with
+the previous tectdist release and TeX Live latexmk instead. Direct Tectonic
+remains required and visible for every applicable engine-only workload.
 
-| | median | p95 | min | max |
-|---|---|---|---|---|
-| tectdist (`pdflatex paper.tex`, Tectonic) | **467** | 510 | 454 | 522 |
-| TeX Live (`latexmk -pdf paper.tex`, TinyTeX 2026) | 710 | 842 | 664 | 929 |
-
-tectdist compiled this document **34% faster** than TeX Live's own
-multi-pass driver, measured on a warm TinyTeX 2026 install (macOS,
-arm64). This is not because tectdist's Python launcher is unusually fast
-(its own overhead is ~26 ms, confirmed by timing `tectdist --version` and
-by `bin/pdflatex` matching a direct `tectonic` invocation to within noise),
-but because Tectonic's single rerun-until-stable pass beats `latexmk`
-invoking a full second `pdflatex` process from scratch.
-
-These numbers are specific to this document, this TeX Live install, and
-this machine; a stripped-down TeX Live, a different package set, or a
-cold Tectonic bundle cache will shift them. Re-run the command above on
-your own setup for a number that means something for your workflow.
+Do not add hand-maintained percentages or broad product claims here. Publish
+only generated summaries backed by immutable raw bundles, and scope any claim
+to its platform, corpus, cache state, and competitors.

@@ -1,0 +1,23 @@
+schema_version = 1
+corpus_kind = "external"
+source = "https://web.itp3.uni-stuttgart.de/latex-benchmark/git/benchmark/"
+fixture_bytes = 742627
+
+[[document]]
+id = "itp3-qft"
+path = "external/itp3-qft"
+main = "QFT.tex"
+license = "upstream-unreviewed-internal"
+claim = false
+platforms = ["macos-arm64", "linux-x86_64", "linux-arm64"]
+scenarios = ["cold-empty-cache", "warm-clean", "bibliography"]
+expected_pages = 51
+expected_text = ["Quantum Field Theory", "Elements of Classical Field Theory", "The Dirac Field", "Bibliography"]
+engine = "tectonic"
+requires = ["bibtex", "tikz", "pgfplots", "circuitikz", "graphics"]
+requires_bibliography = true
+requires_index = false
+requires_glossary = false
+requires_shell_escape = false
+edit_operations = []
+forbid_log_patterns = ["undefined references", "Citation .* undefined", "Rerun to get cross-references right"]

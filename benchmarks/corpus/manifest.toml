@@ -1,0 +1,220 @@
+schema_version = 1
+
+[[document]]
+id = "tiny"
+path = "corpus/tiny"
+main = "main.tex"
+license = "CC0-1.0"
+claim = true
+platforms = ["macos-arm64", "linux-x86_64", "linux-arm64"]
+scenarios = ["cold-empty-cache", "warm-clean", "warm-existing-output", "source-small-edit"]
+expected_pages = 1
+expected_text = ["tectdist tiny benchmark"]
+engine = "tectonic"
+requires = []
+requires_bibliography = false
+requires_index = false
+requires_glossary = false
+requires_shell_escape = false
+edit_operations = ["small-text"]
+forbid_log_patterns = ["undefined references", "Rerun to get cross-references right"]
+
+[[document]]
+id = "references"
+path = "corpus/references"
+main = "main.tex"
+license = "CC0-1.0"
+claim = true
+platforms = ["macos-arm64", "linux-x86_64", "linux-arm64"]
+scenarios = ["warm-clean", "source-structural-edit"]
+expected_pages = 1
+expected_text = ["Reference target", "Reference source"]
+engine = "tectonic"
+requires = ["hyperref"]
+requires_bibliography = false
+requires_index = false
+requires_glossary = false
+requires_shell_escape = false
+edit_operations = ["structural-section"]
+forbid_log_patterns = ["undefined references", "Rerun to get cross-references right"]
+
+[[document]]
+id = "paper"
+path = "corpus/paper"
+main = "main.tex"
+license = "CC0-1.0"
+claim = true
+platforms = ["macos-arm64", "linux-x86_64", "linux-arm64"]
+scenarios = ["warm-clean", "source-small-edit", "source-structural-edit"]
+expected_pages = 1
+expected_text = ["A Representative LaTeX Document", "Example results table"]
+engine = "tectonic"
+requires = ["hyperref", "booktabs"]
+requires_bibliography = false
+requires_index = false
+requires_glossary = false
+requires_shell_escape = false
+edit_operations = ["small-text", "structural-section"]
+forbid_log_patterns = ["undefined references", "Rerun to get cross-references right"]
+
+[[document]]
+id = "bibtex"
+path = "corpus/bibtex"
+main = "main.tex"
+license = "CC0-1.0"
+claim = true
+platforms = ["macos-arm64", "linux-x86_64", "linux-arm64"]
+scenarios = ["warm-clean", "bibliography"]
+expected_pages = 1
+expected_text = ["Knuth"]
+engine = "tectonic"
+requires = ["bibtex"]
+requires_bibliography = true
+requires_index = false
+requires_glossary = false
+requires_shell_escape = false
+edit_operations = []
+
+[[document]]
+id = "biblatex"
+path = "corpus/biblatex"
+main = "main.tex"
+license = "CC0-1.0"
+claim = true
+platforms = ["macos-arm64", "linux-x86_64", "linux-arm64"]
+scenarios = ["warm-clean", "bibliography"]
+expected_pages = 1
+expected_text = ["Knuth"]
+engine = "tectonic"
+requires = ["biber"]
+requires_bibliography = true
+requires_index = false
+requires_glossary = false
+requires_shell_escape = false
+edit_operations = []
+
+[[document]]
+id = "index"
+path = "corpus/index"
+main = "main.tex"
+license = "CC0-1.0"
+claim = true
+platforms = ["macos-arm64", "linux-x86_64", "linux-arm64"]
+scenarios = ["warm-clean", "index"]
+expected_pages = 2
+expected_text = ["alpha"]
+engine = "tectonic"
+requires = ["makeindex"]
+requires_bibliography = false
+requires_index = true
+requires_glossary = false
+requires_shell_escape = false
+edit_operations = []
+
+[[document]]
+id = "glossary"
+path = "corpus/glossary"
+main = "main.tex"
+license = "CC0-1.0"
+claim = false
+platforms = ["macos-arm64", "linux-x86_64", "linux-arm64"]
+scenarios = ["warm-clean"]
+expected_pages = 1
+expected_text = ["Glossary benchmark"]
+engine = "tectonic"
+requires = ["glossaries", "makeindex"]
+requires_bibliography = false
+requires_index = false
+requires_glossary = true
+requires_shell_escape = false
+edit_operations = []
+
+[[document]]
+id = "tikz"
+path = "corpus/tikz"
+main = "main.tex"
+license = "CC0-1.0"
+claim = false
+platforms = ["macos-arm64", "linux-x86_64"]
+scenarios = ["warm-clean"]
+expected_pages = 1
+expected_text = ["TikZ benchmark"]
+engine = "tectonic"
+requires = ["tikz"]
+requires_bibliography = false
+requires_index = false
+requires_glossary = false
+requires_shell_escape = false
+edit_operations = []
+
+[[document]]
+id = "graphics"
+path = "corpus/graphics"
+main = "main.tex"
+license = "CC0-1.0"
+claim = false
+platforms = ["macos-arm64", "linux-x86_64"]
+scenarios = ["warm-clean"]
+expected_pages = 1
+expected_text = ["Graphics benchmark"]
+engine = "tectonic"
+requires = ["graphicx"]
+requires_bibliography = false
+requires_index = false
+requires_glossary = false
+requires_shell_escape = false
+edit_operations = []
+
+[[document]]
+id = "unicode-fonts"
+path = "corpus/unicode-fonts"
+main = "main.tex"
+license = "CC0-1.0"
+claim = false
+platforms = ["macos-arm64", "linux-x86_64"]
+scenarios = ["warm-clean"]
+expected_pages = 1
+expected_text = ["Unicode benchmark"]
+engine = "tectonic"
+requires = ["fontspec"]
+requires_bibliography = false
+requires_index = false
+requires_glossary = false
+requires_shell_escape = false
+edit_operations = []
+
+[[document]]
+id = "shell-escape"
+path = "corpus/shell-escape"
+main = "main.tex"
+license = "CC0-1.0"
+claim = false
+platforms = ["macos-arm64", "linux-x86_64"]
+scenarios = ["warm-clean"]
+expected_pages = 1
+expected_text = ["Shell escape benchmark"]
+engine = "tectonic"
+requires = ["shell-escape"]
+requires_bibliography = false
+requires_index = false
+requires_glossary = false
+requires_shell_escape = true
+edit_operations = []
+
+[[document]]
+id = "thesis"
+path = "corpus/thesis"
+main = "main.tex"
+license = "CC0-1.0"
+claim = true
+platforms = ["macos-arm64", "linux-x86_64", "linux-arm64"]
+scenarios = ["warm-clean", "source-structural-edit"]
+expected_pages = 3
+expected_text = ["Benchmark thesis", "Second chapter"]
+engine = "tectonic"
+requires = ["hyperref"]
+requires_bibliography = false
+requires_index = false
+requires_glossary = false
+requires_shell_escape = false
+edit_operations = ["structural-section"]
