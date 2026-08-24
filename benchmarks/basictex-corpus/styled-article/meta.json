@@ -1,0 +1,7 @@
+{
+  "sequence": [
+    "pdflatex {job}.tex",
+    "pdflatex {job}.tex"
+  ],
+  "expect_pages_floor": 2
+}

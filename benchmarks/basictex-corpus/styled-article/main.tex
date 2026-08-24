@@ -1,0 +1,17 @@
+\documentclass{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{url}
+\usepackage{hyperref}
+\pagestyle{fancy}
+\fancyhead[L]{BT100 styled}
+\definecolor{btblue}{RGB}{0,60,120}
+\begin{document}
+\section{Layout and links}
+Colored \textcolor{btblue}{reference text} with a
+\url{https://tug.org} link and internal target \label{sec:target}.
+\newpage
+\section{Second page}
+Cross reference to \ref*{sec:target} for rerun convergence.
+\end{document}

@@ -1,0 +1,20 @@
+\documentclass{article}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{colortbl}
+\usepackage{multicol}
+\begin{document}
+\section{Tables}
+\begin{tabularx}{\textwidth}{lXr}
+\toprule
+\rowcolor{gray!20} Name & Description & Value \\
+\midrule
+Alpha & First measurement row with longer description & 1.0 \\
+Beta & Second row & 2.50 \\
+\bottomrule
+\end{tabularx}
+\begin{multicols}{2}
+Multicolumn text balancing the table content on the same page
+with additional words to fill the column naturally.
+\end{multicols}
+\end{document}
