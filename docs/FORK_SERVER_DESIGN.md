@@ -97,6 +97,38 @@ server), reporting p50/p95 over ≥100 children with warm caches.
       reference. Root-causing the generated-code flow difference is queued.
 - [ ] XeTeX / LuaHBTeX servers
 - [ ] Integration of worker routing with the full BT100 differential battery
+
+### Open technical notes — \dump-based preamble snapshots (X2 round 2)
+
+Attempted: draftmode-isolated measurement (preamble fmt built with
+\pdfvariable draftmode=1 before \documentclass, so children skip PDF
+emission) to bisect the ~14 ms child residual.
+
+Findings:
+1. Building the project fmt via `-ini "&pdflatex preamble-draft.tex"`
+   (line = &load + input file ending in \dump) produces a .fmt, but the
+   ini session exhibits LaTeX errors (Undefined control sequence /
+   Missing \begin{document}) indicating the input file was processed with
+   incomplete format state — the exact semantics of &load + trailing
+   input-file processing inside -ini sessions need study before trusting
+   hand-rolled dumps. The canonical solution is almost certainly
+   mylatexformat.sty-style handling or fmtutil-driven generation.
+2. Hook placement interacts with first-line processing: the site inside the
+   &-load block (after wclose(fmtfile)) blocks the parent BEFORE the
+   trailing input file on the command line is opened. For the server model
+   this is CORRECT (jobs arrive over the socket; the command line should
+   contain nothing else), but it means format construction must happen in
+   a separate one-shot process, never in the serving parent.
+3. Consequence for X2: per-project formats remain viable, but their
+   generation belongs to the supervisor (offline, fmtutil-semantics), not
+   the serving parent; children resume with the project fmt preloaded via
+   a first-line &reference to a supervisor-managed copy.
+
+Next actions queued:
+- Study mylatexformat.sty + fmtutil joint behaviour; replicate its exact
+  token/state handling in the supervisor's offline format builder.
+- Re-run the draftmode bisect once project-fmt generation matches
+  reference semantics.
 - [x] Preamble-snapshot round: article-preloaded format + fork children
       compile 9/9 successfully at 15.0 ms median; pure-fork control measures
       0.01 ms — the residual is post-preamble engine work (fonts, PDF out),
