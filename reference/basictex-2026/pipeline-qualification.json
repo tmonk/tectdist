@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "pipelines": [
+    {
+      "pipeline": "direct-pdf",
+      "verdict": "pass"
+    },
+    {
+      "pipeline": "xdv-xdvipdfmx",
+      "verdict": "pass"
+    },
+    {
+      "pipeline": "dvi",
+      "verdict": "pass"
+    },
+    {
+      "pipeline": "dvips",
+      "verdict": "pass"
+    },
+    {
+      "pipeline": "synctex",
+      "verdict": "pass"
+    },
+    {
+      "pipeline": "metapost",
+      "verdict": "pass"
+    },
+    {
+      "pipeline": "tex4ht",
+      "verdict": "pass"
+    }
+  ],
+  "passed": 7,
+  "total": 7
+}
