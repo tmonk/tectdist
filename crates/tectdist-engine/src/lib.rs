@@ -88,6 +88,11 @@ pub struct EngineContext {
     bundle:
         std::sync::Arc<std::sync::Mutex<Box<dyn tectonic_bundles::Bundle>>>,
     io_counters: std::sync::Arc<observer::BundleIoCounters>,
+    /// Names the bundle answered NotAvailable for. The bundle is immutable,
+    /// so a miss is final for the whole process; rerun passes re-probe many
+    /// of these names and would otherwise pay full bundle resolution again
+    /// (plan X4.3).
+    negative_cache: std::sync::Arc<std::sync::Mutex<std::collections::HashSet<String>>>,
 }
 
 #[cfg(feature = "embedded")]
@@ -107,14 +112,19 @@ impl EngineContext {
             format_cache,
             bundle: std::sync::Arc::new(std::sync::Mutex::new(bundle)),
             io_counters: std::sync::Arc::new(observer::BundleIoCounters::default()),
+            negative_cache: std::sync::Arc::new(std::sync::Mutex::new(
+                std::collections::HashSet::new(),
+            )),
         })
     }
 
-    /// A per-session view of the shared context's bundle with I/O counting.
+    /// A per-session view of the shared context's bundle with I/O counting
+    /// and the shared negative-open cache.
     fn context_bundle(&self) -> ContextBundle {
         ContextBundle {
             bundle: self.bundle.clone(),
             counters: self.io_counters.clone(),
+            negative_cache: self.negative_cache.clone(),
         }
     }
 }
@@ -125,6 +135,9 @@ impl EngineContext {
 struct ContextBundle {
     bundle: std::sync::Arc<std::sync::Mutex<Box<dyn tectonic_bundles::Bundle>>>,
     counters: std::sync::Arc<observer::BundleIoCounters>,
+    negative_cache: std::sync::Arc<
+        std::sync::Mutex<std::collections::HashSet<String>>,
+    >,
 }
 
 #[cfg(feature = "embedded")]
@@ -134,6 +147,9 @@ impl tectonic::io::IoProvider for ContextBundle {
         name: &str,
         status: &mut dyn tectonic::status::StatusBackend,
     ) -> tectonic::io::OpenResult<tectonic::io::InputHandle> {
+        if self.negative_cache.lock().expect("negative cache poisoned").contains(name) {
+            return tectonic::io::OpenResult::NotAvailable;
+        }
         let started = Instant::now();
         let result = self
             .bundle
@@ -142,7 +158,13 @@ impl tectonic::io::IoProvider for ContextBundle {
             .input_open_name(name, status);
         let outcome = match &result {
             tectonic::io::OpenResult::Ok(_) => 0u8,
-            tectonic::io::OpenResult::NotAvailable => 1u8,
+            tectonic::io::OpenResult::NotAvailable => {
+                self.negative_cache
+                    .lock()
+                    .expect("negative cache poisoned")
+                    .insert(name.to_string());
+                1u8
+            }
             tectonic::io::OpenResult::Err(_) => 2u8,
         };
         self.counters.record(started.elapsed(), outcome);
