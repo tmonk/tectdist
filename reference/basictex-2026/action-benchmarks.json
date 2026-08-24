@@ -5,32 +5,50 @@
   "results": [
     {
       "helper": "bibtex",
-      "cold_miss_ms": 34,
-      "hit_p50_ms": 0.59,
-      "hit_min_ms": 0.57,
+      "cold_miss_ms": 30,
+      "hit_p50_ms": 0.55,
+      "hit_min_ms": 0.53,
       "invalidation_ok": true,
       "gate_2ms_restore": true,
       "verdict": "pass"
     },
     {
       "helper": "makeindex",
-      "cold_miss_ms": 22,
-      "hit_p50_ms": 0.55,
-      "hit_min_ms": 0.54,
+      "cold_miss_ms": 20,
+      "hit_p50_ms": 0.53,
+      "hit_min_ms": 0.5,
       "invalidation_ok": true,
       "gate_2ms_restore": true,
       "verdict": "pass"
     },
     {
       "helper": "mpost",
-      "cold_miss_ms": 205,
-      "hit_p50_ms": 0.62,
-      "hit_min_ms": 0.56,
+      "cold_miss_ms": 181,
+      "hit_p50_ms": 0.56,
+      "hit_min_ms": 0.53,
+      "invalidation_ok": true,
+      "gate_2ms_restore": true,
+      "verdict": "pass"
+    },
+    {
+      "helper": "dvips",
+      "cold_miss_ms": 36,
+      "hit_p50_ms": 0.45,
+      "hit_min_ms": 0.4,
+      "invalidation_ok": true,
+      "gate_2ms_restore": true,
+      "verdict": "pass"
+    },
+    {
+      "helper": "htlatex",
+      "cold_miss_ms": 424,
+      "hit_p50_ms": 0.56,
+      "hit_min_ms": 0.51,
       "invalidation_ok": true,
       "gate_2ms_restore": true,
       "verdict": "pass"
     }
   ],
-  "passed": 3,
-  "total": 3
+  "passed": 5,
+  "total": 5
 }

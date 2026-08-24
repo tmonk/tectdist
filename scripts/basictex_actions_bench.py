@@ -36,6 +36,7 @@ class SupervisorHandle:
         env["TECTDIST_SUPERVISOR_SOCKET"] = str(self.socket)
         env["TECTDIST_BASICTEX_ROOT"] = str(image_root)
         env["TECTDIST_ACTION_CACHE"] = str(self.dir / "cache")
+        env["PATH"] = f"{Path(image_root) / 'bin/universal-darwin'}:{env.get('PATH', '')}"
         self.child = subprocess.Popen(
             [exe, "serve"], env=env,
             stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
@@ -82,9 +83,10 @@ def timed_request(handle, payload, repeats):
 
 
 def measure_tool(handle, name, setup, argv, inputs, outputs, mutate=None,
-                 trials=20):
+                 trials=20, binary_dir=None, env=None):
     work = Path(tempfile.mkdtemp(prefix=f"bt100-act-{name}-"))
-    setup(work)
+    if setup:
+        setup(work, binary_dir, env)
     base_payload = {
         "type": "action", "tool": name, "cwd": str(work),
         "argv": argv, "inputs": [str(p) for p in inputs],
@@ -102,7 +104,7 @@ def measure_tool(handle, name, setup, argv, inputs, outputs, mutate=None,
     # Invalidation.
     invalidated_ok = True
     if mutate:
-        mutate(work)
+        mutate(work, binary_dir, env)
         response = handle.request(base_payload)
         invalidated_ok = (
             response.get("ok")
@@ -141,17 +143,20 @@ def main(argv=None):
         return path
 
     # --- BibTeX ---
-    def bib_setup(work):
+    def bib_setup(work, binary_dir=None, env=None):
         write_file(work, "refs.bib",
                    "@book{k1, author={Alpha}, title={T}, publisher={P}, year={2001}}\n")
         write_file(work, "main.aux",
                    "\\relax\n\\citation{k1}\n\\bibstyle{plain}\n"
                    "\\bibdata{refs}\n\\bibcite{k1}{1}\n")
 
-    def bib_mutate(work):
+    def bib_mutate(work, binary_dir=None, env=None):
         write_file(work, "refs.bib",
                    "@book{k1, author={Beta}, title={T}, publisher={P}, year={2001}}\n")
 
+    binary_dir = image_root / "bin/universal-darwin"
+    tool_env = dict(os.environ)
+    tool_env["TEXMFROOT"] = str(image_root)
     results.append(measure_tool(
         handle, "bibtex", bib_setup,
         ["bibtex", "main"], [Path("main.aux"), Path("refs.bib")],
@@ -159,10 +164,10 @@ def main(argv=None):
         trials=ns.trials))
 
     # --- MakeIndex ---
-    def idx_setup(work):
+    def idx_setup(work, binary_dir=None, env=None):
         write_file(work, "main.idx", "\\indexentry{alpha}{1}\n\\indexentry{beta}{2}\n")
 
-    def idx_mutate(work):
+    def idx_mutate(work, binary_dir=None, env=None):
         write_file(work, "main.idx", "\\indexentry{gamma}{3}\n")
 
     results.append(measure_tool(
@@ -172,11 +177,11 @@ def main(argv=None):
         trials=ns.trials))
 
     # --- MetaPost ---
-    def mp_setup(work):
+    def mp_setup(work, binary_dir=None, env=None):
         write_file(work, "fig.mp",
                    "beginfig(1)\ndraw (0,0)--(10mm,0);\nendfig;\nend.\n")
 
-    def mp_mutate(work):
+    def mp_mutate(work, binary_dir=None, env=None):
         write_file(work, "fig.mp",
                    "beginfig(1)\ndraw (0,0)--(20mm,0);\nendfig;\nend.\n")
 
@@ -185,6 +190,49 @@ def main(argv=None):
         ["mpost", "-interaction=batchmode", "fig.mp"], [Path("fig.mp")],
         [Path("fig.1"), Path("fig.log")], mutate=mp_mutate,
         trials=ns.trials))
+
+    # --- dvips (setup produces the DVI through the reference latex) ---
+    def dvips_setup(work, binary_dir, env):
+        write_file(work, "main.tex",
+                   "\\documentclass{article}\\begin{document}"
+                   "DVI pipeline.\\end{document}\n")
+        result = subprocess.run(
+            [str(binary_dir / "latex"), "-interaction=batchmode", "main.tex"],
+            cwd=work, env=env, capture_output=True, text=True)
+        assert result.returncode == 0, result.stderr[-300:]
+
+    def dvips_mutate(work, binary_dir, env):
+        write_file(work, "main.tex",
+                   "\\documentclass{article}\\begin{document}"
+                   "DVI pipeline v2.\\end{document}\n")
+        subprocess.run(
+            [str(binary_dir / "latex"), "-interaction=batchmode", "main.tex"],
+            cwd=work, env=env, capture_output=True, text=True)
+
+    if (binary_dir / "dvips").exists():
+        results.append(measure_tool(
+            handle, "dvips", dvips_setup,
+            ["dvips", "main.dvi"], [Path("main.dvi")],
+            [Path("main.ps")], mutate=dvips_mutate,
+            trials=min(ns.trials, 10), binary_dir=binary_dir, env=tool_env))
+
+    # --- tex4ht (HTML asset set) ---
+    if (binary_dir / "htlatex").exists():
+        def tex4ht_setup(work, binary_dir, env):
+            write_file(work, "main.tex",
+                       "\\documentclass{article}\\begin{document}"
+                       "HTML pipeline.\\end{document}\n")
+
+        def tex4ht_mutate(work, binary_dir, env):
+            write_file(work, "main.tex",
+                       "\\documentclass{article}\\begin{document}"
+                       "HTML pipeline v2.\\end{document}\n")
+
+        results.append(measure_tool(
+            handle, "htlatex", tex4ht_setup,
+            ["htlatex", "main.tex"], [Path("main.tex")],
+            [Path("main.html"), Path("main.css")], mutate=tex4ht_mutate,
+            trials=min(ns.trials, 5), binary_dir=binary_dir, env=tool_env))
 
     handle.stop()
 
