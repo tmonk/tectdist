@@ -1,6 +1,9 @@
 name: test-pour
 on:
   workflow_dispatch: {}
+  schedule:
+    # Catch a Homebrew dependency change that invalidates a published bottle.
+    - cron: "17 5 * * 1"
 permissions:
   contents: read
 jobs:
@@ -11,12 +14,14 @@ jobs:
       - name: Set up Homebrew
         uses: Homebrew/actions/setup-homebrew@c8707045ccae42888fe98e86f2ee8938bc7cc193 # 2026.08.03.2
 
-      - name: Fresh install from the tap and verify the published bottle
+      - name: Fresh install from the tap and exercise every documented path
         run: |
-          set -euo pipefail
           brew tap tmonk/brew
-          brew install tmonk/brew/tectdist 2>&1 | tee /tmp/tectdist-install.log
-          grep -q "Pouring tectdist" /tmp/tectdist-install.log
-          tectdist doctor
-          biber --version | grep -q "biber version: 2.17"
-          test "$(find "$(brew --prefix tectdist)/bin" -maxdepth 1 -type l -o -type f | wc -l | tr -d ' ')" -ge 62
+          # A bottle must pour when the published formula declares one. During
+          # an ABI remediation it is intentionally absent, so exercise the
+          # source-install fallback instead of failing before the real test.
+          if brew cat tmonk/brew/tectdist | grep -q '^  bottle do$'; then
+            TECTDIST_REQUIRE_BOTTLE=1 tests/homebrew_e2e.sh
+          else
+            tests/homebrew_e2e.sh
+          fi

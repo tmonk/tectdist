@@ -268,7 +268,7 @@ CASES.append(Case(name="tectdist tools", section=SEC_VERHELP, tier="mock",
                   cmd=["$B/tectdist", "tools"], stdout_contains="pdflatex",
                   stdout_contains2="latexmk"))
 CASES.append(Case(name="tectdist version", section=SEC_VERHELP, tier="mock",
-                  cmd=["$B/tectdist", "version"], stdout_contains="tectdist 0.2.1"))
+                  cmd=["$B/tectdist", "version"], stdout_contains="tectdist 0.2.2"))
 CASES.append(mock("tectdist direct compile", SEC_DISP, [], prog="tectdist",
                   want_args=["-o .", "tiny.tex"], want_last="tiny.tex"))
 CASES.append(Case(name="tectdist -V", section=SEC_VERHELP, tier="mock",
@@ -295,6 +295,8 @@ SEC_PAIR = sec("mock: pairing check & doctor")
 
 FAKE17 = "#!/bin/sh\nif [ \"$1\" = --version ]; then echo \"Tectonic 0.17.9 (stub)\"; exit 0; fi\nexit 0\n"
 FAKE18 = "#!/bin/sh\nif [ \"$1\" = --version ]; then echo \"Tectonic 0.18.0 (stub)\"; exit 0; fi\nexit 0\n"
+FAKE_BIBER = "#!/bin/sh\nif [ \"$1\" = --version ]; then echo \"biber version: 2.17\"; exit 0; fi\nexit 0\n"
+BROKEN_BIBER = "#!/bin/sh\necho 'Perl API version v5.42.0 does not match v5.44.0' >&2\nexit 1\n"
 
 CASES.append(Case(name="pairing ok (tectonic 0.17.9)", section=SEC_PAIR, tier="mock",
                   cmd=["$B/pdflatex", "tiny.tex"],
@@ -312,15 +314,17 @@ CASES.append(Case(name="pairing bypass env var", section=SEC_PAIR, tier="mock",
                   env={"TECTONIC": "$D/fake18.sh", "TECTDIST_SKIP_PAIRING": "1"},
                   want=0, want_args=["tiny.tex"]))
 CASES.append(Case(name="doctor ok", section=SEC_PAIR, tier="mock",
-                  cmd=["$B/tectdist", "doctor"],
-                  setup={"fake17.sh": FAKE17}, chmod=["fake17.sh"],
-                  env={"TECTONIC": "$D/fake17.sh"},
+                  cmd=[sys.executable, "$B/tectdist", "doctor"],
+                  setup={"fake17.sh": FAKE17, "biber": FAKE_BIBER},
+                  chmod=["fake17.sh", "biber"],
+                  env={"TECTONIC": "$D/fake17.sh", "PATH": "$D"},
                   want=0, stdout_contains="PAIR OK",
                   stdout_contains2="declared:"))
 CASES.append(Case(name="doctor mismatch", section=SEC_PAIR, tier="mock",
-                  cmd=["$B/tectdist", "doctor"],
-                  setup={"fake18.sh": FAKE18}, chmod=["fake18.sh"],
-                  env={"TECTONIC": "$D/fake18.sh"},
+                  cmd=[sys.executable, "$B/tectdist", "doctor"],
+                  setup={"fake18.sh": FAKE18, "biber": FAKE_BIBER},
+                  chmod=["fake18.sh", "biber"],
+                  env={"TECTONIC": "$D/fake18.sh", "PATH": "$D"},
                   want=1, stdout_contains="MISMATCH"))
 CASES.append(Case(name="doctor missing tectonic", section=SEC_PAIR, tier="mock",
                   cmd=["$B/tectdist", "doctor"],
@@ -333,10 +337,18 @@ CASES.append(Case(name="doctor missing biber", section=SEC_PAIR, tier="mock",
                   env={"TECTONIC": "$D/fake17.sh", "PATH": "$D"},
                   want=1, stdout_contains="biber-missing",
                   stdout_contains2="biber NOT FOUND"))
+CASES.append(Case(name="doctor detects executable but broken biber", section=SEC_PAIR,
+                  tier="mock", cmd=[sys.executable, "$B/tectdist", "doctor", "--json"],
+                  setup={"fake17.sh": FAKE17, "biber": BROKEN_BIBER},
+                  chmod=["fake17.sh", "biber"],
+                  env={"TECTONIC": "$D/fake17.sh", "PATH": "$D"}, want=1,
+                  stdout_contains='"biber-failed"',
+                  stdout_contains2='Perl API version v5.42.0'))
 CASES.append(Case(name="doctor json", section=SEC_PAIR, tier="mock",
-                  cmd=["$B/tectdist", "doctor", "--json"],
-                  setup={"fake17.sh": FAKE17}, chmod=["fake17.sh"],
-                  env={"TECTONIC": "$D/fake17.sh"},
+                  cmd=[sys.executable, "$B/tectdist", "doctor", "--json"],
+                  setup={"fake17.sh": FAKE17, "biber": FAKE_BIBER},
+                  chmod=["fake17.sh", "biber"],
+                  env={"TECTONIC": "$D/fake17.sh", "PATH": "$D"},
                   want=0, stdout_contains='"ok": true',
                   stdout_contains2='"pair": "0.17"'))
 CASES.append(Case(name="independent lookup ignores pairing mismatch", section=SEC_PAIR,

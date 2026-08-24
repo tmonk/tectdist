@@ -7,12 +7,17 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [0.2.2] - 2026-08-24
+
 ### Added
 
 - `latexmk -n` / `latexmk --dry-run` validates the input and prints the exact
   Tectonic command without executing it.
 - `tectdist doctor --json` emits machine-readable pairing and installation
   diagnostics for CI and editor integrations.
+- A scheduled clean-Homebrew acceptance test now uninstalls and reinstalls
+  the tap formula, uses an empty home/cache, and compiles both a basic and a
+  Biber-backed bibliography document.
 
 ### Improved
 
@@ -42,6 +47,11 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   failed command.
 - `tectdist doctor` now reports missing Tectonic or biber dependencies as
   unhealthy instead of incorrectly returning `PAIR OK`.
+- `tectdist doctor` now distinguishes a missing Biber from one that exists
+  but cannot execute, and includes its command failure in the text and JSON
+  reports.
+- Homebrew Biber is now built and run against pinned `perl@5.44`; this
+  prevents an unversioned Perl upgrade from invalidating Biber's XS modules.
 - `install.py` emits a POSIX-single-quoted PATH entry, so unusual checkout
   paths containing shell metacharacters cannot execute when an rc file loads.
 - The documented one-sample benchmark smoke mode now reports that sample for

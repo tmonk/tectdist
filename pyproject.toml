@@ -1,6 +1,6 @@
 [project]
 name = "tectdist"
-version = "0.2.1"     # mirrors src/tectdist/version.py (single source of truth)
+version = "0.2.2"     # mirrors src/tectdist/version.py (single source of truth)
 description = "A standard-TeX-compatible distribution backed by Tectonic"
 readme = "README.md"
 requires-python = ">=3.9"

@@ -60,6 +60,15 @@ def main():
     if f":>=, {MIN_BIN_ENTRIES}" not in src:
         problems.append(f"test-block count assertion drifted from "
                         f"{MIN_BIN_ENTRIES}")
+    if 'depends_on "perl@5.44"' not in src:
+        problems.append("formula must pin biber to perl@5.44 so a future "
+                        "unversioned Perl upgrade cannot break its XS modules")
+    if 'formula_opt_bin("perl@5.44")' not in src:
+        problems.append("formula must build biber with the same pinned Perl "
+                        "used at runtime")
+    if 'tectdist doctor' not in src:
+        problems.append("formula test must verify that doctor reports a "
+                        "healthy installed toolchain")
 
     if problems:
         for p in problems:
