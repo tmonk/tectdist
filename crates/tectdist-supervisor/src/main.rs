@@ -56,6 +56,16 @@ enum Request {
     Snapshots {
         request_id: Option<u64>,
     },
+    Action {
+        request_id: Option<u64>,
+        tool: String,
+        cwd: PathBuf,
+        argv: Vec<String>,
+        /// Files whose content participates in the action key.
+        inputs: Vec<PathBuf>,
+        /// Files the action is expected to produce; restored on a hit.
+        outputs: Vec<PathBuf>,
+    },
 }
 
 #[derive(Debug, Serialize)]
@@ -96,6 +106,12 @@ enum Payload {
         entries: Vec<SnapshotEntry>,
         evicted: Vec<String>,
     },
+    ActionResult {
+        cache_hit: bool,
+        exit_status: i32,
+        duration_ms: u64,
+        key_digest: String,
+    },
 }
 
 #[derive(Debug, Serialize)]
@@ -106,6 +122,7 @@ struct SnapshotEntry {
 }
 
 struct SupervisorState {
+    image_root: PathBuf,
     started: std::time::Instant,
     compiles_started: AtomicU64,
     compiles_succeeded: AtomicU64,
@@ -131,6 +148,9 @@ impl SupervisorState {
             .and_then(|value| value.parse().ok())
             .unwrap_or(32);
         Self {
+            image_root: PathBuf::from(
+                std::env::var("TECTDIST_BASICTEX_ROOT").unwrap_or_default(),
+            ),
             started: std::time::Instant::now(),
             compiles_started: AtomicU64::new(0),
             compiles_succeeded: AtomicU64::new(0),
@@ -234,6 +254,152 @@ impl SupervisorState {
     }
 }
 
+
+// ------------------------------------------------------------------
+// Action broker (plan X3 / X10-120..123): content-addressed reuse of
+// exact core-helper executions.
+// ------------------------------------------------------------------
+
+fn sha256_hex(bytes: &[u8]) -> String {
+    use sha2::{Digest, Sha256};
+    let mut hasher = Sha256::new();
+    hasher.update(bytes);
+    format!("{:x}", hasher.finalize())
+}
+
+fn sha256_file(path: &Path) -> Result<String, String> {
+    let bytes = std::fs::read(path).map_err(|e| format!("read {}: {e}", path.display()))?;
+    Ok(sha256_hex(&bytes))
+}
+
+impl SupervisorState {
+    fn image_tool(&self, tool: &str) -> Result<PathBuf, String> {
+        if self.image_root.as_os_str().is_empty() {
+            return Err("TECTDIST_BASICTEX_ROOT is not configured".to_string());
+        }
+        let bin = self.image_root.join("bin");
+        let mut platform_dir = None;
+        for entry in bin.read_dir().map_err(|e| e.to_string())?.flatten() {
+            if entry.path().is_dir() && entry.path().join(tool).exists() {
+                platform_dir = Some(entry.path());
+                break;
+            }
+        }
+        platform_dir
+            .map(|dir| dir.join(tool))
+            .ok_or_else(|| format!("image has no tool '{tool}'"))
+    }
+
+    fn action_cache_dir(&self) -> PathBuf {
+        let base = std::env::var("TECTDIST_ACTION_CACHE").unwrap_or_else(|_| {
+            format!(
+                "{}/.tectdist-cache",
+                std::env::var("HOME").unwrap_or_else(|_| "/tmp".into())
+            )
+        });
+        PathBuf::from(base).join("actions")
+    }
+}
+
+fn run_action(
+    state: &SupervisorState,
+    tool: &str,
+    cwd: &Path,
+    argv: &[String],
+    inputs: &[PathBuf],
+    outputs: &[PathBuf],
+) -> Result<(bool, i32), String> {
+    let binary = state.image_tool(tool)?;
+    let tool_digest = sha256_file(&binary)?;
+
+    let mut input_pairs: Vec<(String, String)> = Vec::new();
+    for input in inputs {
+        let digest = sha256_file(&cwd.join(input))?;
+        input_pairs.push((input.to_string_lossy().into_owned(), digest));
+    }
+    input_pairs.sort();
+
+    const SEP: char = '\u{1}';
+    let mut key_material = String::new();
+    key_material.push_str(&tool_digest);
+    key_material.push(SEP);
+    for argument in argv {
+        key_material.push_str(argument);
+        key_material.push(SEP);
+    }
+    for (name, digest) in &input_pairs {
+        key_material.push_str(name);
+        key_material.push('=');
+        key_material.push_str(digest);
+        key_material.push(SEP);
+    }
+    let key_digest = sha256_hex(key_material.as_bytes());
+
+    let cache_dir = state.action_cache_dir().join(&key_digest);
+    let meta_path = cache_dir.join("meta.json");
+
+    // Cache hit: restore declared outputs atomically.
+    if meta_path.is_file() {
+        let meta: serde_json::Value = serde_json::from_str(
+            &std::fs::read_to_string(&meta_path).map_err(|e| e.to_string())?,
+        )
+        .map_err(|e| e.to_string())?;
+        let exit_status = meta["exit_status"].as_i64().unwrap_or(1) as i32;
+        for output in outputs {
+            let cached = cache_dir.join(output);
+            if !cached.is_file() {
+                return Err(format!("cache entry missing output {}", output.display()));
+            }
+            let destination = cwd.join(output);
+            if let Some(parent) = destination.parent() {
+                std::fs::create_dir_all(parent).map_err(|e| e.to_string())?;
+            }
+            let temporary = destination.with_extension("tectdist-tmp");
+            std::fs::copy(&cached, &temporary).map_err(|e| e.to_string())?;
+            std::fs::rename(temporary, &destination).map_err(|e| e.to_string())?;
+        }
+        return Ok((true, exit_status));
+    }
+
+    // Miss: exact execution through the pinned image.
+    let status = std::process::Command::new(&binary)
+        // argv[0] names the tool; the remainder are its arguments.
+        .args(&argv[1..])
+        .current_dir(cwd)
+        .env("TEXMFROOT", &state.image_root)
+        .status()
+        .map_err(|error| format!("spawn {tool}: {error}"))?;
+    let exit_status = status.code().unwrap_or(128);
+
+    // Populate the cache only on success and only when outputs exist.
+    if exit_status == 0 {
+        let mut usable = !outputs.is_empty();
+        for output in outputs {
+            if !cwd.join(output).is_file() {
+                usable = false;
+                break;
+            }
+        }
+        if usable {
+            let _ = std::fs::create_dir_all(&cache_dir);
+            for output in outputs {
+                let _ = std::fs::copy(cwd.join(output), cache_dir.join(output));
+            }
+            let meta = serde_json::json!({
+                "tool": tool,
+                "exit_status": exit_status,
+                "argv": argv,
+                "inputs": input_pairs,
+            });
+            let _ = std::fs::write(
+                &meta_path,
+                serde_json::to_string_pretty(&meta).unwrap_or_default(),
+            );
+        }
+    }
+    Ok((false, exit_status))
+}
+
 fn respond(stream: &mut UnixStream, response: &Response) {
     if let Ok(mut line) = serde_json::to_string(response) {
         line.push('\n');
@@ -306,6 +472,29 @@ fn handle_request(
                 request_id,
                 error: if found { None } else { Some("unknown snapshot key".into()) },
                 payload: Payload::Empty,
+            }
+        }
+        Request::Action { request_id, tool, cwd, argv, inputs, outputs } => {
+            let started = std::time::Instant::now();
+            match run_action(state, &tool, &cwd, &argv, &inputs, &outputs)
+            {
+                Ok((cache_hit, exit_status)) => Response {
+                    ok: true,
+                    request_id,
+                    error: None,
+                    payload: Payload::ActionResult {
+                        cache_hit,
+                        exit_status,
+                        duration_ms: started.elapsed().as_millis() as u64,
+                        key_digest: String::new(),
+                    },
+                },
+                Err(error) => Response {
+                    ok: false,
+                    request_id,
+                    error: Some(error),
+                    payload: Payload::Empty,
+                },
             }
         }
         Request::Compile { request_id, profile, argv, cwd, snapshot_key } => {

@@ -250,3 +250,69 @@ fn compile_reports_snapshot_hit_telemetry() {
     assert_eq!(second["ok"], true);
     assert_eq!(second["compile_accepted"]["snapshot_hit"], true);
 }
+
+#[test]
+fn action_broker_bibtex_hit_miss_and_invalidation() {
+    let Some(image) = basic_tex_root() else {
+        eprintln!("skipping: BasicTeX reference image not present on this host");
+        return;
+    };
+    let supervisor = start_supervisor("actions", Some(&image));
+    let cache = free_dir("action-cache");
+    let work = free_dir("action-work");
+
+    std::fs::write(work.join("refs.bib"),
+        "@book{k1, author={Alpha Author}, title={First Book}, publisher={P}, year={2001}}\n").unwrap();
+    std::fs::write(work.join("main.aux"),
+        "\\relax\n\\citation{k1}\n\\bibstyle{plain}\n\\bibdata{refs}\n\\bibcite{k1}{1}\n").unwrap();
+
+    let make_request = |inputs_digest_seed: &str| {
+        use serde_json::json;
+        json!({
+            "type": "action",
+            "tool": "bibtex",
+            "cwd": work.to_str().unwrap(),
+            "argv": ["bibtex", "main"],
+            "inputs": ["main.aux", "refs.bib"],
+            "outputs": ["main.bbl", "main.blg"],
+            "request_id": 1,
+        }).to_string()
+    };
+
+    // Miss: exact execution through the pinned image.
+    let first = request(&supervisor.socket, &make_request("1"));
+    assert_eq!(first["ok"], true, "first action failed: {first}");
+    assert_eq!(first["action_result"]["cache_hit"], false);
+    eprintln!("first action response: {first}");
+    eprintln!("work dir contents:");
+    for entry in std::fs::read_dir(&work).unwrap() {
+        eprintln!("  {}", entry.unwrap().path().display());
+    }
+    let bbl = std::fs::read_to_string(work.join("main.bbl")).unwrap();
+    assert!(bbl.contains("Alpha"), "bbl should reflect first bib");
+
+    let original_bbl = std::fs::read(work.join("main.bbl")).unwrap();
+
+    // Hit: outputs restored without running the tool (<2 ms target).
+    std::fs::remove_file(work.join("main.bbl")).unwrap();
+    let t0 = std::time::Instant::now();
+    let second = request(&supervisor.socket, &make_request("2"));
+    let restore_ms = t0.elapsed().as_millis();
+    assert_eq!(second["ok"], true);
+    assert_eq!(second["action_result"]["cache_hit"], true);
+    assert_eq!(
+        std::fs::read(work.join("main.bbl")).unwrap(),
+        original_bbl,
+        "restored .bbl must be byte-identical"
+    );
+    eprintln!("restore time: {restore_ms} ms");
+
+    // Invalidation: changed .bib produces a different key -> fresh run.
+    std::fs::write(work.join("refs.bib"),
+        "@book{k1, author={Beta Author}, title={First Book}, publisher={P}, year={2001}}\n").unwrap();
+    let third = request(&supervisor.socket, &make_request("3"));
+    assert_eq!(third["ok"], true);
+    assert_eq!(third["action_result"]["cache_hit"], false);
+    let bbl3 = std::fs::read_to_string(work.join("main.bbl")).unwrap();
+    assert!(bbl3.contains("Beta"), "changed bib must produce fresh output");
+}
