@@ -1,0 +1,926 @@
+{
+  "balance_seed": 11,
+  "dirty": true,
+  "platform": {
+    "architecture": "arm64",
+    "cores": 16,
+    "cpu": "arm",
+    "kernel": "27.0.0",
+    "memory_bytes": 137438953472,
+    "os": "Darwin",
+    "power_mode": "unknown"
+  },
+  "qualification": false,
+  "repository_commit": "7e0e3a106cbaf02709dc5b0e09b623cae3cfdb7a",
+  "runner_commit": "7e0e3a106cbaf02709dc5b0e09b623cae3cfdb7a",
+  "runs": [
+    {
+      "balance_seed": 11,
+      "claim": true,
+      "cold_source": "not-applicable",
+      "document": "tiny",
+      "samples": [
+        {
+          "order": [
+            "direct-tectonic",
+            "candidate"
+          ],
+          "tools": {
+            "candidate": {
+              "correctness": {
+                "errors": [],
+                "ok": true,
+                "stages": {
+                  "bibliography": false,
+                  "glossary": false,
+                  "index": false,
+                  "shell_escape": false
+                },
+                "text_bytes": 29
+              },
+              "engine_pass_count": 0,
+              "exit_status": 0,
+              "external_tool_count": 0,
+              "measurement_class": "untraced-timed",
+              "output_sha256": "6cfac280194c8f126a42023490302ef5d790ef4723918cb6113932111d19e062",
+              "peak_rss": 235307008,
+              "peak_rss_unit": "bytes",
+              "process_count": 1,
+              "process_count_method": "root-process-lower-bound",
+              "resource_method": "wait4-direct-child",
+              "resources": {
+                "bytes_downloaded": null,
+                "decompression_duration_ms": 0.0,
+                "download_duration_ms": 0.0,
+                "download_observed": false,
+                "measurement": "unavailable"
+              },
+              "stderr": "",
+              "stdout": "\u001b[0m\u001b[1m\u001b[32mnote:\u001b[0m Running TeX ...\n\u001b[0m\u001b[1m\u001b[32mnote:\u001b[0m Rerunning TeX because \"main.aux\" changed ...\n\u001b[0m\u001b[1m\u001b[32mnote:\u001b[0m Running xdvipdfmx ...\n\u001b[0m\u001b[1m\u001b[32mnote:\u001b[0m Writing `./main.aux` (32 B)\n\u001b[0m\u001b[1m\u001b[32mnote:\u001b[0m Writing `./main.pdf` (3.6376953125 KiB)\n\u001b[0m\u001b[1m\u001b[32mnote:\u001b[0m Writing `./main.log` (2.0341796875 KiB)\n",
+              "system_cpu_ms": 21.139,
+              "trace_spans": [],
+              "user_cpu_ms": 109.678,
+              "wall_time_ms": 133.591
+            },
+            "direct-tectonic": {
+              "correctness": {
+                "errors": [],
+                "ok": true,
+                "stages": {
+                  "bibliography": false,
+                  "glossary": false,
+                  "index": false,
+                  "shell_escape": false
+                },
+                "text_bytes": 29
+              },
+              "engine_pass_count": 0,
+              "exit_status": 0,
+              "external_tool_count": 0,
+              "measurement_class": "untraced-timed",
+              "output_sha256": "54b53c88918f16a7fc315f7fa48e5e3256d2987944380b763a7b604a778cfdf6",
+              "peak_rss": 235077632,
+              "peak_rss_unit": "bytes",
+              "process_count": 1,
+              "process_count_method": "root-process-lower-bound",
+              "resource_method": "wait4-direct-child",
+              "resources": {
+                "bytes_downloaded": null,
+                "decompression_duration_ms": 0.0,
+                "download_duration_ms": 0.0,
+                "download_observed": false,
+                "measurement": "unavailable"
+              },
+              "stderr": "",
+              "stdout": "note: Running TeX ...\nnote: Rerunning TeX because \"main.aux\" changed ...\nnote: Running xdvipdfmx ...\nnote: Writing `main.log` (2.0341796875 KiB)\nnote: Writing `main.pdf` (3.6376953125 KiB)\nnote: Writing `main.aux` (32 B)\n",
+              "system_cpu_ms": 24.515,
+              "trace_spans": [],
+              "user_cpu_ms": 126.596,
+              "wall_time_ms": 153.375
+            }
+          }
+        },
+        {
+          "order": [
+            "candidate",
+            "direct-tectonic"
+          ],
+          "tools": {
+            "candidate": {
+              "correctness": {
+                "errors": [],
+                "ok": true,
+                "stages": {
+                  "bibliography": false,
+                  "glossary": false,
+                  "index": false,
+                  "shell_escape": false
+                },
+                "text_bytes": 29
+              },
+              "engine_pass_count": 0,
+              "exit_status": 0,
+              "external_tool_count": 0,
+              "measurement_class": "untraced-timed",
+              "output_sha256": "6cfac280194c8f126a42023490302ef5d790ef4723918cb6113932111d19e062",
+              "peak_rss": 235241472,
+              "peak_rss_unit": "bytes",
+              "process_count": 1,
+              "process_count_method": "root-process-lower-bound",
+              "resource_method": "wait4-direct-child",
+              "resources": {
+                "bytes_downloaded": null,
+                "decompression_duration_ms": 0.0,
+                "download_duration_ms": 0.0,
+                "download_observed": false,
+                "measurement": "unavailable"
+              },
+              "stderr": "",
+              "stdout": "\u001b[0m\u001b[1m\u001b[32mnote:\u001b[0m Running TeX ...\n\u001b[0m\u001b[1m\u001b[32mnote:\u001b[0m Rerunning TeX because \"main.aux\" changed ...\n\u001b[0m\u001b[1m\u001b[32mnote:\u001b[0m Running xdvipdfmx ...\n\u001b[0m\u001b[1m\u001b[32mnote:\u001b[0m Writing `./main.pdf` (3.6376953125 KiB)\n\u001b[0m\u001b[1m\u001b[32mnote:\u001b[0m Writing `./main.log` (2.0341796875 KiB)\n\u001b[0m\u001b[1m\u001b[32mnote:\u001b[0m Writing `./main.aux` (32 B)\n",
+              "system_cpu_ms": 20.793,
+              "trace_spans": [],
+              "user_cpu_ms": 108.379,
+              "wall_time_ms": 132.093
+            },
+            "direct-tectonic": {
+              "correctness": {
+                "errors": [],
+                "ok": true,
+                "stages": {
+                  "bibliography": false,
+                  "glossary": false,
+                  "index": false,
+                  "shell_escape": false
+                },
+                "text_bytes": 29
+              },
+              "engine_pass_count": 0,
+              "exit_status": 0,
+              "external_tool_count": 0,
+              "measurement_class": "untraced-timed",
+              "output_sha256": "6cfac280194c8f126a42023490302ef5d790ef4723918cb6113932111d19e062",
+              "peak_rss": 235225088,
+              "peak_rss_unit": "bytes",
+              "process_count": 1,
+              "process_count_method": "root-process-lower-bound",
+              "resource_method": "wait4-direct-child",
+              "resources": {
+                "bytes_downloaded": null,
+                "decompression_duration_ms": 0.0,
+                "download_duration_ms": 0.0,
+                "download_observed": false,
+                "measurement": "unavailable"
+              },
+              "stderr": "",
+              "stdout": "note: Running TeX ...\nnote: Rerunning TeX because \"main.aux\" changed ...\nnote: Running xdvipdfmx ...\nnote: Writing `main.pdf` (3.6376953125 KiB)\nnote: Writing `main.aux` (32 B)\nnote: Writing `main.log` (2.0341796875 KiB)\n",
+              "system_cpu_ms": 23.225,
+              "trace_spans": [],
+              "user_cpu_ms": 126.163,
+              "wall_time_ms": 151.603
+            }
+          }
+        },
+        {
+          "order": [
+            "candidate",
+            "direct-tectonic"
+          ],
+          "tools": {
+            "candidate": {
+              "correctness": {
+                "errors": [],
+                "ok": true,
+                "stages": {
+                  "bibliography": false,
+                  "glossary": false,
+                  "index": false,
+                  "shell_escape": false
+                },
+                "text_bytes": 29
+              },
+              "engine_pass_count": 0,
+              "exit_status": 0,
+              "external_tool_count": 0,
+              "measurement_class": "untraced-timed",
+              "output_sha256": "6cfac280194c8f126a42023490302ef5d790ef4723918cb6113932111d19e062",
+              "peak_rss": 235241472,
+              "peak_rss_unit": "bytes",
+              "process_count": 1,
+              "process_count_method": "root-process-lower-bound",
+              "resource_method": "wait4-direct-child",
+              "resources": {
+                "bytes_downloaded": null,
+                "decompression_duration_ms": 0.0,
+                "download_duration_ms": 0.0,
+                "download_observed": false,
+                "measurement": "unavailable"
+              },
+              "stderr": "",
+              "stdout": "\u001b[0m\u001b[1m\u001b[32mnote:\u001b[0m Running TeX ...\n\u001b[0m\u001b[1m\u001b[32mnote:\u001b[0m Rerunning TeX because \"main.aux\" changed ...\n\u001b[0m\u001b[1m\u001b[32mnote:\u001b[0m Running xdvipdfmx ...\n\u001b[0m\u001b[1m\u001b[32mnote:\u001b[0m Writing `./main.log` (2.0341796875 KiB)\n\u001b[0m\u001b[1m\u001b[32mnote:\u001b[0m Writing `./main.aux` (32 B)\n\u001b[0m\u001b[1m\u001b[32mnote:\u001b[0m Writing `./main.pdf` (3.6376953125 KiB)\n",
+              "system_cpu_ms": 21.957,
+              "trace_spans": [],
+              "user_cpu_ms": 110.039,
+              "wall_time_ms": 135.068
+            },
+            "direct-tectonic": {
+              "correctness": {
+                "errors": [],
+                "ok": true,
+                "stages": {
+                  "bibliography": false,
+                  "glossary": false,
+                  "index": false,
+                  "shell_escape": false
+                },
+                "text_bytes": 29
+              },
+              "engine_pass_count": 0,
+              "exit_status": 0,
+              "external_tool_count": 0,
+              "measurement_class": "untraced-timed",
+              "output_sha256": "6cfac280194c8f126a42023490302ef5d790ef4723918cb6113932111d19e062",
+              "peak_rss": 235044864,
+              "peak_rss_unit": "bytes",
+              "process_count": 1,
+              "process_count_method": "root-process-lower-bound",
+              "resource_method": "wait4-direct-child",
+              "resources": {
+                "bytes_downloaded": null,
+                "decompression_duration_ms": 0.0,
+                "download_duration_ms": 0.0,
+                "download_observed": false,
+                "measurement": "unavailable"
+              },
+              "stderr": "",
+              "stdout": "note: Running TeX ...\nnote: Rerunning TeX because \"main.aux\" changed ...\nnote: Running xdvipdfmx ...\nnote: Writing `main.log` (2.0341796875 KiB)\nnote: Writing `main.aux` (32 B)\nnote: Writing `main.pdf` (3.6376953125 KiB)\n",
+              "system_cpu_ms": 24.057,
+              "trace_spans": [],
+              "user_cpu_ms": 121.632,
+              "wall_time_ms": 147.184
+            }
+          }
+        },
+        {
+          "order": [
+            "direct-tectonic",
+            "candidate"
+          ],
+          "tools": {
+            "candidate": {
+              "correctness": {
+                "errors": [],
+                "ok": true,
+                "stages": {
+                  "bibliography": false,
+                  "glossary": false,
+                  "index": false,
+                  "shell_escape": false
+                },
+                "text_bytes": 29
+              },
+              "engine_pass_count": 0,
+              "exit_status": 0,
+              "external_tool_count": 0,
+              "measurement_class": "untraced-timed",
+              "output_sha256": "3c5f748a3237f29c061bc9e2bb04ec4ce5d5d4c13ad25dae13a440ce2eb1f054",
+              "peak_rss": 235438080,
+              "peak_rss_unit": "bytes",
+              "process_count": 1,
+              "process_count_method": "root-process-lower-bound",
+              "resource_method": "wait4-direct-child",
+              "resources": {
+                "bytes_downloaded": null,
+                "decompression_duration_ms": 0.0,
+                "download_duration_ms": 0.0,
+                "download_observed": false,
+                "measurement": "unavailable"
+              },
+              "stderr": "",
+              "stdout": "\u001b[0m\u001b[1m\u001b[32mnote:\u001b[0m Running TeX ...\n\u001b[0m\u001b[1m\u001b[32mnote:\u001b[0m Rerunning TeX because \"main.aux\" changed ...\n\u001b[0m\u001b[1m\u001b[32mnote:\u001b[0m Running xdvipdfmx ...\n\u001b[0m\u001b[1m\u001b[32mnote:\u001b[0m Writing `./main.log` (2.0341796875 KiB)\n\u001b[0m\u001b[1m\u001b[32mnote:\u001b[0m Writing `./main.aux` (32 B)\n\u001b[0m\u001b[1m\u001b[32mnote:\u001b[0m Writing `./main.pdf` (3.6357421875 KiB)\n",
+              "system_cpu_ms": 20.598,
+              "trace_spans": [],
+              "user_cpu_ms": 110.499,
+              "wall_time_ms": 133.894
+            },
+            "direct-tectonic": {
+              "correctness": {
+                "errors": [],
+                "ok": true,
+                "stages": {
+                  "bibliography": false,
+                  "glossary": false,
+                  "index": false,
+                  "shell_escape": false
+                },
+                "text_bytes": 29
+              },
+              "engine_pass_count": 0,
+              "exit_status": 0,
+              "external_tool_count": 0,
+              "measurement_class": "untraced-timed",
+              "output_sha256": "6cfac280194c8f126a42023490302ef5d790ef4723918cb6113932111d19e062",
+              "peak_rss": 234979328,
+              "peak_rss_unit": "bytes",
+              "process_count": 1,
+              "process_count_method": "root-process-lower-bound",
+              "resource_method": "wait4-direct-child",
+              "resources": {
+                "bytes_downloaded": null,
+                "decompression_duration_ms": 0.0,
+                "download_duration_ms": 0.0,
+                "download_observed": false,
+                "measurement": "unavailable"
+              },
+              "stderr": "",
+              "stdout": "note: Running TeX ...\nnote: Rerunning TeX because \"main.aux\" changed ...\nnote: Running xdvipdfmx ...\nnote: Writing `main.log` (2.0341796875 KiB)\nnote: Writing `main.aux` (32 B)\nnote: Writing `main.pdf` (3.6376953125 KiB)\n",
+              "system_cpu_ms": 23.253,
+              "trace_spans": [],
+              "user_cpu_ms": 121.802,
+              "wall_time_ms": 147.095
+            }
+          }
+        },
+        {
+          "order": [
+            "candidate",
+            "direct-tectonic"
+          ],
+          "tools": {
+            "candidate": {
+              "correctness": {
+                "errors": [],
+                "ok": true,
+                "stages": {
+                  "bibliography": false,
+                  "glossary": false,
+                  "index": false,
+                  "shell_escape": false
+                },
+                "text_bytes": 29
+              },
+              "engine_pass_count": 0,
+              "exit_status": 0,
+              "external_tool_count": 0,
+              "measurement_class": "untraced-timed",
+              "output_sha256": "3c5f748a3237f29c061bc9e2bb04ec4ce5d5d4c13ad25dae13a440ce2eb1f054",
+              "peak_rss": 235208704,
+              "peak_rss_unit": "bytes",
+              "process_count": 1,
+              "process_count_method": "root-process-lower-bound",
+              "resource_method": "wait4-direct-child",
+              "resources": {
+                "bytes_downloaded": null,
+                "decompression_duration_ms": 0.0,
+                "download_duration_ms": 0.0,
+                "download_observed": false,
+                "measurement": "unavailable"
+              },
+              "stderr": "",
+              "stdout": "\u001b[0m\u001b[1m\u001b[32mnote:\u001b[0m Running TeX ...\n\u001b[0m\u001b[1m\u001b[32mnote:\u001b[0m Rerunning TeX because \"main.aux\" changed ...\n\u001b[0m\u001b[1m\u001b[32mnote:\u001b[0m Running xdvipdfmx ...\n\u001b[0m\u001b[1m\u001b[32mnote:\u001b[0m Writing `./main.log` (2.0341796875 KiB)\n\u001b[0m\u001b[1m\u001b[32mnote:\u001b[0m Writing `./main.pdf` (3.6357421875 KiB)\n\u001b[0m\u001b[1m\u001b[32mnote:\u001b[0m Writing `./main.aux` (32 B)\n",
+              "system_cpu_ms": 20.997,
+              "trace_spans": [],
+              "user_cpu_ms": 111.53,
+              "wall_time_ms": 135.386
+            },
+            "direct-tectonic": {
+              "correctness": {
+                "errors": [],
+                "ok": true,
+                "stages": {
+                  "bibliography": false,
+                  "glossary": false,
+                  "index": false,
+                  "shell_escape": false
+                },
+                "text_bytes": 29
+              },
+              "engine_pass_count": 0,
+              "exit_status": 0,
+              "external_tool_count": 0,
+              "measurement_class": "untraced-timed",
+              "output_sha256": "3c5f748a3237f29c061bc9e2bb04ec4ce5d5d4c13ad25dae13a440ce2eb1f054",
+              "peak_rss": 235126784,
+              "peak_rss_unit": "bytes",
+              "process_count": 1,
+              "process_count_method": "root-process-lower-bound",
+              "resource_method": "wait4-direct-child",
+              "resources": {
+                "bytes_downloaded": null,
+                "decompression_duration_ms": 0.0,
+                "download_duration_ms": 0.0,
+                "download_observed": false,
+                "measurement": "unavailable"
+              },
+              "stderr": "",
+              "stdout": "note: Running TeX ...\nnote: Rerunning TeX because \"main.aux\" changed ...\nnote: Running xdvipdfmx ...\nnote: Writing `main.aux` (32 B)\nnote: Writing `main.log` (2.0341796875 KiB)\nnote: Writing `main.pdf` (3.6357421875 KiB)\n",
+              "system_cpu_ms": 24.606,
+              "trace_spans": [],
+              "user_cpu_ms": 123.276,
+              "wall_time_ms": 150.157
+            }
+          }
+        }
+      ],
+      "scenario": "warm-clean",
+      "summary": {
+        "ci95_ms": [
+          -19.783999999999992,
+          -12.115999999999985
+        ],
+        "count": 5,
+        "mean_difference_ms": -15.8764,
+        "median_difference_ms": -14.771000000000015
+      },
+      "tool": {
+        "candidate": {
+          "binary_sha256": "b5bd3a19b48c10c47260e71a8203779a9278db0226a4efe082c18e01d812e17a",
+          "binary_size_bytes": 10941520,
+          "bundle": {
+            "format_cache_identity": "unknown",
+            "identity": "unknown",
+            "manifest_sha256": "unknown",
+            "source": "default"
+          },
+          "command": [
+            "./bin/pdflatex"
+          ],
+          "name": "candidate",
+          "path": "/Users/tom/Library/CloudStorage/Dropbox/projects/tectdist/bin/pdflatex",
+          "version_output": ""
+        },
+        "competitor": {
+          "binary_sha256": "568dea0a81f4ceed859e33734bbbea85d54a25f14b12665a48c98b536a887986",
+          "binary_size_bytes": 19792672,
+          "bundle": {
+            "format_cache_identity": "unknown",
+            "identity": "unknown",
+            "manifest_sha256": "unknown",
+            "source": "default"
+          },
+          "command": [
+            "tectonic"
+          ],
+          "name": "direct-tectonic",
+          "path": "/opt/homebrew/bin/tectonic",
+          "version_output": "Tectonic 0.17.0"
+        }
+      }
+    },
+    {
+      "balance_seed": 11,
+      "claim": true,
+      "cold_source": "not-applicable",
+      "document": "paper",
+      "samples": [
+        {
+          "order": [
+            "candidate",
+            "direct-tectonic"
+          ],
+          "tools": {
+            "candidate": {
+              "correctness": {
+                "errors": [],
+                "ok": true,
+                "stages": {
+                  "bibliography": false,
+                  "glossary": false,
+                  "index": false,
+                  "shell_escape": false
+                },
+                "text_bytes": 94
+              },
+              "engine_pass_count": 0,
+              "exit_status": 0,
+              "external_tool_count": 0,
+              "measurement_class": "untraced-timed",
+              "output_sha256": "a2973bbdf92c47d34b801fd87722930bb02a57873058b0a6b78220913e027829",
+              "peak_rss": 240205824,
+              "peak_rss_unit": "bytes",
+              "process_count": 1,
+              "process_count_method": "root-process-lower-bound",
+              "resource_method": "wait4-direct-child",
+              "resources": {
+                "bytes_downloaded": null,
+                "decompression_duration_ms": 0.0,
+                "download_duration_ms": 0.0,
+                "download_observed": false,
+                "measurement": "unavailable"
+              },
+              "stderr": "",
+              "stdout": "\u001b[0m\u001b[1m\u001b[32mnote:\u001b[0m Running TeX ...\n\u001b[0m\u001b[1m\u001b[32mnote:\u001b[0m Rerunning TeX because \"main.aux\" changed ...\n\u001b[0m\u001b[1m\u001b[32mnote:\u001b[0m Running xdvipdfmx ...\n\u001b[0m\u001b[1m\u001b[32mnote:\u001b[0m Writing `./main.log` (8.9853515625 KiB)\n\u001b[0m\u001b[1m\u001b[32mnote:\u001b[0m Writing `./main.out` (78 B)\n\u001b[0m\u001b[1m\u001b[32mnote:\u001b[0m Writing `./main.aux` (756 B)\n\u001b[0m\u001b[1m\u001b[32mnote:\u001b[0m Writing `./main.pdf` (11.5205078125 KiB)\n",
+              "system_cpu_ms": 47.952,
+              "trace_spans": [],
+              "user_cpu_ms": 221.308,
+              "wall_time_ms": 273.277
+            },
+            "direct-tectonic": {
+              "correctness": {
+                "errors": [],
+                "ok": true,
+                "stages": {
+                  "bibliography": false,
+                  "glossary": false,
+                  "index": false,
+                  "shell_escape": false
+                },
+                "text_bytes": 94
+              },
+              "engine_pass_count": 0,
+              "exit_status": 0,
+              "external_tool_count": 0,
+              "measurement_class": "untraced-timed",
+              "output_sha256": "a2973bbdf92c47d34b801fd87722930bb02a57873058b0a6b78220913e027829",
+              "peak_rss": 240599040,
+              "peak_rss_unit": "bytes",
+              "process_count": 1,
+              "process_count_method": "root-process-lower-bound",
+              "resource_method": "wait4-direct-child",
+              "resources": {
+                "bytes_downloaded": null,
+                "decompression_duration_ms": 0.0,
+                "download_duration_ms": 0.0,
+                "download_observed": false,
+                "measurement": "unavailable"
+              },
+              "stderr": "",
+              "stdout": "note: Running TeX ...\nnote: Rerunning TeX because \"main.aux\" changed ...\nnote: Running xdvipdfmx ...\nnote: Writing `main.out` (78 B)\nnote: Writing `main.aux` (756 B)\nnote: Writing `main.log` (8.9853515625 KiB)\nnote: Writing `main.pdf` (11.5205078125 KiB)\n",
+              "system_cpu_ms": 46.768,
+              "trace_spans": [],
+              "user_cpu_ms": 234.502,
+              "wall_time_ms": 287.354
+            }
+          }
+        },
+        {
+          "order": [
+            "candidate",
+            "direct-tectonic"
+          ],
+          "tools": {
+            "candidate": {
+              "correctness": {
+                "errors": [],
+                "ok": true,
+                "stages": {
+                  "bibliography": false,
+                  "glossary": false,
+                  "index": false,
+                  "shell_escape": false
+                },
+                "text_bytes": 94
+              },
+              "engine_pass_count": 0,
+              "exit_status": 0,
+              "external_tool_count": 0,
+              "measurement_class": "untraced-timed",
+              "output_sha256": "a2973bbdf92c47d34b801fd87722930bb02a57873058b0a6b78220913e027829",
+              "peak_rss": 240205824,
+              "peak_rss_unit": "bytes",
+              "process_count": 1,
+              "process_count_method": "root-process-lower-bound",
+              "resource_method": "wait4-direct-child",
+              "resources": {
+                "bytes_downloaded": null,
+                "decompression_duration_ms": 0.0,
+                "download_duration_ms": 0.0,
+                "download_observed": false,
+                "measurement": "unavailable"
+              },
+              "stderr": "",
+              "stdout": "\u001b[0m\u001b[1m\u001b[32mnote:\u001b[0m Running TeX ...\n\u001b[0m\u001b[1m\u001b[32mnote:\u001b[0m Rerunning TeX because \"main.out\" changed ...\n\u001b[0m\u001b[1m\u001b[32mnote:\u001b[0m Running xdvipdfmx ...\n\u001b[0m\u001b[1m\u001b[32mnote:\u001b[0m Writing `./main.log` (8.9853515625 KiB)\n\u001b[0m\u001b[1m\u001b[32mnote:\u001b[0m Writing `./main.aux` (756 B)\n\u001b[0m\u001b[1m\u001b[32mnote:\u001b[0m Writing `./main.out` (78 B)\n\u001b[0m\u001b[1m\u001b[32mnote:\u001b[0m Writing `./main.pdf` (11.5205078125 KiB)\n",
+              "system_cpu_ms": 44.634,
+              "trace_spans": [],
+              "user_cpu_ms": 219.122,
+              "wall_time_ms": 266.858
+            },
+            "direct-tectonic": {
+              "correctness": {
+                "errors": [],
+                "ok": true,
+                "stages": {
+                  "bibliography": false,
+                  "glossary": false,
+                  "index": false,
+                  "shell_escape": false
+                },
+                "text_bytes": 94
+              },
+              "engine_pass_count": 0,
+              "exit_status": 0,
+              "external_tool_count": 0,
+              "measurement_class": "untraced-timed",
+              "output_sha256": "a2973bbdf92c47d34b801fd87722930bb02a57873058b0a6b78220913e027829",
+              "peak_rss": 239927296,
+              "peak_rss_unit": "bytes",
+              "process_count": 1,
+              "process_count_method": "root-process-lower-bound",
+              "resource_method": "wait4-direct-child",
+              "resources": {
+                "bytes_downloaded": null,
+                "decompression_duration_ms": 0.0,
+                "download_duration_ms": 0.0,
+                "download_observed": false,
+                "measurement": "unavailable"
+              },
+              "stderr": "",
+              "stdout": "note: Running TeX ...\nnote: Rerunning TeX because \"main.aux\" changed ...\nnote: Running xdvipdfmx ...\nnote: Writing `main.log` (8.9853515625 KiB)\nnote: Writing `main.aux` (756 B)\nnote: Writing `main.out` (78 B)\nnote: Writing `main.pdf` (11.5205078125 KiB)\n",
+              "system_cpu_ms": 46.159,
+              "trace_spans": [],
+              "user_cpu_ms": 234.911,
+              "wall_time_ms": 283.14
+            }
+          }
+        },
+        {
+          "order": [
+            "direct-tectonic",
+            "candidate"
+          ],
+          "tools": {
+            "candidate": {
+              "correctness": {
+                "errors": [],
+                "ok": true,
+                "stages": {
+                  "bibliography": false,
+                  "glossary": false,
+                  "index": false,
+                  "shell_escape": false
+                },
+                "text_bytes": 94
+              },
+              "engine_pass_count": 0,
+              "exit_status": 0,
+              "external_tool_count": 0,
+              "measurement_class": "untraced-timed",
+              "output_sha256": "f84f7e97754c977e700a838f15ebc6b9d6f02157091459155982163daa2c070a",
+              "peak_rss": 240222208,
+              "peak_rss_unit": "bytes",
+              "process_count": 1,
+              "process_count_method": "root-process-lower-bound",
+              "resource_method": "wait4-direct-child",
+              "resources": {
+                "bytes_downloaded": null,
+                "decompression_duration_ms": 0.0,
+                "download_duration_ms": 0.0,
+                "download_observed": false,
+                "measurement": "unavailable"
+              },
+              "stderr": "",
+              "stdout": "\u001b[0m\u001b[1m\u001b[32mnote:\u001b[0m Running TeX ...\n\u001b[0m\u001b[1m\u001b[32mnote:\u001b[0m Rerunning TeX because \"main.aux\" changed ...\n\u001b[0m\u001b[1m\u001b[32mnote:\u001b[0m Running xdvipdfmx ...\n\u001b[0m\u001b[1m\u001b[32mnote:\u001b[0m Writing `./main.aux` (756 B)\n\u001b[0m\u001b[1m\u001b[32mnote:\u001b[0m Writing `./main.pdf` (11.5205078125 KiB)\n\u001b[0m\u001b[1m\u001b[32mnote:\u001b[0m Writing `./main.out` (78 B)\n\u001b[0m\u001b[1m\u001b[32mnote:\u001b[0m Writing `./main.log` (8.9853515625 KiB)\n",
+              "system_cpu_ms": 44.999,
+              "trace_spans": [],
+              "user_cpu_ms": 220.254,
+              "wall_time_ms": 268.669
+            },
+            "direct-tectonic": {
+              "correctness": {
+                "errors": [],
+                "ok": true,
+                "stages": {
+                  "bibliography": false,
+                  "glossary": false,
+                  "index": false,
+                  "shell_escape": false
+                },
+                "text_bytes": 94
+              },
+              "engine_pass_count": 0,
+              "exit_status": 0,
+              "external_tool_count": 0,
+              "measurement_class": "untraced-timed",
+              "output_sha256": "f84f7e97754c977e700a838f15ebc6b9d6f02157091459155982163daa2c070a",
+              "peak_rss": 239861760,
+              "peak_rss_unit": "bytes",
+              "process_count": 1,
+              "process_count_method": "root-process-lower-bound",
+              "resource_method": "wait4-direct-child",
+              "resources": {
+                "bytes_downloaded": null,
+                "decompression_duration_ms": 0.0,
+                "download_duration_ms": 0.0,
+                "download_observed": false,
+                "measurement": "unavailable"
+              },
+              "stderr": "",
+              "stdout": "note: Running TeX ...\nnote: Rerunning TeX because \"main.aux\" changed ...\nnote: Running xdvipdfmx ...\nnote: Writing `main.log` (8.9853515625 KiB)\nnote: Writing `main.aux` (756 B)\nnote: Writing `main.out` (78 B)\nnote: Writing `main.pdf` (11.5205078125 KiB)\n",
+              "system_cpu_ms": 49.352,
+              "trace_spans": [],
+              "user_cpu_ms": 248.783,
+              "wall_time_ms": 301.934
+            }
+          }
+        },
+        {
+          "order": [
+            "direct-tectonic",
+            "candidate"
+          ],
+          "tools": {
+            "candidate": {
+              "correctness": {
+                "errors": [],
+                "ok": true,
+                "stages": {
+                  "bibliography": false,
+                  "glossary": false,
+                  "index": false,
+                  "shell_escape": false
+                },
+                "text_bytes": 94
+              },
+              "engine_pass_count": 0,
+              "exit_status": 0,
+              "external_tool_count": 0,
+              "measurement_class": "untraced-timed",
+              "output_sha256": "5e4706cc7bb571ac118b62fbe3e5981a06a78095a6534f00b43abca0625fa826",
+              "peak_rss": 241942528,
+              "peak_rss_unit": "bytes",
+              "process_count": 1,
+              "process_count_method": "root-process-lower-bound",
+              "resource_method": "wait4-direct-child",
+              "resources": {
+                "bytes_downloaded": null,
+                "decompression_duration_ms": 0.0,
+                "download_duration_ms": 0.0,
+                "download_observed": false,
+                "measurement": "unavailable"
+              },
+              "stderr": "",
+              "stdout": "\u001b[0m\u001b[1m\u001b[32mnote:\u001b[0m Running TeX ...\n\u001b[0m\u001b[1m\u001b[32mnote:\u001b[0m Rerunning TeX because \"main.aux\" changed ...\n\u001b[0m\u001b[1m\u001b[32mnote:\u001b[0m Running xdvipdfmx ...\n\u001b[0m\u001b[1m\u001b[32mnote:\u001b[0m Writing `./main.pdf` (11.5205078125 KiB)\n\u001b[0m\u001b[1m\u001b[32mnote:\u001b[0m Writing `./main.log` (8.9853515625 KiB)\n\u001b[0m\u001b[1m\u001b[32mnote:\u001b[0m Writing `./main.out` (78 B)\n\u001b[0m\u001b[1m\u001b[32mnote:\u001b[0m Writing `./main.aux` (756 B)\n",
+              "system_cpu_ms": 43.751,
+              "trace_spans": [],
+              "user_cpu_ms": 221.218,
+              "wall_time_ms": 268.316
+            },
+            "direct-tectonic": {
+              "correctness": {
+                "errors": [],
+                "ok": true,
+                "stages": {
+                  "bibliography": false,
+                  "glossary": false,
+                  "index": false,
+                  "shell_escape": false
+                },
+                "text_bytes": 94
+              },
+              "engine_pass_count": 0,
+              "exit_status": 0,
+              "external_tool_count": 0,
+              "measurement_class": "untraced-timed",
+              "output_sha256": "f84f7e97754c977e700a838f15ebc6b9d6f02157091459155982163daa2c070a",
+              "peak_rss": 239960064,
+              "peak_rss_unit": "bytes",
+              "process_count": 1,
+              "process_count_method": "root-process-lower-bound",
+              "resource_method": "wait4-direct-child",
+              "resources": {
+                "bytes_downloaded": null,
+                "decompression_duration_ms": 0.0,
+                "download_duration_ms": 0.0,
+                "download_observed": false,
+                "measurement": "unavailable"
+              },
+              "stderr": "",
+              "stdout": "note: Running TeX ...\nnote: Rerunning TeX because \"main.aux\" changed ...\nnote: Running xdvipdfmx ...\nnote: Writing `main.log` (8.9853515625 KiB)\nnote: Writing `main.pdf` (11.5205078125 KiB)\nnote: Writing `main.aux` (756 B)\nnote: Writing `main.out` (78 B)\n",
+              "system_cpu_ms": 48.975,
+              "trace_spans": [],
+              "user_cpu_ms": 236.414,
+              "wall_time_ms": 287.928
+            }
+          }
+        },
+        {
+          "order": [
+            "candidate",
+            "direct-tectonic"
+          ],
+          "tools": {
+            "candidate": {
+              "correctness": {
+                "errors": [],
+                "ok": true,
+                "stages": {
+                  "bibliography": false,
+                  "glossary": false,
+                  "index": false,
+                  "shell_escape": false
+                },
+                "text_bytes": 94
+              },
+              "engine_pass_count": 0,
+              "exit_status": 0,
+              "external_tool_count": 0,
+              "measurement_class": "untraced-timed",
+              "output_sha256": "5e4706cc7bb571ac118b62fbe3e5981a06a78095a6534f00b43abca0625fa826",
+              "peak_rss": 240173056,
+              "peak_rss_unit": "bytes",
+              "process_count": 1,
+              "process_count_method": "root-process-lower-bound",
+              "resource_method": "wait4-direct-child",
+              "resources": {
+                "bytes_downloaded": null,
+                "decompression_duration_ms": 0.0,
+                "download_duration_ms": 0.0,
+                "download_observed": false,
+                "measurement": "unavailable"
+              },
+              "stderr": "",
+              "stdout": "\u001b[0m\u001b[1m\u001b[32mnote:\u001b[0m Running TeX ...\n\u001b[0m\u001b[1m\u001b[32mnote:\u001b[0m Rerunning TeX because \"main.out\" changed ...\n\u001b[0m\u001b[1m\u001b[32mnote:\u001b[0m Running xdvipdfmx ...\n\u001b[0m\u001b[1m\u001b[32mnote:\u001b[0m Writing `./main.aux` (756 B)\n\u001b[0m\u001b[1m\u001b[32mnote:\u001b[0m Writing `./main.log` (8.9853515625 KiB)\n\u001b[0m\u001b[1m\u001b[32mnote:\u001b[0m Writing `./main.out` (78 B)\n\u001b[0m\u001b[1m\u001b[32mnote:\u001b[0m Writing `./main.pdf` (11.5205078125 KiB)\n",
+              "system_cpu_ms": 38.809,
+              "trace_spans": [],
+              "user_cpu_ms": 217.512,
+              "wall_time_ms": 259.172
+            },
+            "direct-tectonic": {
+              "correctness": {
+                "errors": [],
+                "ok": true,
+                "stages": {
+                  "bibliography": false,
+                  "glossary": false,
+                  "index": false,
+                  "shell_escape": false
+                },
+                "text_bytes": 94
+              },
+              "engine_pass_count": 0,
+              "exit_status": 0,
+              "external_tool_count": 0,
+              "measurement_class": "untraced-timed",
+              "output_sha256": "5e4706cc7bb571ac118b62fbe3e5981a06a78095a6534f00b43abca0625fa826",
+              "peak_rss": 239828992,
+              "peak_rss_unit": "bytes",
+              "process_count": 1,
+              "process_count_method": "root-process-lower-bound",
+              "resource_method": "wait4-direct-child",
+              "resources": {
+                "bytes_downloaded": null,
+                "decompression_duration_ms": 0.0,
+                "download_duration_ms": 0.0,
+                "download_observed": false,
+                "measurement": "unavailable"
+              },
+              "stderr": "",
+              "stdout": "note: Running TeX ...\nnote: Rerunning TeX because \"main.out\" changed ...\nnote: Running xdvipdfmx ...\nnote: Writing `main.aux` (756 B)\nnote: Writing `main.out` (78 B)\nnote: Writing `main.log` (8.9853515625 KiB)\nnote: Writing `main.pdf` (11.5205078125 KiB)\n",
+              "system_cpu_ms": 41.948,
+              "trace_spans": [],
+              "user_cpu_ms": 235.697,
+              "wall_time_ms": 279.958
+            }
+          }
+        }
+      ],
+      "scenario": "warm-clean",
+      "summary": {
+        "ci95_ms": [
+          -33.26500000000004,
+          -14.076999999999998
+        ],
+        "count": 5,
+        "mean_difference_ms": -20.804400000000008,
+        "median_difference_ms": -19.612000000000023
+      },
+      "tool": {
+        "candidate": {
+          "binary_sha256": "b5bd3a19b48c10c47260e71a8203779a9278db0226a4efe082c18e01d812e17a",
+          "binary_size_bytes": 10941520,
+          "bundle": {
+            "format_cache_identity": "unknown",
+            "identity": "unknown",
+            "manifest_sha256": "unknown",
+            "source": "default"
+          },
+          "command": [
+            "./bin/pdflatex"
+          ],
+          "name": "candidate",
+          "path": "/Users/tom/Library/CloudStorage/Dropbox/projects/tectdist/bin/pdflatex",
+          "version_output": ""
+        },
+        "competitor": {
+          "binary_sha256": "568dea0a81f4ceed859e33734bbbea85d54a25f14b12665a48c98b536a887986",
+          "binary_size_bytes": 19792672,
+          "bundle": {
+            "format_cache_identity": "unknown",
+            "identity": "unknown",
+            "manifest_sha256": "unknown",
+            "source": "default"
+          },
+          "command": [
+            "tectonic"
+          ],
+          "name": "direct-tectonic",
+          "path": "/opt/homebrew/bin/tectonic",
+          "version_output": "Tectonic 0.17.0"
+        }
+      }
+    }
+  ],
+  "schema_version": 1,
+  "session_id": "08bb4666-8f37-4e58-83ab-358e1aeb4ae3",
+  "timestamp_utc": "2026-08-24T15:10:18+00:00",
+  "trial_class": "ordinary"
+}

@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "gate_tiny_ms": 200.0,
+  "documents": [
+    "tiny",
+    "paper",
+    "unicode-fonts"
+  ],
+  "revisions": [
+    {
+      "revision": "tag:tectonic@0.17.0",
+      "classification": "good",
+      "binary_sha256": "311751fdb779c7da5e9aa9e52cc63664b7ebb34ce9370f908a07b189691aaea2",
+      "medians_ms": {
+        "tiny": 134.7,
+        "paper": 280.5,
+        "unicode-fonts": 349.1
+      }
+    }
+  ]
+}
