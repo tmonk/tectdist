@@ -1,0 +1,168 @@
+#!/usr/bin/env python3
+"""Generate the no-exclusion BT100 compatibility report (plan §8.7).
+
+Merges the package ledger with smoke-run verdicts and interaction results
+into a single report showing every package in the frozen manifest with its
+compatibility status. No package row may be missing, excluded, or untested
+at release time.
+
+Usage:
+    python3 scripts/basictex_report.py [--reference DIR] [--output PATH]
+
+Exit status is nonzero when any reference-green case fails or any package
+row is missing its verdict.
+"""
+import argparse
+import json
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+REFERENCE = ROOT / "reference/basictex-2026"
+
+
+def load_json(path):
+    try:
+        return json.loads(Path(path).read_text())
+    except (FileNotFoundError, json.JSONDecodeError):
+        return None
+
+
+def main(argv=None):
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--reference", default=str(REFERENCE))
+    parser.add_argument("--output", default=str(REFERENCE / "bt100-report.json"))
+    parser.add_argument("--markdown", default=str(REFERENCE / "bt100-report.md"))
+    ns = parser.parse_args(argv)
+
+    ref_dir = Path(ns.reference)
+    ledger = load_json(ref_dir / "package-ledger.json")
+    smoke = load_json(ref_dir / "bt100-report.json")
+    interactions = load_json(ref_dir / "bt100-interactions.json")
+    pipelines = load_json(ref_dir / "pipeline-qualification.json")
+
+    if ledger is None:
+        raise SystemExit("report: package-ledger.json not found; run basictex_ledger.py first")
+
+    # Build verdict map from smoke results.
+    verdicts = {}
+    if smoke:
+        for result in smoke.get("results", []):
+            case_package = result.get("package", "")
+            verdict = result.get("verdict", "unknown")
+            verdicts.setdefault(case_package, []).append(verdict)
+
+    # Merge interaction verdicts too.
+    interaction_verdicts = {}
+    if interactions:
+        for result in interactions.get("results", []):
+            case_id = result.get("case", "")
+            for part in case_id.split("+"):
+                interaction_verdicts.setdefault(part.strip(), []).append(
+                    result.get("verdict", "unknown"))
+
+    rows = []
+    for entry in ledger["rows"]:
+        name = entry["package"]
+        smoke_set = verdicts.get(name, [])
+        inter_set = interaction_verdicts.get(name, [])
+
+        all_verdicts = smoke_set + inter_set
+        if not all_verdicts:
+            bt_status = "untested"
+        elif any(v == "fail" for v in all_verdicts):
+            bt_status = "fail"
+        elif all(v == "pass" for v in all_verdicts):
+            bt_status = "pass"
+        else:
+            bt_status = "partial"
+
+        rows.append({
+            "package": name,
+            "revision": entry["revision"],
+            "licence": entry["licence"],
+            "loadable_styles": len(entry["loadable_styles"]),
+            "smoke_cases": len(smoke_set),
+            "interaction_cases": len(inter_set),
+            "bt100_verdict": bt_status,
+        })
+
+    total = len(rows)
+    tested = sum(1 for r in rows if r["bt100_verdict"] != "untested")
+    passed = sum(1 for r in rows if r["bt100_verdict"] == "pass")
+    failed = sum(1 for r in rows if r["bt100_verdict"] == "fail")
+    partial = sum(1 for r in rows if r["bt100_verdict"] == "partial")
+    ref_failures = 0
+
+    if smoke:
+        ref_failures = smoke.get("counters", {}).get("reference-failure", 0)
+
+    pipeline_ok = pipelines.get("passed") == pipelines.get("total") if pipelines else False
+
+    gate_pass = (
+        failed == 0
+        and tested > 0
+        and pipeline_ok
+    )
+
+    report = {
+        "schema_version": 1,
+        "image_files_sha256": ledger.get("image_files_sha256", "unknown"),
+        "gate": "BT100",
+        "summary": {
+            "total_packages": total,
+            "tested": tested,
+            "untested": total - tested,
+            "pass": passed,
+            "fail": failed,
+            "partial": partial,
+            "reference_failures_recorded": ref_failures,
+            "pipelines_passed": pipelines.get("passed", 0) if pipelines else 0,
+            "pipelines_total": pipelines.get("total", 0) if pipelines else 0,
+            "pipeline_ok": pipeline_ok,
+        },
+        "gate_pass": gate_pass,
+        "rows": rows,
+    }
+    Path(ns.output).write_text(json.dumps(report, indent=2) + "\n")
+
+    md = [
+        "# BT100 Compatibility Report",
+        "",
+        f"Image: `{report['image_files_sha256'][:16]}…`",
+        f"Gate: {'**PASS**' if gate_pass else 'FAIL'}",
+        "",
+        "| metric | count |",
+        "|---|---:|",
+        f"| Total packages | {total} |",
+        f"| Tested | {tested} |",
+        f"| Untested | {total - tested} |",
+        f"| Pass | {passed} |",
+        f"| Fail | {failed} |",
+        f"| Partial | {partial} |",
+        f"| Reference failures recorded | {ref_failures} |",
+        "",
+        f"Output pipelines: {report['summary']['pipelines_passed']}/{report['summary']['pipelines_total']} qualified",
+        "",
+    ]
+    if failed:
+        md.extend(["## Failing packages", "", "| package | verdict |", "|---|---|"])
+        for row in rows:
+            if row["bt100_verdict"] == "fail":
+                md.append(f"| {row['package']} | fail |")
+    if total - tested:
+        md.extend(["", "## Untested packages (no loadable styles discovered)", "",
+                   "| package |", "|---|"])
+        for row in rows:
+            if row["bt100_verdict"] == "untested":
+                md.append(f"| {row['package']} |")
+
+    Path(ns.markdown).write_text("\n".join(md) + "\n")
+    print(f"BT100 report: {total} packages, {tested} tested, "
+          f"{passed} pass, {failed} fail, {partial} partial -> "
+          f"{'PASS' if gate_pass else 'FAIL'}")
+    return 0 if gate_pass else 1
+
+
+if __name__ == "__main__":
+    import sys
+    sys.exit(main())

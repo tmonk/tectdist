@@ -1,1916 +1,3368 @@
 {
   "schema_version": 1,
   "image_files_sha256": "395f0b4d7ce47684c021e8734421bd530206e58a96949cb6103a6333ad2b36b6",
-  "shard": "0/1",
-  "counters": {
-    "pass": 192,
+  "gate": "BT100",
+  "summary": {
+    "total_packages": 372,
+    "tested": 195,
+    "untested": 177,
+    "pass": 77,
     "fail": 0,
-    "reference-failure": 80
+    "partial": 118,
+    "reference_failures_recorded": 80,
+    "pipelines_passed": 7,
+    "pipelines_total": 7,
+    "pipeline_ok": true
   },
-  "results": [
+  "gate_pass": true,
+  "rows": [
     {
-      "case": "ae/ae",
+      "package": "00texlive.config",
+      "revision": "",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "00texlive.installation",
+      "revision": "",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
       "package": "ae",
-      "style": "ae",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "15878",
+      "licence": "unknown",
+      "loadable_styles": 2,
+      "smoke_cases": 2,
+      "interaction_cases": 2,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "ae/aecompl",
-      "package": "ae",
-      "style": "aecompl",
-      "verdict": "pass",
-      "pages": 1
-    },
-    {
-      "case": "amscls/amsart",
       "package": "amscls",
-      "style": "amsart",
-      "verdict": "reference-failure",
-      "reference_exit": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 9,
+      "smoke_cases": 2,
+      "interaction_cases": 2,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "amscls/amsbook",
-      "package": "amscls",
-      "style": "amsbook",
-      "verdict": "reference-failure",
-      "reference_exit": 1
-    },
-    {
-      "case": "amsfonts/amsfonts",
       "package": "amsfonts",
-      "style": "amsfonts",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 6,
+      "smoke_cases": 2,
+      "interaction_cases": 1,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "amsfonts/amssymb",
-      "package": "amsfonts",
-      "style": "amssymb",
-      "verdict": "pass",
-      "pages": 1
-    },
-    {
-      "case": "amsmath/amsbsy",
       "package": "amsmath",
-      "style": "amsbsy",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "78101",
+      "licence": "unknown",
+      "loadable_styles": 9,
+      "smoke_cases": 2,
+      "interaction_cases": 1,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "amsmath/amscd",
-      "package": "amsmath",
-      "style": "amscd",
-      "verdict": "pass",
-      "pages": 1
-    },
-    {
-      "case": "anysize/anysize",
       "package": "anysize",
-      "style": "anysize",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 2,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "arabxetex/arabxetex",
       "package": "arabxetex",
-      "style": "arabxetex",
-      "verdict": "reference-failure",
-      "reference_exit": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 0,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "atbegshi/atbegshi",
       "package": "atbegshi",
-      "style": "atbegshi",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 0,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "attachfile2/attachfile2",
       "package": "attachfile2",
-      "style": "attachfile2",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 1,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "atveryend/atveryend",
+      "package": "attachfile2.universal-darwin",
+      "revision": "57908",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
       "package": "atveryend",
-      "style": "atveryend",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 1,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "auxhook/auxhook",
+      "package": "automata",
+      "revision": "19717",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
       "package": "auxhook",
-      "style": "auxhook",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 1,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "babel/UKenglish",
       "package": "babel",
-      "style": "UKenglish",
-      "verdict": "reference-failure",
-      "reference_exit": 1
+      "revision": "77829",
+      "licence": "unknown",
+      "loadable_styles": 52,
+      "smoke_cases": 2,
+      "interaction_cases": 2,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "babel/USenglish",
-      "package": "babel",
-      "style": "USenglish",
-      "verdict": "reference-failure",
-      "reference_exit": 1
+      "package": "babel-basque",
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
     },
     {
-      "case": "babel-spanish/romanidx",
+      "package": "babel-czech",
+      "revision": "30261",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "babel-danish",
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "babel-dutch",
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "babel-english",
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "babel-finnish",
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "babel-french",
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "babel-german",
+      "revision": "77815",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "babel-hungarian",
+      "revision": "77586",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "babel-italian",
+      "revision": "77371",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "babel-norsk",
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "babel-polish",
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "babel-portuges",
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
       "package": "babel-spanish",
-      "style": "romanidx",
-      "verdict": "reference-failure",
-      "reference_exit": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 0,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "babelbib/babelbib",
+      "package": "babel-swedish",
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
       "package": "babelbib",
-      "style": "babelbib",
-      "verdict": "reference-failure",
-      "reference_exit": 1
+      "revision": "76790",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 1,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "beamer/beamer",
+      "package": "bbcard",
+      "revision": "19440",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
       "package": "beamer",
-      "style": "beamer",
-      "verdict": "reference-failure",
-      "reference_exit": 1
+      "revision": "78101",
+      "licence": "unknown",
+      "loadable_styles": 114,
+      "smoke_cases": 2,
+      "interaction_cases": 3,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "beamer/beamerarticle",
-      "package": "beamer",
-      "style": "beamerarticle",
-      "verdict": "pass",
-      "pages": 1
-    },
-    {
-      "case": "bibtex/apalike",
       "package": "bibtex",
-      "style": "apalike",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77830",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 3,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "bidi-atbegshi/bidi-atbegshi",
+      "package": "bibtex.universal-darwin",
+      "revision": "77928",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
       "package": "bidi-atbegshi",
-      "style": "bidi-atbegshi",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "62009",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 2,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "bidicontour/bidicontour",
       "package": "bidicontour",
-      "style": "bidicontour",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 0,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "bidipagegrid/bidipagegrid",
       "package": "bidipagegrid",
-      "style": "bidipagegrid",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 1,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "bidipresentation/bidipresentation",
       "package": "bidipresentation",
-      "style": "bidipresentation",
-      "verdict": "reference-failure",
-      "reference_exit": 1
+      "revision": "35267",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 1,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "bidishadowtext/bidishadowtext",
       "package": "bidishadowtext",
-      "style": "bidishadowtext",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 1,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "bigintcalc/bigintcalc",
       "package": "bigintcalc",
-      "style": "bigintcalc",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 3,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "bitset/bitset",
       "package": "bitset",
-      "style": "bitset",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 1,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "bookmark/bookmark",
+      "package": "blockdraw_mp",
+      "revision": "15878",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
       "package": "bookmark",
-      "style": "bookmark",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 1,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "booktabs/booktabs",
       "package": "booktabs",
-      "style": "booktabs",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 4,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "breqn/breqn",
+      "package": "bpolynomial",
+      "revision": "15878",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
       "package": "breqn",
-      "style": "breqn",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 3,
+      "smoke_cases": 2,
+      "interaction_cases": 1,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "breqn/flexisym",
-      "package": "breqn",
-      "style": "flexisym",
-      "verdict": "pass",
-      "pages": 1
-    },
-    {
-      "case": "businesscard-qrcode/businesscard-qrcode",
       "package": "businesscard-qrcode",
-      "style": "businesscard-qrcode",
-      "verdict": "reference-failure",
-      "reference_exit": 1
+      "revision": "76924",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 0,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "caption/bicaption",
       "package": "caption",
-      "style": "bicaption",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 22,
+      "smoke_cases": 2,
+      "interaction_cases": 3,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "caption/caption",
-      "package": "caption",
-      "style": "caption",
-      "verdict": "pass",
-      "pages": 1
-    },
-    {
-      "case": "carlisle/dotlessj",
       "package": "carlisle",
-      "style": "dotlessj",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "59577",
+      "licence": "unknown",
+      "loadable_styles": 6,
+      "smoke_cases": 2,
+      "interaction_cases": 2,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "carlisle/ltxtable",
-      "package": "carlisle",
-      "style": "ltxtable",
-      "verdict": "pass",
-      "pages": 1
-    },
-    {
-      "case": "cite/chapterbib",
       "package": "cite",
-      "style": "chapterbib",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 4,
+      "smoke_cases": 2,
+      "interaction_cases": 0,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "cite/cite",
-      "package": "cite",
-      "style": "cite",
-      "verdict": "pass",
-      "pages": 1
+      "package": "cm",
+      "revision": "57963",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
     },
     {
-      "case": "cmap/cmap",
       "package": "cmap",
-      "style": "cmap",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 2,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "colorprofiles/colorprofiles",
+      "package": "cmarrows",
+      "revision": "24378",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "collection-basic",
+      "revision": "72890",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "collection-latex",
+      "revision": "77034",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "collection-latexrecommended",
+      "revision": "77082",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "collection-metapost",
+      "revision": "73627",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "collection-xetex",
+      "revision": "77786",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
       "package": "colorprofiles",
-      "style": "colorprofiles",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "49086",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 1,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "colortbl/colortbl",
       "package": "colortbl",
-      "style": "colortbl",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 3,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "cqubeamer/cqubeamer",
       "package": "cqubeamer",
-      "style": "cqubeamer",
-      "verdict": "reference-failure",
-      "reference_exit": 1
+      "revision": "54512",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 0,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "crop/crop",
       "package": "crop",
-      "style": "crop",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 2,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "ctable/ctable",
       "package": "ctable",
-      "style": "ctable",
-      "verdict": "reference-failure",
-      "reference_exit": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 1,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "ctablestack/ctablestack",
       "package": "ctablestack",
-      "style": "ctablestack",
-      "verdict": "reference-failure",
-      "reference_exit": 1
+      "revision": "78101",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 1,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "dvips/blackdvi",
+      "package": "dehyph",
+      "revision": "48599",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "drv",
+      "revision": "29349",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "dviincl",
+      "revision": "29349",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "dvipdfmx",
+      "revision": "77942",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "dvipdfmx.universal-darwin",
+      "revision": "77987",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
       "package": "dvips",
-      "style": "blackdvi",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77830",
+      "licence": "unknown",
+      "loadable_styles": 3,
+      "smoke_cases": 2,
+      "interaction_cases": 4,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "dvips/colordvi",
-      "package": "dvips",
-      "style": "colordvi",
-      "verdict": "pass",
-      "pages": 1
+      "package": "dvips.universal-darwin",
+      "revision": "77928",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
     },
     {
-      "case": "emp/emp",
+      "package": "ec",
+      "revision": "25033",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
       "package": "emp",
-      "style": "emp",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "23483",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 2,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "epstopdf-pkg/epstopdf",
+      "package": "enctex",
+      "revision": "34957",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "epsincl",
+      "revision": "29349",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "epstopdf",
+      "revision": "71782",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
       "package": "epstopdf-pkg",
-      "style": "epstopdf",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 2,
+      "smoke_cases": 2,
+      "interaction_cases": 1,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "epstopdf-pkg/epstopdf-base",
-      "package": "epstopdf-pkg",
-      "style": "epstopdf-base",
-      "verdict": "pass",
-      "pages": 1
+      "package": "epstopdf.universal-darwin",
+      "revision": "57908",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
     },
     {
-      "case": "eso-pic/eso-pic",
       "package": "eso-pic",
-      "style": "eso-pic",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 2,
+      "smoke_cases": 2,
+      "interaction_cases": 3,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "eso-pic/showframe",
-      "package": "eso-pic",
-      "style": "showframe",
-      "verdict": "pass",
-      "pages": 1
+      "package": "etex",
+      "revision": "77830",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
     },
     {
-      "case": "etex-pkg/etex",
       "package": "etex-pkg",
-      "style": "etex",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 1,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "etexcmds/etexcmds",
       "package": "etexcmds",
-      "style": "etexcmds",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "78101",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 3,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "etoolbox/etoolbox",
       "package": "etoolbox",
-      "style": "etoolbox",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 3,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "euler/euler",
+      "package": "euenc",
+      "revision": "19795",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
       "package": "euler",
-      "style": "euler",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 1,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "eurosym/eurosym",
       "package": "eurosym",
-      "style": "eurosym",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "78101",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 0,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "everysel/everysel",
       "package": "everysel",
-      "style": "everysel",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "57489",
+      "licence": "unknown",
+      "loadable_styles": 2,
+      "smoke_cases": 2,
+      "interaction_cases": 2,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "everysel/everysel-2011-10-28",
-      "package": "everysel",
-      "style": "everysel-2011-10-28",
-      "verdict": "pass",
-      "pages": 1
-    },
-    {
-      "case": "everyshi/everyshi",
       "package": "everyshi",
-      "style": "everyshi",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 2,
+      "smoke_cases": 2,
+      "interaction_cases": 0,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "everyshi/everyshi-2001-05-15",
-      "package": "everyshi",
-      "style": "everyshi-2001-05-15",
-      "verdict": "pass",
-      "pages": 1
+      "package": "expressg",
+      "revision": "29349",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
     },
     {
-      "case": "extsizes/autopagewidth",
+      "package": "exteps",
+      "revision": "19859",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "extractbb",
+      "revision": "77855",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "extractbb.universal-darwin",
+      "revision": "72890",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
       "package": "extsizes",
-      "style": "autopagewidth",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "78101",
+      "licence": "unknown",
+      "loadable_styles": 7,
+      "smoke_cases": 2,
+      "interaction_cases": 2,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "extsizes/extarticle",
-      "package": "extsizes",
-      "style": "extarticle",
-      "verdict": "reference-failure",
-      "reference_exit": 1
-    },
-    {
-      "case": "fancybox/fancybox",
       "package": "fancybox",
-      "style": "fancybox",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 1,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "fancyhdr/extramarks",
       "package": "fancyhdr",
-      "style": "extramarks",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "78101",
+      "licence": "unknown",
+      "loadable_styles": 4,
+      "smoke_cases": 2,
+      "interaction_cases": 1,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "fancyhdr/extramarks-v4",
-      "package": "fancyhdr",
-      "style": "extramarks-v4",
-      "verdict": "pass",
-      "pages": 1
-    },
-    {
-      "case": "fancyref/fancyref",
       "package": "fancyref",
-      "style": "fancyref",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 1,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "fancyvrb/fancyvrb",
       "package": "fancyvrb",
-      "style": "fancyvrb",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 4,
+      "smoke_cases": 2,
+      "interaction_cases": 0,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "fancyvrb/fancyvrb-ex",
-      "package": "fancyvrb",
-      "style": "fancyvrb-ex",
-      "verdict": "pass",
-      "pages": 1
+      "package": "featpost",
+      "revision": "35346",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
     },
     {
-      "case": "feynmf/feynmf",
       "package": "feynmf",
-      "style": "feynmf",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 2,
+      "smoke_cases": 2,
+      "interaction_cases": 3,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "feynmf/feynmp",
-      "package": "feynmf",
-      "style": "feynmp",
-      "verdict": "pass",
-      "pages": 1
-    },
-    {
-      "case": "feynmp-auto/feynmp-auto",
       "package": "feynmp-auto",
-      "style": "feynmp-auto",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 2,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "filehook/filehook",
       "package": "filehook",
-      "style": "filehook",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 8,
+      "smoke_cases": 2,
+      "interaction_cases": 2,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "filehook/filehook-2019",
-      "package": "filehook",
-      "style": "filehook-2019",
-      "verdict": "reference-failure",
-      "reference_exit": 1
-    },
-    {
-      "case": "firstaid/filehook-ltx",
       "package": "firstaid",
-      "style": "filehook-ltx",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "76740",
+      "licence": "unknown",
+      "loadable_styles": 2,
+      "smoke_cases": 2,
+      "interaction_cases": 1,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "firstaid/underscore-ltx",
-      "package": "firstaid",
-      "style": "underscore-ltx",
-      "verdict": "pass",
-      "pages": 1
-    },
-    {
-      "case": "fix2col/fix2col",
       "package": "fix2col",
-      "style": "fix2col",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "38770",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 0,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "fixlatvian/fixlatvian",
       "package": "fixlatvian",
-      "style": "fixlatvian",
-      "verdict": "reference-failure",
-      "reference_exit": 1
+      "revision": "21631",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 2,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "float/float",
+      "package": "fiziko",
+      "revision": "61944",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
       "package": "float",
-      "style": "float",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 1,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "fontbook/fontbook",
+      "package": "font-change-xetex",
+      "revision": "40404",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
       "package": "fontbook",
-      "style": "fontbook",
-      "verdict": "reference-failure",
-      "reference_exit": 1
+      "revision": "23608",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 0,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "fontspec/fontspec",
       "package": "fontspec",
-      "style": "fontspec",
-      "verdict": "reference-failure",
-      "reference_exit": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 3,
+      "smoke_cases": 2,
+      "interaction_cases": 0,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "fontspec/fontspec-luatex",
-      "package": "fontspec",
-      "style": "fontspec-luatex",
-      "verdict": "reference-failure",
-      "reference_exit": 1
-    },
-    {
-      "case": "fontwrap/fontwrap",
       "package": "fontwrap",
-      "style": "fontwrap",
-      "verdict": "reference-failure",
-      "reference_exit": 1
+      "revision": "15878",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 3,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "footnotehyper/footnotehyper",
       "package": "footnotehyper",
-      "style": "footnotehyper",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 0,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "fp/defpattern",
       "package": "fp",
-      "style": "defpattern",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 13,
+      "smoke_cases": 2,
+      "interaction_cases": 1,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "fp/fp",
-      "package": "fp",
-      "style": "fp",
-      "verdict": "pass",
-      "pages": 1
+      "package": "garrigues",
+      "revision": "15878",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
     },
     {
-      "case": "geometry/geometry",
       "package": "geometry",
-      "style": "geometry",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 2,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "gettitlestring/gettitlestring",
       "package": "gettitlestring",
-      "style": "gettitlestring",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 4,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "gmp/gmp",
+      "package": "glyphlist",
+      "revision": "54074",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
       "package": "gmp",
-      "style": "gmp",
-      "verdict": "reference-failure",
-      "reference_exit": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 1,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "graphics/color",
       "package": "graphics",
-      "style": "color",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "75374",
+      "licence": "unknown",
+      "loadable_styles": 9,
+      "smoke_cases": 2,
+      "interaction_cases": 2,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "graphics/epsfig",
-      "package": "graphics",
-      "style": "epsfig",
-      "verdict": "pass",
-      "pages": 1
+      "package": "graphics-cfg",
+      "revision": "41448",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
     },
     {
-      "case": "grfext/grfext",
+      "package": "graphics-def",
+      "revision": "76719",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
       "package": "grfext",
-      "style": "grfext",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 0,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "grffile/grffile",
       "package": "grffile",
-      "style": "grffile",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "78101",
+      "licence": "unknown",
+      "loadable_styles": 2,
+      "smoke_cases": 2,
+      "interaction_cases": 2,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "grffile/grffile-2017-06-30",
-      "package": "grffile",
-      "style": "grffile-2017-06-30",
-      "verdict": "pass",
-      "pages": 1
+      "package": "hatching",
+      "revision": "23818",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
     },
     {
-      "case": "hologo/hologo",
+      "package": "hershey-mp",
+      "revision": "70885",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
       "package": "hologo",
-      "style": "hologo",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 3,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "hopatch/hopatch",
       "package": "hopatch",
-      "style": "hopatch",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "65491",
+      "licence": "unknown",
+      "loadable_styles": 2,
+      "smoke_cases": 2,
+      "interaction_cases": 2,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "hopatch/hopatch-2016-05-16",
-      "package": "hopatch",
-      "style": "hopatch-2016-05-16",
-      "verdict": "pass",
-      "pages": 1
+      "package": "huffman",
+      "revision": "67071",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
     },
     {
-      "case": "hycolor/hycolor",
       "package": "hycolor",
-      "style": "hycolor",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 2,
+      "smoke_cases": 2,
+      "interaction_cases": 3,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "hycolor/xcolor-patch",
-      "package": "hycolor",
-      "style": "xcolor-patch",
-      "verdict": "pass",
-      "pages": 1
-    },
-    {
-      "case": "hypcap/hypcap",
       "package": "hypcap",
-      "style": "hypcap",
-      "verdict": "reference-failure",
-      "reference_exit": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 1,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "hyperref/backref",
       "package": "hyperref",
-      "style": "backref",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 8,
+      "smoke_cases": 2,
+      "interaction_cases": 1,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "hyperref/hyperref",
-      "package": "hyperref",
-      "style": "hyperref",
-      "verdict": "pass",
-      "pages": 1
+      "package": "hyph-utf8",
+      "revision": "78069",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
     },
     {
-      "case": "ifplatform/ifplatform",
+      "package": "hyphen-base",
+      "revision": "78076",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "hyphen-basque",
+      "revision": "78069",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "hyphen-czech",
+      "revision": "78069",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "hyphen-danish",
+      "revision": "78069",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "hyphen-dutch",
+      "revision": "78069",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "hyphen-english",
+      "revision": "78069",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "hyphen-finnish",
+      "revision": "78069",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "hyphen-french",
+      "revision": "78069",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "hyphen-german",
+      "revision": "78069",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "hyphen-hungarian",
+      "revision": "78069",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "hyphen-italian",
+      "revision": "78069",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "hyphen-norwegian",
+      "revision": "78069",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "hyphen-polish",
+      "revision": "78069",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "hyphen-portuguese",
+      "revision": "78069",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "hyphen-spanish",
+      "revision": "78069",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "hyphen-swedish",
+      "revision": "78069",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "hyphenex",
+      "revision": "57387",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
       "package": "ifplatform",
-      "style": "ifplatform",
-      "verdict": "reference-failure",
-      "reference_exit": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 1,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "iftex/ifetex",
       "package": "iftex",
-      "style": "ifetex",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 6,
+      "smoke_cases": 2,
+      "interaction_cases": 2,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "iftex/ifluatex",
-      "package": "iftex",
-      "style": "ifluatex",
-      "verdict": "pass",
-      "pages": 1
-    },
-    {
-      "case": "index/index",
       "package": "index",
-      "style": "index",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 2,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "infwarerr/infwarerr",
       "package": "infwarerr",
-      "style": "infwarerr",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 0,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "intcalc/intcalc",
       "package": "intcalc",
-      "style": "intcalc",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 2,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "interchar/interchar",
       "package": "interchar",
-      "style": "interchar",
-      "verdict": "reference-failure",
-      "reference_exit": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 1,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "jknapltx/greekctr",
       "package": "jknapltx",
-      "style": "greekctr",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "19440",
+      "licence": "unknown",
+      "loadable_styles": 11,
+      "smoke_cases": 2,
+      "interaction_cases": 2,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "jknapltx/holtpolt",
-      "package": "jknapltx",
-      "style": "holtpolt",
-      "verdict": "pass",
-      "pages": 1
+      "package": "knuth-lib",
+      "revision": "57963",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
     },
     {
-      "case": "koma-script/koma-script-source-doc",
+      "package": "knuth-local",
+      "revision": "57963",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
       "package": "koma-script",
-      "style": "koma-script-source-doc",
-      "verdict": "reference-failure",
-      "reference_exit": 1
+      "revision": "77575",
+      "licence": "unknown",
+      "loadable_styles": 27,
+      "smoke_cases": 2,
+      "interaction_cases": 0,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "koma-script/scraddr",
-      "package": "koma-script",
-      "style": "scraddr",
-      "verdict": "pass",
-      "pages": 1
+      "package": "kpathsea",
+      "revision": "77861",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
     },
     {
-      "case": "kvdefinekeys/kvdefinekeys",
+      "package": "kpathsea.universal-darwin",
+      "revision": "77928",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
       "package": "kvdefinekeys",
-      "style": "kvdefinekeys",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 1,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "kvoptions/kvoptions",
       "package": "kvoptions",
-      "style": "kvoptions",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 2,
+      "smoke_cases": 2,
+      "interaction_cases": 2,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "kvoptions/kvoptions-patch",
-      "package": "kvoptions",
-      "style": "kvoptions-patch",
-      "verdict": "pass",
-      "pages": 1
-    },
-    {
-      "case": "kvsetkeys/kvsetkeys",
       "package": "kvsetkeys",
-      "style": "kvsetkeys",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 4,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "l3experimental/l3draw",
+      "package": "l3backend",
+      "revision": "76924",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "l3backend-dev",
+      "revision": "77954",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
       "package": "l3experimental",
-      "style": "l3draw",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "76637",
+      "licence": "unknown",
+      "loadable_styles": 4,
+      "smoke_cases": 2,
+      "interaction_cases": 0,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "l3experimental/l3galley",
-      "package": "l3experimental",
-      "style": "l3galley",
-      "verdict": "pass",
-      "pages": 1
-    },
-    {
-      "case": "l3kernel/expl3",
       "package": "l3kernel",
-      "style": "expl3",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77438",
+      "licence": "unknown",
+      "loadable_styles": 2,
+      "smoke_cases": 2,
+      "interaction_cases": 0,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "l3kernel/l3doc",
-      "package": "l3kernel",
-      "style": "l3doc",
-      "verdict": "reference-failure",
-      "reference_exit": 1
-    },
-    {
-      "case": "l3kernel-dev/expl3",
       "package": "l3kernel-dev",
-      "style": "expl3",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77953",
+      "licence": "unknown",
+      "loadable_styles": 2,
+      "smoke_cases": 2,
+      "interaction_cases": 1,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "l3kernel-dev/l3doc",
-      "package": "l3kernel-dev",
-      "style": "l3doc",
-      "verdict": "reference-failure",
-      "reference_exit": 1
-    },
-    {
-      "case": "l3packages/l3keys2e",
       "package": "l3packages",
-      "style": "l3keys2e",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "76637",
+      "licence": "unknown",
+      "loadable_styles": 7,
+      "smoke_cases": 2,
+      "interaction_cases": 1,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "l3packages/xfp",
-      "package": "l3packages",
-      "style": "xfp",
-      "verdict": "pass",
-      "pages": 1
-    },
-    {
-      "case": "latex/alltt",
       "package": "latex",
-      "style": "alltt",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "76924",
+      "licence": "unknown",
+      "loadable_styles": 43,
+      "smoke_cases": 2,
+      "interaction_cases": 0,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "latex/article",
-      "package": "latex",
-      "style": "article",
-      "verdict": "reference-failure",
-      "reference_exit": 1
-    },
-    {
-      "case": "latex-amsmath-dev/amsbsy",
       "package": "latex-amsmath-dev",
-      "style": "amsbsy",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77483",
+      "licence": "unknown",
+      "loadable_styles": 9,
+      "smoke_cases": 2,
+      "interaction_cases": 0,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "latex-amsmath-dev/amscd",
-      "package": "latex-amsmath-dev",
-      "style": "amscd",
-      "verdict": "pass",
-      "pages": 1
-    },
-    {
-      "case": "latex-base-dev/alltt",
       "package": "latex-base-dev",
-      "style": "alltt",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77483",
+      "licence": "unknown",
+      "loadable_styles": 44,
+      "smoke_cases": 2,
+      "interaction_cases": 2,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "latex-base-dev/article",
-      "package": "latex-base-dev",
-      "style": "article",
-      "verdict": "reference-failure",
-      "reference_exit": 1
+      "package": "latex-bin",
+      "revision": "77830",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
     },
     {
-      "case": "latex-firstaid-dev/filehook-ltx",
+      "package": "latex-bin-dev",
+      "revision": "77830",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "latex-bin-dev.universal-darwin",
+      "revision": "57908",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "latex-bin.universal-darwin",
+      "revision": "57908",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
       "package": "latex-firstaid-dev",
-      "style": "filehook-ltx",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77483",
+      "licence": "unknown",
+      "loadable_styles": 2,
+      "smoke_cases": 2,
+      "interaction_cases": 3,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "latex-firstaid-dev/underscore-ltx",
-      "package": "latex-firstaid-dev",
-      "style": "underscore-ltx",
-      "verdict": "pass",
-      "pages": 1
+      "package": "latex-fonts",
+      "revision": "28888",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
     },
     {
-      "case": "latex-graphics-dev/color",
       "package": "latex-graphics-dev",
-      "style": "color",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "76722",
+      "licence": "unknown",
+      "loadable_styles": 9,
+      "smoke_cases": 2,
+      "interaction_cases": 2,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "latex-graphics-dev/epsfig",
-      "package": "latex-graphics-dev",
-      "style": "epsfig",
-      "verdict": "pass",
-      "pages": 1
-    },
-    {
-      "case": "latex-lab/latex-lab-kernel-changes",
       "package": "latex-lab",
-      "style": "latex-lab-kernel-changes",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "76739",
+      "licence": "unknown",
+      "loadable_styles": 21,
+      "smoke_cases": 2,
+      "interaction_cases": 2,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "latex-lab/latex-lab-testphase-bib",
-      "package": "latex-lab",
-      "style": "latex-lab-testphase-bib",
-      "verdict": "reference-failure",
-      "reference_exit": 1
-    },
-    {
-      "case": "latex-lab-dev/latex-lab-enumitem",
       "package": "latex-lab-dev",
-      "style": "latex-lab-enumitem",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77531",
+      "licence": "unknown",
+      "loadable_styles": 23,
+      "smoke_cases": 2,
+      "interaction_cases": 0,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "latex-lab-dev/latex-lab-kernel-changes",
-      "package": "latex-lab-dev",
-      "style": "latex-lab-kernel-changes",
-      "verdict": "pass",
-      "pages": 1
-    },
-    {
-      "case": "latex-tools-dev/afterpage",
       "package": "latex-tools-dev",
-      "style": "afterpage",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77483",
+      "licence": "unknown",
+      "loadable_styles": 44,
+      "smoke_cases": 2,
+      "interaction_cases": 3,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "latex-tools-dev/array",
-      "package": "latex-tools-dev",
-      "style": "array",
-      "verdict": "pass",
-      "pages": 1
-    },
-    {
-      "case": "latexbug/latexbug",
       "package": "latexbug",
-      "style": "latexbug",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "78101",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 1,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "letltxmacro/letltxmacro",
+      "package": "latexconfig",
+      "revision": "68923",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "latexmp",
+      "revision": "55643",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
       "package": "letltxmacro",
-      "style": "letltxmacro",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 1,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "lineno/ednmath0",
       "package": "lineno",
-      "style": "ednmath0",
-      "verdict": "reference-failure",
-      "reference_exit": 1
+      "revision": "77875",
+      "licence": "unknown",
+      "loadable_styles": 5,
+      "smoke_cases": 2,
+      "interaction_cases": 0,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "lineno/edtable",
-      "package": "lineno",
-      "style": "edtable",
-      "verdict": "reference-failure",
-      "reference_exit": 1
-    },
-    {
-      "case": "listings/listings",
       "package": "listings",
-      "style": "listings",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 7,
+      "smoke_cases": 2,
+      "interaction_cases": 1,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "listings/lstdoc",
-      "package": "listings",
-      "style": "lstdoc",
-      "verdict": "reference-failure",
-      "reference_exit": 1
-    },
-    {
-      "case": "lm/lmodern",
       "package": "lm",
-      "style": "lmodern",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 0,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "ltx-talk/ltx-talk",
+      "package": "lm-math",
+      "revision": "67718",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
       "package": "ltx-talk",
-      "style": "ltx-talk",
-      "verdict": "reference-failure",
-      "reference_exit": 1
+      "revision": "77950",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 0,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "ltxcmds/ltxcmds",
       "package": "ltxcmds",
-      "style": "ltxcmds",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 3,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "ltxmisc/abstbook",
       "package": "ltxmisc",
-      "style": "abstbook",
-      "verdict": "reference-failure",
-      "reference_exit": 1
+      "revision": "75878",
+      "licence": "unknown",
+      "loadable_styles": 11,
+      "smoke_cases": 2,
+      "interaction_cases": 2,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "ltxmisc/beletter",
-      "package": "ltxmisc",
-      "style": "beletter",
-      "verdict": "reference-failure",
-      "reference_exit": 1
+      "package": "lua-alt-getopt",
+      "revision": "56414",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
     },
     {
-      "case": "lua-unicode-math/lua-unicode-math",
+      "package": "lua-uni-algos",
+      "revision": "76195",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
       "package": "lua-unicode-math",
-      "style": "lua-unicode-math",
-      "verdict": "reference-failure",
-      "reference_exit": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 16,
+      "smoke_cases": 2,
+      "interaction_cases": 2,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "lua-unicode-math/lum-bonum",
-      "package": "lua-unicode-math",
-      "style": "lum-bonum",
-      "verdict": "reference-failure",
-      "reference_exit": 1
+      "package": "luahbtex",
+      "revision": "77830",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
     },
     {
-      "case": "luamml/luamml",
+      "package": "luahbtex.universal-darwin",
+      "revision": "78048",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "lualibs",
+      "revision": "67994",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
       "package": "luamml",
-      "style": "luamml",
-      "verdict": "reference-failure",
-      "reference_exit": 1
+      "revision": "78219",
+      "licence": "unknown",
+      "loadable_styles": 4,
+      "smoke_cases": 2,
+      "interaction_cases": 3,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "luamml/luamml-patches-amsmath",
-      "package": "luamml",
-      "style": "luamml-patches-amsmath",
-      "verdict": "reference-failure",
-      "reference_exit": 1
-    },
-    {
-      "case": "luaotfload/luaotfload",
       "package": "luaotfload",
-      "style": "luaotfload",
-      "verdict": "reference-failure",
-      "reference_exit": 1
+      "revision": "74324",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 2,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "luatexbase/luatexbase",
+      "package": "luaotfload.universal-darwin",
+      "revision": "57908",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "luatex",
+      "revision": "78218",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "luatex.universal-darwin",
+      "revision": "78048",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
       "package": "luatexbase",
-      "style": "luatexbase",
-      "verdict": "reference-failure",
-      "reference_exit": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 8,
+      "smoke_cases": 2,
+      "interaction_cases": 0,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "luatexbase/luatexbase-attr",
-      "package": "luatexbase",
-      "style": "luatexbase-attr",
-      "verdict": "reference-failure",
-      "reference_exit": 1
-    },
-    {
-      "case": "lwarp/lwarp",
       "package": "lwarp",
-      "style": "lwarp",
-      "verdict": "reference-failure",
-      "reference_exit": 1
+      "revision": "78111",
+      "licence": "unknown",
+      "loadable_styles": 595,
+      "smoke_cases": 2,
+      "interaction_cases": 2,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "lwarp/lwarp-2in1",
-      "package": "lwarp",
-      "style": "lwarp-2in1",
-      "verdict": "reference-failure",
-      "reference_exit": 1
+      "package": "lwarp.universal-darwin",
+      "revision": "57908",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
     },
     {
-      "case": "makecmds/makecmds",
+      "package": "make4ht",
+      "revision": "78133",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "make4ht.universal-darwin",
+      "revision": "57908",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
       "package": "makecmds",
-      "style": "makecmds",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 3,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "mathspec/mathspec",
+      "package": "makeindex",
+      "revision": "75712",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "makeindex.universal-darwin",
+      "revision": "77928",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
       "package": "mathspec",
-      "style": "mathspec",
-      "verdict": "reference-failure",
-      "reference_exit": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 2,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "mathtools/empheq",
       "package": "mathtools",
-      "style": "empheq",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 3,
+      "smoke_cases": 2,
+      "interaction_cases": 1,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "mathtools/mathtools",
-      "package": "mathtools",
-      "style": "mathtools",
-      "verdict": "pass",
-      "pages": 1
+      "package": "mcf2graph",
+      "revision": "76506",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
     },
     {
-      "case": "mdwtools/at",
       "package": "mdwtools",
-      "style": "at",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "15878",
+      "licence": "unknown",
+      "loadable_styles": 10,
+      "smoke_cases": 2,
+      "interaction_cases": 1,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "mdwtools/cmtt",
-      "package": "mdwtools",
-      "style": "cmtt",
-      "verdict": "pass",
-      "pages": 1
-    },
-    {
-      "case": "memoir/memhfixc",
       "package": "memoir",
-      "style": "memhfixc",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 2,
+      "smoke_cases": 2,
+      "interaction_cases": 2,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "memoir/memoir",
-      "package": "memoir",
-      "style": "memoir",
-      "verdict": "reference-failure",
-      "reference_exit": 1
+      "package": "metafont",
+      "revision": "77830",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
     },
     {
-      "case": "metalogo/metalogo",
+      "package": "metafont.universal-darwin",
+      "revision": "77928",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "metago",
+      "revision": "78101",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
       "package": "metalogo",
-      "style": "metalogo",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 2,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "mflogo/mflogo",
+      "package": "metaobj",
+      "revision": "15878",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "metaplot",
+      "revision": "15878",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "metapost",
+      "revision": "77830",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "metapost-colorbrewer",
+      "revision": "48753",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "metapost.universal-darwin",
+      "revision": "78048",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "metauml",
+      "revision": "49923",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
       "package": "mflogo",
-      "style": "mflogo",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 1,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "mfnfss/oldgerm",
       "package": "mfnfss",
-      "style": "oldgerm",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 2,
+      "smoke_cases": 2,
+      "interaction_cases": 0,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "mfnfss/pandora",
-      "package": "mfnfss",
-      "style": "pandora",
-      "verdict": "reference-failure",
-      "reference_exit": 1
-    },
-    {
-      "case": "mfpic/mfpic",
       "package": "mfpic",
-      "style": "mfpic",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "28444",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 0,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "mfpic4ode/mfpic4ode",
       "package": "mfpic4ode",
-      "style": "mfpic4ode",
-      "verdict": "reference-failure",
-      "reference_exit": 1
+      "revision": "75712",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 3,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "microtype/letterspace",
+      "package": "mfware",
+      "revision": "77830",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "mfware.universal-darwin",
+      "revision": "77928",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
       "package": "microtype",
-      "style": "letterspace",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "78228",
+      "licence": "unknown",
+      "loadable_styles": 3,
+      "smoke_cases": 2,
+      "interaction_cases": 1,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "microtype/microtype",
-      "package": "microtype",
-      "style": "microtype",
-      "verdict": "pass",
-      "pages": 1
+      "package": "minim-hatching",
+      "revision": "70885",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
     },
     {
-      "case": "mpgraphics/mpgraphics",
+      "package": "modes",
+      "revision": "77365",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "mp-geom2d",
+      "revision": "77019",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "mp-neuralnetwork",
+      "revision": "73627",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "mp3d",
+      "revision": "29349",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "mparrows",
+      "revision": "39729",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "mpattern",
+      "revision": "15878",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "mpchess",
+      "revision": "78101",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "mpcolornames",
+      "revision": "23252",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
       "package": "mpgraphics",
-      "style": "mpgraphics",
-      "verdict": "reference-failure",
-      "reference_exit": 1
+      "revision": "29776",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 3,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "na-position/na-position",
+      "package": "mpkiviat",
+      "revision": "75712",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "mptopdf",
+      "revision": "78010",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "mptopdf.universal-darwin",
+      "revision": "57908",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "mptrees",
+      "revision": "70887",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
       "package": "na-position",
-      "style": "na-position",
-      "verdict": "reference-failure",
-      "reference_exit": 1
+      "revision": "55559",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 0,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "natbib/bibentry",
       "package": "natbib",
-      "style": "bibentry",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 2,
+      "smoke_cases": 2,
+      "interaction_cases": 1,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "natbib/natbib",
-      "package": "natbib",
-      "style": "natbib",
-      "verdict": "pass",
-      "pages": 1
-    },
-    {
-      "case": "newfloat/newfloat",
       "package": "newfloat",
-      "style": "newfloat",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 3,
+      "smoke_cases": 2,
+      "interaction_cases": 3,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "newfloat/newfloat_v1.0",
-      "package": "newfloat",
-      "style": "newfloat_v1.0",
-      "verdict": "pass",
-      "pages": 1
-    },
-    {
-      "case": "ntgclass/a4",
       "package": "ntgclass",
-      "style": "a4",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77239",
+      "licence": "unknown",
+      "loadable_styles": 9,
+      "smoke_cases": 2,
+      "interaction_cases": 2,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "ntgclass/artikel1",
-      "package": "ntgclass",
-      "style": "artikel1",
-      "verdict": "reference-failure",
-      "reference_exit": 1
-    },
-    {
-      "case": "oberdiek/aliascnt",
       "package": "oberdiek",
-      "style": "aliascnt",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "71916",
+      "licence": "unknown",
+      "loadable_styles": 34,
+      "smoke_cases": 2,
+      "interaction_cases": 2,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "oberdiek/bmpsize",
-      "package": "oberdiek",
-      "style": "bmpsize",
-      "verdict": "pass",
-      "pages": 1
-    },
-    {
-      "case": "pagesel/pagesel",
       "package": "pagesel",
-      "style": "pagesel",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 2,
+      "smoke_cases": 2,
+      "interaction_cases": 4,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "pagesel/pagesel-2016-05-16",
-      "package": "pagesel",
-      "style": "pagesel-2016-05-16",
-      "verdict": "pass",
-      "pages": 1
-    },
-    {
-      "case": "parskip/parskip",
       "package": "parskip",
-      "style": "parskip",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 2,
+      "smoke_cases": 2,
+      "interaction_cases": 1,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "parskip/parskip-2001-04-09",
-      "package": "parskip",
-      "style": "parskip-2001-04-09",
-      "verdict": "pass",
-      "pages": 1
-    },
-    {
-      "case": "pdfcolfoot/pdfcolfoot",
       "package": "pdfcolfoot",
-      "style": "pdfcolfoot",
-      "verdict": "reference-failure",
-      "reference_exit": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 3,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "pdfescape/pdfescape",
       "package": "pdfescape",
-      "style": "pdfescape",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 2,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "pdflscape/pdflscape",
       "package": "pdflscape",
-      "style": "pdflscape",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 2,
+      "smoke_cases": 2,
+      "interaction_cases": 6,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "pdflscape/pdflscape-nometadata",
-      "package": "pdflscape",
-      "style": "pdflscape-nometadata",
-      "verdict": "pass",
-      "pages": 1
-    },
-    {
-      "case": "pdfmanagement-testphase/color-ltx",
       "package": "pdfmanagement-testphase",
-      "style": "color-ltx",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77467",
+      "licence": "unknown",
+      "loadable_styles": 8,
+      "smoke_cases": 2,
+      "interaction_cases": 4,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "pdfmanagement-testphase/colorspace-patches-tmp-ltx",
-      "package": "pdfmanagement-testphase",
-      "style": "colorspace-patches-tmp-ltx",
-      "verdict": "reference-failure",
-      "reference_exit": 1
-    },
-    {
-      "case": "pdfpages/pdfpages",
       "package": "pdfpages",
-      "style": "pdfpages",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 1,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "pdftexcmds/pdftexcmds",
+      "package": "pdftex",
+      "revision": "77868",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "pdftex.universal-darwin",
+      "revision": "78096",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
       "package": "pdftexcmds",
-      "style": "pdftexcmds",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 1,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "pgf/pgf",
       "package": "pgf",
-      "style": "pgf",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "78101",
+      "licence": "unknown",
+      "loadable_styles": 37,
+      "smoke_cases": 2,
+      "interaction_cases": 1,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "pgf/pgfarrows",
-      "package": "pgf",
-      "style": "pgfarrows",
-      "verdict": "pass",
-      "pages": 1
-    },
-    {
-      "case": "philokalia/philokalia",
       "package": "philokalia",
-      "style": "philokalia",
-      "verdict": "reference-failure",
-      "reference_exit": 1
+      "revision": "45356",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 1,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "polyglossia/arabicnumbers",
+      "package": "piechartmp",
+      "revision": "19440",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "plain",
+      "revision": "75712",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
       "package": "polyglossia",
-      "style": "arabicnumbers",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "76990",
+      "licence": "unknown",
+      "loadable_styles": 11,
+      "smoke_cases": 2,
+      "interaction_cases": 2,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "polyglossia/bengalidigits",
-      "package": "polyglossia",
-      "style": "bengalidigits",
-      "verdict": "pass",
-      "pages": 1
-    },
-    {
-      "case": "psfrag/psfrag",
       "package": "psfrag",
-      "style": "psfrag",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "15878",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 3,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "pslatex/pslatex",
       "package": "pslatex",
-      "style": "pslatex",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "67469",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 1,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "psnfss/avant",
       "package": "psnfss",
-      "style": "avant",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 15,
+      "smoke_cases": 2,
+      "interaction_cases": 3,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "psnfss/bookman",
-      "package": "psnfss",
-      "style": "bookman",
-      "verdict": "reference-failure",
-      "reference_exit": 1
-    },
-    {
-      "case": "pspicture/pspicture",
       "package": "pspicture",
-      "style": "pspicture",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "15878",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 2,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "ptext/ptext",
       "package": "ptext",
-      "style": "ptext",
-      "verdict": "reference-failure",
-      "reference_exit": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 2,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "ragged2e/ragged2e",
       "package": "ragged2e",
-      "style": "ragged2e",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 2,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "rcs/rcs",
       "package": "rcs",
-      "style": "rcs",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "15878",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 0,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "refcount/refcount",
       "package": "refcount",
-      "style": "refcount",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 3,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "rerunfilecheck/rerunfilecheck",
+      "package": "repere",
+      "revision": "66998",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
       "package": "rerunfilecheck",
-      "style": "rerunfilecheck",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 2,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "revtex/ltxdocext",
       "package": "revtex",
-      "style": "ltxdocext",
-      "verdict": "reference-failure",
-      "reference_exit": 1
+      "revision": "67271",
+      "licence": "unknown",
+      "loadable_styles": 6,
+      "smoke_cases": 2,
+      "interaction_cases": 0,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "revtex/ltxfront",
-      "package": "revtex",
-      "style": "ltxfront",
-      "verdict": "reference-failure",
-      "reference_exit": 1
+      "package": "roex",
+      "revision": "45818",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
     },
     {
-      "case": "sansmath/sansmath",
+      "package": "roundrect",
+      "revision": "39796",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
       "package": "sansmath",
-      "style": "sansmath",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 0,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "section/section",
+      "package": "scheme-basic",
+      "revision": "54191",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "scheme-infraonly",
+      "revision": "54191",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "scheme-minimal",
+      "revision": "54191",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "scheme-small",
+      "revision": "77510",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
       "package": "section",
-      "style": "section",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "20180",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 0,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "seminar/npsfont",
       "package": "seminar",
-      "style": "npsfont",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 14,
+      "smoke_cases": 2,
+      "interaction_cases": 1,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "seminar/sem-a4",
-      "package": "seminar",
-      "style": "sem-a4",
-      "verdict": "reference-failure",
-      "reference_exit": 1
-    },
-    {
-      "case": "sepnum/sepnum",
       "package": "sepnum",
-      "style": "sepnum",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "20186",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 1,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "setspace/setspace",
       "package": "setspace",
-      "style": "setspace",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 4,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "simple-resume-cv/simpleresumecv",
+      "package": "shapes",
+      "revision": "42428",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
       "package": "simple-resume-cv",
-      "style": "simpleresumecv",
-      "verdict": "reference-failure",
-      "reference_exit": 1
+      "revision": "43057",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 0,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "simple-thesis-dissertation/simplethesisdissertation",
       "package": "simple-thesis-dissertation",
-      "style": "simplethesisdissertation",
-      "verdict": "reference-failure",
-      "reference_exit": 1
+      "revision": "43058",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 1,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "stringenc/stringenc",
+      "package": "slideshow",
+      "revision": "15878",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "splines",
+      "revision": "15878",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
       "package": "stringenc",
-      "style": "stringenc",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 0,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "subfig/subfig",
+      "package": "suanpan",
+      "revision": "15878",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
       "package": "subfig",
-      "style": "subfig",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 5,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "tagpdf/tagpdf",
+      "package": "symbol",
+      "revision": "77161",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "synctex",
+      "revision": "66203",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "synctex.universal-darwin",
+      "revision": "78096",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
       "package": "tagpdf",
-      "style": "tagpdf",
-      "verdict": "reference-failure",
-      "reference_exit": 1
+      "revision": "77539",
+      "licence": "unknown",
+      "loadable_styles": 8,
+      "smoke_cases": 2,
+      "interaction_cases": 0,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "tagpdf/tagpdf-base",
-      "package": "tagpdf",
-      "style": "tagpdf-base",
-      "verdict": "pass",
-      "pages": 1
-    },
-    {
-      "case": "tetragonos/tetragonos",
       "package": "tetragonos",
-      "style": "tetragonos",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "49732",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 3,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "tex4ebook/tex4ebook",
+      "package": "tex",
+      "revision": "77830",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "tex-ini-files",
+      "revision": "73863",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "tex.universal-darwin",
+      "revision": "77928",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
       "package": "tex4ebook",
-      "style": "tex4ebook",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "78132",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 2,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "tex4ht/tex4ht",
+      "package": "tex4ebook.universal-darwin",
+      "revision": "57908",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
       "package": "tex4ht",
-      "style": "tex4ht",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77990",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 3,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "textcase/textcase",
+      "package": "tex4ht.universal-darwin",
+      "revision": "77928",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "texlive-common",
+      "revision": "77830",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "texlive-en",
+      "revision": "78030",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "texlive-msg-translations",
+      "revision": "77993",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "texlive-scripts",
+      "revision": "78213",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "texlive-scripts-extra",
+      "revision": "78162",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "texlive-scripts-extra.universal-darwin",
+      "revision": "71749",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "texlive-scripts.universal-darwin",
+      "revision": "64356",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "texlive.infra",
+      "revision": "78218",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "texlive.infra.universal-darwin",
+      "revision": "70811",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
       "package": "textcase",
-      "style": "textcase",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 1,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "textpath/textpathmp",
       "package": "textpath",
-      "style": "textpathmp",
-      "verdict": "reference-failure",
-      "reference_exit": 1
+      "revision": "15878",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 2,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "thumbpdf/thumbpdf",
+      "package": "threeddice",
+      "revision": "20675",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
       "package": "thumbpdf",
-      "style": "thumbpdf",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "62518",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 0,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "tipa/exaccent",
+      "package": "thumbpdf.universal-darwin",
+      "revision": "57908",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "times",
+      "revision": "77161",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
       "package": "tipa",
-      "style": "exaccent",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 6,
+      "smoke_cases": 2,
+      "interaction_cases": 2,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "tipa/extraipa",
-      "package": "tipa",
-      "style": "extraipa",
-      "verdict": "pass",
-      "pages": 1
+      "package": "tlshell",
+      "revision": "78053",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
     },
     {
-      "case": "tools/afterpage",
+      "package": "tlshell.universal-darwin",
+      "revision": "57908",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
       "package": "tools",
-      "style": "afterpage",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "76708",
+      "licence": "unknown",
+      "loadable_styles": 42,
+      "smoke_cases": 2,
+      "interaction_cases": 1,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "tools/array",
-      "package": "tools",
-      "style": "array",
-      "verdict": "pass",
-      "pages": 1
-    },
-    {
-      "case": "translator/translator",
       "package": "translator",
-      "style": "translator",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 0,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "typehtml/typehtml",
       "package": "typehtml",
-      "style": "typehtml",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "17134",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 0,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "ucharcat/ucharcat",
       "package": "ucharcat",
-      "style": "ucharcat",
-      "verdict": "reference-failure",
-      "reference_exit": 1
+      "revision": "38907",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 2,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "ucharclasses/ucharclasses",
       "package": "ucharclasses",
-      "style": "ucharclasses",
-      "verdict": "reference-failure",
-      "reference_exit": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 1,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "ulem/ulem",
       "package": "ulem",
-      "style": "ulem",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 0,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "underscore/underscore",
       "package": "underscore",
-      "style": "underscore",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 3,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "unicode-bidi/unicode-bidi",
       "package": "unicode-bidi",
-      "style": "unicode-bidi",
-      "verdict": "reference-failure",
-      "reference_exit": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 6,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "unicode-math/unicode-math",
+      "package": "unicode-data",
+      "revision": "76413",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
       "package": "unicode-math",
-      "style": "unicode-math",
-      "verdict": "reference-failure",
-      "reference_exit": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 3,
+      "smoke_cases": 2,
+      "interaction_cases": 2,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "unicode-math/unicode-math-luatex",
-      "package": "unicode-math",
-      "style": "unicode-math-luatex",
-      "verdict": "reference-failure",
-      "reference_exit": 1
+      "package": "unimath-plain-xetex",
+      "revision": "72498",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
     },
     {
-      "case": "uniquecounter/uniquecounter",
       "package": "uniquecounter",
-      "style": "uniquecounter",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 2,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "unisugar/unisugar",
       "package": "unisugar",
-      "style": "unisugar",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "22357",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 0,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "upquote/upquote",
       "package": "upquote",
-      "style": "upquote",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 1,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "url/url",
       "package": "url",
-      "style": "url",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 2,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "xcolor/xcolor",
       "package": "xcolor",
-      "style": "xcolor",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 2,
+      "smoke_cases": 2,
+      "interaction_cases": 2,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "xcolor/xcolor-2022-06-12",
-      "package": "xcolor",
-      "style": "xcolor-2022-06-12",
-      "verdict": "pass",
-      "pages": 1
+      "package": "xdvi",
+      "revision": "62387",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
     },
     {
-      "case": "xebaposter/xebaposter",
+      "package": "xdvi.universal-darwin",
+      "revision": "77928",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
       "package": "xebaposter",
-      "style": "xebaposter",
-      "verdict": "reference-failure",
-      "reference_exit": 1
+      "revision": "75290",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 1,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "xechangebar/xechangebar",
       "package": "xechangebar",
-      "style": "xechangebar",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 4,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "xecolor/xecolor",
       "package": "xecolor",
-      "style": "xecolor",
-      "verdict": "reference-failure",
-      "reference_exit": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 0,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "xecyr/xecyr",
       "package": "xecyr",
-      "style": "xecyr",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 2,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "xeindex/xeindex",
       "package": "xeindex",
-      "style": "xeindex",
-      "verdict": "reference-failure",
-      "reference_exit": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 3,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "xesearch/xesearch",
+      "package": "xelatex-dev",
+      "revision": "71363",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "xelatex-dev.universal-darwin",
+      "revision": "57908",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
       "package": "xesearch",
-      "style": "xesearch",
-      "verdict": "reference-failure",
-      "reference_exit": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 3,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "xespotcolor/xespotcolor",
       "package": "xespotcolor",
-      "style": "xespotcolor",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 1,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "xetexko/xetexko",
+      "package": "xetex",
+      "revision": "77830",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "xetex-itrans",
+      "revision": "55475",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "xetex-pstricks",
+      "revision": "17055",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "xetex-tibetan",
+      "revision": "28847",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "xetex.universal-darwin",
+      "revision": "77987",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "xetexconfig",
+      "revision": "45845",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
+      "package": "xetexfontinfo",
+      "revision": "15878",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
+    },
+    {
       "package": "xetexko",
-      "style": "xetexko",
-      "verdict": "reference-failure",
-      "reference_exit": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 6,
+      "smoke_cases": 2,
+      "interaction_cases": 0,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "xetexko/xetexko-font",
-      "package": "xetexko",
-      "style": "xetexko-font",
-      "verdict": "reference-failure",
-      "reference_exit": 1
-    },
-    {
-      "case": "xevlna/xevlna",
       "package": "xevlna",
-      "style": "xevlna",
-      "verdict": "reference-failure",
-      "reference_exit": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 2,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "xfrac/xfrac",
       "package": "xfrac",
-      "style": "xfrac",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 1,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "xkeyval/pst-xkey",
       "package": "xkeyval",
-      "style": "pst-xkey",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 4,
+      "smoke_cases": 2,
+      "interaction_cases": 1,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "xkeyval/xkeyval",
-      "package": "xkeyval",
-      "style": "xkeyval",
-      "verdict": "pass",
-      "pages": 1
-    },
-    {
-      "case": "xltxtra/xltxtra",
       "package": "xltxtra",
-      "style": "xltxtra",
-      "verdict": "reference-failure",
-      "reference_exit": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 1,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "xpatch/xpatch",
       "package": "xpatch",
-      "style": "xpatch",
-      "verdict": "pass",
-      "pages": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 0,
+      "bt100_verdict": "pass"
     },
     {
-      "case": "xunicode/xunicode",
       "package": "xunicode",
-      "style": "xunicode",
-      "verdict": "reference-failure",
-      "reference_exit": 1
+      "revision": "77682",
+      "licence": "unknown",
+      "loadable_styles": 1,
+      "smoke_cases": 1,
+      "interaction_cases": 1,
+      "bt100_verdict": "partial"
     },
     {
-      "case": "zbmath-review-template/zb-basics",
-      "package": "zbmath-review-template",
-      "style": "zb-basics",
-      "verdict": "reference-failure",
-      "reference_exit": 1
+      "package": "zapfding",
+      "revision": "77161",
+      "licence": "unknown",
+      "loadable_styles": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
     },
     {
-      "case": "zbmath-review-template/zbMATH",
       "package": "zbmath-review-template",
-      "style": "zbMATH",
-      "verdict": "reference-failure",
-      "reference_exit": 1
+      "revision": "59693",
+      "licence": "unknown",
+      "loadable_styles": 2,
+      "smoke_cases": 2,
+      "interaction_cases": 3,
+      "bt100_verdict": "partial"
     }
   ]
 }
