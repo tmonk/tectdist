@@ -153,16 +153,14 @@ persistent service or a `tectdist`-managed content cache.
 
 ### 3.4 Competitor set
 
-The qualification suite must include:
-
-1. The current `tectdist` candidate.
-2. The previous released `tectdist` version.
-3. Direct Tectonic using the same compatible engine and bundle.
-4. TeX Live with `latexmk` for fully resolved one-command output.
-5. TeX Live raw engines only on documents for which the oracle proves that a
-   single pass is complete.
-6. ClutTeX where installation and document compatibility allow it.
-7. MiKTeX when Windows or a controlled compatible environment is added.
+The product-performance qualification suite must include the current
+`tectdist` candidate and TeX Live with `latexmk` as an independent, fully
+resolved one-command implementation. Direct Tectonic and the previous
+`tectdist` release remain useful engineering controls, but they are optional
+and excluded from the product headline because they benchmark the same engine
+or product family. TeX Live raw engines may be included only when the oracle
+proves that a single pass is complete. ClutTeX and MiKTeX may be added where a
+controlled compatible environment is available.
 
 The exact executable path, version output, distribution identity, package
 state, and configuration of every competitor must be stored with the raw
@@ -1819,10 +1817,10 @@ For every supported platform:
 - Three independent benchmark sessions.
 - At least 30 paired trials per ordinary case.
 - At least 15 paired trials per expensive case.
-- Candidate versus direct Tectonic.
-- Candidate versus previous `tectdist` release.
 - Candidate versus TeX Live `latexmk`.
-- Other qualified competitors where available.
+- Optional same-engine and prior-release diagnostic controls, reported outside
+  the product headline.
+- Other independent qualified competitors where available.
 - Warm-clean suite.
 - Controlled cold-cache suite.
 - Bibliography and index suites.
@@ -2071,7 +2069,8 @@ Retain fast correctness checks:
 
 - Full corpus.
 - All stable benchmark platforms.
-- Direct Tectonic and previous release.
+- Independent TeX Live comparison, with direct Tectonic and the previous
+  release retained only as optional diagnostics.
 - Generated dashboard update.
 
 ### 16.6 `perf-weekly-competitors.yml`
