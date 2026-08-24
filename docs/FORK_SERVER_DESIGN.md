@@ -77,6 +77,10 @@ server), reporting p50/p95 over ≥100 children with warm caches.
 
 - [x] Design recorded (this document)
 - [x] Supervisor-side registry/LRU scaffold (tectdist-supervisor 0.2.x)
-- [ ] TeX Live source checkout pinned next to the image manifest
-- [ ] pdfTeX `forkserver-entry` patch prototype
-- [ ] Child-creation latency measurement vs 2 ms gate
+- [x] TeX Live source pinned: texlive-20260301-source.tar.xz
+      (sha512 7b244504…bbde, see reference/texlive-source/)
+- [x] pdfTeX `forkserver-entry` patch prototype — build-tree variant;
+      production `.ch` change file is follow-up
+- [x] Child-creation latency measured: **1.5 ms p50 (< 2 ms gate PASS)**;
+      end-to-end fork-child one-pager 18.8 ms vs 37.6 ms cold = 2.0×
+      (see reference/basictex-2026/forkserver-measurement.json)
