@@ -40,6 +40,9 @@ def main():
             fish_text = f.read()
         assert "fish_add_path '" in fish_text
 
+        assert install.path_line(zsh_rc, "/tmp/native bin") == \
+            "export PATH='/tmp/native bin':\"$PATH\""
+
         assert uninstall.clean_rc(zsh_rc) is True
         assert uninstall.clean_rc(fish_rc) is True
         with open(zsh_rc, encoding="utf-8") as f:

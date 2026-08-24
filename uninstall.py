@@ -33,6 +33,7 @@ def clean_rc(path):
 
     def drop(ln):
         return (b"tectdist/bin" in ln or b"texdist/bin" in ln
+                or b"tectdist/dist/native-bin" in ln
                 or marker in ln.strip())
 
     lines = data.split(b"\n")
