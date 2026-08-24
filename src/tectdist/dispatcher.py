@@ -31,6 +31,7 @@ Standard behaviour details:
 
 import os
 import sys
+import time
 
 from .flags import (ENGINES, IGNORED_FLAGS, MEMORY_KNOBS, PROXIES,
                     ENGINE_PATH_VARS, TECTONIC_FALLBACK,
@@ -100,6 +101,18 @@ def resolve_engine():
     if not cand:
         cand = TECTONIC_FALLBACK
     return cand
+
+
+def resolved_engine():
+    """Resolve once; the result is passed to pairing and execution."""
+    from .plan import ResolvedEngine
+    path = resolve_engine()
+    try:
+        mtime_ns = os.stat(path).st_mtime_ns
+    except OSError:
+        mtime_ns = None
+    return ResolvedEngine(path=path, realpath=os.path.realpath(path),
+                          mtime_ns=mtime_ns)
 
 
 def warn(prog, msg):
@@ -246,7 +259,12 @@ def translate(args, prog):
         elif name in IGNORED_FLAGS:
             pass
         elif name in MEMORY_KNOBS:
-            pass
+            # web2c accepts both `-main-memory=VALUE` and
+            # `-main-memory VALUE`. Tectonic has no equivalent setting, but
+            # the separate value must be consumed rather than mistaken for a
+            # source file.
+            if not hasval:
+                pending = "ignored-value"
         elif name in ("v", "version", "V"):
             extra.append("--version")
         elif name in ("h", "help"):
@@ -299,10 +317,8 @@ def translate(args, prog):
     # otherwise; Tectonic defaults to the input's directory, so pin the cwd
     # when no explicit output directory was given.
     if outdir:
-        try:
-            os.makedirs(outdir, exist_ok=True)
-        except OSError:
-            pass
+        from .engine import ensure_output_directory
+        ensure_output_directory(outdir)
         cmd += ["-o", outdir]
     elif inputs:
         cmd += ["-o", "."]
@@ -319,6 +335,25 @@ def translate(args, prog):
         if jobname != stem:
             rename = (jobname, stem, outdir or ".")
     return cmd, rename, 0
+
+
+def build_compilation_plan(prog, args):
+    """Translate a compatibility invocation into one executable plan."""
+    from .plan import CompilationPlan
+    from .trace import span
+    with span("planner.translate", program=prog):
+        cmd, rename, help_wanted = translate(args, prog)
+    engine = resolved_engine()
+    input_path = None
+    if cmd:
+        candidates = [arg for arg in cmd if not arg.startswith("-")]
+        input_path = candidates[-1] if candidates else None
+    from .engine import existing_output_directory
+    return CompilationPlan(program=prog, engine=engine,
+                           engine_args=tuple(cmd or ()), input_path=input_path,
+                           output_directory=existing_output_directory(cmd or ()),
+                           rename=rename, requires_index_detection=not help_wanted,
+                           help_requested=bool(help_wanted))
 
 
 def run_engine(prog, args):
@@ -339,22 +374,29 @@ def run_engine(prog, args):
     # engine is from a mismatched release.
     info_request = any(a in ("-h", "-help", "--help", "-v", "-version",
                              "-V", "--version") for a in args)
+    mode = os.environ.get("TECTDIST_ENGINE_MODE", "external")
+    if mode != "external":
+        # Keep the diagnostic switch explicit before the embedded executor is
+        # available. A silent fallback could turn an engine-selection error
+        # into a seemingly successful but incorrect compile.
+        warn(prog, "engine mode '%s' is unavailable; use TECTDIST_ENGINE_MODE=external" % mode)
+        return 2
+    plan = build_compilation_plan(prog, args)
     if not info_request:
         from . import pairing
-        ok, message = pairing.check()
+        from .trace import span
+        with span("pairing.resolve"):
+            ok, message = pairing.check(plan.engine.path)
         if not ok:
             warn(prog, message)
             return 1
 
-    engine = resolve_engine()
-    result = translate(args, prog)
-    if result[2]:
+    if plan.help_requested:
         # help requested for a non-tectdist name: forward to the engine
-        cmd, _, _ = result
-        cmd = [engine, "--help"]
+        cmd = [plan.engine.path, "--help"]
         return run(cmd)
-    cmd, rename, _ = result
-    full = [engine] + cmd
+    cmd, rename = list(plan.engine_args), plan.rename
+    full = [plan.engine.path] + cmd
 
     # the output directory as Tectonic sees it (translated or native -o)
     dest = "."
@@ -363,12 +405,26 @@ def run_engine(prog, args):
     except (ValueError, IndexError):
         pass
 
-    def idx_files():
+    expected_stems = ()
+    if plan.input_path and plan.input_path != "-":
+        stem = os.path.splitext(os.path.basename(plan.input_path))[0]
+        expected_stems = (stem + ".idx", stem + ".glo")
+
+    def auxiliary_files():
+        """Use known index/glossary stems; retain scanning only for stdin."""
         files = {}
+        if expected_stems:
+            for name in expected_stems:
+                try:
+                    stat = os.stat(os.path.join(dest, name))
+                    files[name] = (stat.st_mtime_ns, stat.st_size)
+                except OSError:
+                    pass
+            return files
         try:
             with os.scandir(dest) as entries:
                 for entry in entries:
-                    if not entry.name.endswith(".idx"):
+                    if not entry.name.endswith((".idx", ".glo")):
                         continue
                     try:
                         stat = entry.stat()
@@ -379,13 +435,17 @@ def run_engine(prog, args):
             pass
         return files
 
-    before = idx_files()
-    rc = run(full)
+    from .trace import span
+    with span("filesystem.index_scan_before", strategy=("expected-stem" if expected_stems else "directory")):
+        before = auxiliary_files()
+    from .engine import run_external
+    rc = run_external(full, run).returncode
     if rc == 0:
-        after = idx_files()
-        changed_idx = sorted(name for name, stat in after.items()
-                             if before.get(name) != stat)
-        if changed_idx:
+        with span("filesystem.index_scan_after", strategy=("expected-stem" if expected_stems else "directory")):
+            after = auxiliary_files()
+        changed = sorted(name for name, stat in after.items()
+                         if before.get(name) != stat)
+        if changed:
             from . import tools
             indexer = (tools.resolve_real("makeindex", prefer_path=True)
                        or tools.resolve_real("upmendex", prefer_path=True))
@@ -396,13 +456,27 @@ def run_engine(prog, args):
             else:
                 import subprocess
                 indexed = 0
-                for name in changed_idx:
+                for name in changed:
                     stem = os.path.splitext(name)[0]
                     proc = None
+                    command = [indexer, stem]
+                    stage = "indexer.run"
+                    if name.endswith(".glo"):
+                        # `glossaries` delegates to makeindex with its
+                        # generated style and glossary-specific output names.
+                        command = [indexer, "-s", stem + ".ist", "-t", stem + ".glg",
+                                   "-o", stem + ".gls", name]
+                        stage = "glossary.run"
                     try:
-                        proc = subprocess.run([indexer, stem], cwd=dest,
-                                              capture_output=True, text=True,
-                                              timeout=120)
+                        try:
+                            timeout = max(1, int(os.environ.get(
+                                "TECTDIST_EXTERNAL_TOOL_TIMEOUT_SECS", "120")))
+                        except ValueError:
+                            timeout = 120
+                        with span(stage, executable=indexer):
+                            proc = subprocess.run(command, cwd=dest,
+                                                  capture_output=True, text=True,
+                                                  timeout=timeout)
                     except (OSError, subprocess.TimeoutExpired):
                         pass
                     if proc is not None and proc.returncode == 0:
@@ -417,7 +491,8 @@ def run_engine(prog, args):
                     # re-run so \printindex can \@input the new .ind files;
                     # add the output dir to the search paths so a non-cwd
                     # -output-directory works on the second pass too
-                    rc = run(full + ["-Z", f"search-path={dest}"])
+                    from .engine import run_external
+                    rc = run_external(full + ["-Z", f"search-path={dest}"], run).returncode
     if rc == 0 and rename:
         jobname, stem, dest = rename
         # -jobname names the artifacts; it must not relocate them outside the
@@ -449,6 +524,15 @@ def run(argv):
 
 
 def main(argv=None):
+    start_ns = time.perf_counter_ns()
+    try:
+        return _main(argv)
+    finally:
+        from .trace import emit
+        emit("process.total", start_ns)
+
+
+def _main(argv=None):
     argv = list(sys.argv if argv is None else argv)
     invoked = prog = os.path.basename(argv[0])
     if prog == "tectdist":
@@ -471,7 +555,9 @@ def main(argv=None):
             return 0
         if args and args[0] == "doctor":
             from . import pairing
-            report, ok = pairing.doctor(as_json="--json" in args[1:])
+            report, ok = pairing.doctor(
+                as_json="--json" in args[1:],
+                executor=os.environ.get("TECTDIST_ENGINE_MODE", "external"))
             print(report)
             return 0 if ok else 1
 

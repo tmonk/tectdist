@@ -214,7 +214,7 @@ def _write_cache(cache, binary, mtime, pair):
             pass
 
 
-def check(dist="0.1.0"):
+def check(binary=None, dist="0.1.0"):
     """Fast runtime pairing check used on every engine compile.
 
     Returns ``(ok, message)``.  ``ok`` is True when the declared tectonic pair
@@ -228,7 +228,7 @@ def check(dist="0.1.0"):
     if os.environ.get("TECTDIST_SKIP_PAIRING"):
         return True, ""
 
-    binary = _resolved_tectonic()
+    binary = binary or _resolved_tectonic()
     if not binary:
         # no tectonic: nothing to verify
         return True, ""
@@ -253,7 +253,7 @@ def check(dist="0.1.0"):
     return False, _message(dist, TECTONIC_VERSION, pair)
 
 
-def doctor(as_json=False):
+def doctor(as_json=False, executor="external"):
     """Full pairing report for `tectdist doctor`; exit code = verdict.
 
     ``as_json`` is intended for editor integrations and CI health checks.  It
@@ -284,6 +284,11 @@ def doctor(as_json=False):
         import shutil
         payload = {
             "tectdist": VERSION,
+            "executor": {
+                "mode": executor,
+                "embedded": False,
+                "external_fallback_available": True,
+            },
             "declared": {
                 "tectonic": TECTONIC_VERSION,
                 "biblatex": BIBLATEX_VERSION,
@@ -307,7 +312,8 @@ def doctor(as_json=False):
         }
         return json.dumps(payload, indent=2, sort_keys=True), not problems
 
-    lines = [f"tectdist {VERSION} pairing report", ""]
+    lines = [f"tectdist {VERSION} pairing report", "",
+             "  executor:   %s (embedded: no; external fallback: yes)" % executor]
     lines.append("  declared:   tectonic %s.x + biber %s "
                  "(biblatex %s, .bcf %s)" %
                  (TECTONIC_VERSION, BIBER_VERSION, BIBLATEX_VERSION,

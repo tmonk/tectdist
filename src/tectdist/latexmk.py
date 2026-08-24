@@ -23,10 +23,6 @@ engine once per invocation.
 """
 
 import os
-import re
-import shlex
-import shutil
-import subprocess
 import sys
 
 from .version import VERSION
@@ -62,6 +58,7 @@ def usage(prog):
 
 def read_rc(path, state):
     """Parse a (subset of a) latexmk rc file into the driver state."""
+    import re
     try:
         with open(path, encoding="utf-8", errors="replace") as f:
             for line in f:
@@ -274,18 +271,6 @@ def main(argv=None):
         return 1
 
     engine = state["engine"]
-    if "/" in engine:
-        engine_cmd = engine                      # custom command path
-    elif engine in KNOWN_ENGINES:
-        engine_cmd = os.path.join(here, engine)  # symlink into the same bin/
-        if not (os.path.isfile(engine_cmd) and os.access(engine_cmd, os.X_OK)):
-            engine_cmd = shutil.which(engine) or engine_cmd
-    else:
-        candidate = os.path.join(here, engine)
-        if os.path.isfile(candidate) and os.access(candidate, os.X_OK):
-            engine_cmd = candidate
-        else:
-            engine_cmd = shutil.which(engine) or engine
 
     cmd = []
     if state["outdir"]:
@@ -300,14 +285,35 @@ def main(argv=None):
         print("latexmk: -pvc: continuous preview not supported; running once.",
               file=sys.stderr)
 
-    full = (shlex.split(engine_cmd) if " " in engine_cmd else [engine_cmd]) \
-        + cmd + [input_f]
     if state["dry_run"]:
+        import shlex
+        # Preserve the historical, useful representation of the command a
+        # normal latexmk installation would have delegated to.
+        full = ([engine] + cmd + [input_f])
         print("latexmk: dry run: " + shlex.join(full))
         return 0
     print(f"latexmk: Running '{engine}' on '{input_f}'")
+    if engine in KNOWN_ENGINES:
+        # This is the crucial fast path: delegate to the shared planner and
+        # external executor in this interpreter, rather than spawning a farm
+        # symlink that starts a second Python dispatcher.
+        from .dispatcher import run_engine
+        return run_engine(engine, cmd + [input_f])
+
+    # Custom command strings deliberately retain latexmk's external-command
+    # semantics. They are not interpreted as an internal Tectonic request.
+    import shlex
+    import subprocess
+    import shutil
+    if "/" not in engine:
+        candidate = os.path.join(here, engine)
+        if os.path.isfile(candidate) and os.access(candidate, os.X_OK):
+            engine = candidate
+        else:
+            engine = shutil.which(engine) or engine
+    full = (shlex.split(engine) if " " in engine else [engine]) + cmd + [input_f]
     try:
         return subprocess.run(full).returncode
     except FileNotFoundError:
-        print(f"latexmk: {engine_cmd}: command not found", file=sys.stderr)
+        print(f"latexmk: {engine}: command not found", file=sys.stderr)
         return 127
