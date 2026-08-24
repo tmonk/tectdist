@@ -16,13 +16,14 @@ from pathlib import Path
 
 
 
-HOOK = """#ifdef TECTDIST_FORKSERVER
-    {
+HOOK = """    {
       extern void tectdist_forkserver_serve ( void ) ;
       tectdist_forkserver_serve ( ) ;
     }
-#endif /* TECTDIST_FORKSERVER */
 """
+# NOTE: the serve() implementation self-gates on TECTDIST_FORKSERVER_SOCKET,
+# so no compile-time define is required here (an #ifdef would be wiped by
+# command-line CPPFLAGS restrictions in some TL sub-builds).
 
 def hook_engine(web2c: Path, engine: str) -> str:
     source = web2c / f"{engine}ini.c"
