@@ -98,7 +98,31 @@ server), reporting p50/p95 over ≥100 children with warm caches.
 - [ ] XeTeX / LuaHBTeX servers
 - [ ] Integration of worker routing with the full BT100 differential battery
 
-### Open technical notes — \dump-based preamble snapshots (X2 round 2)
+### Open technical notes — launch-path control flow (X1 round 3)
+
+Empirical status across launch variants (all with the unconditional hook):
+
+| variant | hook fires | serves |
+|---|---|---|
+| direct launch, first-line `&<fmt> <file>` | yes (FS-enter) | yes — 9/9 children, full PDFs |
+| supervisor-spawned, NO format argument | yes (reaches serve) | compile requests fail: child installs bare job name but web2c's conditional start_input never opens it without an active-char prefix |
+| any launch with `-fmt=<name>` preload | **no** — mainbody skips the fixdateandtime-#2 region entirely for preloaded formats |
+
+Root cause of the last row is a web2c-generated-mainbody control-flow
+subtlety: the preloaded-format path branches before the general
+initialisation region. Resolving it requires studying tex.web's main block
+(or authoring the .ch change file properly) rather than patching generated
+C — this is the primary open engineering task for X1 completion.
+
+Interim consequence: the fork server is launched exactly as proven in the
+working configuration (first-line &reference), and the supervisor falls
+back to exact one-shot execution otherwise — BT100 semantics unaffected;
+X10-E acceleration currently applies only to the proven launch shape.
+
+Next actions queued:
+- Study tex.web main-block flow for the preloaded-format branch; author
+  the production .ch patch placing the hook on ALL post-format-load paths.
+- Re-run child-creation and end-to-end gates across every launch variant. — \dump-based preamble snapshots (X2 round 2)
 
 Attempted: draftmode-isolated measurement (preamble fmt built with
 \pdfvariable draftmode=1 before \documentclass, so children skip PDF
