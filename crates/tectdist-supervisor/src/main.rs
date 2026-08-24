@@ -15,6 +15,8 @@
 //!
 //! Responses carry `"ok"` plus payload fields; every response echoes
 //! `"request_id"` when the request supplied one.
+mod checkpoint;
+
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::io::{BufRead, BufReader, Write};
