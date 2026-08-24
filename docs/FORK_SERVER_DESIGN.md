@@ -153,6 +153,29 @@ Next actions queued:
   token/state handling in the supervisor's offline format builder.
 - Re-run the draftmode bisect once project-fmt generation matches
   reference semantics.
+
+### Session status note (honest)
+
+Proven and committed:
+- Fork server mechanism end-to-end via direct launch (first-line
+  &reference): 9/9 children, full PDFs, child creation 1.5 ms p50
+  (<2 ms gate), 2x vs cold exec on one-pager.
+- Supervisor IPC, project locks, action broker (5/5 helpers <2 ms).
+- Engine protocol per-job names; supervisor worker spawn/forward/fallback
+  code paths implemented with integration tests.
+
+Blocked / open:
+- Supervisor-spawned worker round-trip could not be validated inside this
+  agent session: backgrounded engine processes are reaped by the session
+  harness (SIGKILL on process groups) between commands, so multi-process
+  serving states cannot be observed reliably here. Validation requires an
+  interactive shell or CI runner (bt100-compat.yml pattern extends
+  naturally).
+- -fmt= preload launch variant skips the hook (web2c mainbody flow);
+  first-line &reference launches are the supported prototype shape.
+- \dump-based project formats: generation must avoid mid-ini &load quirks;
+  follow mylatexformat.sty's exact technique or use fmtutil with a custom
+  cnf fragment.
 - [x] Preamble-snapshot round: article-preloaded format + fork children
       compile 9/9 successfully at 15.0 ms median; pure-fork control measures
       0.01 ms — the residual is post-preamble engine work (fonts, PDF out),
