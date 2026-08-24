@@ -1,5 +1,12 @@
 # Benchmarks
 
+> **Programme update:** the perf-branch programme (Milestones 0–8 of
+> `docs/ORDER_OF_MAGNITUDE_PERFORMANCE_PLAN.md`) reduced the seven-document
+> warm-clean aggregate from 3.497 s to ≈2.818 s (−19.4%) on the reference
+> host. Raw evidence: `benchmark-results/corpus-final-macos-arm64.{json,md}`
+> and `benchmark-results/toolchain-comparison.md`. The audited baseline
+> section below is preserved unchanged for provenance.
+
 The new native Rust implementation has the lowest aggregate complete-build
 latency on the compact project corpus: **3.497 seconds versus 4.100 seconds for
 TeX Live `latexmk`, a 14.71% reduction**. The paired bootstrap 95% confidence
