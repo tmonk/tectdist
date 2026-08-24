@@ -1326,6 +1326,54 @@ fn latexmk(arguments: Vec<OsString>) -> i32 {
 }
 
 fn execute_engine(program: OsString, arguments: Vec<OsString>) -> i32 {
+    // Backend portfolio selection (plan X7): record the semantic contract the
+    // alias promises and the backend chosen for this invocation. Only
+    // qualified backends are selectable; today that is Tectonic/XeTeX plus
+    // the external fallback, so selection records the decision explicitly
+    // without changing semantics for any alias.
+    {
+        use tectdist_core::backend::{
+            detect_features, select_backend, SemanticContract,
+        };
+        let program_text = program.to_string_lossy().into_owned();
+        let contract = match program_text.as_str() {
+            "xelatex" => Some(SemanticContract::XeTex),
+            "lualatex" => Some(SemanticContract::LuaHbTex),
+            "pdflatex" | "tectdist" => Some(SemanticContract::PdfTex),
+            _ => None,
+        };
+        let input: Option<&OsString> = arguments
+                .iter()
+                .find(|argument| !argument.to_string_lossy().starts_with('-'));
+        if let Some(contract) = contract {
+            let source = input.map(std::path::PathBuf::from);
+            let features = match &source {
+                Some(source) if source.is_file() => std::fs::read_to_string(source)
+                    .map(|text| detect_features(&text))
+                    .unwrap_or_default(),
+                _ => Default::default(),
+            };
+            let selected = select_backend(
+                contract,
+                &features,
+                &[
+                    #[cfg(feature = "embedded")]
+                    tectdist_core::backend::BackendKind::TectonicXetex,
+                    tectdist_core::backend::BackendKind::ExternalFallback,
+                ],
+            );
+            let selection_started = Instant::now();
+            trace_span(
+                "backend.select",
+                selection_started.elapsed(),
+                None,
+            );
+            env::set_var(
+                "TECTDIST_BACKEND_LAST",
+                format!("{:?}", selected),
+            );
+        }
+    }
     let planning_started = Instant::now();
     let translation = translate(arguments);
     trace_span("planner.translate", planning_started.elapsed(), None);
