@@ -16,9 +16,10 @@
 //! Responses carry `"ok"` plus payload fields; every response echoes
 //! `"request_id"` when the request supplied one.
 mod checkpoint;
+use checkpoint::{CheckpointChain, CheckpointRecord};
 
 use serde::{Deserialize, Serialize};
-use std::collections::HashMap;
+use std::collections::{HashMap, VecDeque};
 use std::io::{BufRead, BufReader, Write};
 use std::os::unix::fs::PermissionsExt;
 use std::os::unix::net::{UnixListener, UnixStream};
@@ -61,6 +62,20 @@ enum Request {
     },
     Snapshots {
         request_id: Option<u64>,
+    },
+    CheckpointPut {
+        request_id: Option<u64>,
+        key: String,
+        jobname: String,
+        records: Vec<CheckpointRecordDto>,
+    },
+    CheckpointGet {
+        request_id: Option<u64>,
+        key: String,
+    },
+    CheckpointEvict {
+        request_id: Option<u64>,
+        key: String,
     },
     Action {
         request_id: Option<u64>,
@@ -118,6 +133,40 @@ enum Payload {
         duration_ms: u64,
         key_digest: String,
     },
+    CheckpointChainData {
+        jobname: String,
+        pages: Vec<CheckpointPageSummary>,
+        evicted_keys: Vec<String>,
+    },
+}
+
+#[derive(Debug, Serialize)]
+struct CheckpointPageSummary {
+    sequence: u64,
+    state_digest: String,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct CheckpointRecordDto {
+    pub id: u64,
+    pub sequence: u64,
+    pub engine_state_digest: String,
+    pub dependency_epoch: String,
+    pub auxiliary_state_digest: String,
+    pub shipped_pages: Vec<String>,
+}
+
+impl From<CheckpointRecordDto> for checkpoint::CheckpointRecord {
+    fn from(dto: CheckpointRecordDto) -> Self {
+        Self {
+            id: dto.id,
+            sequence: dto.sequence,
+            engine_state_digest: dto.engine_state_digest,
+            dependency_epoch: dto.dependency_epoch,
+            auxiliary_state_digest: dto.auxiliary_state_digest,
+            shipped_pages: dto.shipped_pages,
+        }
+    }
 }
 
 #[derive(Debug, Serialize)]
@@ -144,6 +193,11 @@ struct SupervisorState {
     /// private socket. None until first use; reset on any failure.
     engine_worker: Mutex<Option<EngineWorker>>,
     use_forkserver: bool,
+    /// Page-checkpoint chains (plan X4) keyed by "<cwd>#<jobname>";
+    /// LRU-evicted by entry count until real COW-backed storage lands.
+    checkpoint_chains: Mutex<HashMap<String, CheckpointChain>>,
+    checkpoint_chain_order: Mutex<VecDeque<String>>,
+    checkpoint_max_chains: usize,
     /// Two-tier tool identity (plan §11.2): (size, mtime) as the cheap
     /// candidate check, content digest computed once per candidate change.
     /// BasicTeX image binaries are immutable within a profile, so the cached
@@ -191,9 +245,21 @@ impl SupervisorState {
             .unwrap_or(32);
         let use_forkserver =
             std::env::var("TECTDIST_USE_FORKSERVER").as_deref() == Ok("1");
+        let checkpoint_max_chains = std::env::var("TECTDIST_CHECKPOINT_MAX")
+            .ok()
+            .and_then(|value| value.parse().ok())
+            .unwrap_or(16);
         Self {
             use_forkserver,
             engine_worker: Mutex::new(None),
+            checkpoint_chains: Mutex::new(HashMap::new()),
+            checkpoint_chain_order: Mutex::new(VecDeque::new()),
+            checkpoint_max_chains,
+            tool_digests: Mutex::new(HashMap::new()),
+            snapshot_max_entries: std::env::var("TECTDIST_SNAPSHOT_MAX")
+                .ok()
+                .and_then(|value| value.parse().ok())
+                .unwrap_or(32),
             image_root: PathBuf::from(
                 std::env::var("TECTDIST_BASICTEX_ROOT").unwrap_or_default(),
             ),
@@ -203,8 +269,6 @@ impl SupervisorState {
             compiles_failed: AtomicU64::new(0),
             project_locks: Mutex::new(HashMap::new()),
             snapshots: Mutex::new(HashMap::new()),
-            tool_digests: Mutex::new(HashMap::new()),
-            snapshot_max_entries,
         }
     }
 
@@ -470,6 +534,59 @@ impl SupervisorState {
             .ok_or_else(|| format!("image has no tool '{tool}'"))
     }
 
+    fn checkpoint_key(&self, cwd: &Path, jobname: &str) -> String {
+        let canonical = cwd.canonicalize().unwrap_or_else(|_| cwd.to_path_buf());
+        format!("{}#{}", canonical.display(), jobname)
+    }
+
+    /// Insert or replace a chain; evicts the least-recently-used chain beyond
+    /// the configured limit. Returns evicted keys for telemetry.
+    fn checkpoint_chain_put(
+        &self,
+        key: String,
+        chain: CheckpointChain,
+    ) -> Vec<String> {
+        let mut chains = self.checkpoint_chains.lock().expect("checkpoints poisoned");
+        let mut order = self.checkpoint_chain_order.lock().expect("order poisoned");
+        order.retain(|existing| existing != &key);
+        order.push_back(key.clone());
+        chains.insert(key, chain);
+        let mut evicted = Vec::new();
+        while order.len() > self.checkpoint_max_chains {
+            let oldest = order.pop_front().expect("non-empty");
+            chains.remove(&oldest);
+            evicted.push(oldest);
+        }
+        evicted
+    }
+
+    fn checkpoint_chain_get(&self, key: &str) -> Option<CheckpointChain> {
+        let mut order = self.checkpoint_chain_order.lock().expect("order poisoned");
+        if order.iter().any(|existing| existing == key) {
+            order.retain(|existing| existing != key);
+            order.push_back(key.to_string());
+        }
+        self.checkpoint_chains
+            .lock()
+            .expect("checkpoints poisoned")
+            .get(key)
+            .cloned()
+    }
+
+    fn checkpoint_chain_evict(&self, key: &str) -> bool {
+        let mut order = self.checkpoint_chain_order.lock().expect("order poisoned");
+        if let Some(position) = order.iter().position(|existing| existing == key) {
+            order.remove(position);
+            return self
+                .checkpoint_chains
+                .lock()
+                .expect("checkpoints poisoned")
+                .remove(key)
+                .is_some();
+        }
+        false
+    }
+
     fn action_cache_dir(&self) -> PathBuf {
         let base = std::env::var("TECTDIST_ACTION_CACHE").unwrap_or_else(|_| {
             format!(
@@ -651,6 +768,68 @@ fn handle_request(
                 ok: found,
                 request_id,
                 error: if found { None } else { Some("unknown snapshot key".into()) },
+                payload: Payload::Empty,
+            }
+        }
+        Request::CheckpointPut {
+            request_id,
+            key,
+            jobname,
+            records,
+        } => {
+            let mut chain = checkpoint::CheckpointChain::new(&jobname);
+            for dto in records {
+                chain.push(dto.into());
+            }
+            let evicted = state.checkpoint_chain_put(key, chain);
+            Response {
+                ok: true,
+                request_id,
+                error: None,
+                payload: Payload::CheckpointChainData {
+                    jobname,
+                    pages: Vec::new(),
+                    evicted_keys: evicted,
+                },
+            }
+        }
+        Request::CheckpointGet { request_id, key } => {
+            match state.checkpoint_chain_get(&key) {
+                Some(chain) => Response {
+                    ok: true,
+                    request_id,
+                    error: None,
+                    payload: Payload::CheckpointChainData {
+                        jobname: chain.jobname,
+                        pages: chain
+                            .records
+                            .iter()
+                            .map(|record| CheckpointPageSummary {
+                                sequence: record.sequence,
+                                state_digest: record.engine_state_digest.clone(),
+                            })
+                            .collect(),
+                        evicted_keys: Vec::new(),
+                    },
+                },
+                None => Response {
+                    ok: false,
+                    request_id,
+                    error: Some("unknown checkpoint chain".into()),
+                    payload: Payload::Empty,
+                },
+            }
+        }
+        Request::CheckpointEvict { request_id, key } => {
+            let evicted = state.checkpoint_chain_evict(&key);
+            Response {
+                ok: evicted,
+                request_id,
+                error: if evicted {
+                    None
+                } else {
+                    Some("unknown checkpoint chain".into())
+                },
                 payload: Payload::Empty,
             }
         }

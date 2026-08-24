@@ -389,3 +389,109 @@ fn fork_server_worker_compiles_through_resident_engine() {
     client(serde_json::json!({"type": "shutdown"}));
     let _ = child.wait();
 }
+
+#[test]
+fn checkpoint_chain_put_get_evict_and_lru() {
+    let supervisor = start_supervisor("ckpt", None);
+    let socket = &supervisor.socket;
+    use serde_json::json;
+
+    let put = |key: &str, seqs: &[u64]| {
+        let records: Vec<serde_json::Value> = seqs
+            .iter()
+            .map(|seq| {
+                json!({
+                    "id": seq, "sequence": seq,
+                    "engine_state_digest": format!("st-{key}-{seq}"),
+                    "dependency_epoch": "e1",
+                    "auxiliary_state_digest": "aux",
+                    "shipped_pages": [format!("p{seq}")],
+                })
+            })
+            .collect();
+        request(socket, &json!({
+            "type": "checkpoint_put", "key": key,
+            "jobname": "main", "records": records,
+        }).to_string())
+    };
+
+    put("proj#main", &[0, 1]);
+    put("proj#appendix", &[0]);
+
+    // Get roundtrip preserves record order and digests.
+    let chain = request(socket, &json!({"type": "checkpoint_get", "key": "proj#main"}).to_string());
+    assert_eq!(chain["ok"], true);
+    let pages = chain["checkpoint_chain_data"]["pages"].as_array().expect("pages");
+    assert_eq!(pages.len(), 2);
+    assert_eq!(pages[0]["state_digest"], "st-proj#main-0");
+
+    // Eviction removes exactly the requested chain.
+    let evicted = request(socket, &json!({"type": "checkpoint_evict", "key": "proj#appendix"}).to_string());
+    assert_eq!(evicted["ok"], true);
+    let gone = request(socket, &json!({"type": "checkpoint_get", "key": "proj#appendix"}).to_string());
+    assert_eq!(gone["ok"], false);
+
+    // Unknown key errors on get.
+    let missing = request(socket, &json!({"type": "checkpoint_get", "key": "nope"}).to_string());
+    assert_eq!(missing["ok"], false);
+}
+
+#[test]
+fn checkpoint_lru_respects_max_chains() {
+    // Instance with max=2: custom spawn because start_supervisor does not
+    // expose env overrides.
+    let dir = free_dir("ckpt-lru");
+    let socket = dir.join("s.sock");
+    let exe = env!("CARGO_BIN_EXE_tectdist-supervisor");
+    let mut command = Command::new(exe);
+    command.arg("serve");
+    command.env("TECTDIST_SUPERVISOR_SOCKET", &socket);
+    command.env("TECTDIST_CHECKPOINT_MAX", "2");
+    command.env("TECTDIST_ACTION_CACHE", dir.join("cache"));
+    command.stdout(Stdio::null()).stderr(Stdio::null());
+    let mut child = command.spawn().expect("spawn");
+    let deadline = Instant::now() + Duration::from_secs(5);
+    while Instant::now() < deadline {
+        if UnixStream::connect(&socket).is_ok() { break; }
+        std::thread::sleep(Duration::from_millis(20));
+    }
+
+    let put = |key: &str| {
+        let mut stream = UnixStream::connect(&socket).unwrap();
+        let payload = serde_json::json!({
+            "type": "checkpoint_put", "key": key, "jobname": "j",
+            "records": [{"id":1,"sequence":0,
+              "engine_state_digest":"d","dependency_epoch":"e",
+              "auxiliary_state_digest":"a","shipped_pages":["p"]}],
+        });
+        stream.write_all(payload.to_string().as_bytes()).unwrap();
+        stream.write_all(b"\n").unwrap();
+        stream.flush().unwrap();
+        let mut reader = BufReader::new(stream.try_clone().unwrap());
+        let mut line = String::new();
+        reader.read_line(&mut line).unwrap();
+        let response: serde_json::Value = serde_json::from_str(&line).unwrap();
+        response
+    };
+
+    put("k1");
+    put("k2");
+    put("k3");  // evicts k1 (LRU)
+
+    let get = |key: &str| {
+        let mut stream = UnixStream::connect(&socket).unwrap();
+        let payload = serde_json::json!({"type": "checkpoint_get", "key": key});
+        stream.write_all(payload.to_string().as_bytes()).unwrap();
+        stream.write_all(b"\n").unwrap();
+        let mut reader = BufReader::new(stream.try_clone().unwrap());
+        let mut line = String::new();
+        reader.read_line(&mut line).unwrap();
+        let value: serde_json::Value = serde_json::from_str(&line).unwrap();
+        value
+    };
+    assert_eq!(get("k1")["ok"], false, "k1 should be LRU-evicted");
+    assert_eq!(get("k2")["ok"], true);
+    assert_eq!(get("k3")["ok"], true);
+
+    child.kill().unwrap();
+}
