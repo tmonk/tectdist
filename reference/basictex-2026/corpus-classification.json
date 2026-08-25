@@ -2,18 +2,19 @@
   "schema_version": 1,
   "image_files_sha256": "395f0b4d7ce47684c021e8734421bd530206e58a96949cb6103a6333ad2b36b6",
   "documents": {
+    "biblatex": "extension",
     "bibtex": "basictex-core",
+    "glossary": "extension",
     "graphics": "basictex-core",
     "index": "basictex-core",
+    "multifile": "basictex-core",
     "paper": "basictex-core",
     "references": "basictex-core",
     "shell-escape": "basictex-core",
     "thesis": "basictex-core",
     "tikz": "basictex-core",
     "tiny": "basictex-core",
-    "unicode-fonts": "basictex-core",
-    "biblatex": "extension",
-    "glossary": "extension"
+    "unicode-fonts": "basictex-core"
   },
   "note": "extension documents are outside BT100 unless promoted by manifest change"
 }
