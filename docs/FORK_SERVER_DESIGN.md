@@ -224,3 +224,14 @@ work; scripts/basictex_project_format.py provides the CLI scaffolding.
       0.01 ms — the residual is post-preamble engine work (fonts, PDF out),
       confirming the route to the 5.1 ms budget runs through §14.3/14.4
       rather than further fork optimisation
+
+
+## Non-pdftex fork-server status (2026-08)
+
+The build-fs TL tree was configured without XeTeX/LuaTeX targets (no
+`xetex:` rule in texk/web2c/Makefile); enabling them requires a full
+reconfigure plus first-time builds of the XeTeX C++ and LuaTeX sources.
+Dedicated-session work: patch generation (forkserver_apply_patch)
+generalises to the tangled *ini.c files once they exist, but the build,
+per-engine hook placement verification, and protocol testing are
+substantial. pdfTeX remains the instrumented reference engine.
