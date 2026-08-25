@@ -23,7 +23,7 @@ use std::path::Path;
 use std::process::Command;
 use std::time::Instant;
 
-const FORMAT_DIR: &str = ".tectdist";
+pub const FORMAT_DIR: &str = ".tectdist";
 const META_SUFFIX: &str = ".meta";
 /// Engines eligible for the preamble-snapshot fast path.
 const ELIGIBLE_ENGINES: &[&str] = &["pdflatex", "latex", "pdftex"];
@@ -477,6 +477,47 @@ fn run_with_timeout(
             }
             Err(error) => return Err(format!("wait failed: {error}")),
         }
+    }
+}
+
+/// Return the active project-format name for a job stem when a built
+/// format exists AND its meta digest matches the CURRENT source preamble.
+/// Used by the fork-server composition: a resident worker can preload
+/// this format so body compiles skip both process spawn and format load.
+pub fn active_format(cwd: &Path, job_stem: &str) -> Option<String> {
+    let fmt_name = format!("{job_stem}-pre");
+    let format_dir = cwd.join(FORMAT_DIR);
+    if !format_dir.join(format!("{fmt_name}.fmt")).is_file() {
+        return None;
+    }
+    let meta = std::fs::read_to_string(
+        format_dir.join(format!("{fmt_name}{META_SUFFIX}")),
+    )
+    .ok()?;
+    // The recorded digest covers the preamble text, capability flags and
+    // dependency files. Recompute it from the live source to decide
+    // whether the cached format is still current.
+    let source_path = cwd.join(format!("{job_stem}.tex"));
+    let source_text = std::fs::read_to_string(&source_path).ok()?;
+    let split = split_source(&source_text)?;
+    let mut digest_input = split.preamble.clone();
+    // Dependency digests use the same traversal the builder recorded.
+    let scan = scan_inputs(&split.preamble);
+    if scan.macro_form {
+        return None;
+    }
+    for (dep_name, dep_digest) in
+        dependency_digests_from(cwd, &scan.targets)
+    {
+        digest_input.push('\n');
+        digest_input.push_str(&dep_name);
+        digest_input.push('=');
+        digest_input.push_str(&dep_digest);
+    }
+    if meta.trim() == digest_hex(digest_input.as_bytes()) {
+        Some(fmt_name)
+    } else {
+        None
     }
 }
 

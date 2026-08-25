@@ -247,3 +247,80 @@ fn cancel_request_aborts_runaway_compile() {
     let _ = child.kill();
     let _ = child.wait();
 }
+
+#[test]
+fn composed_fork_server_preloads_project_format() {
+    let Some(image) = basic_tex_root() else {
+        eprintln!("skipping: BasicTeX reference image not present on this host");
+        return;
+    };
+    let dir = free_dir("fscompose");
+    let socket = dir.join("s.sock");
+    let exe = env!("CARGO_BIN_EXE_tectdist-supervisor");
+    let mut command = Command::new(exe);
+    command.arg("serve");
+    command.env("TECTDIST_SUPERVISOR_SOCKET", &socket);
+    command.env("TECTDIST_ACTION_CACHE", dir.join("cache"));
+    command.env("TECTDIST_BASICTEX_ROOT", &image);
+    command.env("TECTDIST_USE_FORKSERVER", "1");
+    command.env("TECTDIST_FORKSERVER_PREFER", "1");
+    let log = std::fs::File::create(dir.join("serve.log")).unwrap();
+    command.stdout(log.try_clone().unwrap()).stderr(log);
+    let mut child = command.spawn().expect("spawn supervisor");
+    let deadline = Instant::now() + Duration::from_secs(5);
+    while Instant::now() < deadline {
+        if UnixStream::connect(&socket).is_ok() {
+            break;
+        }
+        std::thread::sleep(Duration::from_millis(20));
+    }
+
+    let work = free_dir("fscompose-work");
+    std::fs::write(
+        work.join("main.tex"),
+        "\\documentclass{article}\n\\begin{document}\nComposed probe one.\n\\end{document}\n",
+    )
+    .unwrap();
+
+    let payload = serde_json::json!({
+        "type": "compile",
+        "profile": "basictex-2026",
+        "cwd": work.to_str().unwrap(),
+        "argv": ["pdflatex", "-interaction=batchmode", "main.tex"],
+        "snapshot_key": null,
+    });
+
+    // 1. First compile builds the X2 project format (X4 miss -> X2 hit;
+    //    the prefer flag only engages when a format is already valid).
+    let first = client(&socket, payload.clone());
+    assert_eq!(first["compile_accepted"]["exit_status"], 0,
+               "first compile failed: {first}");
+    assert!(work.join(".tectdist/main-pre.fmt").is_file(),
+            "project format must exist after first compile");
+
+    // 2. Second compile takes the COMPOSED fork-server path: resident
+    //    worker preloads main-pre.fmt and compiles the paired body.
+    std::fs::write(work.join("main.pdf"), b"stale").ok();
+    let second = client(&socket, payload.clone());
+    assert_eq!(second["compile_accepted"]["exit_status"], 0,
+               "composed compile failed: {second}");
+    let pdf = work.join("main.pdf");
+    assert!(pdf.is_file(), "PDF must be renamed into place");
+    assert!(
+        pdf.metadata().unwrap().len() > 1000,
+        "renamed PDF must be real output, not a stale placeholder"
+    );
+
+    // 3. Body edit: format stays valid (preamble unchanged), worker still
+    //    serves the NEW content through the composed path.
+    std::fs::write(
+        work.join("main.tex"),
+        "\\documentclass{article}\n\\begin{document}\nComposed probe two.\n\\end{document}\n",
+    )
+    .unwrap();
+    let third = client(&socket, payload);
+    assert_eq!(third["compile_accepted"]["exit_status"], 0);
+
+    let _ = child.kill();
+    let _ = child.wait();
+}

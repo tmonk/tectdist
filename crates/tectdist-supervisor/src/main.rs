@@ -215,8 +215,11 @@ struct SupervisorState {
     /// Exact-engine fork-server worker (plan X1): a resident pdfTeX process
     /// holding the preloaded format; compile requests are forwarded over its
     /// private socket. None until first use; reset on any failure.
-    engine_worker: Mutex<Option<EngineWorker>>,
+    engine_worker: Mutex<Option<(String, EngineWorker)>>,
     use_forkserver: bool,
+    /// When set, a composed fork server (worker preloading an X2 project
+    /// format) is attempted before the direct X2 path.
+    forkserver_prefer: bool,
     /// Page-checkpoint chains (plan X4) keyed by "<cwd>#<jobname>";
     /// LRU-evicted by entry count until real COW-backed storage lands.
     checkpoint_chains: Mutex<HashMap<String, CheckpointChain>>,
@@ -301,6 +304,9 @@ impl SupervisorState {
             compiles_failed: AtomicU64::new(0),
             compiles_cache_hits: AtomicU64::new(0),
             cancel_flags: Mutex::new(HashMap::new()),
+            forkserver_prefer: std::env::var("TECTDIST_FORKSERVER_PREFER")
+                .map(|v| v == "1")
+                .unwrap_or(false),
             project_locks: Mutex::new(HashMap::new()),
             snapshots: Mutex::new(HashMap::new()),
         }
@@ -455,6 +461,9 @@ impl SupervisorState {
 struct EngineWorker {
     child: std::process::Child,
     socket: PathBuf,
+    /// Identity of the preloaded format ("tectdist-active" for composed
+    /// X2 formats, "tectdist-latex" for the base seed).
+    fmt_key: String,
 }
 
 impl Drop for EngineWorker {
@@ -471,32 +480,64 @@ impl EngineWorker {
     /// directory. A reusable base format (`latex` from the image) is seeded
     /// beside the sources so the first-line reference resolves locally;
     /// preamble snapshots (X2) replace it with richer formats later.
-    fn spawn(image_root: &Path, cwd: &Path) -> Result<Self, String> {
+    fn spawn(
+        image_root: &Path,
+        cwd: &Path,
+        project_fmt: Option<&str>,
+    ) -> Result<Self, String> {
         let bin_dir = image_root.join("bin/forkproto");
         let binary = bin_dir.join("pdftex");
         if !binary.is_file() {
             return Err(format!("fork-server binary missing: {}", binary.display()));
         }
-        let base_format = image_root.join("texmf-var/web2c/pdftex/latex.fmt");
-        if !base_format.is_file() {
-            return Err("image lacks texmf-var/web2c/pdftex/latex.fmt".to_string());
-        }
-        std::fs::copy(&base_format, cwd.join("tectdist-latex.fmt"))
-            .map_err(|error| format!("seed format: {error}"))?;
+        // Composed mode preloads an X2 project format so children skip both
+        // process setup AND format load; base mode keeps the stock latex
+        // format for documents without a valid snapshot.
+        let (seed_name, fork_job) = match project_fmt {
+            Some(fmt) => {
+                let source =
+                    cwd.join(project_format::FORMAT_DIR).join(format!("{fmt}.fmt"));
+                let seed = cwd.join("tectdist-active.fmt");
+                std::fs::copy(&source, &seed).map_err(|error| {
+                    format!("seed project format: {error}")
+                })?;
+                (
+                    "tectdist-active".to_string(),
+                    format!("{}/{}-body.tex", project_format::FORMAT_DIR, fmt),
+                )
+            }
+            None => {
+                let base_format =
+                    image_root.join("texmf-var/web2c/pdftex/latex.fmt");
+                if !base_format.is_file() {
+                    return Err(
+                        "image lacks texmf-var/web2c/pdftex/latex.fmt"
+                            .to_string(),
+                    );
+                }
+                std::fs::copy(&base_format, cwd.join("tectdist-latex.fmt"))
+                    .map_err(|error| format!("seed format: {error}"))?;
+                ("tectdist-latex".to_string(), "job.tex".to_string())
+            }
+        };
         let socket = cwd.join(".tectdist-engine.sock");
         // Remove a stale socket from a previous crashed worker.
         let _ = std::fs::remove_file(&socket);
         let child = std::process::Command::new(binary)
-            .arg("-fmt=tectdist-latex")
+            .arg(format!("-fmt={seed_name}"))
             .arg("-interaction=batchmode")
             .current_dir(cwd)
             .env("TEXMFCNF", image_root)
             .env("TEXMFROOT", image_root)
             .env("TECTDIST_FORKSERVER_SOCKET", &socket)
-            .env("TECTDIST_FORK_JOB", "job.tex")
+            .env("TECTDIST_FORK_JOB", &fork_job)
             .spawn()
             .map_err(|error| format!("spawn fork server: {error}"))?;
-        Ok(EngineWorker { child, socket })
+        Ok(EngineWorker {
+            child,
+            socket,
+            fmt_key: seed_name,
+        })
     }
 
     #[allow(dead_code)] // used by tests in flight; kept for engine-worker diagnostics
@@ -989,34 +1030,88 @@ fn handle_request(
                 }
                 None => {
                     let job = derive_job_name(&argv, &cwd);
-                    let attempted = if profile == "basictex-2026" {
-                        match project_format::fast_compile(
-                            &state.image_root, &cwd, &argv,
-                            Some(cancel_flag.as_ref()),
-                        ) {
-                            Ok(fast) => Ok((fast.exit_status, fast.duration_ms)),
-                            Err(error) => {
-                                eprintln!(
+                    let x2_then_exact =
+                        |cancel_flag: &Arc<AtomicBool>|
+                            -> Result<(i32, u64), String> {
+                        if profile == "basictex-2026" {
+                            match project_format::fast_compile(
+                                &state.image_root,
+                                &cwd,
+                                &argv,
+                                Some(cancel_flag),
+                            ) {
+                                Ok(fast) => {
+                                    Ok((fast.exit_status, fast.duration_ms))
+                                }
+                                Err(error) => {
+                                    eprintln!(
                                         "supervisor: project format not used ({error}); trying fork server"
                                     );
-                                if state.use_forkserver {
-                                    match state.forkserver_compile(&cwd, &job) {
-                                        Ok((code, ms)) => Ok((code, ms)),
-                                        Err(error) => {
-                                            eprintln!(
+                                    if state.use_forkserver {
+                                        match state.forkserver_compile(
+                                            &cwd, &job, None,
+                                        ) {
+                                            Ok((code, ms)) => Ok((code, ms)),
+                                            Err(error) => {
+                                                eprintln!(
                                                     "supervisor: fork server unavailable ({error}); using one-shot execution"
                                                 );
-                                            run_profile_compile(&profile, &argv, &cwd, &cancel_flag)
+                                                run_profile_compile(&profile, &argv, &cwd, cancel_flag)
+                                            }
                                         }
+                                    } else {
+                                        run_profile_compile(&profile, &argv, &cwd, cancel_flag)
                                     }
-                                } else {
-                                    run_profile_compile(&profile, &argv, &cwd, &cancel_flag)
                                 }
                             }
+                        } else {
+                            run_profile_compile(&profile, &argv, &cwd, cancel_flag)
                         }
-                    } else {
-                        run_profile_compile(&profile, &argv, &cwd, &cancel_flag)
                     };
+                    // TECTDIST_FORKSERVER_PREFER=1: composed fork server
+                    // first — the resident worker preloads the X2 project
+                    // format so body compiles skip process spawn AND
+                    // format load. Any failure falls through to the
+                    // standard chain.
+                    let attempted =
+                        if profile == "basictex-2026" && state.forkserver_prefer
+                        {
+                            let stem = std::path::Path::new(&job)
+                                .file_stem()
+                                .and_then(|s| s.to_str())
+                                .unwrap_or("main")
+                                .to_string();
+                            match project_format::active_format(&cwd, &stem)
+                            {
+                                Some(fmt) => {
+                                    match state.forkserver_compile(
+                                        &cwd, &job, Some(&fmt),
+                                    ) {
+                                        Ok((code, ms)) => {
+                                            let produced = cwd
+                                                .join(format!("{fmt}-body.pdf"));
+                                            let wanted =
+                                                cwd.join(format!("{stem}.pdf"));
+                                            if produced.is_file() {
+                                                let _ = std::fs::rename(
+                                                    &produced, &wanted,
+                                                );
+                                            }
+                                            Ok((code, ms))
+                                        }
+                                        Err(error) => {
+                                            eprintln!(
+                                                "supervisor: composed fork server unavailable ({error}); falling back"
+                                            );
+                                            x2_then_exact(&cancel_flag)
+                                        }
+                                    }
+                                }
+                                None => x2_then_exact(&cancel_flag),
+                            }
+                        } else {
+                            x2_then_exact(&cancel_flag)
+                        };
                     // Cache-hit telemetry only counts real skips.
                     attempted
                 }
@@ -1119,17 +1214,45 @@ pub(crate) fn derive_job_name(argv: &[String], cwd: &Path) -> String {
 impl SupervisorState {
     /// Route one compile through the resident fork-server engine, spawning it
     /// on first use. Returns None when the fast path is disabled.
-    fn forkserver_compile(&self, cwd: &Path, job: &str) -> Result<(i32, u64), String> {
+    fn forkserver_compile(
+        &self,
+        cwd: &Path,
+        job: &str,
+        project_fmt: Option<&str>,
+    ) -> Result<(i32, u64), String> {
         let mut guard = self.engine_worker.lock().expect("engine worker poisoned");
-        if guard.is_none() {
-            *guard = Some(EngineWorker::spawn(&self.image_root, cwd)?);
+        let wanted_key = project_fmt
+            .map(|fmt| format!("project:{fmt}"))
+            .unwrap_or_else(|| "base".to_string());
+        let needs_spawn = match guard.as_ref() {
+            Some((key, _)) => *key != wanted_key,
+            None => true,
+        };
+        if needs_spawn {
+            if let Some((_, worker)) = guard.take() {
+                worker.shutdown();
+            }
+            *guard = Some((
+                wanted_key.clone(),
+                EngineWorker::spawn(&self.image_root, cwd, project_fmt)?,
+            ));
         }
-        let worker = guard.as_ref().unwrap();
-        match worker.compile(job) {
+        let (_, worker) = guard.as_ref().unwrap();
+        // Composed workers compile the paired body file; the resulting PDF
+        // uses the body's jobname and the CALLER renames it afterwards.
+        let target = match project_fmt {
+            Some(fmt) => format!(
+                "{}/{}-body.tex",
+                project_format::FORMAT_DIR,
+                fmt
+            ),
+            None => job.to_string(),
+        };
+        match worker.compile(&target) {
             Ok(result) => Ok(result),
             Err(error) => {
                 // Worker is wedged or dead: discard it and escalate.
-                if let Some(worker) = guard.take() {
+                if let Some((_, worker)) = guard.take() {
                     worker.shutdown();
                 }
                 Err(error)

@@ -79,6 +79,23 @@ macro-indirected inputs, output relocation, explicit format selection)
 and becomes the primary lever again once engine-side page checkpoints
 enable partial replay inside the resident process.
 
+## Composed fork-server measurement (2026-08)
+
+TECTDIST_FORKSERVER_PREFER=1 routes warm LaTeX compiles through a
+resident worker preloading the X2 project format (children skip process
+spawn AND format load). Measured against X2-direct on identical warm
+body-edit workloads:
+
+    composed fork server: 324-466 ms
+    X2 direct:            ~67 ms
+
+X2-direct wins by ~5x; the forkproto per-compile IPC/hook overhead
+dominates whatever the COW child saves. The composition remains
+implemented behind the opt-in flag with an integration test, and the
+default chain order (X4 -> X2 -> forkserver -> one-shot) is validated
+as correct. The fork server becomes interesting again only when page
+checkpoints let children skip most of the body too.
+
 ## Remaining blockers
 
 All remaining runtime acceleration requires `.ch` change files against
