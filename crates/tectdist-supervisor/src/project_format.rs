@@ -42,15 +42,22 @@ struct Split<'a> {
 
 fn split_source(source_text: &str) -> Option<Split<'_>> {
     let needle = "\\begin{document}";
-    let mut offset = None;
+    let mut offsets: Vec<usize> = Vec::new();
     for (index, _) in source_text.match_indices(needle) {
         // Require start-of-line like the validated scripts.
         if index == 0 || source_text.as_bytes()[index - 1] == b'\n' {
-            offset = Some(index);
-            break;
+            offsets.push(index);
         }
     }
-    offset.map(|at| Split {
+    // Exactly one line-start occurrence must exist. Zero means there is
+    // nothing to snapshot; more than one risks splitting inside a
+    // verbatim/comment context we cannot parse — fall back to the exact
+    // one-shot path instead of gambling on a wrong preamble boundary.
+    if offsets.len() != 1 {
+        return None;
+    }
+    let at = offsets[0];
+    Some(Split {
         preamble: format!("{}\n\\dump\n", &source_text[..at]),
         body: &source_text[at..],
     })
