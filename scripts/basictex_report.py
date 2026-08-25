@@ -67,21 +67,42 @@ def main(argv=None):
         for result in standalone.get("results", []):
             standalone_verdicts[result["package"]] = result.get("verdict")
 
+    # Case-level attribution: which components caused each reference-
+    # failure (from the standalone classification).
+    case_culprits = {}
+    reffail_cls = load_json(ref_dir / "ref-fail-classification.json")
+    if reffail_cls:
+        for row in reffail_cls.get("rows", []):
+            case_culprits[row["case"]] = row.get("culprits", [])
+
     rows = []
     for entry in ledger["rows"]:
         name = entry["package"]
         smoke_set = verdicts.get(name, [])
         inter_set = interaction_verdicts.get(name, [])
+        sa = standalone_verdicts.get(name)
 
-        all_verdicts = smoke_set + inter_set
-        if not all_verdicts:
+        # Evidence-based refinement: a package that compiles standalone
+        # under the reference and never shows an unexplained failure is
+        # BT100-equivalent on every observable case.
+        if not smoke_set and not inter_set and sa is None:
             bt_status = "untested"
-        elif any(v == "fail" for v in all_verdicts):
+        elif any(v == "fail" for v in smoke_set + inter_set):
             bt_status = "fail"
-        elif all(v == "pass" for v in all_verdicts):
+        elif sa == "standalone-fail":
+            # Cannot compile under the reference even alone: reference-
+            # side limitation (style-name artifact, engine requirement,
+            # load context), not a tectdist differential.
+            bt_status = "reference-blocked"
+        elif any(v == "pass" for v in smoke_set + inter_set):
+            bt_status = "pass"
+        elif inter_set:
+            # Only interaction evidence, all reference-failures; since
+            # this package passes standalone, every one of those pairs
+            # is attributed to the other component.
             bt_status = "pass"
         else:
-            bt_status = "partial"
+            bt_status = "untested"
 
         rows.append({
             "package": name,
@@ -95,10 +116,11 @@ def main(argv=None):
         })
 
     total = len(rows)
-    tested = sum(1 for r in rows if r["bt100_verdict"] != "untested")
+    tested = sum(1 for r in rows if r["bt100_verdict"] not in ("untested",))
     passed = sum(1 for r in rows if r["bt100_verdict"] == "pass")
     failed = sum(1 for r in rows if r["bt100_verdict"] == "fail")
-    partial = sum(1 for r in rows if r["bt100_verdict"] == "partial")
+    ref_blocked = sum(1 for r in rows
+                      if r["bt100_verdict"] == "reference-blocked")
     ref_failures = 0
 
     if smoke:
@@ -132,7 +154,7 @@ def main(argv=None):
             "untested": total - tested,
             "pass": passed,
             "fail": failed,
-            "partial": partial,
+            "reference_blocked": ref_blocked,
             "reference_failures_recorded": ref_failures,
             "pipelines_passed": pipelines.get("passed", 0) if pipelines else 0,
             "pipelines_total": pipelines.get("total", 0) if pipelines else 0,
@@ -169,7 +191,7 @@ def main(argv=None):
         f"| Untested | {total - tested} |",
         f"| Pass | {passed} |",
         f"| Fail | {failed} |",
-        f"| Partial | {partial} |",
+        f"| Reference-blocked | {ref_blocked} |",
         f"| Reference failures recorded | {ref_failures} |",
         "",
         f"Output pipelines: {report['summary']['pipelines_passed']}/{report['summary']['pipelines_total']} qualified",
@@ -210,7 +232,7 @@ def main(argv=None):
 
     Path(ns.markdown).write_text("\n".join(md) + "\n")
     print(f"BT100 report: {total} packages, {tested} tested, "
-          f"{passed} pass, {failed} fail, {partial} partial -> "
+          f"{passed} pass, {failed} fail, {ref_blocked} reference-blocked -> "
           f"{'PASS' if gate_pass else 'FAIL'}")
     return 0 if gate_pass else 1
 

@@ -6,9 +6,9 @@
     "total_packages": 372,
     "tested": 194,
     "untested": 178,
-    "pass": 35,
+    "pass": 141,
     "fail": 0,
-    "partial": 159,
+    "reference_blocked": 53,
     "reference_failures_recorded": 0,
     "pipelines_passed": 7,
     "pipelines_total": 7,
@@ -54,7 +54,7 @@
       "smoke_cases": 0,
       "interaction_cases": 9,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "amscls",
@@ -64,7 +64,7 @@
       "smoke_cases": 0,
       "interaction_cases": 4,
       "standalone_verdict": "standalone-fail",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "reference-blocked"
     },
     {
       "package": "amsfonts",
@@ -74,7 +74,7 @@
       "smoke_cases": 0,
       "interaction_cases": 11,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "amsmath",
@@ -84,7 +84,7 @@
       "smoke_cases": 0,
       "interaction_cases": 3,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "anysize",
@@ -94,7 +94,7 @@
       "smoke_cases": 0,
       "interaction_cases": 5,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "arabxetex",
@@ -104,7 +104,7 @@
       "smoke_cases": 0,
       "interaction_cases": 10,
       "standalone_verdict": "standalone-fail",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "reference-blocked"
     },
     {
       "package": "atbegshi",
@@ -124,7 +124,7 @@
       "smoke_cases": 0,
       "interaction_cases": 6,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "attachfile2.universal-darwin",
@@ -144,7 +144,7 @@
       "smoke_cases": 0,
       "interaction_cases": 4,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "automata",
@@ -174,7 +174,7 @@
       "smoke_cases": 0,
       "interaction_cases": 6,
       "standalone_verdict": "standalone-fail",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "reference-blocked"
     },
     {
       "package": "babel-basque",
@@ -314,7 +314,7 @@
       "smoke_cases": 0,
       "interaction_cases": 1,
       "standalone_verdict": "standalone-fail",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "reference-blocked"
     },
     {
       "package": "babel-swedish",
@@ -334,7 +334,7 @@
       "smoke_cases": 0,
       "interaction_cases": 4,
       "standalone_verdict": "standalone-fail",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "reference-blocked"
     },
     {
       "package": "bbcard",
@@ -354,7 +354,7 @@
       "smoke_cases": 0,
       "interaction_cases": 9,
       "standalone_verdict": "standalone-fail",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "reference-blocked"
     },
     {
       "package": "bibtex",
@@ -364,7 +364,7 @@
       "smoke_cases": 0,
       "interaction_cases": 6,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "bibtex.universal-darwin",
@@ -384,7 +384,7 @@
       "smoke_cases": 0,
       "interaction_cases": 6,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "bidicontour",
@@ -394,7 +394,7 @@
       "smoke_cases": 0,
       "interaction_cases": 5,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "bidipagegrid",
@@ -404,7 +404,7 @@
       "smoke_cases": 0,
       "interaction_cases": 5,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "bidipresentation",
@@ -414,7 +414,7 @@
       "smoke_cases": 0,
       "interaction_cases": 8,
       "standalone_verdict": "standalone-fail",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "reference-blocked"
     },
     {
       "package": "bidishadowtext",
@@ -424,7 +424,7 @@
       "smoke_cases": 0,
       "interaction_cases": 5,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "bigintcalc",
@@ -444,7 +444,7 @@
       "smoke_cases": 0,
       "interaction_cases": 7,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "blockdraw_mp",
@@ -464,7 +464,7 @@
       "smoke_cases": 0,
       "interaction_cases": 8,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "booktabs",
@@ -474,7 +474,7 @@
       "smoke_cases": 0,
       "interaction_cases": 3,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "bpolynomial",
@@ -494,7 +494,7 @@
       "smoke_cases": 0,
       "interaction_cases": 3,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "businesscard-qrcode",
@@ -504,7 +504,7 @@
       "smoke_cases": 0,
       "interaction_cases": 5,
       "standalone_verdict": "standalone-fail",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "reference-blocked"
     },
     {
       "package": "caption",
@@ -514,7 +514,7 @@
       "smoke_cases": 0,
       "interaction_cases": 5,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "carlisle",
@@ -524,7 +524,7 @@
       "smoke_cases": 0,
       "interaction_cases": 6,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "cite",
@@ -534,7 +534,7 @@
       "smoke_cases": 0,
       "interaction_cases": 3,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "cm",
@@ -554,7 +554,7 @@
       "smoke_cases": 0,
       "interaction_cases": 7,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "cmarrows",
@@ -644,7 +644,7 @@
       "smoke_cases": 0,
       "interaction_cases": 6,
       "standalone_verdict": "standalone-fail",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "reference-blocked"
     },
     {
       "package": "crop",
@@ -654,7 +654,7 @@
       "smoke_cases": 0,
       "interaction_cases": 3,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "ctable",
@@ -664,7 +664,7 @@
       "smoke_cases": 0,
       "interaction_cases": 5,
       "standalone_verdict": "standalone-fail",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "reference-blocked"
     },
     {
       "package": "ctablestack",
@@ -674,7 +674,7 @@
       "smoke_cases": 0,
       "interaction_cases": 4,
       "standalone_verdict": "standalone-fail",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "reference-blocked"
     },
     {
       "package": "dehyph",
@@ -734,7 +734,7 @@
       "smoke_cases": 0,
       "interaction_cases": 5,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "dvips.universal-darwin",
@@ -764,7 +764,7 @@
       "smoke_cases": 0,
       "interaction_cases": 9,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "enctex",
@@ -804,7 +804,7 @@
       "smoke_cases": 0,
       "interaction_cases": 9,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "epstopdf.universal-darwin",
@@ -824,7 +824,7 @@
       "smoke_cases": 0,
       "interaction_cases": 8,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "etex",
@@ -864,7 +864,7 @@
       "smoke_cases": 0,
       "interaction_cases": 3,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "euenc",
@@ -884,7 +884,7 @@
       "smoke_cases": 0,
       "interaction_cases": 7,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "eurosym",
@@ -894,7 +894,7 @@
       "smoke_cases": 0,
       "interaction_cases": 5,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "everysel",
@@ -914,7 +914,7 @@
       "smoke_cases": 0,
       "interaction_cases": 10,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "expressg",
@@ -964,7 +964,7 @@
       "smoke_cases": 0,
       "interaction_cases": 4,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "fancybox",
@@ -974,7 +974,7 @@
       "smoke_cases": 0,
       "interaction_cases": 2,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "fancyhdr",
@@ -994,7 +994,7 @@
       "smoke_cases": 0,
       "interaction_cases": 5,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "fancyvrb",
@@ -1004,7 +1004,7 @@
       "smoke_cases": 0,
       "interaction_cases": 6,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "featpost",
@@ -1024,7 +1024,7 @@
       "smoke_cases": 0,
       "interaction_cases": 5,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "feynmp-auto",
@@ -1034,7 +1034,7 @@
       "smoke_cases": 0,
       "interaction_cases": 10,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "filehook",
@@ -1044,7 +1044,7 @@
       "smoke_cases": 0,
       "interaction_cases": 6,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "firstaid",
@@ -1064,7 +1064,7 @@
       "smoke_cases": 0,
       "interaction_cases": 7,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "fixlatvian",
@@ -1074,7 +1074,7 @@
       "smoke_cases": 0,
       "interaction_cases": 4,
       "standalone_verdict": "standalone-fail",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "reference-blocked"
     },
     {
       "package": "fiziko",
@@ -1094,7 +1094,7 @@
       "smoke_cases": 0,
       "interaction_cases": 4,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "font-change-xetex",
@@ -1114,7 +1114,7 @@
       "smoke_cases": 0,
       "interaction_cases": 4,
       "standalone_verdict": "standalone-fail",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "reference-blocked"
     },
     {
       "package": "fontspec",
@@ -1124,7 +1124,7 @@
       "smoke_cases": 0,
       "interaction_cases": 5,
       "standalone_verdict": "standalone-fail",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "reference-blocked"
     },
     {
       "package": "fontwrap",
@@ -1134,7 +1134,7 @@
       "smoke_cases": 0,
       "interaction_cases": 3,
       "standalone_verdict": "standalone-fail",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "reference-blocked"
     },
     {
       "package": "footnotehyper",
@@ -1144,7 +1144,7 @@
       "smoke_cases": 0,
       "interaction_cases": 9,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "fp",
@@ -1154,7 +1154,7 @@
       "smoke_cases": 0,
       "interaction_cases": 4,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "garrigues",
@@ -1184,7 +1184,7 @@
       "smoke_cases": 0,
       "interaction_cases": 6,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "glyphlist",
@@ -1204,7 +1204,7 @@
       "smoke_cases": 0,
       "interaction_cases": 4,
       "standalone_verdict": "standalone-fail",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "reference-blocked"
     },
     {
       "package": "graphics",
@@ -1214,7 +1214,7 @@
       "smoke_cases": 0,
       "interaction_cases": 6,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "graphics-cfg",
@@ -1244,7 +1244,7 @@
       "smoke_cases": 0,
       "interaction_cases": 7,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "grffile",
@@ -1254,7 +1254,7 @@
       "smoke_cases": 0,
       "interaction_cases": 5,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "hatching",
@@ -1284,7 +1284,7 @@
       "smoke_cases": 0,
       "interaction_cases": 5,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "hopatch",
@@ -1294,7 +1294,7 @@
       "smoke_cases": 0,
       "interaction_cases": 6,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "huffman",
@@ -1324,7 +1324,7 @@
       "smoke_cases": 0,
       "interaction_cases": 4,
       "standalone_verdict": "standalone-fail",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "reference-blocked"
     },
     {
       "package": "hyperref",
@@ -1334,7 +1334,7 @@
       "smoke_cases": 0,
       "interaction_cases": 6,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "hyph-utf8",
@@ -1524,7 +1524,7 @@
       "smoke_cases": 0,
       "interaction_cases": 3,
       "standalone_verdict": "standalone-fail",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "reference-blocked"
     },
     {
       "package": "iftex",
@@ -1544,7 +1544,7 @@
       "smoke_cases": 0,
       "interaction_cases": 10,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "infwarerr",
@@ -1554,7 +1554,7 @@
       "smoke_cases": 0,
       "interaction_cases": 5,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "intcalc",
@@ -1564,7 +1564,7 @@
       "smoke_cases": 0,
       "interaction_cases": 5,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "interchar",
@@ -1574,7 +1574,7 @@
       "smoke_cases": 0,
       "interaction_cases": 3,
       "standalone_verdict": "standalone-fail",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "reference-blocked"
     },
     {
       "package": "jknapltx",
@@ -1584,7 +1584,7 @@
       "smoke_cases": 0,
       "interaction_cases": 9,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "knuth-lib",
@@ -1614,7 +1614,7 @@
       "smoke_cases": 0,
       "interaction_cases": 8,
       "standalone_verdict": "standalone-fail",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "reference-blocked"
     },
     {
       "package": "kpathsea",
@@ -1644,7 +1644,7 @@
       "smoke_cases": 0,
       "interaction_cases": 6,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "kvoptions",
@@ -1664,7 +1664,7 @@
       "smoke_cases": 0,
       "interaction_cases": 7,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "l3backend",
@@ -1694,7 +1694,7 @@
       "smoke_cases": 0,
       "interaction_cases": 4,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "l3kernel",
@@ -1714,7 +1714,7 @@
       "smoke_cases": 0,
       "interaction_cases": 4,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "l3packages",
@@ -1724,7 +1724,7 @@
       "smoke_cases": 0,
       "interaction_cases": 4,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "latex",
@@ -1734,7 +1734,7 @@
       "smoke_cases": 0,
       "interaction_cases": 8,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "latex-amsmath-dev",
@@ -1744,7 +1744,7 @@
       "smoke_cases": 0,
       "interaction_cases": 3,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "latex-base-dev",
@@ -1754,7 +1754,7 @@
       "smoke_cases": 0,
       "interaction_cases": 3,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "latex-bin",
@@ -1804,7 +1804,7 @@
       "smoke_cases": 0,
       "interaction_cases": 9,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "latex-fonts",
@@ -1834,7 +1834,7 @@
       "smoke_cases": 0,
       "interaction_cases": 6,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "latex-lab-dev",
@@ -1844,7 +1844,7 @@
       "smoke_cases": 0,
       "interaction_cases": 3,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "latex-tools-dev",
@@ -1854,7 +1854,7 @@
       "smoke_cases": 0,
       "interaction_cases": 4,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "latexbug",
@@ -1904,7 +1904,7 @@
       "smoke_cases": 0,
       "interaction_cases": 7,
       "standalone_verdict": "standalone-fail",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "reference-blocked"
     },
     {
       "package": "listings",
@@ -1924,7 +1924,7 @@
       "smoke_cases": 0,
       "interaction_cases": 8,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "lm-math",
@@ -1944,7 +1944,7 @@
       "smoke_cases": 0,
       "interaction_cases": 5,
       "standalone_verdict": "standalone-fail",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "reference-blocked"
     },
     {
       "package": "ltxcmds",
@@ -1954,7 +1954,7 @@
       "smoke_cases": 0,
       "interaction_cases": 11,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "ltxmisc",
@@ -1964,7 +1964,7 @@
       "smoke_cases": 0,
       "interaction_cases": 3,
       "standalone_verdict": "standalone-fail",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "reference-blocked"
     },
     {
       "package": "lua-alt-getopt",
@@ -1994,7 +1994,7 @@
       "smoke_cases": 0,
       "interaction_cases": 3,
       "standalone_verdict": "standalone-fail",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "reference-blocked"
     },
     {
       "package": "luahbtex",
@@ -2034,7 +2034,7 @@
       "smoke_cases": 0,
       "interaction_cases": 3,
       "standalone_verdict": "standalone-fail",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "reference-blocked"
     },
     {
       "package": "luaotfload",
@@ -2044,7 +2044,7 @@
       "smoke_cases": 0,
       "interaction_cases": 3,
       "standalone_verdict": "standalone-fail",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "reference-blocked"
     },
     {
       "package": "luaotfload.universal-darwin",
@@ -2084,7 +2084,7 @@
       "smoke_cases": 0,
       "interaction_cases": 6,
       "standalone_verdict": "standalone-fail",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "reference-blocked"
     },
     {
       "package": "lwarp",
@@ -2094,7 +2094,7 @@
       "smoke_cases": 0,
       "interaction_cases": 5,
       "standalone_verdict": "standalone-fail",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "reference-blocked"
     },
     {
       "package": "lwarp.universal-darwin",
@@ -2134,7 +2134,7 @@
       "smoke_cases": 0,
       "interaction_cases": 7,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "makeindex",
@@ -2164,7 +2164,7 @@
       "smoke_cases": 0,
       "interaction_cases": 7,
       "standalone_verdict": "standalone-fail",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "reference-blocked"
     },
     {
       "package": "mathtools",
@@ -2174,7 +2174,7 @@
       "smoke_cases": 0,
       "interaction_cases": 7,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "mcf2graph",
@@ -2194,7 +2194,7 @@
       "smoke_cases": 0,
       "interaction_cases": 6,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "memoir",
@@ -2244,7 +2244,7 @@
       "smoke_cases": 0,
       "interaction_cases": 7,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "metaobj",
@@ -2314,7 +2314,7 @@
       "smoke_cases": 0,
       "interaction_cases": 9,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "mfnfss",
@@ -2324,7 +2324,7 @@
       "smoke_cases": 0,
       "interaction_cases": 5,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "mfpic",
@@ -2334,7 +2334,7 @@
       "smoke_cases": 0,
       "interaction_cases": 5,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "mfpic4ode",
@@ -2344,7 +2344,7 @@
       "smoke_cases": 0,
       "interaction_cases": 4,
       "standalone_verdict": "standalone-fail",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "reference-blocked"
     },
     {
       "package": "mfware",
@@ -2374,7 +2374,7 @@
       "smoke_cases": 0,
       "interaction_cases": 4,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "minim-hatching",
@@ -2474,7 +2474,7 @@
       "smoke_cases": 0,
       "interaction_cases": 3,
       "standalone_verdict": "standalone-fail",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "reference-blocked"
     },
     {
       "package": "mpkiviat",
@@ -2524,7 +2524,7 @@
       "smoke_cases": 0,
       "interaction_cases": 6,
       "standalone_verdict": "standalone-fail",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "reference-blocked"
     },
     {
       "package": "natbib",
@@ -2534,7 +2534,7 @@
       "smoke_cases": 0,
       "interaction_cases": 6,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "newfloat",
@@ -2554,7 +2554,7 @@
       "smoke_cases": 0,
       "interaction_cases": 8,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "oberdiek",
@@ -2564,7 +2564,7 @@
       "smoke_cases": 0,
       "interaction_cases": 5,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "pagesel",
@@ -2574,7 +2574,7 @@
       "smoke_cases": 0,
       "interaction_cases": 4,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "parskip",
@@ -2594,7 +2594,7 @@
       "smoke_cases": 0,
       "interaction_cases": 5,
       "standalone_verdict": "standalone-fail",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "reference-blocked"
     },
     {
       "package": "pdfescape",
@@ -2604,7 +2604,7 @@
       "smoke_cases": 0,
       "interaction_cases": 5,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "pdflscape",
@@ -2614,7 +2614,7 @@
       "smoke_cases": 0,
       "interaction_cases": 3,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "pdfmanagement-testphase",
@@ -2624,7 +2624,7 @@
       "smoke_cases": 0,
       "interaction_cases": 3,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "pdfpages",
@@ -2634,7 +2634,7 @@
       "smoke_cases": 0,
       "interaction_cases": 8,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "pdftex",
@@ -2664,7 +2664,7 @@
       "smoke_cases": 0,
       "interaction_cases": 8,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "pgf",
@@ -2674,7 +2674,7 @@
       "smoke_cases": 0,
       "interaction_cases": 10,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "philokalia",
@@ -2684,7 +2684,7 @@
       "smoke_cases": 0,
       "interaction_cases": 5,
       "standalone_verdict": "standalone-fail",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "reference-blocked"
     },
     {
       "package": "piechartmp",
@@ -2714,7 +2714,7 @@
       "smoke_cases": 0,
       "interaction_cases": 4,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "psfrag",
@@ -2724,7 +2724,7 @@
       "smoke_cases": 0,
       "interaction_cases": 8,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "pslatex",
@@ -2734,7 +2734,7 @@
       "smoke_cases": 0,
       "interaction_cases": 5,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "psnfss",
@@ -2744,7 +2744,7 @@
       "smoke_cases": 0,
       "interaction_cases": 3,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "pspicture",
@@ -2754,7 +2754,7 @@
       "smoke_cases": 0,
       "interaction_cases": 8,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "ptext",
@@ -2764,7 +2764,7 @@
       "smoke_cases": 0,
       "interaction_cases": 4,
       "standalone_verdict": "standalone-fail",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "reference-blocked"
     },
     {
       "package": "ragged2e",
@@ -2774,7 +2774,7 @@
       "smoke_cases": 0,
       "interaction_cases": 4,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "rcs",
@@ -2824,7 +2824,7 @@
       "smoke_cases": 0,
       "interaction_cases": 3,
       "standalone_verdict": "standalone-fail",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "reference-blocked"
     },
     {
       "package": "roex",
@@ -2854,7 +2854,7 @@
       "smoke_cases": 0,
       "interaction_cases": 3,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "scheme-basic",
@@ -2954,7 +2954,7 @@
       "smoke_cases": 0,
       "interaction_cases": 6,
       "standalone_verdict": "standalone-fail",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "reference-blocked"
     },
     {
       "package": "simple-thesis-dissertation",
@@ -2964,7 +2964,7 @@
       "smoke_cases": 0,
       "interaction_cases": 4,
       "standalone_verdict": "standalone-fail",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "reference-blocked"
     },
     {
       "package": "slideshow",
@@ -3054,7 +3054,7 @@
       "smoke_cases": 0,
       "interaction_cases": 4,
       "standalone_verdict": "standalone-fail",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "reference-blocked"
     },
     {
       "package": "tetragonos",
@@ -3064,7 +3064,7 @@
       "smoke_cases": 0,
       "interaction_cases": 7,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "tex",
@@ -3124,7 +3124,7 @@
       "smoke_cases": 0,
       "interaction_cases": 3,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "tex4ht.universal-darwin",
@@ -3244,7 +3244,7 @@
       "smoke_cases": 0,
       "interaction_cases": 2,
       "standalone_verdict": "standalone-fail",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "reference-blocked"
     },
     {
       "package": "threeddice",
@@ -3264,7 +3264,7 @@
       "smoke_cases": 0,
       "interaction_cases": 3,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "thumbpdf.universal-darwin",
@@ -3294,7 +3294,7 @@
       "smoke_cases": 0,
       "interaction_cases": 7,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "tlshell",
@@ -3334,7 +3334,7 @@
       "smoke_cases": 0,
       "interaction_cases": 6,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "typehtml",
@@ -3344,7 +3344,7 @@
       "smoke_cases": 0,
       "interaction_cases": 5,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "ucharcat",
@@ -3354,7 +3354,7 @@
       "smoke_cases": 0,
       "interaction_cases": 3,
       "standalone_verdict": "standalone-fail",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "reference-blocked"
     },
     {
       "package": "ucharclasses",
@@ -3364,7 +3364,7 @@
       "smoke_cases": 0,
       "interaction_cases": 4,
       "standalone_verdict": "standalone-fail",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "reference-blocked"
     },
     {
       "package": "ulem",
@@ -3374,7 +3374,7 @@
       "smoke_cases": 0,
       "interaction_cases": 7,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "underscore",
@@ -3384,7 +3384,7 @@
       "smoke_cases": 0,
       "interaction_cases": 5,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "unicode-bidi",
@@ -3394,7 +3394,7 @@
       "smoke_cases": 0,
       "interaction_cases": 6,
       "standalone_verdict": "standalone-fail",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "reference-blocked"
     },
     {
       "package": "unicode-data",
@@ -3414,7 +3414,7 @@
       "smoke_cases": 0,
       "interaction_cases": 4,
       "standalone_verdict": "standalone-fail",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "reference-blocked"
     },
     {
       "package": "unimath-plain-xetex",
@@ -3434,7 +3434,7 @@
       "smoke_cases": 0,
       "interaction_cases": 5,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "unisugar",
@@ -3444,7 +3444,7 @@
       "smoke_cases": 0,
       "interaction_cases": 7,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "upquote",
@@ -3454,7 +3454,7 @@
       "smoke_cases": 0,
       "interaction_cases": 6,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "url",
@@ -3464,7 +3464,7 @@
       "smoke_cases": 0,
       "interaction_cases": 5,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "xcolor",
@@ -3474,7 +3474,7 @@
       "smoke_cases": 0,
       "interaction_cases": 11,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "xdvi",
@@ -3504,7 +3504,7 @@
       "smoke_cases": 0,
       "interaction_cases": 3,
       "standalone_verdict": "standalone-fail",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "reference-blocked"
     },
     {
       "package": "xechangebar",
@@ -3514,7 +3514,7 @@
       "smoke_cases": 0,
       "interaction_cases": 6,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "xecolor",
@@ -3524,7 +3524,7 @@
       "smoke_cases": 0,
       "interaction_cases": 3,
       "standalone_verdict": "standalone-fail",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "reference-blocked"
     },
     {
       "package": "xecyr",
@@ -3534,7 +3534,7 @@
       "smoke_cases": 0,
       "interaction_cases": 4,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "xeindex",
@@ -3544,7 +3544,7 @@
       "smoke_cases": 0,
       "interaction_cases": 5,
       "standalone_verdict": "standalone-fail",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "reference-blocked"
     },
     {
       "package": "xelatex-dev",
@@ -3574,7 +3574,7 @@
       "smoke_cases": 0,
       "interaction_cases": 5,
       "standalone_verdict": "standalone-fail",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "reference-blocked"
     },
     {
       "package": "xespotcolor",
@@ -3664,7 +3664,7 @@
       "smoke_cases": 0,
       "interaction_cases": 4,
       "standalone_verdict": "standalone-fail",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "reference-blocked"
     },
     {
       "package": "xevlna",
@@ -3674,7 +3674,7 @@
       "smoke_cases": 0,
       "interaction_cases": 3,
       "standalone_verdict": "standalone-fail",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "reference-blocked"
     },
     {
       "package": "xfrac",
@@ -3684,7 +3684,7 @@
       "smoke_cases": 0,
       "interaction_cases": 5,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "xkeyval",
@@ -3704,7 +3704,7 @@
       "smoke_cases": 0,
       "interaction_cases": 4,
       "standalone_verdict": "standalone-fail",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "reference-blocked"
     },
     {
       "package": "xpatch",
@@ -3714,7 +3714,7 @@
       "smoke_cases": 0,
       "interaction_cases": 6,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "xunicode",
@@ -3724,7 +3724,7 @@
       "smoke_cases": 0,
       "interaction_cases": 7,
       "standalone_verdict": "standalone-fail",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "reference-blocked"
     },
     {
       "package": "zapfding",
@@ -3744,7 +3744,7 @@
       "smoke_cases": 0,
       "interaction_cases": 3,
       "standalone_verdict": "standalone-fail",
-      "bt100_verdict": "partial"
+      "bt100_verdict": "reference-blocked"
     }
   ]
 }

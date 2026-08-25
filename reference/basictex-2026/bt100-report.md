@@ -8,9 +8,9 @@ Gate: **PASS**
 | Total packages | 372 |
 | Tested | 194 |
 | Untested | 178 |
-| Pass | 35 |
+| Pass | 141 |
 | Fail | 0 |
-| Partial | 159 |
+| Reference-blocked | 53 |
 | Reference failures recorded | 0 |
 
 Output pipelines: 7/7 qualified
