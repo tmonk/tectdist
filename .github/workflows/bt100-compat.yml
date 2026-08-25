@@ -77,6 +77,11 @@ jobs:
         run: python3 scripts/basictex_report.py
       - name: X2 edit-scenario measurements (project format)
         run: python3 scripts/basictex_x2_edit_scenarios.py
+      - name: Supervisor-path interactions (X4+X2 chain exactness)
+        run: |
+          python3 scripts/basictex_supervisor_interactions.py \
+            --reference "reference/basictex-2026/installer/expanded/BasicTeX-2026-Start.pkg/Payload/usr/local/texlive/2026basic" \
+            --pairs 60
       - uses: actions/upload-artifact@v4
         with:
           name: bt100-interactions
@@ -88,5 +93,7 @@ jobs:
             reference/basictex-2026/fail-equivalence.json
             reference/basictex-2026/x2-edit-scenarios.json
             reference/basictex-2026/x2-edit-scenarios.md
+            reference/basictex-2026/supervisor-interactions.json
+            reference/basictex-2026/supervisor-interactions.md
             reference/basictex-2026/bt100-report.json
             reference/basictex-2026/bt100-report.md
