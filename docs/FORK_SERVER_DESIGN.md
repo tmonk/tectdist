@@ -255,16 +255,21 @@ Verified live: xelatex documents compile through the COMPOSED path
 (worker preloading an X2 project format), exit 0, pdftotext output
 identical to the reference.
 
-BASE-worker caveat discovered: XeTeX's non-init mainbody executes
-`goto lab1` early, jumping past the fixdateandtime convergence point —
-so a hook placed there never runs in preloaded-format runs (engine hits
-the `**` prompt and dies on EOF). Relocation target identified: insert
-the hook immediately after the `lab1 :` label in xetexini.c (~line
-4762). A relocation+instrumentation attempt was interrupted by a
-freetype rebuild loop; the deployed forkproto/xetex binary predates
-this and works for the COMPOSED path only. Base-path support for
-xetex requires finishing the relocation (bounded work, ~15 min with
-CXXFLAGS=-std=c++17 on the make line). Build-tree gotchas encountered and fixed:
+BASE-worker caveat discovered and PARTIALLY resolved: XeTeX's
+non-init mainbody executes `goto lab1` early, bypassing the
+fixdateandtime convergence point. Hook relocated to just after
+`lab1 :` (xetexini.c ~4762): serve() now runs preloaded-format runs
+(FS-enter + socket ready verified), and the COMPOSED path is live
+(xelatex documents through a worker preloading an X2 project format,
+byte-identical outputs).
+
+REMAINING base-worker gap: children forked at lab1 die reading their
+job (`**` + EOF, ~1 ms) — the buffer/first/limitfield state at that
+point differs from what the pdftex-style install expects (the
+first-line read block sits later in xetexini.c, ~4974). Composed mode
+is unaffected (its body files are consumed through the normal X2 body
+flow). Finishing base-mode needs tracing first/last initialisation at
+lab1 vs the ~4974 read block. Build-tree gotchas encountered and fixed:
 a corrupted texmfmp.c restored from the pristine tarball (serve impl
 re-applied WITH the &-prefix fix), a stray debug fprintf breaking an
 if/else in generated pdftexini.c, and an empty build-tree
