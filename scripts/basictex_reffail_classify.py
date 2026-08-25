@@ -47,9 +47,11 @@ def main(argv=None) -> int:
     rows = []
     for r in ref_fails:
         parts = r["case"].split("+")
-        culprits = sorted(p for p in parts
-                          if standalone.get(p, {}).get("verdict")
-                          == "standalone-fail")
+        culprits = sorted(
+            p for p in parts
+            if standalone.get(p, {}).get("verdict") == "standalone-fail"
+            or standalone.get(p, {}).get("usepackage_verdict")
+            == "standalone-fail")
         if culprits:
             cls = "explained-by-standalone-failure"
         else:

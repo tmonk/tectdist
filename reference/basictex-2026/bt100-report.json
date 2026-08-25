@@ -6,9 +6,9 @@
     "total_packages": 372,
     "tested": 194,
     "untested": 178,
-    "pass": 141,
+    "pass": 142,
     "fail": 0,
-    "reference_blocked": 53,
+    "reference_blocked": 52,
     "reference_failures_recorded": 0,
     "pipelines_passed": 7,
     "pipelines_total": 7,
@@ -17,11 +17,11 @@
       "total": 207,
       "explained_by_standalone_failure": 207,
       "pair_specific": 0,
-      "standalone_failed_packages": 53
+      "standalone_failed_packages": 52
     },
     "standalone_probes": {
-      "pass": 142,
-      "fail": 53
+      "pass": 157,
+      "fail": 52
     }
   },
   "gate_pass": true,
@@ -183,7 +183,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
-      "standalone_verdict": null,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "untested"
     },
     {
@@ -193,7 +193,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
-      "standalone_verdict": null,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "untested"
     },
     {
@@ -203,7 +203,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
-      "standalone_verdict": null,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "untested"
     },
     {
@@ -213,7 +213,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
-      "standalone_verdict": null,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "untested"
     },
     {
@@ -223,7 +223,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
-      "standalone_verdict": null,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "untested"
     },
     {
@@ -233,7 +233,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
-      "standalone_verdict": null,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "untested"
     },
     {
@@ -243,7 +243,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
-      "standalone_verdict": null,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "untested"
     },
     {
@@ -253,7 +253,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
-      "standalone_verdict": null,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "untested"
     },
     {
@@ -263,7 +263,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
-      "standalone_verdict": null,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "untested"
     },
     {
@@ -273,7 +273,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
-      "standalone_verdict": null,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "untested"
     },
     {
@@ -283,7 +283,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
-      "standalone_verdict": null,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "untested"
     },
     {
@@ -293,7 +293,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
-      "standalone_verdict": null,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "untested"
     },
     {
@@ -303,7 +303,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
-      "standalone_verdict": null,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "untested"
     },
     {
@@ -313,8 +313,8 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 1,
-      "standalone_verdict": "standalone-fail",
-      "bt100_verdict": "reference-blocked"
+      "standalone_verdict": "standalone-pass",
+      "bt100_verdict": "pass"
     },
     {
       "package": "babel-swedish",
@@ -323,7 +323,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
-      "standalone_verdict": null,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "untested"
     },
     {

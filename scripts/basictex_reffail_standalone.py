@@ -32,6 +32,22 @@ Standalone probe.
 \end{document}
 """
 
+BABEL_DOC = r"""\documentclass{article}
+\usepackage[%s]{babel}
+\begin{document}
+Standalone probe.
+\end{document}
+"""
+
+
+def source_for(pkg: str, style: str) -> str:
+    """Choose a probe document appropriate to the package family."""
+    if pkg.startswith("babel-"):
+        # Language packages ship .ldf files loaded through babel options,
+        # never as standalone styles.
+        return BABEL_DOC % pkg[len("babel-"):]
+    return DOC % style
+
 
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__)
@@ -45,6 +61,9 @@ def main(argv=None) -> int:
     ap.add_argument("--all", action="store_true",
                     help="probe every style-providing package, not just "
                          "those appearing in reference-failure pairs")
+    ap.add_argument("--include-babel", action="store_true",
+                    help="also probe babel-<language> packages via the "
+                         "babel-option template")
     args = ap.parse_args(argv)
 
     ledger = json.loads(args.ledger.read_text())
@@ -54,6 +73,8 @@ def main(argv=None) -> int:
     for row in ledger["rows"]:
         if row["loadable_styles"]:
             style_of[row["package"]] = row["loadable_styles"][0]
+        elif args.include_babel and row["package"].startswith("babel-"):
+            style_of[row["package"]] = row["package"]  # placeholder
 
     if args.all:
         targets = sorted(style_of)
@@ -85,7 +106,7 @@ def main(argv=None) -> int:
             results.append(entry)
             continue
         work = Path(tempfile.mkdtemp(prefix="bt100-probe-"))
-        (work / "main.tex").write_text(DOC % entry["style"])
+        (work / "main.tex").write_text(source_for(pkg, entry["style"]))
         try:
             proc = subprocess.run(
                 [str(binary_dir / "pdflatex"), "-interaction=batchmode",
@@ -96,6 +117,23 @@ def main(argv=None) -> int:
         except subprocess.TimeoutExpired:
             status = None
         entry["exit"] = status
+
+        # For family templates also record how the package behaves under
+        # the plain \usepackage convention the interaction runner uses;
+        # attribution needs the matching convention.
+        if pkg.startswith("babel-"):
+            (work / "up.tex").write_text(DOC % entry["style"])
+            try:
+                proc2 = subprocess.run(
+                    [str(binary_dir / "pdflatex"), "-interaction=batchmode",
+                     "-halt-on-error", "up.tex"],
+                    cwd=work, env=env, capture_output=True, text=True,
+                    timeout=args.timeout)
+                up_status = proc2.returncode
+            except subprocess.TimeoutExpired:
+                up_status = None
+            entry["usepackage_verdict"] = (
+                "standalone-pass" if up_status == 0 else "standalone-fail")
         if status == 0:
             entry["verdict"] = "standalone-pass"
             counters["standalone-pass"] += 1
@@ -120,6 +158,23 @@ def main(argv=None) -> int:
         "counters": counters,
         "results": results,
     }
+    if args.out.exists():
+        try:
+            prev = json.loads(args.out.read_text())
+            merged = {r["package"]: r for r in prev.get("results", [])}
+            merged.update({r["package"]: r for r in results})
+            all_results = sorted(merged.values(), key=lambda r: r["package"])
+            out["results"] = all_results
+            out["counters"] = {
+                "standalone-pass": sum(
+                    1 for r in all_results if r["verdict"] == "standalone-pass"),
+                "standalone-fail": sum(
+                    1 for r in all_results if r["verdict"] == "standalone-fail"),
+                "no-style": sum(
+                    1 for r in all_results if r["verdict"] == "no-style"),
+            }
+        except (json.JSONDecodeError, KeyError):
+            pass
     args.out.write_text(json.dumps(out, indent=2, sort_keys=True) + "\n")
     args.out.with_suffix(".md").write_text(
         "# Standalone probes for reference-failure components\n\n"

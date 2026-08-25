@@ -282,7 +282,7 @@
       "case": "babel-spanish+sansmath",
       "class": "explained-by-standalone-failure",
       "culprit_errors": {
-        "babel-spanish": "! Undefined control sequence."
+        "babel-spanish": ""
       },
       "culprits": [
         "babel-spanish"
@@ -2154,7 +2154,6 @@
     "amscls",
     "arabxetex",
     "babel",
-    "babel-spanish",
     "babelbib",
     "beamer",
     "bidipresentation",

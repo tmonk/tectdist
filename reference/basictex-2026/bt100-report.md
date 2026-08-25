@@ -8,13 +8,13 @@ Gate: **PASS**
 | Total packages | 372 |
 | Tested | 194 |
 | Untested | 178 |
-| Pass | 141 |
+| Pass | 142 |
 | Fail | 0 |
-| Reference-blocked | 53 |
+| Reference-blocked | 52 |
 | Reference failures recorded | 0 |
 
 Output pipelines: 7/7 qualified
-Standalone probes: 142 pass / 53 fail
+Standalone probes: 157 pass / 52 fail
 
 ## Reference-failure attribution
 
@@ -22,14 +22,13 @@ Standalone probes: 142 pass / 53 fail
 
 - explained by a component failing standalone: 207
 - pair-specific (unattributed): 0
-- components failing standalone: 53
+- components failing standalone: 52
 
 | standalone-failing package | cause |
 |---|---|
 | amscls | ! LaTeX Error: File `amsart.sty' not found. |
 | arabxetex | ! Fatal Package fontspec Error: The fontspec package requires either XeTeX or |
 | babel | ! Package babel Error: You are loading directly a language style. |
-| babel-spanish | ! Undefined control sequence. |
 | babelbib | ! Undefined control sequence. |
 | beamer | ! LaTeX Error: File `beamer.sty' not found. |
 | bidipresentation | ! LaTeX Error: File `bidipresentation.sty' not found. |

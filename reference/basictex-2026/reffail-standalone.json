@@ -1,8 +1,8 @@
 {
   "counters": {
     "no-style": 0,
-    "standalone-fail": 53,
-    "standalone-pass": 142
+    "standalone-fail": 52,
+    "standalone-pass": 157
   },
   "interactions_image_sha256": "395f0b4d7ce47684c021e8734421bd530206e58a96949cb6103a6333ad2b36b6",
   "results": [
@@ -76,11 +76,109 @@
       "verdict": "standalone-fail"
     },
     {
-      "error": "! Undefined control sequence.",
-      "exit": 1,
+      "exit": 0,
+      "package": "babel-basque",
+      "style": "babel-basque",
+      "usepackage_verdict": "standalone-fail",
+      "verdict": "standalone-pass"
+    },
+    {
+      "exit": 0,
+      "package": "babel-czech",
+      "style": "babel-czech",
+      "usepackage_verdict": "standalone-fail",
+      "verdict": "standalone-pass"
+    },
+    {
+      "exit": 0,
+      "package": "babel-danish",
+      "style": "babel-danish",
+      "usepackage_verdict": "standalone-fail",
+      "verdict": "standalone-pass"
+    },
+    {
+      "exit": 0,
+      "package": "babel-dutch",
+      "style": "babel-dutch",
+      "usepackage_verdict": "standalone-fail",
+      "verdict": "standalone-pass"
+    },
+    {
+      "exit": 0,
+      "package": "babel-english",
+      "style": "babel-english",
+      "usepackage_verdict": "standalone-fail",
+      "verdict": "standalone-pass"
+    },
+    {
+      "exit": 0,
+      "package": "babel-finnish",
+      "style": "babel-finnish",
+      "usepackage_verdict": "standalone-fail",
+      "verdict": "standalone-pass"
+    },
+    {
+      "exit": 0,
+      "package": "babel-french",
+      "style": "babel-french",
+      "usepackage_verdict": "standalone-fail",
+      "verdict": "standalone-pass"
+    },
+    {
+      "exit": 0,
+      "package": "babel-german",
+      "style": "babel-german",
+      "usepackage_verdict": "standalone-fail",
+      "verdict": "standalone-pass"
+    },
+    {
+      "exit": 0,
+      "package": "babel-hungarian",
+      "style": "babel-hungarian",
+      "usepackage_verdict": "standalone-fail",
+      "verdict": "standalone-pass"
+    },
+    {
+      "exit": 0,
+      "package": "babel-italian",
+      "style": "babel-italian",
+      "usepackage_verdict": "standalone-fail",
+      "verdict": "standalone-pass"
+    },
+    {
+      "exit": 0,
+      "package": "babel-norsk",
+      "style": "babel-norsk",
+      "usepackage_verdict": "standalone-fail",
+      "verdict": "standalone-pass"
+    },
+    {
+      "exit": 0,
+      "package": "babel-polish",
+      "style": "babel-polish",
+      "usepackage_verdict": "standalone-fail",
+      "verdict": "standalone-pass"
+    },
+    {
+      "exit": 0,
+      "package": "babel-portuges",
+      "style": "babel-portuges",
+      "usepackage_verdict": "standalone-fail",
+      "verdict": "standalone-pass"
+    },
+    {
+      "exit": 0,
       "package": "babel-spanish",
       "style": "romanidx",
-      "verdict": "standalone-fail"
+      "usepackage_verdict": "standalone-fail",
+      "verdict": "standalone-pass"
+    },
+    {
+      "exit": 0,
+      "package": "babel-swedish",
+      "style": "babel-swedish",
+      "usepackage_verdict": "standalone-fail",
+      "verdict": "standalone-pass"
     },
     {
       "error": "! Undefined control sequence.",
