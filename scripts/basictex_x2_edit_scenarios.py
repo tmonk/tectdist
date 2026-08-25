@@ -35,6 +35,13 @@ DOC_PREAMBLE = """\\documentclass{article}
 \\usepackage{amsmath}
 \\usepackage{hyperref}
 """
+
+# Preamble-heavy variant: many language patterns and packages make the
+# stock format-load cost dominant, which is where X2 shines brightest.
+HEAVY_PREAMBLE = """\\documentclass{article}
+\\usepackage[english,german,french,spanish,italian,portuges,dutch]{babel}
+\\usepackage{amsmath,graphicx,xcolor,hyperref}
+"""
 DOC_BODY = """\\begin{document}
 \\title{Edit Scenario Probe}\\maketitle
 BODY_SENTENCE
@@ -113,8 +120,12 @@ def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--trials", type=int, default=3,
                     help="timed trials per scenario (min taken)")
+    ap.add_argument("--heavy", action="store_true",
+                    help="use a preamble-heavy document (babel x7 + more)")
     ap.add_argument("--out", type=Path, default=REF / "x2-edit-scenarios.json")
     args = ap.parse_args(argv)
+
+    preamble_template = HEAVY_PREAMBLE if args.heavy else DOC_PREAMBLE
 
     results = {}
     work = Path(tempfile.mkdtemp(prefix="x2-doc-"))
@@ -147,7 +158,7 @@ def main(argv=None) -> int:
         argv = ["pdflatex", "-interaction=batchmode", "main.tex"]
 
         def set_source(preamble_sentence, body_sentence):
-            preamble = DOC_PREAMBLE + (
+            preamble = preamble_template + (
                 "% variant\n" if preamble_sentence else "")
             source.write_text(
                 preamble + DOC_BODY.replace("BODY_SENTENCE", body_sentence))
