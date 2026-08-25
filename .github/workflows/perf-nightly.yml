@@ -81,6 +81,11 @@ jobs:
         run: >-
           python -m benchmarks.runner.stage_budget benchmark-results/regression.json
           --min-coverage 95 | tee benchmark-results/stage-budget.md
+      - name: X10-E edit scenarios through the supervisor (accelerated chain)
+        run: |-
+          python3 scripts/basictex_x2_edit_scenarios.py \
+            --heavy --trials 5 \
+            --out reference/basictex-2026/x2-edit-scenarios-nightly.json
       - uses: actions/upload-artifact@v4
         with:
           name: nightly-regression
@@ -88,6 +93,8 @@ jobs:
             benchmark-results/regression.json
             benchmark-results/stage-budget.md
             benchmark-results/candidate-sha256.txt
+            reference/basictex-2026/x2-edit-scenarios-nightly.json
+            reference/basictex-2026/x2-edit-scenarios-nightly.md
 
   qualification:
     runs-on: [self-hosted, tectdist-perf]
