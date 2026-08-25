@@ -13,6 +13,8 @@
   before any further I/O optimisation lands.
 - **Adversarial mutation corpus** (`tests/mutation_corpus.py`): verifies at
   product level that rerun decisions stay correct under same-size/same-mtime
+  edits, included-file edits, and bibliography edits — all pass. (`tests/mutation_corpus.py`): verifies at
+  product level that rerun decisions stay correct under same-size/same-mtime
   edits, included-file edits, and bibliography edits — the failure modes a
   fast-digest design must never introduce. Run:
   `python3 tests/mutation_corpus.py --native <binary>`.

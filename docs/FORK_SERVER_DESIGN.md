@@ -130,7 +130,11 @@ X10-E acceleration currently applies only to the proven launch shape.
 Next actions queued:
 - Study tex.web main-block flow for the preloaded-format branch; author
   the production .ch patch placing the hook on ALL post-format-load paths.
-- Re-run child-creation and end-to-end gates across every launch variant. — \dump-based preamble snapshots (X2 round 2)
+- Re-run child-creation and end-to-end gates across every launch variant.
+- TEXFORMATS env requirement confirmed empirically: mid-ini &load fails
+  without explicit TEXFORMATS including fmt directory when binary runs
+  outside installed tree. Supervisor offline builder must set:
+  TEXMFROOT=<image>, TEXMFCNF=<image>, TEXFORMATS=.:<image>/texmf-var/... — \dump-based preamble snapshots (X2 round 2)
 
 Attempted: draftmode-isolated measurement (preamble fmt built with
 \pdfvariable draftmode=1 before \documentclass, so children skip PDF
