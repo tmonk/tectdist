@@ -33,7 +33,9 @@ modifications documented in `docs/FORK_SERVER_DESIGN.md`.
 | Index document | 175.4 ms | −48% vs audited baseline |
 | Fork child creation | 1.5 ms p50 | < 2 ms gate PASS |
 | Action restore (bibtex) | 0.55 ms p50 | < 2 ms gate PASS |
-| Interaction coverage | 507 ref-green / 0 fail | across 400+500 pair samples |
+| Interaction coverage | 507+218 ref-green / 0 fail | CLI battery + supervisor-path battery |
+| Supervisor chain (warm body edit) | 67 ms vs 152 ms stock | 2.3x via project format |
+| Supervisor chain (unchanged rebuild) | 12 ms vs 152 ms stock | 12.7x via X4 gate |
 | Pipeline qualification | 7/7 | direct PDF through tex4ht |
 
 ## Crates delivered
