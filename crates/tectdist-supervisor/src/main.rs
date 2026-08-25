@@ -475,21 +475,65 @@ impl Drop for EngineWorker {
     }
 }
 
+/// Base seed format per fork-server engine: (fmt name beside the sources,
+/// fmt path inside the image). Engines whose instrumented builds have not
+/// landed simply fail at spawn with "binary missing".
+fn engine_base_seed(
+    engine: &str,
+    image_root: &Path,
+) -> Result<(String, PathBuf), String> {
+    let (name, rel) = match engine {
+        "pdftex" => (
+            "tectdist-latex",
+            "texmf-var/web2c/pdftex/latex.fmt",
+        ),
+        "xetex" => (
+            "tectdist-xelatex",
+            "texmf-var/web2c/xelatex/xelatex.fmt",
+        ),
+        "luatex" => (
+            "tectdist-luatex",
+            "texmf-var/web2c/luatex/luatex.fmt",
+        ),
+        other => return Err(format!("unsupported fork-server engine '{other}'")),
+    };
+    let path = image_root.join(rel);
+    if !path.is_file() {
+        return Err(format!(
+            "image lacks {rel} (needed to seed the '{engine}' worker)"
+        ));
+    }
+    Ok((name.to_string(), path))
+}
+
+/// Map a compile argv engine name onto its fork-server engine.
+pub fn fork_engine_for_program(program: &str) -> Option<&'static str> {
+    match program {
+        "pdflatex" | "latex" | "pdftex" => Some("pdftex"),
+        "xelatex" => Some("xetex"),
+        "lualatex" | "luatex" => Some("luatex"),
+        _ => None,
+    }
+}
+
 impl EngineWorker {
     /// Spawn the fork-server engine from the pinned image inside the project
     /// directory. A reusable base format (`latex` from the image) is seeded
     /// beside the sources so the first-line reference resolves locally;
     /// preamble snapshots (X2) replace it with richer formats later.
     fn spawn(
+        engine: &str,
         image_root: &Path,
         cwd: &Path,
         project_fmt: Option<&str>,
     ) -> Result<Self, String> {
         let bin_dir = image_root.join("bin/forkproto");
-        let binary = bin_dir.join("pdftex");
+        let binary = bin_dir.join(engine);
         if !binary.is_file() {
             return Err(format!("fork-server binary missing: {}", binary.display()));
         }
+        let (base_seed_name, base_seed_source) =
+            engine_base_seed(engine, image_root)?;
         // Composed mode preloads an X2 project format so children skip both
         // process setup AND format load; base mode keeps the stock latex
         // format for documents without a valid snapshot.
@@ -507,17 +551,9 @@ impl EngineWorker {
                 )
             }
             None => {
-                let base_format =
-                    image_root.join("texmf-var/web2c/pdftex/latex.fmt");
-                if !base_format.is_file() {
-                    return Err(
-                        "image lacks texmf-var/web2c/pdftex/latex.fmt"
-                            .to_string(),
-                    );
-                }
-                std::fs::copy(&base_format, cwd.join("tectdist-latex.fmt"))
+                std::fs::copy(&base_seed_source, cwd.join(&base_seed_name))
                     .map_err(|error| format!("seed format: {error}"))?;
-                ("tectdist-latex".to_string(), "job.tex".to_string())
+                (base_seed_name.clone(), "job.tex".to_string())
             }
         };
         let socket = cwd.join(".tectdist-engine.sock");
@@ -1049,6 +1085,7 @@ fn handle_request(
                                     );
                                     if state.use_forkserver {
                                         match state.forkserver_compile(
+                                            fork_engine_for_program(argv.first().map(|s| s.as_str()).unwrap_or("")).unwrap_or("pdftex"),
                                             &cwd, &job, None,
                                         ) {
                                             Ok((code, ms)) => Ok((code, ms)),
@@ -1085,6 +1122,7 @@ fn handle_request(
                             {
                                 Some(fmt) => {
                                     match state.forkserver_compile(
+                                        fork_engine_for_program(argv.first().map(|s| s.as_str()).unwrap_or("")).unwrap_or("pdftex"),
                                         &cwd, &job, Some(&fmt),
                                     ) {
                                         Ok((code, ms)) => {
@@ -1216,14 +1254,18 @@ impl SupervisorState {
     /// on first use. Returns None when the fast path is disabled.
     fn forkserver_compile(
         &self,
+        engine: &str,
         cwd: &Path,
         job: &str,
         project_fmt: Option<&str>,
     ) -> Result<(i32, u64), String> {
         let mut guard = self.engine_worker.lock().expect("engine worker poisoned");
-        let wanted_key = project_fmt
-            .map(|fmt| format!("project:{fmt}"))
-            .unwrap_or_else(|| "base".to_string());
+        let wanted_key = format!(
+            "{engine}:{}",
+            project_fmt
+                .map(|fmt| format!("project:{fmt}"))
+                .unwrap_or_else(|| "base".to_string())
+        );
         let needs_spawn = match guard.as_ref() {
             Some((key, _)) => *key != wanted_key,
             None => true,
@@ -1233,7 +1275,7 @@ impl SupervisorState {
                 worker.shutdown();
             }
             let mut worker =
-                EngineWorker::spawn(&self.image_root, cwd, project_fmt)?;
+                EngineWorker::spawn(engine, &self.image_root, cwd, project_fmt)?;
             // The engine loads its format before opening the listen
             // socket; a 3 MB project format can take hundreds of ms.
             // Wait instead of letting the first compile poll-fail.

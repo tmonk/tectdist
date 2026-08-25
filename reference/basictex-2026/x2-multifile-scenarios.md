@@ -2,10 +2,10 @@
 
 | scenario | ms (min) |
 |---|---:|
-| stock-one-shot | 96 |
-| cold-first-with-format-build | 214 |
-| chapter-edit-format-reused | 78 |
-| preamble-dep-edit-format-rebuilt | 204 |
-| unchanged-rebuild-cache-hit | 2 |
+| stock-one-shot | 99 |
+| cold-first-with-format-build | 210 |
+| chapter-edit-format-reused | 80 |
+| preamble-dep-edit-format-rebuilt | 217 |
+| unchanged-rebuild-cache-hit | 3 |
 
-Chapter-edit speedup: 1.231x; unchanged speedup: 48.0x
+Chapter-edit speedup: 1.238x; unchanged speedup: 33.0x
