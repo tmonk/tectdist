@@ -68,6 +68,11 @@ jobs:
             --reference "reference/basictex-2026/installer/expanded/BasicTeX-2026-Start.pkg/Payload/usr/local/texlive/2026basic"
       - name: Attribute reference-failures
         run: python3 scripts/basictex_reffail_classify.py
+      - name: Failure equivalence (reference vs candidate)
+        run: |
+          python3 scripts/basictex_fail_equivalence.py \
+            --reference "reference/basictex-2026/installer/expanded/BasicTeX-2026-Start.pkg/Payload/usr/local/texlive/2026basic" \
+            --candidate ./target/release/tectdist
       - name: BT100 report (gate)
         run: python3 scripts/basictex_report.py
       - uses: actions/upload-artifact@v4
@@ -78,5 +83,6 @@ jobs:
             reference/basictex-2026/bt100-interactions.md
             reference/basictex-2026/reffail-standalone.json
             reference/basictex-2026/ref-fail-classification.json
+            reference/basictex-2026/fail-equivalence.json
             reference/basictex-2026/bt100-report.json
             reference/basictex-2026/bt100-report.md
