@@ -44,8 +44,10 @@ pub fn try_cached(state: &SupervisorState, cwd: &Path, argv: &[String]) -> Optio
     let chain: CheckpointChain = state.checkpoint_chain_get(&key)?;
 
     // Current input snapshot filtered to source files; outputs and logs
-    // must not influence the decision.
-    let files = crate::snapshot_project_files(cwd);
+    // must not influence the decision. The snapshot is recursive and keyed
+    // by relative path so \input'ed subdirectory files invalidate too;
+    // None (tree unprovable) means a real compile.
+    let files = crate::snapshot_project_tree(cwd)?;
     let current: BTreeMap<String, String> = files
         .into_iter()
         .filter(|(name, _)| is_source(name))

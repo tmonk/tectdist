@@ -132,3 +132,55 @@ fn unchanged_recompile_is_served_from_cache() {
         "edited recompile must NOT be a cache hit: {status2}"
     );
 }
+
+#[test]
+fn subdirectory_input_edit_invalidates_gate() {
+    let Some(_image) = basic_tex_root() else {
+        eprintln!("skipping: BasicTeX reference image not present on this host");
+        return;
+    };
+    let supervisor = start_supervisor("gate-sub");
+
+    let work = free_dir("gatesub-work");
+    std::fs::create_dir_all(work.join("chapters")).unwrap();
+    std::fs::write(
+        work.join("main.tex"),
+        "\\documentclass{article}\n\\begin{document}\n\\input{chapters/ch1}\n\\end{document}\n",
+    )
+    .unwrap();
+    std::fs::write(work.join("chapters/ch1.tex"), "Chapter one.\n").unwrap();
+
+    let payload = serde_json::json!({
+        "type": "compile",
+        "profile": "basictex-2026",
+        "cwd": work.to_str().unwrap(),
+        "argv": ["pdflatex", "-interaction=batchmode", "main.tex"],
+        "snapshot_key": null,
+    });
+
+    // First compile: real run, chain recorded (recursive snapshot).
+    let first = client(&supervisor.socket, payload.clone());
+    assert_eq!(first["ok"], true, "first compile failed: {first}");
+    assert_eq!(first["compile_accepted"]["exit_status"], 0);
+
+    // Unchanged recompile: cache hit.
+    let _second = client(&supervisor.socket, payload.clone());
+    let status0 = client(&supervisor.socket, serde_json::json!({"type":"status"}));
+    assert_eq!(
+        status0["status"]["compiles_cache_hits"], 1,
+        "unchanged recompile should hit: {status0}"
+    );
+
+    // Editing the \input'ed SUBDIRECTORY file must invalidate the gate.
+    std::fs::write(work.join("chapters/ch1.tex"), "Chapter one revised.\n")
+        .unwrap();
+    let third = client(&supervisor.socket, payload);
+    assert_eq!(third["ok"], true, "post-edit compile failed: {third}");
+    assert_eq!(third["compile_accepted"]["exit_status"], 0);
+
+    let status1 = client(&supervisor.socket, serde_json::json!({"type":"status"}));
+    assert_eq!(
+        status1["status"]["compiles_cache_hits"], 1,
+        "subdir edit must NOT be served from cache: {status1}"
+    );
+}

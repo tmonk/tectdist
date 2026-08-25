@@ -972,7 +972,11 @@ fn handle_request(
                 .unwrap_or(false)
             {
                 let jobname = derive_job_name(&argv, &cwd);
-                let files = snapshot_project_files(&cwd);
+                // Recursive snapshot: \input'ed subdirectory files must be
+                // part of the recorded input set or the rebuild gate would
+                // miss later edits to them.
+                let files = snapshot_project_tree(&cwd)
+                    .unwrap_or_else(|| snapshot_project_files(&cwd));
                 let chain_key = format!("{}#{}", cwd.display(), jobname);
                 let records: Vec<checkpoint::CheckpointRecord> = files
                     .iter()
@@ -1226,6 +1230,80 @@ pub(crate) fn snapshot_project_files(cwd: &Path) -> Vec<(String, String)> {
     }
     entries.sort();
     entries
+}
+
+/// Upper bound on files considered before declaring the project too large
+/// to prove unchanged (the gate then falls back to a real compile).
+const TREE_SNAPSHOT_MAX_FILES: usize = 8192;
+const TREE_SNAPSHOT_MAX_DEPTH: usize = 16;
+
+/// Recursive project snapshot keyed by path RELATIVE to `cwd`. Used by the
+/// unchanged-rebuild gate so that edits to \\input'ed files in
+/// subdirectories invalidate correctly (a flat listing would produce
+/// false cache hits). Returns None when the tree cannot be fully proven:
+/// unreadable entries, too many files, or excessive nesting — callers
+/// must treat None as "cannot skip".
+pub(crate) fn snapshot_project_tree(
+    cwd: &Path,
+) -> Option<Vec<(String, String)>> {
+    fn walk(
+        dir: &Path,
+        base: &Path,
+        depth: usize,
+        out: &mut Vec<(String, String)>,
+    ) -> bool {
+        if depth > TREE_SNAPSHOT_MAX_DEPTH || out.len() > TREE_SNAPSHOT_MAX_FILES
+        {
+            return false;
+        }
+        let entries = match std::fs::read_dir(dir) {
+            Ok(entries) => entries,
+            Err(_) => return false,
+        };
+        for entry in entries.flatten() {
+            let path = entry.path();
+            let name = entry.file_name().to_string_lossy().into_owned();
+            let file_type = match entry.file_type() {
+                Ok(t) => t,
+                Err(_) => return false,
+            };
+            if file_type.is_symlink() {
+                // Never follow links: loops and outside-project escapes.
+                continue;
+            }
+            if file_type.is_dir() {
+                if name.starts_with('.') {
+                    continue; // .tectdist, .git, caches
+                }
+                if !walk(&path, base, depth + 1, out) {
+                    return false;
+                }
+            } else if file_type.is_file() {
+                if out.len() >= TREE_SNAPSHOT_MAX_FILES {
+                    return false;
+                }
+                let rel = path
+                    .strip_prefix(base)
+                    .unwrap_or(&path)
+                    .to_string_lossy()
+                    .into_owned();
+                if let Ok(bytes) = std::fs::read(&path) {
+                    use sha2::{Digest, Sha256};
+                    let mut hasher = Sha256::new();
+                    hasher.update(&bytes);
+                    out.push((rel, format!("{:x}", hasher.finalize())));
+                }
+            }
+        }
+        true
+    }
+    let mut out = Vec::new();
+    if walk(cwd, cwd, 0, &mut out) {
+        out.sort();
+        Some(out)
+    } else {
+        None
+    }
 }
 
 /// Alias so the handler signature reads clearly without importing another
