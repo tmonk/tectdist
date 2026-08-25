@@ -27,6 +27,69 @@
       "candidate_pages": 1,
       "text_identical": true,
       "verdict": "pass"
+    },
+    {
+      "document": "bibtex",
+      "reference_exit": 0,
+      "candidate_exit": 0,
+      "reference_pages": 1,
+      "candidate_pages": 1,
+      "text_identical": true,
+      "verdict": "pass"
+    },
+    {
+      "document": "index",
+      "reference_exit": 0,
+      "candidate_exit": 0,
+      "reference_pages": 1,
+      "candidate_pages": 1,
+      "text_identical": true,
+      "verdict": "pass"
+    },
+    {
+      "document": "tikz",
+      "reference_exit": 0,
+      "candidate_exit": 0,
+      "reference_pages": 1,
+      "candidate_pages": 1,
+      "text_identical": true,
+      "verdict": "pass"
+    },
+    {
+      "document": "shell-escape",
+      "reference_exit": 0,
+      "candidate_exit": 0,
+      "reference_pages": 1,
+      "candidate_pages": 1,
+      "text_identical": true,
+      "verdict": "pass"
+    },
+    {
+      "document": "references",
+      "reference_exit": 0,
+      "candidate_exit": 0,
+      "reference_pages": 1,
+      "candidate_pages": 1,
+      "text_identical": true,
+      "verdict": "pass"
+    },
+    {
+      "document": "graphics",
+      "reference_exit": 0,
+      "candidate_exit": 0,
+      "reference_pages": 1,
+      "candidate_pages": 1,
+      "text_identical": true,
+      "verdict": "pass"
+    },
+    {
+      "document": "thesis",
+      "reference_exit": 0,
+      "candidate_exit": 0,
+      "reference_pages": 3,
+      "candidate_pages": 3,
+      "text_identical": true,
+      "verdict": "pass"
     }
   ]
 }
