@@ -92,3 +92,73 @@ fn plain_tex_source_compiles_through_fork_server_edge_path() {
     let _ = child.kill();
     let _ = child.wait();
 }
+
+#[test]
+fn wedged_worker_recovers_via_restart_or_escalation() {
+    let Some(image) = basic_tex_root() else {
+        eprintln!("skipping: BasicTeX reference image not present on this host");
+        return;
+    };
+    let dir = free_dir("fswedge");
+    let socket = dir.join("s.sock");
+    let exe = env!("CARGO_BIN_EXE_tectdist-supervisor");
+    let mut command = Command::new(exe);
+    command.arg("serve");
+    command.env("TECTDIST_SUPERVISOR_SOCKET", &socket);
+    command.env("TECTDIST_ACTION_CACHE", dir.join("cache"));
+    command.env("TECTDIST_BASICTEX_ROOT", &image);
+    command.env("TECTDIST_USE_FORKSERVER", "1");
+    let log = std::fs::File::create(dir.join("serve.log")).unwrap();
+    command.stdout(log.try_clone().unwrap()).stderr(log);
+    let mut child = command.spawn().expect("spawn supervisor");
+    let deadline = Instant::now() + Duration::from_secs(5);
+    while Instant::now() < deadline {
+        if UnixStream::connect(&socket).is_ok() {
+            break;
+        }
+        std::thread::sleep(Duration::from_millis(20));
+    }
+
+    let work = free_dir("fswedge-work");
+    // Plain-TeX source: X2 declines, so the resident worker serves it.
+    std::fs::write(
+        work.join("plain.tex"),
+        "Plain TeX wedge probe.\\vfill\\eject\\end\n",
+    )
+    .unwrap();
+
+    let payload = serde_json::json!({
+        "type": "compile",
+        "profile": "basictex-2026",
+        "cwd": work.to_str().unwrap(),
+        "argv": ["pdftex", "-interaction=batchmode", "plain.tex"],
+        "snapshot_key": null,
+    });
+
+    // 1. Warm the worker.
+    let first = client(&socket, payload.clone());
+    assert_eq!(first["compile_accepted"]["exit_status"], 0,
+               "warm-up compile failed: {first}");
+
+    // 2. Simulate a wedged transport: destroy the engine socket. The
+    //    supervisor must detect the failure, discard the worker, and
+    //    still complete this compile (restart or one-shot escalation).
+    std::fs::remove_file(work.join(".tectdist-engine.sock")).ok();
+
+    let second = client(&socket, payload.clone());
+    assert_eq!(second["ok"], true, "post-wedge compile failed: {second}");
+    assert_eq!(
+        second["compile_accepted"]["exit_status"], 0,
+        "post-wedge exit nonzero: {second}"
+    );
+    assert!(work.join("plain.pdf").is_file());
+
+    // 3. The next request must also succeed (fresh worker or escalation).
+    std::fs::remove_file(work.join("plain.pdf")).ok();
+    let third = client(&socket, payload);
+    assert_eq!(third["compile_accepted"]["exit_status"], 0);
+    assert!(work.join("plain.pdf").is_file());
+
+    let _ = child.kill();
+    let _ = child.wait();
+}
