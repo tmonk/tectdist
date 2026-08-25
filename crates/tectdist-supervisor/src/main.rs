@@ -1114,12 +1114,38 @@ fn run_profile_compile(profile: &str, argv: &[String], cwd: &Path) -> Result<(i3
     // Capture pre/post-build file state for the build manifest (plan §12).
     let pre_build = snapshot_project_files(cwd);
     let start = std::time::Instant::now();
-    let status = std::process::Command::new(binary)
+    // Compile limit (X1 "limits"): a runaway document must not wedge the
+    // supervisor. Configurable for tests; the error escalates to the
+    // caller exactly like any other failure.
+    let timeout_secs: u64 = std::env::var("TECTDIST_COMPILE_TIMEOUT_SECS")
+        .ok()
+        .and_then(|value| value.parse().ok())
+        .unwrap_or(600);
+    let mut child = std::process::Command::new(binary)
         .args(&argv[1..])
         .current_dir(cwd)
         .env("TEXMFROOT", &root_path)
-        .status()
+        .stdout(std::process::Stdio::null())
+        .stderr(std::process::Stdio::null())
+        .spawn()
         .map_err(|error| format!("spawn failed: {error}"))?;
+    let deadline = start + std::time::Duration::from_secs(timeout_secs);
+    let status = loop {
+        match child.try_wait() {
+            Ok(Some(status)) => break status,
+            Ok(None) => {
+                if std::time::Instant::now() >= deadline {
+                    let _ = child.kill();
+                    let _ = child.wait();
+                    return Err(format!(
+                        "compile exceeded the {timeout_secs}s limit and was terminated"
+                    ));
+                }
+                std::thread::sleep(std::time::Duration::from_millis(10));
+            }
+            Err(error) => return Err(format!("wait failed: {error}")),
+        }
+    };
     let post_build = snapshot_project_files(cwd);
 
     // Build manifest: record reads (pre) and writes (post diff) for

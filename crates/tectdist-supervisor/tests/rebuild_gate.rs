@@ -228,3 +228,85 @@ fn external_artifact_change_invalidates_gate() {
         "artifact edit must NOT be served from cache: {status1}"
     );
 }
+
+#[test]
+fn runaway_compile_hits_limit_and_supervisor_survives() {
+    let Some(_image) = basic_tex_root() else {
+        eprintln!("skipping: BasicTeX reference image not present on this host");
+        return;
+    };
+    // Dedicated supervisor with a 3-second compile limit.
+    let dir = free_dir("gate-limit");
+    let socket = dir.join("s.sock");
+    let exe = env!("CARGO_BIN_EXE_tectdist-supervisor");
+    let mut command = Command::new(exe);
+    command.arg("serve");
+    command.env("TECTDIST_SUPERVISOR_SOCKET", &socket);
+    command.env("TECTDIST_ACTION_CACHE", dir.join("cache"));
+    if let Some(root) = basic_tex_root() {
+        command.env("TECTDIST_BASICTEX_ROOT", &root);
+    }
+    command.env("TECTDIST_COMPILE_TIMEOUT_SECS", "3");
+    let log = std::fs::File::create(dir.join("serve.log")).unwrap();
+    command.stdout(log.try_clone().unwrap()).stderr(log);
+    let mut child = command.spawn().expect("spawn supervisor");
+    let deadline = Instant::now() + Duration::from_secs(5);
+    while Instant::now() < deadline {
+        if UnixStream::connect(&socket).is_ok() {
+            break;
+        }
+        std::thread::sleep(Duration::from_millis(20));
+    }
+
+    let work = free_dir("gatelimit-work");
+    // Infinite loop document: \loop ... \repeat never terminates.
+    std::fs::write(
+        work.join("main.tex"),
+        "\\documentclass{article}\n\\begin{document}\n\\loop\\iftrue\\repeat\n\\end{document}\n",
+    )
+    .unwrap();
+
+    let payload = serde_json::json!({
+        "type": "compile",
+        "profile": "basictex-2026",
+        "cwd": work.to_str().unwrap(),
+        "argv": ["pdflatex", "-interaction=batchmode", "main.tex"],
+        "snapshot_key": null,
+    });
+
+    // X2 fast path declines? No — it has a begin-document; the fast path
+    // itself must time out OR the one-shot escalation must. Either way
+    // the request returns an error response rather than hanging, and the
+    // supervisor stays alive.
+    let started = Instant::now();
+    let stream_result = UnixStream::connect(&socket);
+    assert!(stream_result.is_ok());
+    let mut stream = stream_result.unwrap();
+    stream
+        .set_read_timeout(Some(Duration::from_secs(120)))
+        .unwrap();
+    stream.write_all(payload.to_string().as_bytes()).unwrap();
+    stream.write_all(b"\n").unwrap();
+    let mut reader = BufReader::new(stream);
+    let mut line = String::new();
+    reader.read_line(&mut line).unwrap();
+    let elapsed = started.elapsed();
+
+    assert!(
+        elapsed < Duration::from_secs(60),
+        "request must return after the limit, took {elapsed:?}"
+    );
+    let response: serde_json::Value =
+        serde_json::from_str(line.trim()).unwrap_or(serde_json::json!({}));
+    let errored = response["ok"] == false
+        || response["error"].is_string()
+        || response["compile_accepted"]["exit_status"].as_i64().unwrap_or(0) != 0;
+    assert!(errored, "runaway compile must not report success: {response}");
+
+    // Supervisor must still respond afterwards.
+    let status = client(&socket, serde_json::json!({"type":"status"}));
+    assert_eq!(status["ok"], true, "supervisor dead after timeout: {status}");
+
+    let _ = child.kill();
+    let _ = child.wait();
+}

@@ -288,7 +288,8 @@ pub fn fast_compile(image_root: &Path, cwd: &Path, argv: &[String]) -> Result<Fa
         .map_err(|error| format!("cannot write body file: {error}"))?;
 
     let started = Instant::now();
-    let output = Command::new(engine_binary(image_root)?)
+    let mut body_cmd = Command::new(engine_binary(image_root)?);
+    body_cmd
         // User flags first, then our pinned controls; duplicates of
         // -interaction are harmless and the LAST occurrence wins, which
         // keeps batchmode/halt-on-error authoritative.
@@ -327,12 +328,15 @@ pub fn fast_compile(image_root: &Path, cwd: &Path, argv: &[String]) -> Result<Fa
                     .unwrap_or_default(),
                 std::env::var("PATH").unwrap_or_default()
             ),
-        )
-        .output()
-        .map_err(|error| format!("engine dispatch failed: {error}"))?;
+        );
+    let body_timeout: u64 = std::env::var("TECTDIST_COMPILE_TIMEOUT_SECS")
+        .ok()
+        .and_then(|value| value.parse().ok())
+        .unwrap_or(300);
+    let status = run_with_timeout(&mut body_cmd, body_timeout)?;
     let duration_ms = started.elapsed().as_millis() as u64;
     Ok(FastCompile {
-        exit_status: output.status.code().unwrap_or(-1),
+        exit_status: status.code().unwrap_or(-1),
         duration_ms,
     })
 }
@@ -366,7 +370,8 @@ fn ensure_format(
         .map_err(|error| format!("cannot write preamble: {error}"))?;
 
     let binary = engine_binary(image_root)?;
-    let status = Command::new(&binary)
+    let mut ini_cmd = Command::new(&binary);
+    ini_cmd
         .args(["-ini"])
         // Capability flags (e.g. -shell-escape) shape what the preamble
         // may do during the dump; forward them so the snapshot matches
@@ -405,11 +410,11 @@ fn ensure_format(
             ),
         )
         // Deliberately NO TEXMFCNF override — see module docs.
-        .output()
-        .map_err(|error| format!("format build dispatch failed: {error}"))?;
+        ;
+    let ini_status = run_with_timeout(&mut ini_cmd, 300)?;
 
-    if !status.status.success() || !fmt_file.is_file() {
-        let tail = String::from_utf8_lossy(&status.stderr);
+    if !ini_status.success() || !fmt_file.is_file() {
+
         let log = std::fs::read_to_string(format_dir.join(format!("{fmt_name}.log")))
             .map(|log| {
                 log.lines()
@@ -419,14 +424,43 @@ fn ensure_format(
             })
             .unwrap_or_default();
         return Err(format!(
-            "format build failed (exit {:?}) {log} {}",
-            status.status.code(),
-            tail.lines().last().unwrap_or("")
+            "format build failed (exit {:?}) {log}",
+            ini_status.code()
         ));
     }
     std::fs::write(&meta_file, cache_digest)
         .map_err(|error| format!("cannot write meta: {error}"))?;
     Ok(())
+}
+
+/// Run `cmd` to completion with a hard kill deadline. Returns the raw
+/// ExitStatus; a timeout yields Err (callers escalate to exact paths).
+fn run_with_timeout(
+    cmd: &mut Command,
+    timeout_secs: u64,
+) -> Result<std::process::ExitStatus, String> {
+    let mut child = cmd
+        .stdout(std::process::Stdio::piped())
+        .stderr(std::process::Stdio::piped())
+        .spawn()
+        .map_err(|error| format!("dispatch failed: {error}"))?;
+    let deadline = Instant::now() + std::time::Duration::from_secs(timeout_secs);
+    loop {
+        match child.try_wait() {
+            Ok(Some(status)) => return Ok(status),
+            Ok(None) => {
+                if Instant::now() >= deadline {
+                    let _ = child.kill();
+                    let _ = child.wait();
+                    return Err(format!(
+                        "engine exceeded the {timeout_secs}s limit"
+                    ));
+                }
+                std::thread::sleep(std::time::Duration::from_millis(10));
+            }
+            Err(error) => return Err(format!("wait failed: {error}")),
+        }
+    }
 }
 
 fn engine_binary(image_root: &Path) -> Result<std::path::PathBuf, String> {
