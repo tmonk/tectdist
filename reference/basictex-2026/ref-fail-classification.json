@@ -1,0 +1,2209 @@
+{
+  "classified": {
+    "explained-by-standalone-failure": 207
+  },
+  "interactions_image_sha256": "395f0b4d7ce47684c021e8734421bd530206e58a96949cb6103a6333ad2b36b6",
+  "interactions_seed": 99,
+  "pair_specific_cases": [],
+  "pair_specific_package_frequency": {},
+  "ref_failures_total": 207,
+  "rows": [
+    {
+      "case": "mflogo+simple-thesis-dissertation",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "simple-thesis-dissertation": "! LaTeX Error: File `simplethesisdissertation.sty' not found."
+      },
+      "culprits": [
+        "simple-thesis-dissertation"
+      ]
+    },
+    {
+      "case": "lwarp+polyglossia",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "lwarp": "! LaTeX Error: File `ifptex.sty' not found."
+      },
+      "culprits": [
+        "lwarp"
+      ]
+    },
+    {
+      "case": "hopatch+xebaposter",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "xebaposter": "! LaTeX Error: File `xebaposter.sty' not found."
+      },
+      "culprits": [
+        "xebaposter"
+      ]
+    },
+    {
+      "case": "mpgraphics+thumbpdf",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "mpgraphics": "! LaTeX Error: File `moreverb.sty' not found."
+      },
+      "culprits": [
+        "mpgraphics"
+      ]
+    },
+    {
+      "case": "lineno+oberdiek",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "lineno": "! Package ednmath0 Error: Bad lineno.sty version."
+      },
+      "culprits": [
+        "lineno"
+      ]
+    },
+    {
+      "case": "na-position+pdfpages",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "na-position": "! LaTeX Error: File `tkz-tab.sty' not found."
+      },
+      "culprits": [
+        "na-position"
+      ]
+    },
+    {
+      "case": "businesscard-qrcode+xltxtra",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "businesscard-qrcode": "! LaTeX Error: File `businesscard-qrcode.sty' not found.",
+        "xltxtra": "! Emergency stop."
+      },
+      "culprits": [
+        "businesscard-qrcode",
+        "xltxtra"
+      ]
+    },
+    {
+      "case": "unicode-bidi+zbmath-review-template",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "unicode-bidi": "! Undefined control sequence.",
+        "zbmath-review-template": "! LaTeX Error: File `stmaryrd.sty' not found."
+      },
+      "culprits": [
+        "unicode-bidi",
+        "zbmath-review-template"
+      ]
+    },
+    {
+      "case": "microtype+philokalia",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "philokalia": "! Emergency stop."
+      },
+      "culprits": [
+        "philokalia"
+      ]
+    },
+    {
+      "case": "mathspec+pdfescape",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "mathspec": "! Emergency stop."
+      },
+      "culprits": [
+        "mathspec"
+      ]
+    },
+    {
+      "case": "amsfonts+xevlna",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "xevlna": "! Undefined control sequence."
+      },
+      "culprits": [
+        "xevlna"
+      ]
+    },
+    {
+      "case": "babel+cite",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "babel": "! Package babel Error: You are loading directly a language style."
+      },
+      "culprits": [
+        "babel"
+      ]
+    },
+    {
+      "case": "feynmp-auto+simple-thesis-dissertation",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "simple-thesis-dissertation": "! LaTeX Error: File `simplethesisdissertation.sty' not found."
+      },
+      "culprits": [
+        "simple-thesis-dissertation"
+      ]
+    },
+    {
+      "case": "bidipresentation+fontwrap",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "bidipresentation": "! LaTeX Error: File `bidipresentation.sty' not found.",
+        "fontwrap": "! Fatal Package fontspec Error: The fontspec package requires either XeTeX or"
+      },
+      "culprits": [
+        "bidipresentation",
+        "fontwrap"
+      ]
+    },
+    {
+      "case": "bidipagegrid+koma-script",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "koma-script": "! LaTeX Error: File `koma-script-source-doc.sty' not found."
+      },
+      "culprits": [
+        "koma-script"
+      ]
+    },
+    {
+      "case": "bitset+mpgraphics",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "mpgraphics": "! LaTeX Error: File `moreverb.sty' not found."
+      },
+      "culprits": [
+        "mpgraphics"
+      ]
+    },
+    {
+      "case": "oberdiek+zbmath-review-template",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "zbmath-review-template": "! LaTeX Error: File `stmaryrd.sty' not found."
+      },
+      "culprits": [
+        "zbmath-review-template"
+      ]
+    },
+    {
+      "case": "cqubeamer+mathtools",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "cqubeamer": "! Undefined control sequence."
+      },
+      "culprits": [
+        "cqubeamer"
+      ]
+    },
+    {
+      "case": "arabxetex+pdflscape",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "arabxetex": "! Fatal Package fontspec Error: The fontspec package requires either XeTeX or"
+      },
+      "culprits": [
+        "arabxetex"
+      ]
+    },
+    {
+      "case": "makecmds+simple-resume-cv",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "simple-resume-cv": "! LaTeX Error: File `simpleresumecv.sty' not found."
+      },
+      "culprits": [
+        "simple-resume-cv"
+      ]
+    },
+    {
+      "case": "bookmark+lineno",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "lineno": "! Package ednmath0 Error: Bad lineno.sty version."
+      },
+      "culprits": [
+        "lineno"
+      ]
+    },
+    {
+      "case": "ctable+ucharclasses",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "ctable": "! LaTeX Error: File `transparent.sty' not found.",
+        "ucharclasses": "! Emergency stop."
+      },
+      "culprits": [
+        "ctable",
+        "ucharclasses"
+      ]
+    },
+    {
+      "case": "arabxetex+translator",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "arabxetex": "! Fatal Package fontspec Error: The fontspec package requires either XeTeX or"
+      },
+      "culprits": [
+        "arabxetex"
+      ]
+    },
+    {
+      "case": "xechangebar+xunicode",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "xunicode": "! LaTeX Error: *** this package currently works only with XeTeX ***"
+      },
+      "culprits": [
+        "xunicode"
+      ]
+    },
+    {
+      "case": "breqn+fixlatvian",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "fixlatvian": "! LaTeX Error: File `svn-prov.sty' not found."
+      },
+      "culprits": [
+        "fixlatvian"
+      ]
+    },
+    {
+      "case": "koma-script+philokalia",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "koma-script": "! LaTeX Error: File `koma-script-source-doc.sty' not found.",
+        "philokalia": "! Emergency stop."
+      },
+      "culprits": [
+        "koma-script",
+        "philokalia"
+      ]
+    },
+    {
+      "case": "babel-spanish+sansmath",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "babel-spanish": "! Undefined control sequence."
+      },
+      "culprits": [
+        "babel-spanish"
+      ]
+    },
+    {
+      "case": "gmp+latex-amsmath-dev",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "gmp": "! LaTeX Error: File `environ.sty' not found."
+      },
+      "culprits": [
+        "gmp"
+      ]
+    },
+    {
+      "case": "grfext+tagpdf",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "tagpdf": "! Package tagpdf Error: PDF resource management is no active!"
+      },
+      "culprits": [
+        "tagpdf"
+      ]
+    },
+    {
+      "case": "beamer+ntgclass",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "beamer": "! LaTeX Error: File `beamer.sty' not found."
+      },
+      "culprits": [
+        "beamer"
+      ]
+    },
+    {
+      "case": "fontwrap+pspicture",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "fontwrap": "! Fatal Package fontspec Error: The fontspec package requires either XeTeX or"
+      },
+      "culprits": [
+        "fontwrap"
+      ]
+    },
+    {
+      "case": "gmp+pdfpages",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "gmp": "! LaTeX Error: File `environ.sty' not found."
+      },
+      "culprits": [
+        "gmp"
+      ]
+    },
+    {
+      "case": "cite+fixlatvian",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "fixlatvian": "! LaTeX Error: File `svn-prov.sty' not found."
+      },
+      "culprits": [
+        "fixlatvian"
+      ]
+    },
+    {
+      "case": "arabxetex+psfrag",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "arabxetex": "! Fatal Package fontspec Error: The fontspec package requires either XeTeX or"
+      },
+      "culprits": [
+        "arabxetex"
+      ]
+    },
+    {
+      "case": "xunicode+zbmath-review-template",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "xunicode": "! LaTeX Error: *** this package currently works only with XeTeX ***",
+        "zbmath-review-template": "! LaTeX Error: File `stmaryrd.sty' not found."
+      },
+      "culprits": [
+        "xunicode",
+        "zbmath-review-template"
+      ]
+    },
+    {
+      "case": "ragged2e+xebaposter",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "xebaposter": "! LaTeX Error: File `xebaposter.sty' not found."
+      },
+      "culprits": [
+        "xebaposter"
+      ]
+    },
+    {
+      "case": "pdftexcmds+philokalia",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "philokalia": "! Emergency stop."
+      },
+      "culprits": [
+        "philokalia"
+      ]
+    },
+    {
+      "case": "euler+fontbook",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "fontbook": "! Fatal Package fontspec Error: The fontspec package requires either XeTeX or"
+      },
+      "culprits": [
+        "fontbook"
+      ]
+    },
+    {
+      "case": "pspicture+ucharclasses",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "ucharclasses": "! Emergency stop."
+      },
+      "culprits": [
+        "ucharclasses"
+      ]
+    },
+    {
+      "case": "index+xetexko",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "xetexko": "! Bad character code (4095)."
+      },
+      "culprits": [
+        "xetexko"
+      ]
+    },
+    {
+      "case": "fontspec+latex-lab-dev",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "fontspec": "! Fatal Package fontspec Error: The fontspec package requires either XeTeX or"
+      },
+      "culprits": [
+        "fontspec"
+      ]
+    },
+    {
+      "case": "arabxetex+pdfescape",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "arabxetex": "! Fatal Package fontspec Error: The fontspec package requires either XeTeX or"
+      },
+      "culprits": [
+        "arabxetex"
+      ]
+    },
+    {
+      "case": "crop+luaotfload",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "luaotfload": "! Undefined control sequence."
+      },
+      "culprits": [
+        "luaotfload"
+      ]
+    },
+    {
+      "case": "babel+gettitlestring",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "babel": "! Package babel Error: You are loading directly a language style."
+      },
+      "culprits": [
+        "babel"
+      ]
+    },
+    {
+      "case": "ltxmisc+typehtml",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "ltxmisc": "! LaTeX Error: File `abstbook.sty' not found."
+      },
+      "culprits": [
+        "ltxmisc"
+      ]
+    },
+    {
+      "case": "tetragonos+ucharcat",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "ucharcat": "! Package ucharcat Error: \\Ucharcat may only be used with xetex and luatex."
+      },
+      "culprits": [
+        "ucharcat"
+      ]
+    },
+    {
+      "case": "arabxetex+hologo",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "arabxetex": "! Fatal Package fontspec Error: The fontspec package requires either XeTeX or"
+      },
+      "culprits": [
+        "arabxetex"
+      ]
+    },
+    {
+      "case": "bidipresentation+pgf",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "bidipresentation": "! LaTeX Error: File `bidipresentation.sty' not found."
+      },
+      "culprits": [
+        "bidipresentation"
+      ]
+    },
+    {
+      "case": "emp+xeindex",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "xeindex": "! Undefined control sequence."
+      },
+      "culprits": [
+        "xeindex"
+      ]
+    },
+    {
+      "case": "pdftexcmds+xecolor",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "xecolor": "! Fatal Package fontspec Error: The fontspec package requires either XeTeX or"
+      },
+      "culprits": [
+        "xecolor"
+      ]
+    },
+    {
+      "case": "textpath+ucharcat",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "textpath": "! LaTeX Error: File `soul.sty' not found.",
+        "ucharcat": "! Package ucharcat Error: \\Ucharcat may only be used with xetex and luatex."
+      },
+      "culprits": [
+        "textpath",
+        "ucharcat"
+      ]
+    },
+    {
+      "case": "eurosym+xunicode",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "xunicode": "! LaTeX Error: *** this package currently works only with XeTeX ***"
+      },
+      "culprits": [
+        "xunicode"
+      ]
+    },
+    {
+      "case": "beamer+revtex",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "beamer": "! LaTeX Error: File `beamer.sty' not found.",
+        "revtex": "! Undefined control sequence."
+      },
+      "culprits": [
+        "beamer",
+        "revtex"
+      ]
+    },
+    {
+      "case": "babel+ptext",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "babel": "! Package babel Error: You are loading directly a language style.",
+        "ptext": "! LaTeX Error: File `biditools.sty' not found."
+      },
+      "culprits": [
+        "babel",
+        "ptext"
+      ]
+    },
+    {
+      "case": "tipa+unicode-math",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "unicode-math": "! Package unicode-math Error: Cannot be run with pdftex!"
+      },
+      "culprits": [
+        "unicode-math"
+      ]
+    },
+    {
+      "case": "beamer+xcolor",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "beamer": "! LaTeX Error: File `beamer.sty' not found."
+      },
+      "culprits": [
+        "beamer"
+      ]
+    },
+    {
+      "case": "attachfile2+luatexbase",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "luatexbase": "! Undefined control sequence."
+      },
+      "culprits": [
+        "luatexbase"
+      ]
+    },
+    {
+      "case": "gmp+kvdefinekeys",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "gmp": "! LaTeX Error: File `environ.sty' not found."
+      },
+      "culprits": [
+        "gmp"
+      ]
+    },
+    {
+      "case": "arabxetex+l3experimental",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "arabxetex": "! Fatal Package fontspec Error: The fontspec package requires either XeTeX or"
+      },
+      "culprits": [
+        "arabxetex"
+      ]
+    },
+    {
+      "case": "businesscard-qrcode+url",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "businesscard-qrcode": "! LaTeX Error: File `businesscard-qrcode.sty' not found."
+      },
+      "culprits": [
+        "businesscard-qrcode"
+      ]
+    },
+    {
+      "case": "fancyvrb+na-position",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "na-position": "! LaTeX Error: File `tkz-tab.sty' not found."
+      },
+      "culprits": [
+        "na-position"
+      ]
+    },
+    {
+      "case": "cmap+tagpdf",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "tagpdf": "! Package tagpdf Error: PDF resource management is no active!"
+      },
+      "culprits": [
+        "tagpdf"
+      ]
+    },
+    {
+      "case": "feynmf+xesearch",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "xesearch": "! Undefined control sequence."
+      },
+      "culprits": [
+        "xesearch"
+      ]
+    },
+    {
+      "case": "amsfonts+beamer",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "beamer": "! LaTeX Error: File `beamer.sty' not found."
+      },
+      "culprits": [
+        "beamer"
+      ]
+    },
+    {
+      "case": "businesscard-qrcode+eso-pic",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "businesscard-qrcode": "! LaTeX Error: File `businesscard-qrcode.sty' not found."
+      },
+      "culprits": [
+        "businesscard-qrcode"
+      ]
+    },
+    {
+      "case": "l3kernel-dev+lua-unicode-math",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "lua-unicode-math": "! Critical Package lua-unicode-math Error: lua-unicode-math can only be used"
+      },
+      "culprits": [
+        "lua-unicode-math"
+      ]
+    },
+    {
+      "case": "businesscard-qrcode+xecolor",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "businesscard-qrcode": "! LaTeX Error: File `businesscard-qrcode.sty' not found.",
+        "xecolor": "! Fatal Package fontspec Error: The fontspec package requires either XeTeX or"
+      },
+      "culprits": [
+        "businesscard-qrcode",
+        "xecolor"
+      ]
+    },
+    {
+      "case": "bidipresentation+extsizes",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "bidipresentation": "! LaTeX Error: File `bidipresentation.sty' not found."
+      },
+      "culprits": [
+        "bidipresentation"
+      ]
+    },
+    {
+      "case": "bidi-atbegshi+luatexbase",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "luatexbase": "! Undefined control sequence."
+      },
+      "culprits": [
+        "luatexbase"
+      ]
+    },
+    {
+      "case": "latex+xltxtra",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "xltxtra": "! Emergency stop."
+      },
+      "culprits": [
+        "xltxtra"
+      ]
+    },
+    {
+      "case": "koma-script+lineno",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "koma-script": "! LaTeX Error: File `koma-script-source-doc.sty' not found.",
+        "lineno": "! Package ednmath0 Error: Bad lineno.sty version."
+      },
+      "culprits": [
+        "koma-script",
+        "lineno"
+      ]
+    },
+    {
+      "case": "feynmp-auto+koma-script",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "koma-script": "! LaTeX Error: File `koma-script-source-doc.sty' not found."
+      },
+      "culprits": [
+        "koma-script"
+      ]
+    },
+    {
+      "case": "cqubeamer+luaotfload",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "cqubeamer": "! Undefined control sequence.",
+        "luaotfload": "! Undefined control sequence."
+      },
+      "culprits": [
+        "cqubeamer",
+        "luaotfload"
+      ]
+    },
+    {
+      "case": "makecmds+mathspec",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "mathspec": "! Emergency stop."
+      },
+      "culprits": [
+        "mathspec"
+      ]
+    },
+    {
+      "case": "epstopdf-pkg+hypcap",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "hypcap": "! Package hypcap Error: You have to load 'hyperref' first."
+      },
+      "culprits": [
+        "hypcap"
+      ]
+    },
+    {
+      "case": "koma-script+tipa",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "koma-script": "! LaTeX Error: File `koma-script-source-doc.sty' not found."
+      },
+      "culprits": [
+        "koma-script"
+      ]
+    },
+    {
+      "case": "etoolbox+mfpic4ode",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "mfpic4ode": "! Undefined control sequence."
+      },
+      "culprits": [
+        "mfpic4ode"
+      ]
+    },
+    {
+      "case": "infwarerr+simple-resume-cv",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "simple-resume-cv": "! LaTeX Error: File `simpleresumecv.sty' not found."
+      },
+      "culprits": [
+        "simple-resume-cv"
+      ]
+    },
+    {
+      "case": "carlisle+mpgraphics",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "mpgraphics": "! LaTeX Error: File `moreverb.sty' not found."
+      },
+      "culprits": [
+        "mpgraphics"
+      ]
+    },
+    {
+      "case": "beamer+l3packages",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "beamer": "! LaTeX Error: File `beamer.sty' not found."
+      },
+      "culprits": [
+        "beamer"
+      ]
+    },
+    {
+      "case": "amsmath+simple-thesis-dissertation",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "simple-thesis-dissertation": "! LaTeX Error: File `simplethesisdissertation.sty' not found."
+      },
+      "culprits": [
+        "simple-thesis-dissertation"
+      ]
+    },
+    {
+      "case": "fancyref+revtex",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "revtex": "! Undefined control sequence."
+      },
+      "culprits": [
+        "revtex"
+      ]
+    },
+    {
+      "case": "lineno+luamml",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "lineno": "! Package ednmath0 Error: Bad lineno.sty version.",
+        "luamml": "! Undefined control sequence."
+      },
+      "culprits": [
+        "lineno",
+        "luamml"
+      ]
+    },
+    {
+      "case": "bidipresentation+intcalc",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "bidipresentation": "! LaTeX Error: File `bidipresentation.sty' not found."
+      },
+      "culprits": [
+        "bidipresentation"
+      ]
+    },
+    {
+      "case": "bidishadowtext+ltx-talk",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "ltx-talk": "! LaTeX Error: File `ltx-talk.sty' not found."
+      },
+      "culprits": [
+        "ltx-talk"
+      ]
+    },
+    {
+      "case": "philokalia+tex4ht",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "philokalia": "! Emergency stop."
+      },
+      "culprits": [
+        "philokalia"
+      ]
+    },
+    {
+      "case": "mflogo+mfpic4ode",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "mfpic4ode": "! Undefined control sequence."
+      },
+      "culprits": [
+        "mfpic4ode"
+      ]
+    },
+    {
+      "case": "simple-resume-cv+xesearch",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "simple-resume-cv": "! LaTeX Error: File `simpleresumecv.sty' not found.",
+        "xesearch": "! Undefined control sequence."
+      },
+      "culprits": [
+        "simple-resume-cv",
+        "xesearch"
+      ]
+    },
+    {
+      "case": "interchar+mdwtools",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "interchar": "! LaTeX Error: Variant form 'cx' deprecated for base form '\\prop_item:cn'. One"
+      },
+      "culprits": [
+        "interchar"
+      ]
+    },
+    {
+      "case": "feynmf+fontbook",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "fontbook": "! Fatal Package fontspec Error: The fontspec package requires either XeTeX or"
+      },
+      "culprits": [
+        "fontbook"
+      ]
+    },
+    {
+      "case": "grffile+ptext",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "ptext": "! LaTeX Error: File `biditools.sty' not found."
+      },
+      "culprits": [
+        "ptext"
+      ]
+    },
+    {
+      "case": "lineno+textpath",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "lineno": "! Package ednmath0 Error: Bad lineno.sty version.",
+        "textpath": "! LaTeX Error: File `soul.sty' not found."
+      },
+      "culprits": [
+        "lineno",
+        "textpath"
+      ]
+    },
+    {
+      "case": "ifplatform+tetragonos",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "ifplatform": "! LaTeX Error: File `catchfile.sty' not found."
+      },
+      "culprits": [
+        "ifplatform"
+      ]
+    },
+    {
+      "case": "graphics+pdfcolfoot",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "pdfcolfoot": "! LaTeX Error: File `pdfcol.sty' not found."
+      },
+      "culprits": [
+        "pdfcolfoot"
+      ]
+    },
+    {
+      "case": "caption+na-position",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "na-position": "! LaTeX Error: File `tkz-tab.sty' not found."
+      },
+      "culprits": [
+        "na-position"
+      ]
+    },
+    {
+      "case": "babelbib+ptext",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "babelbib": "! Undefined control sequence.",
+        "ptext": "! LaTeX Error: File `biditools.sty' not found."
+      },
+      "culprits": [
+        "babelbib",
+        "ptext"
+      ]
+    },
+    {
+      "case": "jknapltx+mathspec",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "mathspec": "! Emergency stop."
+      },
+      "culprits": [
+        "mathspec"
+      ]
+    },
+    {
+      "case": "bidipresentation+mfnfss",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "bidipresentation": "! LaTeX Error: File `bidipresentation.sty' not found."
+      },
+      "culprits": [
+        "bidipresentation"
+      ]
+    },
+    {
+      "case": "babelbib+pdfcolfoot",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "babelbib": "! Undefined control sequence.",
+        "pdfcolfoot": "! LaTeX Error: File `pdfcol.sty' not found."
+      },
+      "culprits": [
+        "babelbib",
+        "pdfcolfoot"
+      ]
+    },
+    {
+      "case": "bidishadowtext+ctablestack",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "ctablestack": "! Undefined control sequence."
+      },
+      "culprits": [
+        "ctablestack"
+      ]
+    },
+    {
+      "case": "fontspec+footnotehyper",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "fontspec": "! Fatal Package fontspec Error: The fontspec package requires either XeTeX or"
+      },
+      "culprits": [
+        "fontspec"
+      ]
+    },
+    {
+      "case": "hypcap+latex-amsmath-dev",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "hypcap": "! Package hypcap Error: You have to load 'hyperref' first."
+      },
+      "culprits": [
+        "hypcap"
+      ]
+    },
+    {
+      "case": "babelbib+tetragonos",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "babelbib": "! Undefined control sequence."
+      },
+      "culprits": [
+        "babelbib"
+      ]
+    },
+    {
+      "case": "eso-pic+lwarp",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "lwarp": "! LaTeX Error: File `ifptex.sty' not found."
+      },
+      "culprits": [
+        "lwarp"
+      ]
+    },
+    {
+      "case": "anysize+pdfcolfoot",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "pdfcolfoot": "! LaTeX Error: File `pdfcol.sty' not found."
+      },
+      "culprits": [
+        "pdfcolfoot"
+      ]
+    },
+    {
+      "case": "hypcap+koma-script",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "hypcap": "! Package hypcap Error: You have to load 'hyperref' first.",
+        "koma-script": "! LaTeX Error: File `koma-script-source-doc.sty' not found."
+      },
+      "culprits": [
+        "hypcap",
+        "koma-script"
+      ]
+    },
+    {
+      "case": "kvdefinekeys+lua-unicode-math",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "lua-unicode-math": "! Critical Package lua-unicode-math Error: lua-unicode-math can only be used"
+      },
+      "culprits": [
+        "lua-unicode-math"
+      ]
+    },
+    {
+      "case": "ctablestack+float",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "ctablestack": "! Undefined control sequence."
+      },
+      "culprits": [
+        "ctablestack"
+      ]
+    },
+    {
+      "case": "graphics+xetexko",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "xetexko": "! Bad character code (4095)."
+      },
+      "culprits": [
+        "xetexko"
+      ]
+    },
+    {
+      "case": "gettitlestring+xunicode",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "xunicode": "! LaTeX Error: *** this package currently works only with XeTeX ***"
+      },
+      "culprits": [
+        "xunicode"
+      ]
+    },
+    {
+      "case": "ltx-talk+pdfmanagement-testphase",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "ltx-talk": "! LaTeX Error: File `ltx-talk.sty' not found."
+      },
+      "culprits": [
+        "ltx-talk"
+      ]
+    },
+    {
+      "case": "amsfonts+luatexbase",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "luatexbase": "! Undefined control sequence."
+      },
+      "culprits": [
+        "luatexbase"
+      ]
+    },
+    {
+      "case": "arabxetex+ifplatform",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "arabxetex": "! Fatal Package fontspec Error: The fontspec package requires either XeTeX or",
+        "ifplatform": "! LaTeX Error: File `catchfile.sty' not found."
+      },
+      "culprits": [
+        "arabxetex",
+        "ifplatform"
+      ]
+    },
+    {
+      "case": "mathspec+upquote",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "mathspec": "! Emergency stop."
+      },
+      "culprits": [
+        "mathspec"
+      ]
+    },
+    {
+      "case": "ae+babel",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "babel": "! Package babel Error: You are loading directly a language style."
+      },
+      "culprits": [
+        "babel"
+      ]
+    },
+    {
+      "case": "underscore+xeindex",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "xeindex": "! Undefined control sequence."
+      },
+      "culprits": [
+        "xeindex"
+      ]
+    },
+    {
+      "case": "koma-script+mdwtools",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "koma-script": "! LaTeX Error: File `koma-script-source-doc.sty' not found."
+      },
+      "culprits": [
+        "koma-script"
+      ]
+    },
+    {
+      "case": "amscls+pagesel",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "amscls": "! LaTeX Error: File `amsart.sty' not found."
+      },
+      "culprits": [
+        "amscls"
+      ]
+    },
+    {
+      "case": "everyshi+unicode-bidi",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "unicode-bidi": "! Undefined control sequence."
+      },
+      "culprits": [
+        "unicode-bidi"
+      ]
+    },
+    {
+      "case": "simple-resume-cv+xechangebar",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "simple-resume-cv": "! LaTeX Error: File `simpleresumecv.sty' not found."
+      },
+      "culprits": [
+        "simple-resume-cv"
+      ]
+    },
+    {
+      "case": "lm+unicode-bidi",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "unicode-bidi": "! Undefined control sequence."
+      },
+      "culprits": [
+        "unicode-bidi"
+      ]
+    },
+    {
+      "case": "breqn+ctablestack",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "ctablestack": "! Undefined control sequence."
+      },
+      "culprits": [
+        "ctablestack"
+      ]
+    },
+    {
+      "case": "epstopdf-pkg+unicode-math",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "unicode-math": "! Package unicode-math Error: Cannot be run with pdftex!"
+      },
+      "culprits": [
+        "unicode-math"
+      ]
+    },
+    {
+      "case": "babel+unicode-bidi",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "babel": "! Package babel Error: You are loading directly a language style.",
+        "unicode-bidi": "! Undefined control sequence."
+      },
+      "culprits": [
+        "babel",
+        "unicode-bidi"
+      ]
+    },
+    {
+      "case": "luatexbase+metalogo",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "luatexbase": "! Undefined control sequence."
+      },
+      "culprits": [
+        "luatexbase"
+      ]
+    },
+    {
+      "case": "arabxetex+grfext",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "arabxetex": "! Fatal Package fontspec Error: The fontspec package requires either XeTeX or"
+      },
+      "culprits": [
+        "arabxetex"
+      ]
+    },
+    {
+      "case": "mfpic4ode+xeindex",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "mfpic4ode": "! Undefined control sequence.",
+        "xeindex": "! Undefined control sequence."
+      },
+      "culprits": [
+        "mfpic4ode",
+        "xeindex"
+      ]
+    },
+    {
+      "case": "filehook+unicode-math",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "unicode-math": "! Package unicode-math Error: Cannot be run with pdftex!"
+      },
+      "culprits": [
+        "unicode-math"
+      ]
+    },
+    {
+      "case": "dvips+fontspec",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "fontspec": "! Fatal Package fontspec Error: The fontspec package requires either XeTeX or"
+      },
+      "culprits": [
+        "fontspec"
+      ]
+    },
+    {
+      "case": "psnfss+simple-resume-cv",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "simple-resume-cv": "! LaTeX Error: File `simpleresumecv.sty' not found."
+      },
+      "culprits": [
+        "simple-resume-cv"
+      ]
+    },
+    {
+      "case": "gmp+pagesel",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "gmp": "! LaTeX Error: File `environ.sty' not found."
+      },
+      "culprits": [
+        "gmp"
+      ]
+    },
+    {
+      "case": "fontbook+mfpic",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "fontbook": "! Fatal Package fontspec Error: The fontspec package requires either XeTeX or"
+      },
+      "culprits": [
+        "fontbook"
+      ]
+    },
+    {
+      "case": "fp+ltxmisc",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "ltxmisc": "! LaTeX Error: File `abstbook.sty' not found."
+      },
+      "culprits": [
+        "ltxmisc"
+      ]
+    },
+    {
+      "case": "bidipresentation+mathtools",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "bidipresentation": "! LaTeX Error: File `bidipresentation.sty' not found."
+      },
+      "culprits": [
+        "bidipresentation"
+      ]
+    },
+    {
+      "case": "amscls+fp",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "amscls": "! LaTeX Error: File `amsart.sty' not found."
+      },
+      "culprits": [
+        "amscls"
+      ]
+    },
+    {
+      "case": "feynmf+tagpdf",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "tagpdf": "! Package tagpdf Error: PDF resource management is no active!"
+      },
+      "culprits": [
+        "tagpdf"
+      ]
+    },
+    {
+      "case": "philokalia+ulem",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "philokalia": "! Emergency stop."
+      },
+      "culprits": [
+        "philokalia"
+      ]
+    },
+    {
+      "case": "babel+index",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "babel": "! Package babel Error: You are loading directly a language style."
+      },
+      "culprits": [
+        "babel"
+      ]
+    },
+    {
+      "case": "arabxetex+fix2col",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "arabxetex": "! Fatal Package fontspec Error: The fontspec package requires either XeTeX or"
+      },
+      "culprits": [
+        "arabxetex"
+      ]
+    },
+    {
+      "case": "luaotfload+pdfcolfoot",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "luaotfload": "! Undefined control sequence.",
+        "pdfcolfoot": "! LaTeX Error: File `pdfcol.sty' not found."
+      },
+      "culprits": [
+        "luaotfload",
+        "pdfcolfoot"
+      ]
+    },
+    {
+      "case": "bidicontour+xunicode",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "xunicode": "! LaTeX Error: *** this package currently works only with XeTeX ***"
+      },
+      "culprits": [
+        "xunicode"
+      ]
+    },
+    {
+      "case": "caption+xunicode",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "xunicode": "! LaTeX Error: *** this package currently works only with XeTeX ***"
+      },
+      "culprits": [
+        "xunicode"
+      ]
+    },
+    {
+      "case": "bidipresentation+metalogo",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "bidipresentation": "! LaTeX Error: File `bidipresentation.sty' not found."
+      },
+      "culprits": [
+        "bidipresentation"
+      ]
+    },
+    {
+      "case": "amscls+hyperref",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "amscls": "! LaTeX Error: File `amsart.sty' not found."
+      },
+      "culprits": [
+        "amscls"
+      ]
+    },
+    {
+      "case": "feynmp-auto+lwarp",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "lwarp": "! LaTeX Error: File `ifptex.sty' not found."
+      },
+      "culprits": [
+        "lwarp"
+      ]
+    },
+    {
+      "case": "etoolbox+pdfcolfoot",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "pdfcolfoot": "! LaTeX Error: File `pdfcol.sty' not found."
+      },
+      "culprits": [
+        "pdfcolfoot"
+      ]
+    },
+    {
+      "case": "mathspec+thumbpdf",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "mathspec": "! Emergency stop."
+      },
+      "culprits": [
+        "mathspec"
+      ]
+    },
+    {
+      "case": "luatexbase+pslatex",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "luatexbase": "! Undefined control sequence."
+      },
+      "culprits": [
+        "luatexbase"
+      ]
+    },
+    {
+      "case": "anysize+fixlatvian",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "fixlatvian": "! LaTeX Error: File `svn-prov.sty' not found."
+      },
+      "culprits": [
+        "fixlatvian"
+      ]
+    },
+    {
+      "case": "ctable+grfext",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "ctable": "! LaTeX Error: File `transparent.sty' not found."
+      },
+      "culprits": [
+        "ctable"
+      ]
+    },
+    {
+      "case": "beamer+booktabs",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "beamer": "! LaTeX Error: File `beamer.sty' not found."
+      },
+      "culprits": [
+        "beamer"
+      ]
+    },
+    {
+      "case": "bidipresentation+simple-thesis-dissertation",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "bidipresentation": "! LaTeX Error: File `bidipresentation.sty' not found.",
+        "simple-thesis-dissertation": "! LaTeX Error: File `simplethesisdissertation.sty' not found."
+      },
+      "culprits": [
+        "bidipresentation",
+        "simple-thesis-dissertation"
+      ]
+    },
+    {
+      "case": "fontspec+fp",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "fontspec": "! Fatal Package fontspec Error: The fontspec package requires either XeTeX or"
+      },
+      "culprits": [
+        "fontspec"
+      ]
+    },
+    {
+      "case": "amsfonts+ctablestack",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "ctablestack": "! Undefined control sequence."
+      },
+      "culprits": [
+        "ctablestack"
+      ]
+    },
+    {
+      "case": "cqubeamer+hyperref",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "cqubeamer": "! Undefined control sequence."
+      },
+      "culprits": [
+        "cqubeamer"
+      ]
+    },
+    {
+      "case": "cqubeamer+pdfmanagement-testphase",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "cqubeamer": "! Undefined control sequence."
+      },
+      "culprits": [
+        "cqubeamer"
+      ]
+    },
+    {
+      "case": "tagpdf+unisugar",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "tagpdf": "! Package tagpdf Error: PDF resource management is no active!"
+      },
+      "culprits": [
+        "tagpdf"
+      ]
+    },
+    {
+      "case": "xetexko+xfrac",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "xetexko": "! Bad character code (4095)."
+      },
+      "culprits": [
+        "xetexko"
+      ]
+    },
+    {
+      "case": "lwarp+xecyr",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "lwarp": "! LaTeX Error: File `ifptex.sty' not found."
+      },
+      "culprits": [
+        "lwarp"
+      ]
+    },
+    {
+      "case": "ifplatform+kvdefinekeys",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "ifplatform": "! LaTeX Error: File `catchfile.sty' not found."
+      },
+      "culprits": [
+        "ifplatform"
+      ]
+    },
+    {
+      "case": "koma-script+lua-unicode-math",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "koma-script": "! LaTeX Error: File `koma-script-source-doc.sty' not found.",
+        "lua-unicode-math": "! Critical Package lua-unicode-math Error: lua-unicode-math can only be used"
+      },
+      "culprits": [
+        "koma-script",
+        "lua-unicode-math"
+      ]
+    },
+    {
+      "case": "ctable+pdftexcmds",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "ctable": "! LaTeX Error: File `transparent.sty' not found."
+      },
+      "culprits": [
+        "ctable"
+      ]
+    },
+    {
+      "case": "gettitlestring+ucharclasses",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "ucharclasses": "! Emergency stop."
+      },
+      "culprits": [
+        "ucharclasses"
+      ]
+    },
+    {
+      "case": "luatexbase+xecyr",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "luatexbase": "! Undefined control sequence."
+      },
+      "culprits": [
+        "luatexbase"
+      ]
+    },
+    {
+      "case": "lwarp+typehtml",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "lwarp": "! LaTeX Error: File `ifptex.sty' not found."
+      },
+      "culprits": [
+        "lwarp"
+      ]
+    },
+    {
+      "case": "atveryend+ucharcat",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "ucharcat": "! Package ucharcat Error: \\Ucharcat may only be used with xetex and luatex."
+      },
+      "culprits": [
+        "ucharcat"
+      ]
+    },
+    {
+      "case": "businesscard-qrcode+emp",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "businesscard-qrcode": "! LaTeX Error: File `businesscard-qrcode.sty' not found."
+      },
+      "culprits": [
+        "businesscard-qrcode"
+      ]
+    },
+    {
+      "case": "upquote+xesearch",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "xesearch": "! Undefined control sequence."
+      },
+      "culprits": [
+        "xesearch"
+      ]
+    },
+    {
+      "case": "luamml+xunicode",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "luamml": "! Undefined control sequence.",
+        "xunicode": "! LaTeX Error: *** this package currently works only with XeTeX ***"
+      },
+      "culprits": [
+        "luamml",
+        "xunicode"
+      ]
+    },
+    {
+      "case": "attachfile2+unicode-math",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "unicode-math": "! Package unicode-math Error: Cannot be run with pdftex!"
+      },
+      "culprits": [
+        "unicode-math"
+      ]
+    },
+    {
+      "case": "bibtex+ctable",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "ctable": "! LaTeX Error: File `transparent.sty' not found."
+      },
+      "culprits": [
+        "ctable"
+      ]
+    },
+    {
+      "case": "babelbib+xltxtra",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "babelbib": "! Undefined control sequence.",
+        "xltxtra": "! Emergency stop."
+      },
+      "culprits": [
+        "babelbib",
+        "xltxtra"
+      ]
+    },
+    {
+      "case": "ltx-talk+translator",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "ltx-talk": "! LaTeX Error: File `ltx-talk.sty' not found."
+      },
+      "culprits": [
+        "ltx-talk"
+      ]
+    },
+    {
+      "case": "fontwrap+latex-tools-dev",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "fontwrap": "! Fatal Package fontspec Error: The fontspec package requires either XeTeX or"
+      },
+      "culprits": [
+        "fontwrap"
+      ]
+    },
+    {
+      "case": "cqubeamer+ltxmisc",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "cqubeamer": "! Undefined control sequence.",
+        "ltxmisc": "! LaTeX Error: File `abstbook.sty' not found."
+      },
+      "culprits": [
+        "cqubeamer",
+        "ltxmisc"
+      ]
+    },
+    {
+      "case": "bidipagegrid+xecolor",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "xecolor": "! Fatal Package fontspec Error: The fontspec package requires either XeTeX or"
+      },
+      "culprits": [
+        "xecolor"
+      ]
+    },
+    {
+      "case": "cqubeamer+makecmds",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "cqubeamer": "! Undefined control sequence."
+      },
+      "culprits": [
+        "cqubeamer"
+      ]
+    },
+    {
+      "case": "revtex+sansmath",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "revtex": "! Undefined control sequence."
+      },
+      "culprits": [
+        "revtex"
+      ]
+    },
+    {
+      "case": "ltx-talk+ptext",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "ltx-talk": "! LaTeX Error: File `ltx-talk.sty' not found.",
+        "ptext": "! LaTeX Error: File `biditools.sty' not found."
+      },
+      "culprits": [
+        "ltx-talk",
+        "ptext"
+      ]
+    },
+    {
+      "case": "ctable+index",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "ctable": "! LaTeX Error: File `transparent.sty' not found."
+      },
+      "culprits": [
+        "ctable"
+      ]
+    },
+    {
+      "case": "pdftexcmds+xetexko",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "xetexko": "! Bad character code (4095)."
+      },
+      "culprits": [
+        "xetexko"
+      ]
+    },
+    {
+      "case": "bidicontour+lineno",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "lineno": "! Package ednmath0 Error: Bad lineno.sty version."
+      },
+      "culprits": [
+        "lineno"
+      ]
+    },
+    {
+      "case": "filehook+na-position",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "na-position": "! LaTeX Error: File `tkz-tab.sty' not found."
+      },
+      "culprits": [
+        "na-position"
+      ]
+    },
+    {
+      "case": "beamer+xeindex",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "beamer": "! LaTeX Error: File `beamer.sty' not found.",
+        "xeindex": "! Undefined control sequence."
+      },
+      "culprits": [
+        "beamer",
+        "xeindex"
+      ]
+    },
+    {
+      "case": "grffile+interchar",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "interchar": "! LaTeX Error: Variant form 'cx' deprecated for base form '\\prop_item:cn'. One"
+      },
+      "culprits": [
+        "interchar"
+      ]
+    },
+    {
+      "case": "graphics+unicode-bidi",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "unicode-bidi": "! Undefined control sequence."
+      },
+      "culprits": [
+        "unicode-bidi"
+      ]
+    },
+    {
+      "case": "footnotehyper+xltxtra",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "xltxtra": "! Emergency stop."
+      },
+      "culprits": [
+        "xltxtra"
+      ]
+    },
+    {
+      "case": "fontspec+latex-firstaid-dev",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "fontspec": "! Fatal Package fontspec Error: The fontspec package requires either XeTeX or"
+      },
+      "culprits": [
+        "fontspec"
+      ]
+    },
+    {
+      "case": "ltx-talk+pslatex",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "ltx-talk": "! LaTeX Error: File `ltx-talk.sty' not found."
+      },
+      "culprits": [
+        "ltx-talk"
+      ]
+    },
+    {
+      "case": "ltxcmds+xesearch",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "xesearch": "! Undefined control sequence."
+      },
+      "culprits": [
+        "xesearch"
+      ]
+    },
+    {
+      "case": "beamer+latex-firstaid-dev",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "beamer": "! LaTeX Error: File `beamer.sty' not found."
+      },
+      "culprits": [
+        "beamer"
+      ]
+    },
+    {
+      "case": "beamer+uniquecounter",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "beamer": "! LaTeX Error: File `beamer.sty' not found."
+      },
+      "culprits": [
+        "beamer"
+      ]
+    },
+    {
+      "case": "hypcap+xpatch",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "hypcap": "! Package hypcap Error: You have to load 'hyperref' first."
+      },
+      "culprits": [
+        "hypcap"
+      ]
+    },
+    {
+      "case": "fancybox+luamml",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "luamml": "! Undefined control sequence."
+      },
+      "culprits": [
+        "luamml"
+      ]
+    },
+    {
+      "case": "fixlatvian+xeindex",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "fixlatvian": "! LaTeX Error: File `svn-prov.sty' not found.",
+        "xeindex": "! Undefined control sequence."
+      },
+      "culprits": [
+        "fixlatvian",
+        "xeindex"
+      ]
+    },
+    {
+      "case": "amscls+natbib",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "amscls": "! LaTeX Error: File `amsart.sty' not found."
+      },
+      "culprits": [
+        "amscls"
+      ]
+    },
+    {
+      "case": "interchar+lineno",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "interchar": "! LaTeX Error: Variant form 'cx' deprecated for base form '\\prop_item:cn'. One",
+        "lineno": "! Package ednmath0 Error: Bad lineno.sty version."
+      },
+      "culprits": [
+        "interchar",
+        "lineno"
+      ]
+    },
+    {
+      "case": "fontbook+xesearch",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "fontbook": "! Fatal Package fontspec Error: The fontspec package requires either XeTeX or",
+        "xesearch": "! Undefined control sequence."
+      },
+      "culprits": [
+        "fontbook",
+        "xesearch"
+      ]
+    },
+    {
+      "case": "mathspec+simple-resume-cv",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "mathspec": "! Emergency stop.",
+        "simple-resume-cv": "! LaTeX Error: File `simpleresumecv.sty' not found."
+      },
+      "culprits": [
+        "mathspec",
+        "simple-resume-cv"
+      ]
+    },
+    {
+      "case": "kvsetkeys+unicode-bidi",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "unicode-bidi": "! Undefined control sequence."
+      },
+      "culprits": [
+        "unicode-bidi"
+      ]
+    },
+    {
+      "case": "ulem+xebaposter",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "xebaposter": "! LaTeX Error: File `xebaposter.sty' not found."
+      },
+      "culprits": [
+        "xebaposter"
+      ]
+    },
+    {
+      "case": "arabxetex+xevlna",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "arabxetex": "! Fatal Package fontspec Error: The fontspec package requires either XeTeX or",
+        "xevlna": "! Undefined control sequence."
+      },
+      "culprits": [
+        "arabxetex",
+        "xevlna"
+      ]
+    },
+    {
+      "case": "mfpic4ode+na-position",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "mfpic4ode": "! Undefined control sequence.",
+        "na-position": "! LaTeX Error: File `tkz-tab.sty' not found."
+      },
+      "culprits": [
+        "mfpic4ode",
+        "na-position"
+      ]
+    },
+    {
+      "case": "pgf+ucharclasses",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "ucharclasses": "! Emergency stop."
+      },
+      "culprits": [
+        "ucharclasses"
+      ]
+    },
+    {
+      "case": "latex-lab+na-position",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "na-position": "! LaTeX Error: File `tkz-tab.sty' not found."
+      },
+      "culprits": [
+        "na-position"
+      ]
+    },
+    {
+      "case": "bitset+mathspec",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "mathspec": "! Emergency stop."
+      },
+      "culprits": [
+        "mathspec"
+      ]
+    },
+    {
+      "case": "latex-base-dev+xevlna",
+      "class": "explained-by-standalone-failure",
+      "culprit_errors": {
+        "xevlna": "! Undefined control sequence."
+      },
+      "culprits": [
+        "xevlna"
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "standalone_failed_packages": [
+    "amscls",
+    "arabxetex",
+    "babel",
+    "babel-spanish",
+    "babelbib",
+    "beamer",
+    "bidipresentation",
+    "businesscard-qrcode",
+    "cqubeamer",
+    "ctable",
+    "ctablestack",
+    "fixlatvian",
+    "fontbook",
+    "fontspec",
+    "fontwrap",
+    "gmp",
+    "hypcap",
+    "ifplatform",
+    "interchar",
+    "koma-script",
+    "lineno",
+    "ltx-talk",
+    "ltxmisc",
+    "lua-unicode-math",
+    "luamml",
+    "luaotfload",
+    "luatexbase",
+    "lwarp",
+    "mathspec",
+    "mfpic4ode",
+    "mpgraphics",
+    "na-position",
+    "pdfcolfoot",
+    "philokalia",
+    "ptext",
+    "revtex",
+    "simple-resume-cv",
+    "simple-thesis-dissertation",
+    "tagpdf",
+    "textpath",
+    "ucharcat",
+    "ucharclasses",
+    "unicode-bidi",
+    "unicode-math",
+    "xebaposter",
+    "xecolor",
+    "xeindex",
+    "xesearch",
+    "xetexko",
+    "xevlna",
+    "xltxtra",
+    "xunicode",
+    "zbmath-review-template"
+  ],
+  "total_pairs": 500
+}
