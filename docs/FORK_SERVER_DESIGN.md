@@ -90,11 +90,15 @@ server), reporting p50/p95 over ≥100 children with warm caches.
 - [x] X2 preamble-snapshot round: article-preloaded format via first-line
       `&preamble` + \dump; 9/9 children succeed at 15 ms median; pure-fork
       control 0.01 ms proves fork cost is negligible
-- [ ] KNOWN ISSUE: launching the parent with `-fmt=<snapshot>` instead of a
-      first-line `&<format>` reference does NOT reach the hook (flow differs
-      in web2c-generated mainbody between the &-load branch and preloaded
-      path). Workaround in place: always pass the format via first-line
-      reference. Root-causing the generated-code flow difference is queued.
+- [x] KNOWN ISSUE CONFIRMED: `-fmt=<name>` preloaded runs SKIP the entire
+      general-init region including fixdateandtime#2 and the fork-server
+      hook. This is a tex.web main-block control-flow property: preloaded
+      formats branch directly to start_input/maincontrol, bypassing all
+      post-fmt-load initialisation. Fix requires a .ch change file placing
+      the hook INSIDE tex.web's main control loop (or at every format-load
+      exit path). Interim workaround: first-line &reference launches only.
+- [ ] XeTeX / LuaHBTeX servers (blocked on same issue)
+- [ ] Integration of worker routing with the full BT100 differential battery
 - [ ] XeTeX / LuaHBTeX servers
 - [ ] Integration of worker routing with the full BT100 differential battery
 
