@@ -19,6 +19,7 @@ mod checkpoint;
 mod rebuild_cache;
 mod output_graph;
 mod output_store;
+mod project_format;
 use checkpoint::{CheckpointChain, CheckpointRecord};
 
 use serde::{Deserialize, Serialize};
@@ -878,17 +879,35 @@ fn handle_request(
                     payload: Payload::Empty,
                 };
             }
-            // Milestone X1 fast path: when enabled and the pinned image
-            // provides a fork-server engine, route through the resident
-            // worker. Any failure escalates to the exact one-shot path below,
-            // preserving BT100 (plan §6.1 item 7).
-            let mut outcome = if state.use_forkserver && profile == "basictex-2026" {
-                let job = derive_job_name(&argv, &cwd);
-                match state.forkserver_compile(&cwd, &job) {
-                    Ok((exit_status, duration_ms)) => Ok((exit_status, duration_ms)),
+            // Milestone X2 fast path first (largest measured win, ~2x on
+            // preamble-heavy documents): build/reuse a per-project preamble
+            // format and compile the paired body. Not applicable or any
+            // failure escalates to the X1 fork server, then the exact
+            // one-shot path — preserving BT100 (plan §6.1 item 7).
+            let mut outcome = if profile == "basictex-2026" {
+                match project_format::fast_compile(&state.image_root, &cwd, &argv)
+                {
+                    Ok(fast) => Ok((fast.exit_status, fast.duration_ms)),
                     Err(error) => {
-                        eprintln!("supervisor: fork server unavailable ({error}); using one-shot execution");
-                        run_profile_compile(&profile, &argv, &cwd)
+                        eprintln!(
+                            "supervisor: project format not used ({error}); trying fork server"
+                        );
+                        let job = derive_job_name(&argv, &cwd);
+                        if state.use_forkserver {
+                            match state.forkserver_compile(&cwd, &job) {
+                                Ok((exit_status, duration_ms)) => {
+                                    Ok((exit_status, duration_ms))
+                                }
+                                Err(error) => {
+                                    eprintln!(
+                                        "supervisor: fork server unavailable ({error}); using one-shot execution"
+                                    );
+                                    run_profile_compile(&profile, &argv, &cwd)
+                                }
+                            }
+                        } else {
+                            run_profile_compile(&profile, &argv, &cwd)
+                        }
                     }
                 }
             } else {
