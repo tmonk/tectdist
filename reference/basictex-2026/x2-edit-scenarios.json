@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "trials_per_scenario": 3,
+  "statistic": "min",
+  "scenarios": {
+    "stock-one-shot": 156,
+    "cold-first-with-format-build": 271,
+    "warm-body-edit-format-reused": 67,
+    "preamble-edit-format-rebuilt": 273
+  },
+  "speedup_body_edit_vs_stock": 2.328
+}
