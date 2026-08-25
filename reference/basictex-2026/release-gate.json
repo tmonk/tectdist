@@ -5,44 +5,44 @@
     {
       "stage": "workspace-tests",
       "status": "pass",
-      "detail": "returncode=0, 89 tests passed",
-      "seconds": 40.1
+      "detail": "returncode=0, 90 tests passed",
+      "seconds": 30.4
     },
     {
       "stage": "differential",
       "status": "pass",
       "detail": "differential: OK",
-      "seconds": 37.4
+      "seconds": 0.4
     },
     {
       "stage": "bib-differential",
       "status": "pass",
       "detail": "differential corpus passed (10 cases)",
-      "seconds": 2.8
+      "seconds": 4.2
     },
     {
       "stage": "bt100-report-gate",
       "status": "pass",
       "detail": "195 pass / 0 fail / 65 reference-blocked",
-      "seconds": 0.0
+      "seconds": 0.1
     },
     {
       "stage": "doc-equivalence",
       "status": "pass",
       "detail": "14/14 documents equivalent -> /Users/tom/Library/CloudStorage/Dropbox/projects/tectdist/reference/basictex-2026/doc-equivalence.json",
-      "seconds": 4.0
+      "seconds": 8.0
     },
     {
       "stage": "fail-equivalence",
       "status": "pass",
       "detail": "{'equivalent-fail': 65, 'equivalent-pass': 0, 'mismatch': 0} -> /Users/tom/Library/CloudStorage/Dropbox/projects/tectdist/reference/basictex-2026/fail-equivalence.json",
-      "seconds": 8.1
+      "seconds": 11.3
     },
     {
       "stage": "x10-e-edit",
       "status": "fail",
-      "detail": "body-edit 1.961x, unchanged 12.583x \u2014 below 10x; requires engine-side page checkpoints (documented)",
-      "seconds": 2.5
+      "detail": "body-edit 0.548x, unchanged 4.217x \u2014 below 10x; requires engine-side page checkpoints (documented)",
+      "seconds": 4.6
     },
     {
       "stage": "x10-c-warm-clean",

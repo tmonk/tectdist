@@ -1232,10 +1232,13 @@ impl SupervisorState {
             if let Some((_, worker)) = guard.take() {
                 worker.shutdown();
             }
-            *guard = Some((
-                wanted_key.clone(),
-                EngineWorker::spawn(&self.image_root, cwd, project_fmt)?,
-            ));
+            let mut worker =
+                EngineWorker::spawn(&self.image_root, cwd, project_fmt)?;
+            // The engine loads its format before opening the listen
+            // socket; a 3 MB project format can take hundreds of ms.
+            // Wait instead of letting the first compile poll-fail.
+            worker.wait_ready()?;
+            *guard = Some((wanted_key.clone(), worker));
         }
         let (_, worker) = guard.as_ref().unwrap();
         // Composed workers compile the paired body file; the resulting PDF

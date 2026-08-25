@@ -89,8 +89,13 @@ body-edit workloads:
     composed fork server: 324-466 ms
     X2 direct:            ~67 ms
 
-X2-direct wins by ~5x; the forkproto per-compile IPC/hook overhead
-dominates whatever the COW child saves. The composition remains
+X2-direct wins; post-fix measurement (wait_ready wired, &-prefix
+removed from the child job line): composed warm compiles 80-95 ms vs
+stock 53 ms and X2-direct ~67 ms — correct output every time, but the
+forkproto per-compile machinery (IPC round trip + fork + buffer install)
+costs more than process spawn + format load that X2 pays once. The
+composition stays opt-in with coverage; flipping the default would be a
+regression. The composition remains
 implemented behind the opt-in flag with an integration test, and the
 default chain order (X4 -> X2 -> forkserver -> one-shot) is validated
 as correct. The fork server becomes interesting again only when page

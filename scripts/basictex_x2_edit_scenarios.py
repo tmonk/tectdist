@@ -59,6 +59,11 @@ class Supervisor:
         env["TECTDIST_SUPERVISOR_SOCKET"] = str(self.socket)
         env["TECTDIST_ACTION_CACHE"] = str(self.dir / "cache")
         env["TECTDIST_BASICTEX_ROOT"] = str(IMAGE)
+        # Fork-server composition flags propagate from the caller so the
+        # release gate measures the accelerated resident-worker chain.
+        for key in ("TECTDIST_USE_FORKSERVER", "TECTDIST_FORKSERVER_PREFER"):
+            if key in os.environ:
+                env[key] = os.environ[key]
         self.log = open(self.dir / "serve.log", "w")
         self.proc = subprocess.Popen(
             [str(exe), "serve"], env=env, stdout=self.log, stderr=self.log,

@@ -50,6 +50,11 @@ fn start_supervisor(tag: &str, image: &Path) -> Supervisor {
     command.env("TECTDIST_ACTION_CACHE", dir.join("cache"));
     command.env("TECTDIST_BASICTEX_ROOT", image);
     command.env("TECTDIST_COMPILE_TIMEOUT_SECS", "120");
+    for key in ["TECTDIST_USE_FORKSERVER", "TECTDIST_FORKSERVER_PREFER"] {
+        if let Ok(value) = std::env::var(key) {
+            command.env(key, value);
+        }
+    }
     let log = std::fs::File::create(dir.join("serve.log")).unwrap();
     command.stdout(log.try_clone().unwrap()).stderr(log);
     let child = command.spawn().expect("spawn supervisor");
