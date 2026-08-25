@@ -489,7 +489,7 @@ fn engine_base_seed(
         ),
         "xetex" => (
             "tectdist-xelatex",
-            "texmf-var/web2c/xelatex/xelatex.fmt",
+            "texmf-var/web2c/xetex/xelatex.fmt",
         ),
         "luatex" => (
             "tectdist-luatex",

@@ -226,12 +226,39 @@ work; scripts/basictex_project_format.py provides the CLI scaffolding.
       rather than further fork optimisation
 
 
-## Non-pdftex fork-server status (2026-08)
+## Non-pdftex fork-server status (2026-08, UPDATED — XeTeX DONE)
 
-The build-fs TL tree was configured without XeTeX/LuaTeX targets (no
-`xetex:` rule in texk/web2c/Makefile); enabling them requires a full
-reconfigure plus first-time builds of the XeTeX C++ and LuaTeX sources.
-Dedicated-session work: patch generation (forkserver_apply_patch)
-generalises to the tangled *ini.c files once they exist, but the build,
-per-engine hook placement verification, and protocol testing are
-substantial. pdfTeX remains the instrumented reference engine.
+**XeTeX fork server: BUILT AND VERIFIED.** Recipe (reproducible):
+
+1. The original configure ran with explicit `--disable-xetex` (see
+   build-fs/config.log line ~29113). teckit sources are in-tree and
+   configure fine: `make -C libs/teckit` (~seconds).
+2. Re-run the top-level auxdir/auxsub/configure with the EXACT original
+   argument list (extractable from config.log) but `--enable-xetex`
+   instead of `--disable-xetex`, plus `--with-system-fontconfig=yes`
+   and PKG_CONFIG_PATH including brew fontconfig/freetype.
+3. TL does not bundle fontconfig; inject system flags into
+   texk/web2c/Makefile manually:
+   FONTCONFIG_INCLUDES = -I<brew fc>/include -I<brew freetype>/include/freetype2
+   FONTCONFIG_LIBS = -L<brew fc>/lib -lfontconfig
+4. XeTeXLayoutInterface.cpp needs ICU headers: append
+   -I<build>/libs/icu/include; link needs -L<build>/libs/icu/icu-build/lib
+   -licuuc -licui18n -licudata -licuio. ICU headers require C++17:
+   make xetex CXXFLAGS="-g -O2 -std=c++17".
+5. Hook it: python3 scripts/forkserver_apply_patch.py --build <build>
+   --engines xetex  (anchor: 2nd fixdateandtime in xetexini.c ✓)
+6. make texk/web2c/xetex; deploy to image/bin/forkproto/xetex.
+7. Supervisor: fork_engine_for_program maps xelatex -> xetex;
+   base seed = texmf-var/web2c/xetex/xelatex.fmt.
+
+Verified live: xelatex documents compile through the COMPOSED path
+(worker preloading an X2 project format), exit 0, pdftotext output
+identical to the reference. Build-tree gotchas encountered and fixed:
+a corrupted texmfmp.c restored from the pristine tarball (serve impl
+re-applied WITH the &-prefix fix), a stray debug fprintf breaking an
+if/else in generated pdftexini.c, and an empty build-tree
+lib/texmfmp.c shadowing the source file via include-path order.
+
+**LuaTeX**: same approach expected (--enable-luatex); luatex's engine
+loop differs (lua* init) so hook placement needs verification. Not yet
+attempted.
