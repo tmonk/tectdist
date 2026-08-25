@@ -259,6 +259,11 @@ re-applied WITH the &-prefix fix), a stray debug fprintf breaking an
 if/else in generated pdftexini.c, and an empty build-tree
 lib/texmfmp.c shadowing the source file via include-path order.
 
-**LuaTeX**: same approach expected (--enable-luatex); luatex's engine
-loop differs (lua* init) so hook placement needs verification. Not yet
-attempted.
+**LuaTeX**: NOT web2c-tangled — no *ini.c/fixdateandtime anchor exists
+(luainit-hb.c -> luatexdir/lua/luainit.c is plain C with extensive Lua
+state initialisation before any input processing). Hook insertion
+requires manually locating the post-format-load convergence point in
+luainit.c (after do_luatex_init / format load, before the main loop) —
+genuinely different from the web2c recipe, unattempted. Also note
+lua* engines rebuild their format via luaotfload at first run, which
+changes what a "project format" snapshot even contains.
