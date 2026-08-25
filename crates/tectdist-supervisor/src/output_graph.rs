@@ -10,6 +10,7 @@
 //! these records.
 
 use std::collections::BTreeMap;
+use std::path::{Path, PathBuf};
 
 /// Content digest (SHA-256 hex) over the object's serialized bytes.
 pub type Digest = String;
@@ -315,3 +316,4 @@ mod tests {
         assert!(plan.reused_pages.is_empty());
     }
 }
+
