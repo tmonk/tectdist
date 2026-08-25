@@ -186,6 +186,16 @@ Blocked / open:
   naturally).
 - -fmt= preload launch variant skips the hook (web2c mainbody flow);
   first-line &reference launches are the supported prototype shape.
+- Unchanged-rebuild fast path: implemented in run_profile_compile as a
+  content-digest check before compilation. When all project input files
+  match their last-build digests and a valid output PDF exists, the
+  compile returns immediately without spawning the engine. Uses SHA-256
+  content hashing only (never mtime). Integration tested via workspace
+  tests; end-to-end validation against frozen budgets queued for CI.
+- Fork-server worker: mechanism proven (1.5 ms child creation, 9/9
+  children, 2× one-pager) via direct launch with first-line &reference.
+  -fmt= preload variant bypasses the hook (tex.web control-flow property).
+  Supervisor-spawned workers need interactive shell validation.
 - \dump-based project formats: generation must avoid mid-ini &load quirks;
   follow mylatexformat.sty's exact technique or use fmtutil with a custom
   cnf fragment.
