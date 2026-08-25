@@ -229,6 +229,33 @@ fn adversarial_mutations_never_serve_stale_output() {
         let collapse = |s: &str| -> String {
             s.split_whitespace().collect::<Vec<_>>().join(" ")
         };
+        // Shadow-full-build check (X2 contract): every third iteration,
+        // recompile the CURRENT source with the raw reference engine in a
+        // scratch directory and require identical text. This catches any
+        // systematic divergence the fast paths might introduce, not just
+        // staleness versus the immediately previous output.
+        if iteration % 3 == 0 && iteration > 0 {
+            let shadow = free_dir("mfuzz-shadow");
+            std::fs::copy(&doc_path, shadow.join("main.tex")).unwrap();
+            let status = Command::new(image.join("bin/universal-darwin/pdftex"))
+                .args(["-interaction=batchmode", "-halt-on-error", "&pdflatex", "main.tex"])
+                .current_dir(&shadow)
+                .env("TEXMFROOT", &image)
+                .stdout(Stdio::null())
+                .stderr(Stdio::null())
+                .status()
+                .expect("shadow dispatch");
+            assert!(status.success(), "iteration {iteration}: shadow build failed");
+            let shadow_text = extract(&shadow.join("main.pdf"));
+            assert_eq!(
+                collapse(&text),
+                collapse(&shadow_text),
+                "iteration {iteration}: fast-path output diverges from a \
+                 full shadow rebuild"
+            );
+            let _ = std::fs::remove_dir_all(&shadow);
+        }
+
         if iteration % 3 == 2 {
             // Preamble mutation: prove the snapshot key moved by checking
             // the recorded meta digest changed versus the previous round.
