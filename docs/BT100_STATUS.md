@@ -16,7 +16,7 @@ modifications documented in `docs/FORK_SERVER_DESIGN.md`.
 |---|---|---|
 | **B0** Contract reset | ✅ complete | BasicTeX pinned, manifests generated, budgets frozen |
 | **B1** Substrate | ✅ complete | Image verified (19,935 files), size gate PASS, pipelines 7/7 |
-| **B2** Compatibility factory | ~85% | Ledger 372 rows, smoke 192/192 pass, interactions 507/507 ref-green pass, report generator live |
+| **B2** Compatibility factory | ~90% | Ledger 372 rows, smoke 192/192 pass, interactions 507/507 ref-green pass, **all ref-failures attributed (0 pair-specific)**, probes: 209 packages → 161 pass / 48 reference-blocked, report gate PASS |
 | **X1** Supervisor + fork servers | ~65% | IPC+locks ✓, pdfTeX fork server proven (1.5 ms children), launch-variant matrix mapped, -fmt bypass root-caused |
 | **X2** Preamble snapshots | ~50% | \dump round proven (9/9 children at 15 ms), TEXFORMATS recipe documented, hyph_size limitation isolated |
 | **X3** Helper acceleration | ✅ complete | Broker MVP done, 5/5 helpers < 2 ms gates, mutation corpus passes |
@@ -50,7 +50,8 @@ modifications documented in `docs/FORK_SERVER_DESIGN.md`.
 basictex_image, basictex_reference, basictex_corpus, basictex_baseline,
 basictex_interactions, basictex_pipelines, basictex_overlay,
 basictex_project_format, basictex_actions_bench, basictex_smoke,
-basictex_ledger, basictex_report, forkserver_apply_patch, tectonic_perf_matrix
+basictex_ledger, basictex_report, basictex_reffail_standalone,
+basictex_reffail_classify, forkserver_apply_patch, tectonic_perf_matrix
 
 ## Design documents
 
