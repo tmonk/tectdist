@@ -34,6 +34,7 @@ SEQUENCES = {
     "tiny": ["pdflatex {job}.tex"],
     "references": ["pdflatex {job}.tex", "pdflatex {job}.tex"],
     "paper": ["pdflatex {job}.tex", "pdflatex {job}.tex"],
+    "multifile": ["pdflatex {job}.tex", "pdflatex {job}.tex"],
     "thesis": ["pdflatex {job}.tex", "pdflatex {job}.tex"],
     "graphics": ["pdflatex {job}.tex"],
     "tikz": ["pdflatex {job}.tex", "pdflatex {job}.tex"],
@@ -64,10 +65,15 @@ def run_sequence(binary_dir, work, commands, env):
 
 
 def copy_project(doc_source: Path, destination: Path):
+    # Recursive so multi-file documents (\input/\include into
+    # subdirectories) stage completely; structure is preserved.
     if doc_source.is_dir():
-        for item in doc_source.iterdir():
+        for item in doc_source.rglob("*"):
             if item.is_file() and item.suffix in {".tex", ".bib", ".ist", ".mp"}:
-                shutil.copy(item, destination / item.name)
+                rel = item.relative_to(doc_source)
+                target = destination / rel
+                target.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copy(item, target)
     else:
         shutil.copy(doc_source, destination / doc_source.name)
 
@@ -181,9 +187,11 @@ def main(argv=None):
                 print(f"baseline: no source for '{document}'; skipped")
                 continue
             source = candidates[0]
+        # Always stage the document DIRECTORY: multi-file documents
+        # (\input/\include into subdirectories) must stage completely,
+        # and copy_project handles both layouts.
         samples, error = measure(reference_bin, candidate_bin,
-                                 source_dir if ns.corpus == "basictex" else source,
-                                 commands, ns.trials, env)
+                                 source_dir, commands, ns.trials, env)
         if error:
             print(f"baseline: {document}: FAILED — {error}")
             continue

@@ -218,3 +218,22 @@ requires_index = false
 requires_glossary = false
 requires_shell_escape = false
 edit_operations = ["structural-section"]
+
+[[document]]
+id = "multifile"
+path = "corpus/multifile"
+main = "main.tex"
+license = "CC0-1.0"
+claim = true
+platforms = ["macos-arm64", "linux-x86_64", "linux-arm64"]
+scenarios = ["warm-clean", "source-small-edit", "source-structural-edit"]
+expected_pages = 4
+expected_text = ["A Multifile Corpus Document", "Introduction", "Results", "Accent styling"]
+engine = "tectonic"
+requires = ["xcolor", "amsmath"]
+requires_bibliography = false
+requires_index = false
+requires_glossary = false
+requires_shell_escape = false
+edit_operations = ["small-text", "structural-section"]
+forbid_log_patterns = ["undefined references", "Rerun to get cross-references right"]
