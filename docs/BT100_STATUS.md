@@ -37,7 +37,7 @@ modifications documented in `docs/FORK_SERVER_DESIGN.md`.
 | Supervisor chain (warm body edit) | 67 ms vs 152 ms stock | 2.3x via project format |
 | Supervisor chain (unchanged rebuild) | 12 ms vs 152 ms stock | 12.7x via X4 gate |
 | Pipeline qualification | 7/7 | direct PDF through tex4ht |
-| Fast-path safety | multi-occurrence preamble splits + subdir edits escalate to exact path | correctness hardening |
+| Fast-path safety | 8 hardening rounds: recursive snapshots, split guard, flag forwarding, eligibility guards, whole-tree hashing, dependency walks (direct + nested), macro-indirection escalation — each battery-re-verified | correctness hardening |
 
 ## Crates delivered
 

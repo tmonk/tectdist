@@ -182,6 +182,29 @@ pub fn fast_compile(image_root: &Path, cwd: &Path, argv: &[String]) -> Result<Fa
     let source_text = std::fs::read_to_string(&source_path)
         .map_err(|error| format!("cannot read {source_path:?}: {error}"))?;
     let split = split_source(&source_text).ok_or("no \\begin{document} found")?;
+    // Macro-indirected inputs (\\def\\f{setup}\\input\\f) cannot be
+    // resolved without TeX expansion, so their files are invisible to
+    // the dependency walk. If the preamble uses the brace-less form at
+    // all, decline the snapshot rather than risk serving a stale one.
+    let preamble_text = &split.preamble;
+    for opener in ["\\input", "\\include"] {
+        let mut from = 0;
+        while let Some(rel) = preamble_text[from..].find(opener) {
+            let after = &preamble_text[from + rel + opener.len()..];
+            let next = after.chars().next();
+            match next {
+                Some('{') => {} // braced literal: tracked by the walker
+                Some(c) if c.is_alphabetic() || c == '\\' => {
+                    return Err(
+                        "preamble uses macro-indirected \\input/\\include; needs exact execution"
+                            .to_string(),
+                    );
+                }
+                _ => {}
+            }
+            from += rel + opener.len();
+        }
+    }
 
     let job_stem = Path::new(source_arg)
         .file_stem()

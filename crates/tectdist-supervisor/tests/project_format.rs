@@ -309,3 +309,45 @@ fn nested_dependency_edit_rebuilds_format() {
     assert_ne!(meta_before.trim(), meta_after.trim(),
                "nested dependency edit must rebuild the format");
 }
+
+#[test]
+fn macro_indirected_input_escalates_to_exact_path() {
+    let Some(_image) = basic_tex_root() else {
+        eprintln!("skipping: BasicTeX reference image not present on this host");
+        return;
+    };
+    let supervisor = start_supervisor("pfmt-macro");
+
+    let work = free_dir("pfmtmacro-work");
+    // \input\f with \f a macro: untrackable dependency shape. The fast
+    // path must decline (no .tectdist) and exact execution must still
+    // produce the correct PDF.
+    std::fs::write(
+        work.join("main.tex"),
+        "\\documentclass{article}\n\\def\\extra{setup}\n\\input\\extra\n\\begin{document}\nValue: \\the\\mylen.\n\\end{document}\n",
+    )
+    .unwrap();
+    std::fs::write(
+        work.join("setup.tex"),
+        "\\newlength{\\mylen}\\setlength{\\mylen}{5pt}\n",
+    )
+    .unwrap();
+
+    let payload = serde_json::json!({
+        "type": "compile",
+        "profile": "basictex-2026",
+        "cwd": work.to_str().unwrap(),
+        "argv": ["pdflatex", "-interaction=batchmode", "main.tex"],
+        "snapshot_key": null,
+    });
+
+    let response = client(&supervisor.socket, payload);
+    assert_eq!(response["ok"], true, "compile failed: {response}");
+    assert_eq!(
+        response["compile_accepted"]["exit_status"], 0,
+        "exact-path compile must succeed: {response}"
+    );
+    assert!(work.join("main.pdf").is_file(), "PDF must exist");
+    assert!(!work.join(".tectdist").exists(),
+            "fast path must NOT engage for macro-indirected inputs");
+}
