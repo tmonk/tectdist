@@ -1,0 +1,352 @@
+{
+  "schema_version": 1,
+  "image_files_sha256": "395f0b4d7ce47684c021e8734421bd530206e58a96949cb6103a6333ad2b36b6",
+  "shard": "1/4",
+  "counters": {
+    "pass": 48,
+    "fail": 0,
+    "reference-failure": 20
+  },
+  "results": [
+    {
+      "package": "amscls",
+      "style": "amsart",
+      "verdict": "reference-failure"
+    },
+    {
+      "package": "amscls",
+      "style": "amsbook",
+      "verdict": "reference-failure"
+    },
+    {
+      "package": "arabxetex",
+      "style": "arabxetex",
+      "verdict": "reference-failure"
+    },
+    {
+      "package": "auxhook",
+      "style": "auxhook",
+      "verdict": "pass"
+    },
+    {
+      "package": "beamer",
+      "style": "beamer",
+      "verdict": "reference-failure"
+    },
+    {
+      "package": "beamer",
+      "style": "beamerarticle",
+      "verdict": "pass"
+    },
+    {
+      "package": "bidipagegrid",
+      "style": "bidipagegrid",
+      "verdict": "pass"
+    },
+    {
+      "package": "bitset",
+      "style": "bitset",
+      "verdict": "pass"
+    },
+    {
+      "package": "businesscard-qrcode",
+      "style": "businesscard-qrcode",
+      "verdict": "reference-failure"
+    },
+    {
+      "package": "cmap",
+      "style": "cmap",
+      "verdict": "pass"
+    },
+    {
+      "package": "crop",
+      "style": "crop",
+      "verdict": "pass"
+    },
+    {
+      "package": "emp",
+      "style": "emp",
+      "verdict": "pass"
+    },
+    {
+      "package": "etexcmds",
+      "style": "etexcmds",
+      "verdict": "pass"
+    },
+    {
+      "package": "everysel",
+      "style": "everysel",
+      "verdict": "pass"
+    },
+    {
+      "package": "everysel",
+      "style": "everysel-2011-10-28",
+      "verdict": "pass"
+    },
+    {
+      "package": "fancyhdr",
+      "style": "extramarks",
+      "verdict": "pass"
+    },
+    {
+      "package": "fancyhdr",
+      "style": "extramarks-v4",
+      "verdict": "pass"
+    },
+    {
+      "package": "feynmp-auto",
+      "style": "feynmp-auto",
+      "verdict": "pass"
+    },
+    {
+      "package": "fixlatvian",
+      "style": "fixlatvian",
+      "verdict": "reference-failure"
+    },
+    {
+      "package": "fontwrap",
+      "style": "fontwrap",
+      "verdict": "reference-failure"
+    },
+    {
+      "package": "gettitlestring",
+      "style": "gettitlestring",
+      "verdict": "pass"
+    },
+    {
+      "package": "grffile",
+      "style": "grffile",
+      "verdict": "pass"
+    },
+    {
+      "package": "grffile",
+      "style": "grffile-2017-06-30",
+      "verdict": "pass"
+    },
+    {
+      "package": "hypcap",
+      "style": "hypcap",
+      "verdict": "reference-failure"
+    },
+    {
+      "package": "index",
+      "style": "index",
+      "verdict": "pass"
+    },
+    {
+      "package": "jknapltx",
+      "style": "greekctr",
+      "verdict": "pass"
+    },
+    {
+      "package": "jknapltx",
+      "style": "holtpolt",
+      "verdict": "pass"
+    },
+    {
+      "package": "kvsetkeys",
+      "style": "kvsetkeys",
+      "verdict": "pass"
+    },
+    {
+      "package": "l3packages",
+      "style": "l3keys2e",
+      "verdict": "pass"
+    },
+    {
+      "package": "l3packages",
+      "style": "xfp",
+      "verdict": "pass"
+    },
+    {
+      "package": "latex-firstaid-dev",
+      "style": "filehook-ltx",
+      "verdict": "pass"
+    },
+    {
+      "package": "latex-firstaid-dev",
+      "style": "underscore-ltx",
+      "verdict": "pass"
+    },
+    {
+      "package": "latex-tools-dev",
+      "style": "afterpage",
+      "verdict": "pass"
+    },
+    {
+      "package": "latex-tools-dev",
+      "style": "array",
+      "verdict": "pass"
+    },
+    {
+      "package": "listings",
+      "style": "listings",
+      "verdict": "pass"
+    },
+    {
+      "package": "listings",
+      "style": "lstdoc",
+      "verdict": "reference-failure"
+    },
+    {
+      "package": "ltxmisc",
+      "style": "abstbook",
+      "verdict": "reference-failure"
+    },
+    {
+      "package": "ltxmisc",
+      "style": "beletter",
+      "verdict": "reference-failure"
+    },
+    {
+      "package": "luatexbase",
+      "style": "luatexbase",
+      "verdict": "reference-failure"
+    },
+    {
+      "package": "luatexbase",
+      "style": "luatexbase-attr",
+      "verdict": "reference-failure"
+    },
+    {
+      "package": "mathtools",
+      "style": "empheq",
+      "verdict": "pass"
+    },
+    {
+      "package": "mathtools",
+      "style": "mathtools",
+      "verdict": "pass"
+    },
+    {
+      "package": "mflogo",
+      "style": "mflogo",
+      "verdict": "pass"
+    },
+    {
+      "package": "microtype",
+      "style": "letterspace",
+      "verdict": "pass"
+    },
+    {
+      "package": "microtype",
+      "style": "microtype",
+      "verdict": "pass"
+    },
+    {
+      "package": "newfloat",
+      "style": "newfloat",
+      "verdict": "pass"
+    },
+    {
+      "package": "newfloat",
+      "style": "newfloat_v1.0",
+      "verdict": "pass"
+    },
+    {
+      "package": "parskip",
+      "style": "parskip",
+      "verdict": "pass"
+    },
+    {
+      "package": "parskip",
+      "style": "parskip-2001-04-09",
+      "verdict": "pass"
+    },
+    {
+      "package": "pdfmanagement-testphase",
+      "style": "color-ltx",
+      "verdict": "pass"
+    },
+    {
+      "package": "pdfmanagement-testphase",
+      "style": "colorspace-patches-tmp-ltx",
+      "verdict": "reference-failure"
+    },
+    {
+      "package": "philokalia",
+      "style": "philokalia",
+      "verdict": "reference-failure"
+    },
+    {
+      "package": "psnfss",
+      "style": "avant",
+      "verdict": "pass"
+    },
+    {
+      "package": "psnfss",
+      "style": "bookman",
+      "verdict": "reference-failure"
+    },
+    {
+      "package": "rcs",
+      "style": "rcs",
+      "verdict": "pass"
+    },
+    {
+      "package": "sansmath",
+      "style": "sansmath",
+      "verdict": "pass"
+    },
+    {
+      "package": "setspace",
+      "style": "setspace",
+      "verdict": "pass"
+    },
+    {
+      "package": "subfig",
+      "style": "subfig",
+      "verdict": "pass"
+    },
+    {
+      "package": "tex4ht",
+      "style": "tex4ht",
+      "verdict": "pass"
+    },
+    {
+      "package": "tipa",
+      "style": "exaccent",
+      "verdict": "pass"
+    },
+    {
+      "package": "tipa",
+      "style": "extraipa",
+      "verdict": "pass"
+    },
+    {
+      "package": "ucharcat",
+      "style": "ucharcat",
+      "verdict": "reference-failure"
+    },
+    {
+      "package": "unicode-bidi",
+      "style": "unicode-bidi",
+      "verdict": "reference-failure"
+    },
+    {
+      "package": "upquote",
+      "style": "upquote",
+      "verdict": "pass"
+    },
+    {
+      "package": "xechangebar",
+      "style": "xechangebar",
+      "verdict": "pass"
+    },
+    {
+      "package": "xesearch",
+      "style": "xesearch",
+      "verdict": "reference-failure"
+    },
+    {
+      "package": "xfrac",
+      "style": "xfrac",
+      "verdict": "pass"
+    },
+    {
+      "package": "xunicode",
+      "style": "xunicode",
+      "verdict": "reference-failure"
+    }
+  ]
+}

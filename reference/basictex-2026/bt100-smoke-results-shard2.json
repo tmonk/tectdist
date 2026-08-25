@@ -1,0 +1,367 @@
+{
+  "schema_version": 1,
+  "image_files_sha256": "395f0b4d7ce47684c021e8734421bd530206e58a96949cb6103a6333ad2b36b6",
+  "shard": "2/4",
+  "counters": {
+    "pass": 47,
+    "fail": 0,
+    "reference-failure": 24
+  },
+  "results": [
+    {
+      "package": "amsfonts",
+      "style": "amsfonts",
+      "verdict": "pass"
+    },
+    {
+      "package": "amsfonts",
+      "style": "amssymb",
+      "verdict": "pass"
+    },
+    {
+      "package": "atbegshi",
+      "style": "atbegshi",
+      "verdict": "pass"
+    },
+    {
+      "package": "babel",
+      "style": "UKenglish",
+      "verdict": "reference-failure"
+    },
+    {
+      "package": "babel",
+      "style": "USenglish",
+      "verdict": "reference-failure"
+    },
+    {
+      "package": "bibtex",
+      "style": "apalike",
+      "verdict": "pass"
+    },
+    {
+      "package": "bidipresentation",
+      "style": "bidipresentation",
+      "verdict": "reference-failure"
+    },
+    {
+      "package": "bookmark",
+      "style": "bookmark",
+      "verdict": "pass"
+    },
+    {
+      "package": "caption",
+      "style": "bicaption",
+      "verdict": "pass"
+    },
+    {
+      "package": "caption",
+      "style": "caption",
+      "verdict": "pass"
+    },
+    {
+      "package": "colorprofiles",
+      "style": "colorprofiles",
+      "verdict": "pass"
+    },
+    {
+      "package": "ctable",
+      "style": "ctable",
+      "verdict": "reference-failure"
+    },
+    {
+      "package": "epstopdf-pkg",
+      "style": "epstopdf",
+      "verdict": "pass"
+    },
+    {
+      "package": "epstopdf-pkg",
+      "style": "epstopdf-base",
+      "verdict": "pass"
+    },
+    {
+      "package": "etoolbox",
+      "style": "etoolbox",
+      "verdict": "pass"
+    },
+    {
+      "package": "everyshi",
+      "style": "everyshi",
+      "verdict": "pass"
+    },
+    {
+      "package": "everyshi",
+      "style": "everyshi-2001-05-15",
+      "verdict": "pass"
+    },
+    {
+      "package": "fancyref",
+      "style": "fancyref",
+      "verdict": "pass"
+    },
+    {
+      "package": "filehook",
+      "style": "filehook",
+      "verdict": "pass"
+    },
+    {
+      "package": "filehook",
+      "style": "filehook-2019",
+      "verdict": "reference-failure"
+    },
+    {
+      "package": "float",
+      "style": "float",
+      "verdict": "pass"
+    },
+    {
+      "package": "footnotehyper",
+      "style": "footnotehyper",
+      "verdict": "pass"
+    },
+    {
+      "package": "gmp",
+      "style": "gmp",
+      "verdict": "reference-failure"
+    },
+    {
+      "package": "hologo",
+      "style": "hologo",
+      "verdict": "pass"
+    },
+    {
+      "package": "hyperref",
+      "style": "backref",
+      "verdict": "pass"
+    },
+    {
+      "package": "hyperref",
+      "style": "hyperref",
+      "verdict": "pass"
+    },
+    {
+      "package": "infwarerr",
+      "style": "infwarerr",
+      "verdict": "pass"
+    },
+    {
+      "package": "koma-script",
+      "style": "koma-script-source-doc",
+      "verdict": "reference-failure"
+    },
+    {
+      "package": "koma-script",
+      "style": "scraddr",
+      "verdict": "pass"
+    },
+    {
+      "package": "l3experimental",
+      "style": "l3draw",
+      "verdict": "pass"
+    },
+    {
+      "package": "l3experimental",
+      "style": "l3galley",
+      "verdict": "pass"
+    },
+    {
+      "package": "latex",
+      "style": "alltt",
+      "verdict": "pass"
+    },
+    {
+      "package": "latex",
+      "style": "article",
+      "verdict": "reference-failure"
+    },
+    {
+      "package": "latex-graphics-dev",
+      "style": "color",
+      "verdict": "pass"
+    },
+    {
+      "package": "latex-graphics-dev",
+      "style": "epsfig",
+      "verdict": "pass"
+    },
+    {
+      "package": "latexbug",
+      "style": "latexbug",
+      "verdict": "pass"
+    },
+    {
+      "package": "lm",
+      "style": "lmodern",
+      "verdict": "pass"
+    },
+    {
+      "package": "lua-unicode-math",
+      "style": "lua-unicode-math",
+      "verdict": "reference-failure"
+    },
+    {
+      "package": "lua-unicode-math",
+      "style": "lum-bonum",
+      "verdict": "reference-failure"
+    },
+    {
+      "package": "lwarp",
+      "style": "lwarp",
+      "verdict": "reference-failure"
+    },
+    {
+      "package": "lwarp",
+      "style": "lwarp-2in1",
+      "verdict": "reference-failure"
+    },
+    {
+      "package": "mdwtools",
+      "style": "at",
+      "verdict": "pass"
+    },
+    {
+      "package": "mdwtools",
+      "style": "cmtt",
+      "verdict": "pass"
+    },
+    {
+      "package": "mfnfss",
+      "style": "oldgerm",
+      "verdict": "pass"
+    },
+    {
+      "package": "mfnfss",
+      "style": "pandora",
+      "verdict": "reference-failure"
+    },
+    {
+      "package": "mpgraphics",
+      "style": "mpgraphics",
+      "verdict": "reference-failure"
+    },
+    {
+      "package": "ntgclass",
+      "style": "a4",
+      "verdict": "pass"
+    },
+    {
+      "package": "ntgclass",
+      "style": "artikel1",
+      "verdict": "reference-failure"
+    },
+    {
+      "package": "pdfcolfoot",
+      "style": "pdfcolfoot",
+      "verdict": "reference-failure"
+    },
+    {
+      "package": "pdfpages",
+      "style": "pdfpages",
+      "verdict": "pass"
+    },
+    {
+      "package": "polyglossia",
+      "style": "arabicnumbers",
+      "verdict": "pass"
+    },
+    {
+      "package": "polyglossia",
+      "style": "bengalidigits",
+      "verdict": "pass"
+    },
+    {
+      "package": "pspicture",
+      "style": "pspicture",
+      "verdict": "pass"
+    },
+    {
+      "package": "refcount",
+      "style": "refcount",
+      "verdict": "pass"
+    },
+    {
+      "package": "section",
+      "style": "section",
+      "verdict": "pass"
+    },
+    {
+      "package": "simple-resume-cv",
+      "style": "simpleresumecv",
+      "verdict": "reference-failure"
+    },
+    {
+      "package": "tagpdf",
+      "style": "tagpdf",
+      "verdict": "reference-failure"
+    },
+    {
+      "package": "tagpdf",
+      "style": "tagpdf-base",
+      "verdict": "pass"
+    },
+    {
+      "package": "textcase",
+      "style": "textcase",
+      "verdict": "pass"
+    },
+    {
+      "package": "tools",
+      "style": "afterpage",
+      "verdict": "pass"
+    },
+    {
+      "package": "tools",
+      "style": "array",
+      "verdict": "pass"
+    },
+    {
+      "package": "ucharclasses",
+      "style": "ucharclasses",
+      "verdict": "reference-failure"
+    },
+    {
+      "package": "unicode-math",
+      "style": "unicode-math",
+      "verdict": "reference-failure"
+    },
+    {
+      "package": "unicode-math",
+      "style": "unicode-math-luatex",
+      "verdict": "reference-failure"
+    },
+    {
+      "package": "url",
+      "style": "url",
+      "verdict": "pass"
+    },
+    {
+      "package": "xecolor",
+      "style": "xecolor",
+      "verdict": "reference-failure"
+    },
+    {
+      "package": "xespotcolor",
+      "style": "xespotcolor",
+      "verdict": "pass"
+    },
+    {
+      "package": "xkeyval",
+      "style": "pst-xkey",
+      "verdict": "pass"
+    },
+    {
+      "package": "xkeyval",
+      "style": "xkeyval",
+      "verdict": "pass"
+    },
+    {
+      "package": "zbmath-review-template",
+      "style": "zb-basics",
+      "verdict": "reference-failure"
+    },
+    {
+      "package": "zbmath-review-template",
+      "style": "zbMATH",
+      "verdict": "reference-failure"
+    }
+  ]
+}

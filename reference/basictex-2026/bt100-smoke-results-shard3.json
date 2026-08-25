@@ -1,0 +1,342 @@
+{
+  "schema_version": 1,
+  "image_files_sha256": "395f0b4d7ce47684c021e8734421bd530206e58a96949cb6103a6333ad2b36b6",
+  "shard": "3/4",
+  "counters": {
+    "pass": 47,
+    "fail": 0,
+    "reference-failure": 19
+  },
+  "results": [
+    {
+      "package": "amsmath",
+      "style": "amsbsy",
+      "verdict": "pass"
+    },
+    {
+      "package": "amsmath",
+      "style": "amscd",
+      "verdict": "pass"
+    },
+    {
+      "package": "attachfile2",
+      "style": "attachfile2",
+      "verdict": "pass"
+    },
+    {
+      "package": "babel-spanish",
+      "style": "romanidx",
+      "verdict": "reference-failure"
+    },
+    {
+      "package": "bidi-atbegshi",
+      "style": "bidi-atbegshi",
+      "verdict": "pass"
+    },
+    {
+      "package": "bidishadowtext",
+      "style": "bidishadowtext",
+      "verdict": "pass"
+    },
+    {
+      "package": "booktabs",
+      "style": "booktabs",
+      "verdict": "pass"
+    },
+    {
+      "package": "carlisle",
+      "style": "dotlessj",
+      "verdict": "pass"
+    },
+    {
+      "package": "carlisle",
+      "style": "ltxtable",
+      "verdict": "pass"
+    },
+    {
+      "package": "colortbl",
+      "style": "colortbl",
+      "verdict": "pass"
+    },
+    {
+      "package": "ctablestack",
+      "style": "ctablestack",
+      "verdict": "reference-failure"
+    },
+    {
+      "package": "eso-pic",
+      "style": "eso-pic",
+      "verdict": "pass"
+    },
+    {
+      "package": "eso-pic",
+      "style": "showframe",
+      "verdict": "pass"
+    },
+    {
+      "package": "euler",
+      "style": "euler",
+      "verdict": "pass"
+    },
+    {
+      "package": "extsizes",
+      "style": "autopagewidth",
+      "verdict": "pass"
+    },
+    {
+      "package": "extsizes",
+      "style": "extarticle",
+      "verdict": "reference-failure"
+    },
+    {
+      "package": "fancyvrb",
+      "style": "fancyvrb",
+      "verdict": "pass"
+    },
+    {
+      "package": "fancyvrb",
+      "style": "fancyvrb-ex",
+      "verdict": "pass"
+    },
+    {
+      "package": "firstaid",
+      "style": "filehook-ltx",
+      "verdict": "pass"
+    },
+    {
+      "package": "firstaid",
+      "style": "underscore-ltx",
+      "verdict": "pass"
+    },
+    {
+      "package": "fontbook",
+      "style": "fontbook",
+      "verdict": "reference-failure"
+    },
+    {
+      "package": "fp",
+      "style": "defpattern",
+      "verdict": "pass"
+    },
+    {
+      "package": "fp",
+      "style": "fp",
+      "verdict": "pass"
+    },
+    {
+      "package": "graphics",
+      "style": "color",
+      "verdict": "pass"
+    },
+    {
+      "package": "graphics",
+      "style": "epsfig",
+      "verdict": "pass"
+    },
+    {
+      "package": "hopatch",
+      "style": "hopatch",
+      "verdict": "pass"
+    },
+    {
+      "package": "hopatch",
+      "style": "hopatch-2016-05-16",
+      "verdict": "pass"
+    },
+    {
+      "package": "ifplatform",
+      "style": "ifplatform",
+      "verdict": "reference-failure"
+    },
+    {
+      "package": "intcalc",
+      "style": "intcalc",
+      "verdict": "pass"
+    },
+    {
+      "package": "kvdefinekeys",
+      "style": "kvdefinekeys",
+      "verdict": "pass"
+    },
+    {
+      "package": "l3kernel",
+      "style": "expl3",
+      "verdict": "pass"
+    },
+    {
+      "package": "l3kernel",
+      "style": "l3doc",
+      "verdict": "reference-failure"
+    },
+    {
+      "package": "latex-amsmath-dev",
+      "style": "amsbsy",
+      "verdict": "pass"
+    },
+    {
+      "package": "latex-amsmath-dev",
+      "style": "amscd",
+      "verdict": "pass"
+    },
+    {
+      "package": "latex-lab",
+      "style": "latex-lab-kernel-changes",
+      "verdict": "pass"
+    },
+    {
+      "package": "latex-lab",
+      "style": "latex-lab-testphase-bib",
+      "verdict": "reference-failure"
+    },
+    {
+      "package": "letltxmacro",
+      "style": "letltxmacro",
+      "verdict": "pass"
+    },
+    {
+      "package": "ltx-talk",
+      "style": "ltx-talk",
+      "verdict": "reference-failure"
+    },
+    {
+      "package": "luamml",
+      "style": "luamml",
+      "verdict": "reference-failure"
+    },
+    {
+      "package": "luamml",
+      "style": "luamml-patches-amsmath",
+      "verdict": "reference-failure"
+    },
+    {
+      "package": "makecmds",
+      "style": "makecmds",
+      "verdict": "pass"
+    },
+    {
+      "package": "memoir",
+      "style": "memhfixc",
+      "verdict": "pass"
+    },
+    {
+      "package": "memoir",
+      "style": "memoir",
+      "verdict": "reference-failure"
+    },
+    {
+      "package": "mfpic",
+      "style": "mfpic",
+      "verdict": "pass"
+    },
+    {
+      "package": "na-position",
+      "style": "na-position",
+      "verdict": "reference-failure"
+    },
+    {
+      "package": "oberdiek",
+      "style": "aliascnt",
+      "verdict": "pass"
+    },
+    {
+      "package": "oberdiek",
+      "style": "bmpsize",
+      "verdict": "pass"
+    },
+    {
+      "package": "pdfescape",
+      "style": "pdfescape",
+      "verdict": "pass"
+    },
+    {
+      "package": "pdftexcmds",
+      "style": "pdftexcmds",
+      "verdict": "pass"
+    },
+    {
+      "package": "psfrag",
+      "style": "psfrag",
+      "verdict": "pass"
+    },
+    {
+      "package": "ptext",
+      "style": "ptext",
+      "verdict": "reference-failure"
+    },
+    {
+      "package": "rerunfilecheck",
+      "style": "rerunfilecheck",
+      "verdict": "pass"
+    },
+    {
+      "package": "seminar",
+      "style": "npsfont",
+      "verdict": "pass"
+    },
+    {
+      "package": "seminar",
+      "style": "sem-a4",
+      "verdict": "reference-failure"
+    },
+    {
+      "package": "simple-thesis-dissertation",
+      "style": "simplethesisdissertation",
+      "verdict": "reference-failure"
+    },
+    {
+      "package": "tetragonos",
+      "style": "tetragonos",
+      "verdict": "pass"
+    },
+    {
+      "package": "textpath",
+      "style": "textpathmp",
+      "verdict": "reference-failure"
+    },
+    {
+      "package": "translator",
+      "style": "translator",
+      "verdict": "pass"
+    },
+    {
+      "package": "ulem",
+      "style": "ulem",
+      "verdict": "pass"
+    },
+    {
+      "package": "uniquecounter",
+      "style": "uniquecounter",
+      "verdict": "pass"
+    },
+    {
+      "package": "xcolor",
+      "style": "xcolor",
+      "verdict": "pass"
+    },
+    {
+      "package": "xcolor",
+      "style": "xcolor-2022-06-12",
+      "verdict": "pass"
+    },
+    {
+      "package": "xecyr",
+      "style": "xecyr",
+      "verdict": "pass"
+    },
+    {
+      "package": "xetexko",
+      "style": "xetexko",
+      "verdict": "reference-failure"
+    },
+    {
+      "package": "xetexko",
+      "style": "xetexko-font",
+      "verdict": "reference-failure"
+    },
+    {
+      "package": "xltxtra",
+      "style": "xltxtra",
+      "verdict": "reference-failure"
+    }
+  ]
+}
