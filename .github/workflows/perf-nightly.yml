@@ -86,6 +86,10 @@ jobs:
           python3 scripts/basictex_x2_edit_scenarios.py \
             --heavy --trials 5 \
             --out reference/basictex-2026/x2-edit-scenarios-nightly.json
+      - name: Multi-file edit scenarios (dependency walks, subdirectory inputs)
+        run: |-
+          python3 scripts/basictex_multifile_scenarios.py \
+            --out reference/basictex-2026/x2-multifile-scenarios-nightly.json
       - uses: actions/upload-artifact@v4
         with:
           name: nightly-regression
@@ -95,6 +99,8 @@ jobs:
             benchmark-results/candidate-sha256.txt
             reference/basictex-2026/x2-edit-scenarios-nightly.json
             reference/basictex-2026/x2-edit-scenarios-nightly.md
+            reference/basictex-2026/x2-multifile-scenarios-nightly.json
+            reference/basictex-2026/x2-multifile-scenarios-nightly.md
 
   qualification:
     runs-on: [self-hosted, tectdist-perf]

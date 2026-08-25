@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "document": "multifile",
+  "reference_pages": 4,
+  "trials_per_scenario": 3,
+  "statistic": "min",
+  "scenarios": {
+    "stock-one-shot": 98,
+    "cold-first-with-format-build": 199,
+    "chapter-edit-format-reused": 77,
+    "preamble-dep-edit-format-rebuilt": 202,
+    "unchanged-rebuild-cache-hit": 1
+  },
+  "speedup_body_edit_vs_stock": 1.273,
+  "speedup_unchanged_vs_stock": 98.0
+}
