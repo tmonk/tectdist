@@ -90,6 +90,15 @@
       "candidate_pages": 3,
       "text_identical": true,
       "verdict": "pass"
+    },
+    {
+      "document": "unicode-fonts",
+      "reference_exit": 0,
+      "candidate_exit": 0,
+      "reference_pages": 1,
+      "candidate_pages": 1,
+      "text_identical": true,
+      "verdict": "pass"
     }
   ]
 }

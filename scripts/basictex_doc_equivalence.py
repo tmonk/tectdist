@@ -24,11 +24,12 @@ ROOT = Path(__file__).resolve().parent.parent
 REF = ROOT / "reference" / "basictex-2026"
 
 
-def compile_dir(binary: Path, env_extra: dict, work: Path, source="main.tex"):
+def compile_dir(binary: Path, env_extra: dict, work: Path,
+                source="main.tex", fmt="pdflatex"):
     env = dict(os.environ)
     env.update(env_extra)
     proc = subprocess.run(
-        [str(binary), "-interaction=batchmode", "&pdflatex", source],
+        [str(binary), "-interaction=batchmode", f"&{fmt}", source],
         cwd=work, env=env, capture_output=True, text=True, timeout=180)
     return proc.returncode
 
@@ -64,9 +65,10 @@ def main(argv=None) -> int:
     ref_env = {"TEXMFROOT": str(root),
                "PATH": f"{binary_dir}:{os.environ['PATH']}"}
 
-    # Candidate profile client: symlink named pdflatex -> tectdist.
+    # Candidate profile client: symlinks named after each engine.
     link_dir = Path(tempfile.mkdtemp(prefix="bt100-doc-eq-"))
-    os.symlink(Path(args.candidate).resolve(), link_dir / "pdflatex")
+    for engine in ("pdflatex", "xelatex"):
+        os.symlink(Path(args.candidate).resolve(), link_dir / engine)
     cand_env = {"TECTDIST_PROFILE": "basictex-2026",
                 "TECTDIST_BASICTEX_ROOT": str(root),
                 "PATH": f"{link_dir}:{os.environ['PATH']}"}
@@ -85,12 +87,19 @@ def main(argv=None) -> int:
                 shutil.copytree(source_dir, work, dirs_exist_ok=True)
                 return work
 
+            # Engine per document from the frozen baseline sequences so
+            # XeTeX documents (unicode-fonts) are covered too.
+            sys.path.insert(0, str(ROOT / "scripts"))
+            from basictex_baseline import SEQUENCES
+            commands = SEQUENCES.get(document, ["pdflatex {job}.tex"])
+            engine = commands[0].split()[0]
+
             ref_work = staged()
-            ref_exit = compile_dir(binary_dir / "pdftex", ref_env,
-                                   ref_work)
+            ref_exit = compile_dir(binary_dir / engine, ref_env,
+                                   ref_work, fmt=engine)
             cand_work = staged()
-            cand_exit = compile_dir(link_dir / "pdflatex", cand_env,
-                                    cand_work)
+            cand_exit = compile_dir(link_dir / engine, cand_env,
+                                    cand_work, fmt=engine)
 
             ref_pdf = ref_work / "main.pdf"
             cand_pdf = cand_work / "main.pdf"

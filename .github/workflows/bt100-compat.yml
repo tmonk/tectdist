@@ -86,7 +86,7 @@ jobs:
         run: |
           python3 scripts/basictex_doc_equivalence.py \
             --reference "reference/basictex-2026/installer/expanded/BasicTeX-2026-Start.pkg/Payload/usr/local/texlive/2026basic" \
-            --documents multifile paper tiny bibtex index tikz shell-escape references graphics thesis
+            --documents multifile paper tiny bibtex index tikz shell-escape references graphics thesis unicode-fonts
       - uses: actions/upload-artifact@v4
         with:
           name: bt100-interactions
