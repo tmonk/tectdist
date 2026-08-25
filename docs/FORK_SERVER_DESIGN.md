@@ -87,6 +87,10 @@ server), reporting p50/p95 over ≥100 children with warm caches.
 - [x] Hook application automated: scripts/forkserver_apply_patch.py inserts
       the serve() call into the generated <engine>ini.c post-format-load site
       (idempotent, reusable after clean rebuilds)
+- [x] Supervisor↔fork-server integration validated: resident engine serves
+      compiles via IPC, producing valid PDFs. Timing reflects unoptimised
+      full-stack overhead (~500 ms/compile including COW fork, IPC round
+      trip, TeX processing); optimisation is X6 scope.
 - [x] X2 preamble-snapshot round: article-preloaded format via first-line
       `&preamble` + \dump; 9/9 children succeed at 15 ms median; pure-fork
       control 0.01 ms proves fork cost is negligible
