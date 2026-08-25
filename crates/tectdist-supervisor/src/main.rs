@@ -995,6 +995,8 @@ fn run_profile_compile(profile: &str, argv: &[String], cwd: &Path) -> Result<(i3
     if !binary.exists() {
         return Err(format!("BasicTeX image has no '{program}'"));
     }
+    // Capture pre/post-build file state for the build manifest (plan §12).
+    let pre_build = snapshot_project_files(cwd);
     let start = std::time::Instant::now();
     let status = std::process::Command::new(binary)
         .args(&argv[1..])
@@ -1002,7 +1004,33 @@ fn run_profile_compile(profile: &str, argv: &[String], cwd: &Path) -> Result<(i3
         .env("TEXMFROOT", &root_path)
         .status()
         .map_err(|error| format!("spawn failed: {error}"))?;
+    let post_build = snapshot_project_files(cwd);
+    let manifest_changed = pre_build != post_build;
     Ok((status.code().unwrap_or(128), start.elapsed().as_millis() as u64))
+}
+
+/// Snapshot all files in a directory (name → sha256) for the build manifest.
+fn snapshot_project_files(cwd: &Path) -> Vec<(String, String)> {
+    let mut entries = Vec::new();
+    if let Ok(dir_entries) = std::fs::read_dir(cwd) {
+        for entry in dir_entries.flatten() {
+            let path = entry.path();
+            if !path.is_file() {
+                continue;
+            }
+            let name = path.file_name()
+                .map(|n| n.to_string_lossy().into_owned())
+                .unwrap_or_default();
+            if let Ok(bytes) = std::fs::read(&path) {
+                use sha2::{Digest, Sha256};
+                let mut hasher = Sha256::new();
+                hasher.update(&bytes);
+                entries.push((name, format!("{:x}", hasher.finalize())));
+            }
+        }
+    }
+    entries.sort();
+    entries
 }
 
 /// Alias so the handler signature reads clearly without importing another
