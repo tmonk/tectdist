@@ -7,21 +7,21 @@
         "pdflatex {job}.tex"
       ],
       "trials": 3,
-      "reference_median_ms": 82.9,
-      "candidate_median_ms": 94.9,
+      "reference_median_ms": 69.5,
+      "candidate_median_ms": 75.7,
       "candidate_mode": "basictex-profile",
-      "speedup_vs_reference": 0.873,
-      "x10_budget_ms": 8.3,
+      "speedup_vs_reference": 0.919,
+      "x10_budget_ms": 7.0,
       "_samples": {
         "reference_ms": [
-          82.902292,
-          83.209125,
-          80.167917
+          69.549958,
+          69.21975,
+          70.385625
         ],
         "candidate_ms": [
-          87.377333,
-          94.926292,
-          95.41625
+          384.293833,
+          74.987041,
+          75.709209
         ]
       }
     },
@@ -30,21 +30,21 @@
         "pdflatex {job}.tex"
       ],
       "trials": 3,
-      "reference_median_ms": 62.9,
-      "candidate_median_ms": 77.1,
+      "reference_median_ms": 56.3,
+      "candidate_median_ms": 64.2,
       "candidate_mode": "basictex-profile",
-      "speedup_vs_reference": 0.816,
-      "x10_budget_ms": 6.3,
+      "speedup_vs_reference": 0.878,
+      "x10_budget_ms": 5.6,
       "_samples": {
         "reference_ms": [
-          66.763375,
-          62.94175,
-          62.599625
+          55.939834,
+          56.344041,
+          58.247875
         ],
         "candidate_ms": [
-          77.138875,
-          76.007916,
-          78.470042
+          62.270459,
+          67.475208,
+          64.186209
         ]
       }
     },
@@ -56,21 +56,21 @@
         "pdflatex {job}.tex"
       ],
       "trials": 3,
-      "reference_median_ms": 196.6,
-      "candidate_median_ms": 233.5,
+      "reference_median_ms": 171.9,
+      "candidate_median_ms": 194.1,
       "candidate_mode": "basictex-profile",
-      "speedup_vs_reference": 0.842,
-      "x10_budget_ms": 19.7,
+      "speedup_vs_reference": 0.886,
+      "x10_budget_ms": 17.2,
       "_samples": {
         "reference_ms": [
-          195.763583,
-          196.561833,
-          199.805333
+          185.999,
+          171.922,
+          170.451584
         ],
         "candidate_ms": [
-          235.150417,
-          233.490959,
-          218.009833
+          197.499166,
+          192.932208,
+          194.129167
         ]
       }
     },
@@ -80,21 +80,21 @@
         "dvips {job}.dvi"
       ],
       "trials": 3,
-      "reference_median_ms": 67.0,
-      "candidate_median_ms": 82.1,
+      "reference_median_ms": 56.7,
+      "candidate_median_ms": 69.9,
       "candidate_mode": "basictex-profile",
-      "speedup_vs_reference": 0.816,
-      "x10_budget_ms": 6.7,
+      "speedup_vs_reference": 0.812,
+      "x10_budget_ms": 5.7,
       "_samples": {
         "reference_ms": [
-          66.96875,
-          65.703875,
-          71.860875
+          75.342625,
+          56.147833,
+          56.705917
         ],
         "candidate_ms": [
-          82.086167,
-          80.491458,
-          86.664709
+          69.392167,
+          69.877834,
+          73.832458
         ]
       }
     },
@@ -104,21 +104,21 @@
         "pdflatex {job}.tex"
       ],
       "trials": 3,
-      "reference_median_ms": 473.7,
-      "candidate_median_ms": 408.2,
+      "reference_median_ms": 242.6,
+      "candidate_median_ms": 254.8,
       "candidate_mode": "basictex-profile",
-      "speedup_vs_reference": 1.161,
-      "x10_budget_ms": 47.4,
+      "speedup_vs_reference": 0.952,
+      "x10_budget_ms": 24.3,
       "_samples": {
         "reference_ms": [
-          288.110542,
-          478.115792,
-          473.697583
+          236.166042,
+          242.628041,
+          248.787791
         ],
         "candidate_ms": [
-          300.899708,
-          746.032583,
-          408.153916
+          254.840458,
+          251.454583,
+          262.977666
         ]
       }
     },
@@ -127,21 +127,21 @@
         "lualatex {job}.tex"
       ],
       "trials": 3,
-      "reference_median_ms": 319.7,
-      "candidate_median_ms": 288.3,
+      "reference_median_ms": 239.8,
+      "candidate_median_ms": 246.7,
       "candidate_mode": "basictex-profile",
-      "speedup_vs_reference": 1.109,
-      "x10_budget_ms": 32.0,
+      "speedup_vs_reference": 0.972,
+      "x10_budget_ms": 24.0,
       "_samples": {
         "reference_ms": [
-          319.658083,
-          329.102375,
-          304.089042
+          369.664042,
+          237.030416,
+          239.755375
         ],
         "candidate_ms": [
-          286.300042,
-          288.339625,
-          325.23225
+          244.109208,
+          246.702041,
+          247.414083
         ]
       }
     },
@@ -150,21 +150,21 @@
         "mpost fig.mp"
       ],
       "trials": 3,
-      "reference_median_ms": 39.8,
-      "candidate_median_ms": 50.0,
+      "reference_median_ms": 28.4,
+      "candidate_median_ms": 34.6,
       "candidate_mode": "basictex-profile",
-      "speedup_vs_reference": 0.796,
-      "x10_budget_ms": 4.0,
+      "speedup_vs_reference": 0.821,
+      "x10_budget_ms": 2.8,
       "_samples": {
         "reference_ms": [
-          41.288792,
-          39.76375,
-          38.657958
+          79.873958,
+          28.439,
+          27.454
         ],
         "candidate_ms": [
-          55.2025,
-          47.033666,
-          49.964167
+          34.644792,
+          34.4985,
+          34.730667
         ]
       }
     },
@@ -173,21 +173,21 @@
         "tex {job}.tex"
       ],
       "trials": 3,
-      "reference_median_ms": 14.8,
-      "candidate_median_ms": 25.9,
+      "reference_median_ms": 9.7,
+      "candidate_median_ms": 16.6,
       "candidate_mode": "basictex-profile",
-      "speedup_vs_reference": 0.571,
-      "x10_budget_ms": 1.5,
+      "speedup_vs_reference": 0.585,
+      "x10_budget_ms": 1.0,
       "_samples": {
         "reference_ms": [
-          14.784166,
-          14.232666,
-          18.662625
+          29.822709,
+          9.569542,
+          9.703083
         ],
         "candidate_ms": [
-          25.224959,
-          25.883416,
-          26.366791
+          16.664875,
+          16.545666,
+          16.575667
         ]
       }
     },
@@ -197,21 +197,21 @@
         "pdflatex {job}.tex"
       ],
       "trials": 3,
-      "reference_median_ms": 169.2,
-      "candidate_median_ms": 206.0,
+      "reference_median_ms": 119.8,
+      "candidate_median_ms": 133.9,
       "candidate_mode": "basictex-profile",
-      "speedup_vs_reference": 0.821,
-      "x10_budget_ms": 16.9,
+      "speedup_vs_reference": 0.895,
+      "x10_budget_ms": 12.0,
       "_samples": {
         "reference_ms": [
-          169.15375,
-          168.5505,
-          227.004417
+          118.236625,
+          119.841333,
+          122.109375
         ],
         "candidate_ms": [
-          183.000375,
-          205.979583,
-          276.478709
+          133.926708,
+          138.601875,
+          133.2115
         ]
       }
     },
@@ -221,21 +221,21 @@
         "pdflatex {job}.tex"
       ],
       "trials": 3,
-      "reference_median_ms": 213.1,
-      "candidate_median_ms": 211.3,
+      "reference_median_ms": 172.5,
+      "candidate_median_ms": 188.5,
       "candidate_mode": "basictex-profile",
-      "speedup_vs_reference": 1.008,
-      "x10_budget_ms": 21.3,
+      "speedup_vs_reference": 0.915,
+      "x10_budget_ms": 17.3,
       "_samples": {
         "reference_ms": [
-          258.554292,
-          213.072625,
-          191.835292
+          172.503666,
+          169.777791,
+          173.654458
         ],
         "candidate_ms": [
-          237.95925,
-          205.646083,
-          211.320792
+          180.866459,
+          200.857708,
+          188.451958
         ]
       }
     },
@@ -245,21 +245,21 @@
         "pdflatex {job}.tex"
       ],
       "trials": 3,
-      "reference_median_ms": 359.7,
-      "candidate_median_ms": 377.0,
+      "reference_median_ms": 334.9,
+      "candidate_median_ms": 353.8,
       "candidate_mode": "basictex-profile",
-      "speedup_vs_reference": 0.954,
-      "x10_budget_ms": 36.0,
+      "speedup_vs_reference": 0.947,
+      "x10_budget_ms": 33.5,
       "_samples": {
         "reference_ms": [
-          367.449625,
-          359.736,
-          358.590125
+          334.930708,
+          337.412875,
+          329.922042
         ],
         "candidate_ms": [
-          381.560042,
-          376.714625,
-          376.975292
+          353.789416,
+          359.312125,
+          334.853334
         ]
       }
     },
@@ -269,21 +269,21 @@
         "pdflatex {job}.tex"
       ],
       "trials": 3,
-      "reference_median_ms": 186.0,
-      "candidate_median_ms": 205.2,
+      "reference_median_ms": 166.8,
+      "candidate_median_ms": 179.9,
       "candidate_mode": "basictex-profile",
-      "speedup_vs_reference": 0.906,
-      "x10_budget_ms": 18.6,
+      "speedup_vs_reference": 0.927,
+      "x10_budget_ms": 16.7,
       "_samples": {
         "reference_ms": [
-          185.982459,
-          185.713583,
-          194.585417
+          166.7525,
+          166.13875,
+          175.646209
         ],
         "candidate_ms": [
-          205.194125,
-          204.223291,
-          207.354625
+          179.460125,
+          179.933208,
+          185.016459
         ]
       }
     },
@@ -292,21 +292,21 @@
         "xelatex {job}.tex"
       ],
       "trials": 3,
-      "reference_median_ms": 210.0,
-      "candidate_median_ms": 224.0,
+      "reference_median_ms": 189.2,
+      "candidate_median_ms": 197.4,
       "candidate_mode": "basictex-profile",
-      "speedup_vs_reference": 0.937,
-      "x10_budget_ms": 21.0,
+      "speedup_vs_reference": 0.958,
+      "x10_budget_ms": 18.9,
       "_samples": {
         "reference_ms": [
-          212.703375,
-          209.964709,
-          209.866666
+          548.481416,
+          189.174625,
+          189.103625
         ],
         "candidate_ms": [
-          211.969667,
-          232.1915,
-          223.992917
+          200.509625,
+          197.391375,
+          196.518625
         ]
       }
     }
