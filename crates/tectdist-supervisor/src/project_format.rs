@@ -65,29 +65,56 @@ fn split_source(source_text: &str) -> Option<Split<'_>> {
 }
 
 
-const DEP_OPENERS: [&str; 2] = ["\\input{", "\\include{"];
+const INPUT_CONTROL_WORDS: [&str; 2] = ["\\input", "\\include"];
 const MAX_DEP_FILES: usize = 64;
 
-/// Extract literal targets from every \input{...}/\include{...} in
-/// `text`. Macro-valued arguments are skipped: they cannot be resolved
-/// without TeX expansion.
-fn referenced_targets(text: &str) -> Vec<String> {
+/// Result of scanning text for \input/\include occurrences.
+struct DepScan {
+    /// Literal braced targets (whitespace before '{' allowed, as TeX does).
+    targets: Vec<String>,
+    /// True when a brace-less (macro-valued) argument was seen — such
+    /// dependencies cannot be resolved without TeX expansion.
+    macro_form: bool,
+}
+
+/// Scan `text` for \input/\include control words. After the control word
+/// TeX skips whitespace; a following '{' introduces a literal target,
+/// while a letter or backslash indicates a macro argument.
+fn scan_inputs(text: &str) -> DepScan {
     let mut targets = Vec::new();
-    for opener in DEP_OPENERS {
-        let mut search_from = 0;
-        while let Some(rel) = text[search_from..].find(opener) {
-            let start = search_from + rel + opener.len();
-            let Some(end_rel) = text[start..].find('}') else {
+    let mut macro_form = false;
+    for word in INPUT_CONTROL_WORDS {
+        let mut from = 0;
+        while let Some(rel) = text[from..].find(word) {
+            let mut rest = &text[from + rel + word.len()..];
+            // Skip whitespace exactly as TeX does after a control word.
+            let trimmed = rest.trim_start_matches([' ', '\t', '\n', '\r']);
+            let skipped = rest.len() - trimmed.len();
+            rest = trimmed;
+            match rest.chars().next() {
+                Some('{') => {
+                    if let Some(end_rel) = rest[1..].find('}') {
+                        let target = rest[1..1 + end_rel].trim();
+                        if !target.is_empty() && !target.contains('$') {
+                            targets.push(target.to_owned());
+                        }
+                        from += rel + word.len() + skipped + 1 + end_rel + 1;
+                        continue;
+                    }
+                    break; // unbalanced brace: stop scanning this word
+                }
+                Some(c) if c.is_alphabetic() || c == '\\' => {
+                    macro_form = true;
+                }
+                _ => {}
+            }
+            from += rel + word.len() + skipped;
+            if skipped == 0 && rel + word.len() >= text[from - word.len()..].len() {
                 break;
-            };
-            let target = text[start..start + end_rel].trim();
-            search_from = start + end_rel;
-            if !target.is_empty() && !target.contains('$') {
-                targets.push(target.to_owned());
             }
         }
     }
-    targets
+    DepScan { targets, macro_form }
 }
 
 fn read_project_tex(
@@ -102,17 +129,17 @@ fn read_project_tex(
     None
 }
 
-/// Digest every file reachable from the preamble through
-/// \\input{...}/\\include{...}, resolved relative to the project directory
+/// Digest every file reachable from the initial targets through
+/// \input{...}/\include{...}, resolved relative to the project directory
 /// and followed RECURSIVELY: a dependency's own inputs are part of the
 /// snapshot too. Files that cannot be read are skipped; the engine
 /// surfaces them at compile time exactly as a stock run would.
-fn preamble_dependency_digests(
+fn dependency_digests_from(
     cwd: &Path,
-    preamble: &str,
+    initial_targets: &[String],
 ) -> Vec<(String, String)> {
     let mut out: BTreeMap<String, String> = BTreeMap::new();
-    let mut queue: Vec<String> = referenced_targets(preamble);
+    let mut queue: Vec<String> = initial_targets.to_vec();
     while let Some(target) = queue.pop() {
         if out.len() >= MAX_DEP_FILES {
             break; // conservative overflow: rebuild on any change instead
@@ -129,9 +156,9 @@ fn preamble_dependency_digests(
             continue; // cycle guard
         }
         out.insert(key.clone(), digest_hex(&bytes));
-        // Follow this dependency's own \\input/\\include edges.
+        // Follow this dependency's own \input/\include edges.
         let text = String::from_utf8_lossy(&bytes).into_owned();
-        for nested in referenced_targets(&text) {
+        for nested in scan_inputs(&text).targets {
             if !out.contains_key(&nested) {
                 queue.push(nested);
             }
@@ -182,28 +209,16 @@ pub fn fast_compile(image_root: &Path, cwd: &Path, argv: &[String]) -> Result<Fa
     let source_text = std::fs::read_to_string(&source_path)
         .map_err(|error| format!("cannot read {source_path:?}: {error}"))?;
     let split = split_source(&source_text).ok_or("no \\begin{document} found")?;
-    // Macro-indirected inputs (\\def\\f{setup}\\input\\f) cannot be
-    // resolved without TeX expansion, so their files are invisible to
-    // the dependency walk. If the preamble uses the brace-less form at
-    // all, decline the snapshot rather than risk serving a stale one.
-    let preamble_text = &split.preamble;
-    for opener in ["\\input", "\\include"] {
-        let mut from = 0;
-        while let Some(rel) = preamble_text[from..].find(opener) {
-            let after = &preamble_text[from + rel + opener.len()..];
-            let next = after.chars().next();
-            match next {
-                Some('{') => {} // braced literal: tracked by the walker
-                Some(c) if c.is_alphabetic() || c == '\\' => {
-                    return Err(
-                        "preamble uses macro-indirected \\input/\\include; needs exact execution"
-                            .to_string(),
-                    );
-                }
-                _ => {}
-            }
-            from += rel + opener.len();
-        }
+    // One scanner decides both questions: which literal files the
+    // preamble pulls in (tracked, recursively hashed into the cache key)
+    // and whether any occurrence uses a macro-valued argument (untrackable
+    // without TeX expansion -> decline rather than risk staleness).
+    let preamble_scan = scan_inputs(&split.preamble);
+    if preamble_scan.macro_form {
+        return Err(
+            "preamble uses macro-indirected \\input/\\include; needs exact execution"
+                .to_string(),
+        );
     }
 
     let job_stem = Path::new(source_arg)
@@ -248,7 +263,8 @@ pub fn fast_compile(image_root: &Path, cwd: &Path, argv: &[String]) -> Result<Fa
         digest_input.push('\n');
         digest_input.push_str(flag);
     }
-    for (dep_name, dep_digest) in preamble_dependency_digests(cwd, &split.preamble)
+    for (dep_name, dep_digest) in
+        dependency_digests_from(cwd, &preamble_scan.targets)
     {
         digest_input.push('\n');
         digest_input.push_str(&dep_name);

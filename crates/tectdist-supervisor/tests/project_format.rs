@@ -351,3 +351,55 @@ fn macro_indirected_input_escalates_to_exact_path() {
     assert!(!work.join(".tectdist").exists(),
             "fast path must NOT engage for macro-indirected inputs");
 }
+
+#[test]
+fn space_before_brace_input_is_tracked() {
+    let Some(_image) = basic_tex_root() else {
+        eprintln!("skipping: BasicTeX reference image not present on this host");
+        return;
+    };
+    let supervisor = start_supervisor("pfmt-space");
+
+    let work = free_dir("pfmspace-work");
+    // "\input {setup}" with a space before the brace is valid TeX and
+    // must be TRACKED (not escalated): editing setup.tex rebuilds.
+    std::fs::write(
+        work.join("main.tex"),
+        "\\documentclass{article}\n\\input {setup}\n\\begin{document}\nValue: \\the\\mylen.\n\\end{document}\n",
+    )
+    .unwrap();
+    std::fs::write(
+        work.join("setup.tex"),
+        "\\newlength{\\mylen}\\setlength{\\mylen}{5pt}\n",
+    )
+    .unwrap();
+
+    let payload = serde_json::json!({
+        "type": "compile",
+        "profile": "basictex-2026",
+        "cwd": work.to_str().unwrap(),
+        "argv": ["pdflatex", "-interaction=batchmode", "main.tex"],
+        "snapshot_key": null,
+    });
+
+    let first = client(&supervisor.socket, payload.clone());
+    assert_eq!(first["compile_accepted"]["exit_status"], 0,
+               "first compile failed: {first}");
+    assert!(work.join(".tectdist/main-pre.fmt").is_file(),
+            "fast path must engage for space-form braced input");
+    let meta_before = std::fs::read_to_string(
+        work.join(".tectdist/main-pre.meta")).unwrap();
+
+    std::fs::write(
+        work.join("setup.tex"),
+        "\\newlength{\\mylen}\\setlength{\\mylen}{9pt}\n",
+    )
+    .unwrap();
+    let second = client(&supervisor.socket, payload);
+    assert_eq!(second["compile_accepted"]["exit_status"], 0);
+
+    let meta_after = std::fs::read_to_string(
+        work.join(".tectdist/main-pre.meta")).unwrap();
+    assert_ne!(meta_before.trim(), meta_after.trim(),
+               "space-form dependency edit must rebuild the format");
+}
