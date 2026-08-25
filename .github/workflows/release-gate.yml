@@ -1,0 +1,32 @@
+name: bt100-release-gate
+on:
+  workflow_dispatch:
+
+jobs:
+  release-gate:
+    runs-on: [self-hosted, tectdist-perf]
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.11'
+      - name: Build native release candidates
+        run: cargo build --release --locked --workspace
+      - name: R-milestone release gate (all stages)
+        run: |
+          python3 scripts/basictex_release_gate.py \
+            --out reference/basictex-2026/release-gate.json
+      - name: Stage-budget report (plan X1.4)
+        run: >-
+          python -m benchmarks.runner.stage_budget benchmark-results/regression.json
+          --min-coverage 95 | tee benchmark-results/stage-budget.md
+        continue-on-error: true
+      - uses: actions/upload-artifact@v4
+        with:
+          name: release-gate
+          path: |
+            reference/basictex-2026/release-gate.json
+            reference/basictex-2026/release-gate.md
+            reference/basictex-2026/x2-edit-scenarios.json
+            reference/basictex-2026/doc-equivalence.json
+            reference/basictex-2026/fail-equivalence.json

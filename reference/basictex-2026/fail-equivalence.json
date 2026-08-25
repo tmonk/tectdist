@@ -1,6 +1,6 @@
 {
   "counters": {
-    "equivalent-fail": 48,
+    "equivalent-fail": 65,
     "equivalent-pass": 0,
     "mismatch": 0
   },
@@ -31,6 +31,12 @@
     },
     {
       "candidate_exit": 1,
+      "package": "cm",
+      "ref_exit": 1,
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 1,
       "package": "cqubeamer",
       "ref_exit": 1,
       "verdict": "equivalent-fail"
@@ -44,6 +50,30 @@
     {
       "candidate_exit": 1,
       "package": "ctablestack",
+      "ref_exit": 1,
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 1,
+      "package": "drv",
+      "ref_exit": 1,
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 1,
+      "package": "ec",
+      "ref_exit": 1,
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 1,
+      "package": "etex",
+      "ref_exit": 1,
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 1,
+      "package": "expressg",
       "ref_exit": 1,
       "verdict": "equivalent-fail"
     },
@@ -79,6 +109,12 @@
     },
     {
       "candidate_exit": 1,
+      "package": "huffman",
+      "ref_exit": 1,
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 1,
       "package": "hypcap",
       "ref_exit": 1,
       "verdict": "equivalent-fail"
@@ -97,7 +133,25 @@
     },
     {
       "candidate_exit": 1,
+      "package": "knuth-lib",
+      "ref_exit": 1,
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 1,
+      "package": "knuth-local",
+      "ref_exit": 1,
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 1,
       "package": "koma-script",
+      "ref_exit": 1,
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 1,
+      "package": "latex-fonts",
       "ref_exit": 1,
       "verdict": "equivalent-fail"
     },
@@ -157,7 +211,25 @@
     },
     {
       "candidate_exit": 1,
+      "package": "metaobj",
+      "ref_exit": 1,
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 1,
       "package": "mfpic4ode",
+      "ref_exit": 1,
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 1,
+      "package": "minim-hatching",
+      "ref_exit": 1,
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 1,
+      "package": "mp-neuralnetwork",
       "ref_exit": 1,
       "verdict": "equivalent-fail"
     },
@@ -176,6 +248,12 @@
     {
       "candidate_exit": 1,
       "package": "pdfcolfoot",
+      "ref_exit": 1,
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 1,
+      "package": "pdftex",
       "ref_exit": 1,
       "verdict": "equivalent-fail"
     },
@@ -211,6 +289,18 @@
     },
     {
       "candidate_exit": 1,
+      "package": "suanpan",
+      "ref_exit": 1,
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 1,
+      "package": "symbol",
+      "ref_exit": 1,
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 1,
       "package": "tagpdf",
       "ref_exit": 1,
       "verdict": "equivalent-fail"
@@ -218,6 +308,12 @@
     {
       "candidate_exit": 1,
       "package": "textpath",
+      "ref_exit": 1,
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 1,
+      "package": "times",
       "ref_exit": 1,
       "verdict": "equivalent-fail"
     },
@@ -284,6 +380,12 @@
     {
       "candidate_exit": 1,
       "package": "xunicode",
+      "ref_exit": 1,
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 1,
+      "package": "zapfding",
       "ref_exit": 1,
       "verdict": "equivalent-fail"
     },

@@ -2,12 +2,127 @@
   "schema_version": 1,
   "rows": [
     {
+      "document": "multifile",
+      "reference_exit": 0,
+      "candidate_exit": 0,
+      "reference_pages": 4,
+      "candidate_pages": 4,
+      "text_identical": true,
+      "verdict": "pass"
+    },
+    {
+      "document": "paper",
+      "reference_exit": 0,
+      "candidate_exit": 0,
+      "reference_pages": 1,
+      "candidate_pages": 1,
+      "text_identical": true,
+      "verdict": "pass"
+    },
+    {
+      "document": "tiny",
+      "reference_exit": 0,
+      "candidate_exit": 0,
+      "reference_pages": 1,
+      "candidate_pages": 1,
+      "text_identical": true,
+      "verdict": "pass"
+    },
+    {
+      "document": "bibtex",
+      "reference_exit": 0,
+      "candidate_exit": 0,
+      "reference_pages": 1,
+      "candidate_pages": 1,
+      "text_identical": true,
+      "verdict": "pass"
+    },
+    {
+      "document": "index",
+      "reference_exit": 0,
+      "candidate_exit": 0,
+      "reference_pages": 1,
+      "candidate_pages": 1,
+      "text_identical": true,
+      "verdict": "pass"
+    },
+    {
+      "document": "tikz",
+      "reference_exit": 0,
+      "candidate_exit": 0,
+      "reference_pages": 1,
+      "candidate_pages": 1,
+      "text_identical": true,
+      "verdict": "pass"
+    },
+    {
+      "document": "shell-escape",
+      "reference_exit": 0,
+      "candidate_exit": 0,
+      "reference_pages": 1,
+      "candidate_pages": 1,
+      "text_identical": true,
+      "verdict": "pass"
+    },
+    {
+      "document": "references",
+      "reference_exit": 0,
+      "candidate_exit": 0,
+      "reference_pages": 1,
+      "candidate_pages": 1,
+      "text_identical": true,
+      "verdict": "pass"
+    },
+    {
+      "document": "graphics",
+      "reference_exit": 0,
+      "candidate_exit": 0,
+      "reference_pages": 1,
+      "candidate_pages": 1,
+      "text_identical": true,
+      "verdict": "pass"
+    },
+    {
+      "document": "thesis",
+      "reference_exit": 0,
+      "candidate_exit": 0,
+      "reference_pages": 3,
+      "candidate_pages": 3,
+      "text_identical": true,
+      "verdict": "pass"
+    },
+    {
+      "document": "unicode-fonts",
+      "reference_exit": 0,
+      "candidate_exit": 0,
+      "reference_pages": 1,
+      "candidate_pages": 1,
+      "text_identical": true,
+      "verdict": "pass"
+    },
+    {
       "document": "beamer",
       "reference_exit": 0,
       "candidate_exit": 0,
       "reference_pages": 3,
       "candidate_pages": 3,
       "text_identical": true,
+      "verdict": "pass"
+    },
+    {
+      "document": "biblatex",
+      "reference_exit": 1,
+      "candidate_exit": 1,
+      "reference_pages": null,
+      "candidate_pages": null,
+      "verdict": "pass"
+    },
+    {
+      "document": "glossary",
+      "reference_exit": 1,
+      "candidate_exit": 1,
+      "reference_pages": null,
+      "candidate_pages": null,
       "verdict": "pass"
     }
   ]

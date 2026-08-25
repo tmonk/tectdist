@@ -220,12 +220,17 @@ def main(argv=None) -> int:
         "speedup_body_edit_vs_stock": round(
             results["stock-one-shot"]
             / max(results["warm-body-edit-format-reused"], 1), 3),
+        "speedup_unchanged_vs_stock": round(
+            results["stock-one-shot"]
+            / max(results["unchanged-rebuild-cache-hit"], 1), 3)
+            if "unchanged-rebuild-cache-hit" in results else None,
     }
     args.out.write_text(json.dumps(out, indent=2) + "\n")
     md = ["# X10-E edit scenarios through the supervisor (project format)", "",
           "| scenario | ms (min) |", "|---|---:|"]
     md += [f"| {k} | {v} |" for k, v in results.items()]
-    md += ["", f"Body-edit speedup vs stock: {out['speedup_body_edit_vs_stock']}x"]
+    md += ["", f"Body-edit speedup vs stock: {out['speedup_body_edit_vs_stock']}x",
+         f"Unchanged speedup vs stock: {out['speedup_unchanged_vs_stock']}x"]
     args.out.with_suffix(".md").write_text("\n".join(md) + "\n")
 
     print(f"{results}")
