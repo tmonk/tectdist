@@ -65,46 +65,81 @@ fn split_source(source_text: &str) -> Option<Split<'_>> {
 }
 
 
-/// Digest every file referenced by \\input{...} / \\include{...} in the
-/// preamble text, resolved relative to the project directory. Files that
-/// cannot be read are skipped (the engine will surface them at compile
-/// time exactly as a stock run would).
+const DEP_OPENERS: [&str; 2] = ["\\input{", "\\include{"];
+const MAX_DEP_FILES: usize = 64;
+
+/// Extract literal targets from every \input{...}/\include{...} in
+/// `text`. Macro-valued arguments are skipped: they cannot be resolved
+/// without TeX expansion.
+fn referenced_targets(text: &str) -> Vec<String> {
+    let mut targets = Vec::new();
+    for opener in DEP_OPENERS {
+        let mut search_from = 0;
+        while let Some(rel) = text[search_from..].find(opener) {
+            let start = search_from + rel + opener.len();
+            let Some(end_rel) = text[start..].find('}') else {
+                break;
+            };
+            let target = text[start..start + end_rel].trim();
+            search_from = start + end_rel;
+            if !target.is_empty() && !target.contains('$') {
+                targets.push(target.to_owned());
+            }
+        }
+    }
+    targets
+}
+
+fn read_project_tex(
+    cwd: &Path,
+    target: &str,
+) -> Option<(std::path::PathBuf, Vec<u8>)> {
+    for candidate in [cwd.join(format!("{target}.tex")), cwd.join(target)] {
+        if let Ok(bytes) = std::fs::read(&candidate) {
+            return Some((candidate, bytes));
+        }
+    }
+    None
+}
+
+/// Digest every file reachable from the preamble through
+/// \\input{...}/\\include{...}, resolved relative to the project directory
+/// and followed RECURSIVELY: a dependency's own inputs are part of the
+/// snapshot too. Files that cannot be read are skipped; the engine
+/// surfaces them at compile time exactly as a stock run would.
 fn preamble_dependency_digests(
     cwd: &Path,
     preamble: &str,
 ) -> Vec<(String, String)> {
-    const OPENERS: [&str; 2] = ["\\input{", "\\include{"];
     let mut out: BTreeMap<String, String> = BTreeMap::new();
-    for opener in OPENERS {
-        let mut search_from = 0;
-        while let Some(rel) = preamble[search_from..].find(opener) {
-            let start = search_from + rel + opener.len();
-            let Some(end_rel) = preamble[start..].find('}') else {
-                break;
-            };
-            let target = preamble[start..start + end_rel].trim();
-            search_from = start + end_rel;
-            if target.is_empty() || target.contains('$') {
-                continue; // literal path needed; skip macros/jobs
-            }
-            for candidate in [
-                cwd.join(format!("{target}.tex")),
-                cwd.join(target),
-            ] {
-                if let Ok(bytes) = std::fs::read(&candidate) {
-                    let key = candidate
-                        .strip_prefix(cwd)
-                        .unwrap_or(&candidate)
-                        .to_string_lossy()
-                        .into_owned();
-                    out.insert(key, digest_hex(&bytes));
-                    break;
-                }
+    let mut queue: Vec<String> = referenced_targets(preamble);
+    while let Some(target) = queue.pop() {
+        if out.len() >= MAX_DEP_FILES {
+            break; // conservative overflow: rebuild on any change instead
+        }
+        let Some((path, bytes)) = read_project_tex(cwd, &target) else {
+            continue;
+        };
+        let key = path
+            .strip_prefix(cwd)
+            .unwrap_or(&path)
+            .to_string_lossy()
+            .into_owned();
+        if out.contains_key(&key) {
+            continue; // cycle guard
+        }
+        out.insert(key.clone(), digest_hex(&bytes));
+        // Follow this dependency's own \\input/\\include edges.
+        let text = String::from_utf8_lossy(&bytes).into_owned();
+        for nested in referenced_targets(&text) {
+            if !out.contains_key(&nested) {
+                queue.push(nested);
             }
         }
     }
     out.into_iter().collect()
 }
+
 
 pub struct FastCompile {
     pub exit_status: i32,

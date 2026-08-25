@@ -259,3 +259,53 @@ fn preamble_input_file_edit_rebuilds_format() {
     assert_ne!(meta_before.trim(), meta_after.trim(),
                "dependency edit must rebuild the format");
 }
+
+#[test]
+fn nested_dependency_edit_rebuilds_format() {
+    let Some(_image) = basic_tex_root() else {
+        eprintln!("skipping: BasicTeX reference image not present on this host");
+        return;
+    };
+    let supervisor = start_supervisor("pfmt-nest");
+
+    let work = free_dir("pfmtnest-work");
+    // main.tex -> \input{setup} -> \input{constants} (nested edge).
+    std::fs::write(
+        work.join("main.tex"),
+        "\\documentclass{article}\n\\input{setup}\n\\begin{document}\nValue: \\the\\mylen.\n\\end{document}\n",
+    )
+    .unwrap();
+    std::fs::write(
+        work.join("setup.tex"),
+        "\\newlength{\\mylen}\\input{constants}\n",
+    )
+    .unwrap();
+    std::fs::write(work.join("constants.tex"), "\\setlength{\\mylen}{5pt}\n").unwrap();
+
+    let payload = serde_json::json!({
+        "type": "compile",
+        "profile": "basictex-2026",
+        "cwd": work.to_str().unwrap(),
+        "argv": ["pdflatex", "-interaction=batchmode", "main.tex"],
+        "snapshot_key": null,
+    });
+
+    let first = client(&supervisor.socket, payload.clone());
+    assert_eq!(first["compile_accepted"]["exit_status"], 0,
+               "first compile failed: {first}");
+    let meta_before = std::fs::read_to_string(
+        work.join(".tectdist/main-pre.meta")).unwrap();
+
+    // Edit ONLY the NESTED dependency (constants.tex, pulled in by
+    // setup.tex, which is itself pulled in by the preamble).
+    std::fs::write(work.join("constants.tex"), "\\setlength{\\mylen}{9pt}\n")
+        .unwrap();
+    let second = client(&supervisor.socket, payload);
+    assert_eq!(second["compile_accepted"]["exit_status"], 0,
+               "second compile failed: {second}");
+
+    let meta_after = std::fs::read_to_string(
+        work.join(".tectdist/main-pre.meta")).unwrap();
+    assert_ne!(meta_before.trim(), meta_after.trim(),
+               "nested dependency edit must rebuild the format");
+}
