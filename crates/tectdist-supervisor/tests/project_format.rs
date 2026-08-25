@@ -122,3 +122,53 @@ fn project_format_builds_reuses_and_produces_pdf() {
         "PDF must exist after reuse"
     );
 }
+
+#[test]
+fn shell_escape_flag_is_forwarded_not_dropped() {
+    let Some(_image) = basic_tex_root() else {
+        eprintln!("skipping: BasicTeX reference image not present on this host");
+        return;
+    };
+    let supervisor = start_supervisor("pfmt-shell");
+
+    let work = free_dir("pfmtshell-work");
+    std::fs::write(work.join("main.tex"), DOC).unwrap();
+
+    // Same preamble as DOC but requested with -shell-escape: the fast
+    // path must forward the flag (both to the ini build and the body
+    // compile) rather than silently dropping it.
+    let payload = serde_json::json!({
+        "type": "compile",
+        "profile": "basictex-2026",
+        "cwd": work.to_str().unwrap(),
+        "argv": ["pdflatex", "-interaction=batchmode", "-shell-escape",
+                 "main.tex"],
+        "snapshot_key": null,
+    });
+
+    let first = client(&supervisor.socket, payload);
+    assert_eq!(first["ok"], true, "compile failed: {first}");
+    assert_eq!(
+        first["compile_accepted"]["exit_status"], 0,
+        "shell-escape compile must succeed: {first}"
+    );
+    assert!(work.join("main.pdf").is_file(), "PDF must exist");
+    assert!(work.join(".tectdist/main-pre.fmt").is_file());
+
+    // The cached format's meta digest must reflect the capability flags:
+    // rebuild the expected digest the way fast_compile does and compare.
+    use std::fmt::Write as _;
+    use sha2::Digest as _;
+    let mut digest_input = String::from(DOC.split_at(
+        DOC.find("\\begin{document}").unwrap()).0);
+    digest_input.push_str("\n\\dump\n");
+    digest_input.push('\n');
+    digest_input.push_str("-shell-escape");
+    let meta = std::fs::read_to_string(work.join(".tectdist/main-pre.meta"))
+        .expect("meta record");
+    let mut hasher = <sha2::Sha256 as sha2::Digest>::new();
+    hasher.update(digest_input.as_bytes());
+    let expected = format!("{:x}", hasher.finalize());
+    assert_eq!(meta.trim(), expected,
+               "capability flags must participate in the cache key");
+}

@@ -95,13 +95,46 @@ pub fn fast_compile(image_root: &Path, cwd: &Path, argv: &[String]) -> Result<Fa
         .unwrap_or("main")
         .to_owned();
 
+    // Forward every user flag EXCEPT the engine name, the source, and
+    // jobname controls (we pin the jobname to keep output paths stable).
+    // Dropping flags like -shell-escape or -output-directory would make
+    // the fast path diverge from reference semantics (BT100 violation).
+    let passthrough: Vec<&String> = argv
+        .iter()
+        .skip(1)
+        .filter(|arg| *arg != source_arg)
+        .filter(|arg| {
+            let text = arg.as_str();
+            !(text == "-jobname"
+                || text.starts_with("-jobname=")
+                || text.starts_with("-jobname "))
+        })
+        .collect();
+    // Capability flags also shape the ini/dump run.
+    let capability_flags: Vec<&String> = passthrough
+        .iter()
+        .filter(|arg| {
+            let text = arg.as_str();
+            text.starts_with("-shell") || text.contains("write18")
+        })
+        .copied()
+        .collect();
+
     let fmt_name = format!("{job_stem}-pre");
+    // The cache key includes capability flags so a shell-escape build is
+    // never served to a restricted run or vice versa.
+    let mut digest_input = split.preamble.clone();
+    for flag in &capability_flags {
+        digest_input.push('\n');
+        digest_input.push_str(flag);
+    }
     ensure_format(
         image_root,
         cwd,
         &fmt_name,
         &split.preamble,
-        &digest_hex(split.preamble.as_bytes()),
+        &digest_hex(digest_input.as_bytes()),
+        &capability_flags,
     )?;
 
     // Body file: written next to the format every time (cheap, keeps in
@@ -113,6 +146,10 @@ pub fn fast_compile(image_root: &Path, cwd: &Path, argv: &[String]) -> Result<Fa
 
     let started = Instant::now();
     let output = Command::new(engine_binary(image_root)?)
+        // User flags first, then our pinned controls; duplicates of
+        // -interaction are harmless and the LAST occurrence wins, which
+        // keeps batchmode/halt-on-error authoritative.
+        .args(&passthrough)
         .args([
             "-interaction=batchmode",
             "-halt-on-error",
@@ -163,7 +200,8 @@ fn ensure_format(
     cwd: &Path,
     fmt_name: &str,
     preamble: &str,
-    preamble_digest: &str,
+    cache_digest: &str,
+    capability_flags: &[&String],
 ) -> Result<(), String> {
     let format_dir = cwd.join(FORMAT_DIR);
     std::fs::create_dir_all(&format_dir)
@@ -173,7 +211,7 @@ fn ensure_format(
 
     if fmt_file.is_file() {
         if let Ok(meta) = std::fs::read_to_string(&meta_file) {
-            if meta.trim() == preamble_digest {
+            if meta.trim() == cache_digest {
                 return Ok(()); // current format, reuse
             }
         }
@@ -186,11 +224,15 @@ fn ensure_format(
 
     let binary = engine_binary(image_root)?;
     let status = Command::new(&binary)
+        .args(["-ini"])
+        // Capability flags (e.g. -shell-escape) shape what the preamble
+        // may do during the dump; forward them so the snapshot matches
+        // the semantics of the request that triggered the build.
+        .args(capability_flags.iter().map(|f| f.as_str()))
         .args([
-            "-ini",
             "-interaction=batchmode",
             "-halt-on-error",
-            &format!("&pdflatex"),
+            "&pdflatex",
         ])
         .arg(pre_file.file_name().unwrap().to_string_lossy().as_ref())
         .current_dir(&format_dir)
@@ -235,7 +277,7 @@ fn ensure_format(
             tail.lines().last().unwrap_or("")
         ));
     }
-    std::fs::write(&meta_file, preamble_digest)
+    std::fs::write(&meta_file, cache_digest)
         .map_err(|error| format!("cannot write meta: {error}"))?;
     Ok(())
 }
