@@ -1006,8 +1006,40 @@ fn run_profile_compile(profile: &str, argv: &[String], cwd: &Path) -> Result<(i3
         .map_err(|error| format!("spawn failed: {error}"))?;
     let post_build = snapshot_project_files(cwd);
     let manifest_changed = pre_build != post_build;
+
+    // Build manifest: record reads (pre) and writes (post diff) for
+    // dependency-to-checkpoint mapping on future compiles (plan §12).
+    let mut reads: Vec<(String, String)> = Vec::new();
+    let mut writes: Vec<(String, String)> = Vec::new();
+    {
+        let mut all_pre: std::collections::HashMap<String, String> =
+            pre_build.iter().cloned().collect();
+        let mut all_post: std::collections::HashMap<String, String> =
+            post_build.iter().cloned().collect();
+        for (name, digest) in &all_pre {
+            match all_post.get(name) {
+                Some(post_digest) if post_digest == digest => {
+                    reads.push((name.clone(), digest.clone()));
+                }
+                _ => {
+                    writes.push((name.clone(), digest.clone()));
+                }
+            }
+        }
+        for (name, digest) in &all_post {
+            if !all_pre.contains_key(name) {
+                writes.push((name.clone(), digest.clone()));
+            }
+        }
+        reads.sort();
+        writes.sort();
+    }
+
+
     Ok((status.code().unwrap_or(128), start.elapsed().as_millis() as u64))
 }
+
+/// Compute a content digest over a set of (name, digest) pairs.
 
 /// Snapshot all files in a directory (name → sha256) for the build manifest.
 fn snapshot_project_files(cwd: &Path) -> Vec<(String, String)> {
