@@ -16,11 +16,11 @@ modifications documented in `docs/FORK_SERVER_DESIGN.md`.
 |---|---|---|
 | **B0** Contract reset | ✅ complete | BasicTeX pinned, manifests generated, budgets frozen |
 | **B1** Substrate | ✅ complete | Image verified (19,935 files), size gate PASS, pipelines 7/7 |
-| **B2** Compatibility factory | ~95% | 713+725 ref-green pairs (supervisor + CLI), 13/13 documents directionally equivalent (11 byte-identical), all ref-failures attributed, failure equivalence 48/48, corpus 15 docs incl. multifile + beamer, report gate PASS |
-| **X1** Supervisor + fork servers | ~65% | IPC+locks ✓, pdfTeX fork server proven (1.5 ms children), launch-variant matrix mapped, -fmt bypass root-caused |
+| **B2** Compatibility factory | ~97% | Evidence pipeline honest end-to-end (smoke shards -> probes -> attribution -> equivalence -> gate); 768+725 ref-green pairs; 13/13 docs directionally equivalent; all ref-failures attributed; extra-family probes 51 pkgs / 0 mismatches; smoke 272 cases merged via dedicated results files; corpus 15 docs; report gate PASS |
+| **X1** Supervisor + fork servers | ~80% | IPC+locks+telemetry+limits+cancellation ✓ (all integration-tested); crash isolation/wedge recovery tested; edge-path coverage (plain TeX through resident worker); format-loaded children 1.5 ms p50; non-pdftex engines need build-tree reconfigure (documented) |
 | **X2** Preamble snapshots | ~85% | Builder validated end-to-end (paired-body contract, 2.1x A/B), hyph_size root-caused (TEXMFCNF override), supervisor fast path live with IPC test; measured through supervisor: body edit 156->67 ms (2.33x), rebuild 273 ms |
 | **X3** Helper acceleration | ✅ complete | Broker MVP done, 5/5 helpers < 2 ms gates, mutation corpus passes |
-| **X4** Checkpoints/replay | ~65% | Model ✓, chains ✓, manifest ✓, aux tracker ✓, **unchanged-rebuild gate live: 12 ms vs 152 ms stock (12.7x)**; page-level engine API pending |
+| **X4** Checkpoints/replay | ~72% | Model ✓, chains ✓, manifest ✓, aux tracker ✓; unchanged-rebuild gate: whole-tree content hashing, recursive snapshots, cancel-aware; multi-file mutation fuzz green; forward replay/suffix convergence pending page checkpoints |
 | **X5** Output graphs | model ✓ | Graph model ✓, planner ✓, content store ✓; execution pending engine patches |
 | **X6** Runtime-warm clean | not started | Needs X4/X5 completion first |
 | **R** Release qualification | queued | All prior gates |
