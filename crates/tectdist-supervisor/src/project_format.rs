@@ -78,6 +78,22 @@ pub fn fast_compile(image_root: &Path, cwd: &Path, argv: &[String]) -> Result<Fa
     if !ELIGIBLE_ENGINES.contains(&program.as_str()) {
         return Err(format!("engine '{program}' not eligible"));
     }
+    // Requests that move the output or pick their own format escape every
+    // assumption this fast path makes:
+    // - -output-directory sends the PDF elsewhere while the rebuild gate
+    //   only knows about <cwd>/<stem>.pdf;
+    // - an explicit -fmt=... or first-line &<name> selects the format,
+    //   which our preamble snapshot must not override.
+    // All three escalate to the exact one-shot path.
+    for arg in argv.iter().skip(1) {
+        let text = arg.as_str();
+        if text.starts_with("-output-directory")
+            || text.starts_with("-fmt=")
+            || text.starts_with('&')
+        {
+            return Err(format!("request uses '{text}'; needs exact execution"));
+        }
+    }
     // Primary source = last .tex argument (same rule as derive_job_name).
     let source_arg = argv
         .iter()

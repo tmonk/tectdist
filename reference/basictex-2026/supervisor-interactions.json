@@ -1,299 +1,226 @@
 {
   "schema_version": 1,
-  "seed": 41,
+  "seed": 53,
   "shard": "0/1",
   "counters": {
-    "pass": 30,
+    "pass": 19,
     "cold-fail": 0,
     "warm-fail": 0,
-    "reference-failure": 20
+    "reference-failure": 21
   },
   "results": [
     {
-      "case": "bigintcalc+pdfescape",
+      "case": "infwarerr+l3kernel-dev",
       "reference_pages": 1,
       "cold_pages": 1,
       "warm_pages": 1,
       "verdict": "pass"
     },
     {
-      "case": "index+setspace",
-      "reference_pages": 1,
-      "cold_pages": 1,
-      "warm_pages": 1,
-      "verdict": "pass"
-    },
-    {
-      "case": "babel+lua-unicode-math",
+      "case": "ctablestack+rcs",
       "verdict": "reference-failure"
     },
     {
-      "case": "listings+microtype",
-      "reference_pages": 1,
-      "cold_pages": 1,
-      "warm_pages": 1,
-      "verdict": "pass"
-    },
-    {
-      "case": "gmp+pspicture",
+      "case": "luamml+parskip",
       "verdict": "reference-failure"
     },
     {
-      "case": "sepnum+unisugar",
-      "reference_pages": 1,
-      "cold_pages": 1,
-      "warm_pages": 1,
-      "verdict": "pass"
-    },
-    {
-      "case": "latex-lab-dev+sansmath",
-      "reference_pages": 1,
-      "cold_pages": 1,
-      "warm_pages": 1,
-      "verdict": "pass"
-    },
-    {
-      "case": "philokalia+rerunfilecheck",
+      "case": "businesscard-qrcode+pdfpages",
       "verdict": "reference-failure"
     },
     {
-      "case": "ae+pspicture",
-      "reference_pages": 1,
-      "cold_pages": 1,
-      "warm_pages": 1,
-      "verdict": "pass"
-    },
-    {
-      "case": "feynmf+geometry",
-      "reference_pages": 1,
-      "cold_pages": 1,
-      "warm_pages": 1,
-      "verdict": "pass"
-    },
-    {
-      "case": "bidipresentation+xltxtra",
+      "case": "businesscard-qrcode+mpgraphics",
       "verdict": "reference-failure"
     },
     {
-      "case": "kvoptions+xecyr",
+      "case": "bookmark+etoolbox",
       "reference_pages": 1,
       "cold_pages": 1,
       "warm_pages": 1,
       "verdict": "pass"
     },
     {
-      "case": "listings+tools",
+      "case": "latex-base-dev+seminar",
       "reference_pages": 1,
       "cold_pages": 1,
       "warm_pages": 1,
       "verdict": "pass"
     },
     {
-      "case": "ltx-talk+ucharcat",
+      "case": "kvoptions+makecmds",
+      "reference_pages": 1,
+      "cold_pages": 1,
+      "warm_pages": 1,
+      "verdict": "pass"
+    },
+    {
+      "case": "babel+ucharclasses",
       "verdict": "reference-failure"
     },
     {
-      "case": "bidi-atbegshi+upquote",
-      "reference_pages": 1,
-      "cold_pages": 1,
-      "warm_pages": 1,
-      "verdict": "pass"
-    },
-    {
-      "case": "mfpic+section",
-      "reference_pages": 1,
-      "cold_pages": 1,
-      "warm_pages": 1,
-      "verdict": "pass"
-    },
-    {
-      "case": "epstopdf-pkg+subfig",
-      "reference_pages": 1,
-      "cold_pages": 1,
-      "warm_pages": 1,
-      "verdict": "pass"
-    },
-    {
-      "case": "atbegshi+beamer",
+      "case": "feynmp-auto+mfpic4ode",
       "verdict": "reference-failure"
     },
     {
-      "case": "bibtex+ntgclass",
+      "case": "etexcmds+ltxcmds",
       "reference_pages": 1,
       "cold_pages": 1,
       "warm_pages": 1,
       "verdict": "pass"
     },
     {
-      "case": "ctablestack+ltxmisc",
+      "case": "makecmds+mathspec",
       "verdict": "reference-failure"
     },
     {
-      "case": "grfext+pspicture",
+      "case": "tex4ht+unisugar",
       "reference_pages": 1,
       "cold_pages": 1,
       "warm_pages": 1,
       "verdict": "pass"
     },
     {
-      "case": "jknapltx+stringenc",
+      "case": "hopatch+translator",
       "reference_pages": 1,
       "cold_pages": 1,
       "warm_pages": 1,
       "verdict": "pass"
     },
     {
-      "case": "amsfonts+pslatex",
-      "reference_pages": 1,
-      "cold_pages": 1,
-      "warm_pages": 1,
-      "verdict": "pass"
-    },
-    {
-      "case": "ae+unicode-bidi",
+      "case": "luaotfload+section",
       "verdict": "reference-failure"
     },
     {
-      "case": "fix2col+tetragonos",
-      "reference_pages": 1,
-      "cold_pages": 1,
-      "warm_pages": 1,
-      "verdict": "pass"
-    },
-    {
-      "case": "ragged2e+xevlna",
+      "case": "tagpdf+xkeyval",
       "verdict": "reference-failure"
     },
     {
-      "case": "na-position+tools",
+      "case": "amsfonts+pdfescape",
+      "reference_pages": 1,
+      "cold_pages": 1,
+      "warm_pages": 1,
+      "verdict": "pass"
+    },
+    {
+      "case": "latex-lab+xkeyval",
+      "reference_pages": 1,
+      "cold_pages": 1,
+      "warm_pages": 1,
+      "verdict": "pass"
+    },
+    {
+      "case": "bookmark+xespotcolor",
+      "reference_pages": 1,
+      "cold_pages": 1,
+      "warm_pages": 1,
+      "verdict": "pass"
+    },
+    {
+      "case": "koma-script+lua-unicode-math",
       "verdict": "reference-failure"
     },
     {
-      "case": "anysize+mdwtools",
+      "case": "iftex+xkeyval",
       "reference_pages": 1,
       "cold_pages": 1,
       "warm_pages": 1,
       "verdict": "pass"
     },
     {
-      "case": "feynmp-auto+revtex",
+      "case": "dvips+fancyref",
+      "reference_pages": 1,
+      "cold_pages": 1,
+      "warm_pages": 1,
+      "verdict": "pass"
+    },
+    {
+      "case": "cite+latex-lab-dev",
+      "reference_pages": 1,
+      "cold_pages": 1,
+      "warm_pages": 1,
+      "verdict": "pass"
+    },
+    {
+      "case": "fixlatvian+hopatch",
       "verdict": "reference-failure"
     },
     {
-      "case": "amsfonts+extsizes",
-      "reference_pages": 1,
-      "cold_pages": 1,
-      "warm_pages": 1,
-      "verdict": "pass"
-    },
-    {
-      "case": "fontwrap+pdfcolfoot",
+      "case": "gettitlestring+revtex",
       "verdict": "reference-failure"
     },
     {
-      "case": "babelbib+microtype",
+      "case": "dvips+fix2col",
+      "reference_pages": 1,
+      "cold_pages": 1,
+      "warm_pages": 1,
+      "verdict": "pass"
+    },
+    {
+      "case": "latex-lab-dev+pgf",
+      "reference_pages": 1,
+      "cold_pages": 1,
+      "warm_pages": 1,
+      "verdict": "pass"
+    },
+    {
+      "case": "bidishadowtext+pdflscape",
+      "reference_pages": 1,
+      "cold_pages": 1,
+      "warm_pages": 1,
+      "verdict": "pass"
+    },
+    {
+      "case": "bidishadowtext+feynmp-auto",
+      "reference_pages": 1,
+      "cold_pages": 1,
+      "warm_pages": 1,
+      "verdict": "pass"
+    },
+    {
+      "case": "setspace+ucharclasses",
       "verdict": "reference-failure"
     },
     {
-      "case": "float+iftex",
-      "reference_pages": 1,
-      "cold_pages": 1,
-      "warm_pages": 1,
-      "verdict": "pass"
-    },
-    {
-      "case": "xespotcolor+xetexko",
+      "case": "cqubeamer+xecolor",
       "verdict": "reference-failure"
     },
     {
-      "case": "breqn+xfrac",
+      "case": "latex-tools-dev+tools",
       "reference_pages": 1,
       "cold_pages": 1,
       "warm_pages": 1,
       "verdict": "pass"
     },
     {
-      "case": "fancyvrb+footnotehyper",
-      "reference_pages": 1,
-      "cold_pages": 1,
-      "warm_pages": 1,
-      "verdict": "pass"
-    },
-    {
-      "case": "firstaid+listings",
-      "reference_pages": 1,
-      "cold_pages": 1,
-      "warm_pages": 1,
-      "verdict": "pass"
-    },
-    {
-      "case": "fixlatvian+latex-base-dev",
+      "case": "xecyr+xeindex",
       "verdict": "reference-failure"
     },
     {
-      "case": "extsizes+pagesel",
-      "reference_pages": 1,
-      "cold_pages": 1,
-      "warm_pages": 1,
-      "verdict": "pass"
-    },
-    {
-      "case": "luamml+pdfmanagement-testphase",
+      "case": "gmp+kvsetkeys",
       "verdict": "reference-failure"
     },
     {
-      "case": "babel-spanish+pspicture",
+      "case": "atbegshi+fontspec",
       "verdict": "reference-failure"
     },
     {
-      "case": "unicode-math+xltxtra",
+      "case": "bidipresentation+fontspec",
       "verdict": "reference-failure"
     },
     {
-      "case": "bigintcalc+jknapltx",
-      "reference_pages": 1,
-      "cold_pages": 1,
-      "warm_pages": 1,
-      "verdict": "pass"
-    },
-    {
-      "case": "anysize+tetragonos",
-      "reference_pages": 1,
-      "cold_pages": 1,
-      "warm_pages": 1,
-      "verdict": "pass"
-    },
-    {
-      "case": "float+pdfmanagement-testphase",
-      "reference_pages": 1,
-      "cold_pages": 1,
-      "warm_pages": 1,
-      "verdict": "pass"
-    },
-    {
-      "case": "colortbl+jknapltx",
-      "reference_pages": 1,
-      "cold_pages": 1,
-      "warm_pages": 1,
-      "verdict": "pass"
-    },
-    {
-      "case": "atveryend+fixlatvian",
+      "case": "bidi-atbegshi+na-position",
       "verdict": "reference-failure"
     },
     {
-      "case": "etexcmds+infwarerr",
-      "reference_pages": 1,
-      "cold_pages": 1,
-      "warm_pages": 1,
-      "verdict": "pass"
-    },
-    {
-      "case": "koma-script+refcount",
+      "case": "amsmath+ifplatform",
       "verdict": "reference-failure"
     },
     {
-      "case": "l3experimental+memoir",
+      "case": "babel+fancybox",
+      "verdict": "reference-failure"
+    },
+    {
+      "case": "eurosym+iftex",
       "reference_pages": 1,
       "cold_pages": 1,
       "warm_pages": 1,

@@ -172,3 +172,40 @@ fn shell_escape_flag_is_forwarded_not_dropped() {
     assert_eq!(meta.trim(), expected,
                "capability flags must participate in the cache key");
 }
+
+#[test]
+fn output_directory_requests_escalate_to_exact_path() {
+    let Some(_image) = basic_tex_root() else {
+        eprintln!("skipping: BasicTeX reference image not present on this host");
+        return;
+    };
+    let supervisor = start_supervisor("pfmt-outdir");
+
+    let work = free_dir("pfmtout-work");
+    std::fs::write(work.join("main.tex"), DOC).unwrap();
+    // TeX does not create missing output directories; mirror real usage.
+    std::fs::create_dir_all(work.join("build")).unwrap();
+
+    // -output-directory moves the PDF out of <cwd>; the fast path must
+    // decline (no project format built) and the exact one-shot path must
+    // still produce the artifact where the user asked for it.
+    let payload = serde_json::json!({
+        "type": "compile",
+        "profile": "basictex-2026",
+        "cwd": work.to_str().unwrap(),
+        "argv": ["pdflatex", "-interaction=batchmode",
+                 "-output-directory=build", "main.tex"],
+        "snapshot_key": null,
+    });
+
+    let response = client(&supervisor.socket, payload);
+    assert_eq!(response["ok"], true, "compile failed: {response}");
+    assert_eq!(
+        response["compile_accepted"]["exit_status"], 0,
+        "exact-path compile must succeed: {response}"
+    );
+    assert!(work.join("build/main.pdf").is_file(),
+            "PDF must land in the requested directory");
+    assert!(!work.join(".tectdist").exists(),
+            "fast path must NOT engage for -output-directory requests");
+}
