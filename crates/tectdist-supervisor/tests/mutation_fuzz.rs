@@ -289,3 +289,177 @@ fn adversarial_mutations_never_serve_stale_output() {
         }
     }
 }
+
+/// Multi-file mutation fuzz: subdirectory \include targets and
+/// preamble-\input dependencies mutate adversarially. Exercises the
+/// recursive tree snapshot (X4) and recursive dependency walks (X2).
+/// Each iteration REGENERATES its target region from a template with a
+/// fresh random word (so anchors never mutate away), then defeats cheap
+/// invalidation by restoring the previous mtime.
+#[test]
+fn multifile_adversarial_mutations_never_serve_stale_output() {
+    let Some(image) = basic_tex_root() else {
+        eprintln!("skipping: BasicTeX reference image not present on this host");
+        return;
+    };
+    let supervisor = start_supervisor("mfuzz-multi", &image);
+
+    let work = free_dir("mfuzz-multi-work");
+
+    struct Region {
+        path: &'static str,
+        /// Full file template; "{word}" is replaced with a fresh random
+        /// lowercase word every time this region is targeted.
+        template: &'static str,
+        /// Rendered-output assertion applies only to visible prose.
+        visible: bool,
+        /// Snapshot-key assertion applies to X2-relevant inputs.
+        snapshot_key: bool,
+    }
+    let regions = [
+        Region {
+            path: "chapters/ch1.tex",
+            template: "Chapter prose {word}.\n",
+            visible: true,
+            snapshot_key: true,
+        },
+        Region {
+            path: "preamble-extra.tex",
+            template: "% depmarker {word}\n\\newcommand{\\accenttext}[1]{#1}\n",
+            visible: false,
+            snapshot_key: true,
+        },
+        Region {
+            path: "main.tex",
+            template: "\\documentclass{article}\n\\input {preamble-extra}\n\\begin{document}\nMain body {word}.\n\\input{chapters/ch1}\n\\end{document}\n",
+            visible: true,
+            snapshot_key: true,
+        },
+    ];
+
+    let payload = serde_json::json!({
+        "type": "compile",
+        "profile": "basictex-2026",
+        "cwd": work.to_str().unwrap(),
+        "argv": ["pdflatex", "-interaction=batchmode", "main.tex"],
+        "snapshot_key": null,
+    });
+
+    // Initial layout + warm caches.
+    for region in &regions {
+        let path = work.join(region.path);
+        std::fs::create_dir_all(path.parent().unwrap()).unwrap();
+        std::fs::write(&path, region.template.replace("{word}", "initial"))
+            .unwrap();
+    }
+    let first = client(&supervisor.socket, payload.clone());
+    assert_eq!(first["compile_accepted"]["exit_status"], 0,
+               "warm-up failed: {first}");
+
+    let extract = |pdf: &Path| -> String {
+        String::from_utf8_lossy(
+            &Command::new("pdftotext").arg(pdf).arg("-")
+                .output().expect("pdftotext").stdout,
+        ).into_owned()
+    };
+    let collapse = |s: &str| -> String {
+        s.split_whitespace().collect::<Vec<_>>().join(" ")
+    };
+
+    fn clone_mtime(reference: &Path, target: &Path) {
+        Command::new("touch")
+            .args(["-r"])
+            .arg(reference)
+            .arg(target)
+            .status()
+            .expect("touch -r");
+    }
+
+    let mut rng = Rng(0x1234_5678_9ABC_DEF0);
+    let mut last_meta = std::fs::read_to_string(
+        work.join(".tectdist/main-pre.meta")).ok();
+
+    for iteration in 0..9 {
+        let region = &regions[iteration % regions.len()];
+        let target = work.join(region.path);
+
+        let mtime_ref = work.join(".mtime-ref");
+        if target.exists() {
+            std::fs::copy(&target, &mtime_ref).unwrap();
+        }
+
+        let word: String = (0..8)
+            .map(|_| LETTERS[rng.below(LETTERS.len())] as char)
+            .collect();
+        let content = region.template.replace("{word}", &word);
+        std::fs::write(&target, &content).unwrap();
+        if mtime_ref.exists() {
+            clone_mtime(&mtime_ref, &target);
+            std::fs::remove_file(&mtime_ref).ok();
+        }
+
+        let response = client(&supervisor.socket, payload.clone());
+        assert_eq!(
+            response["compile_accepted"]["exit_status"], 0,
+            "iteration {iteration} ({:?}): compile failed: {response}",
+            region.path
+        );
+
+        let pdf = work.join("main.pdf");
+        assert!(pdf.is_file());
+        let text = extract(&pdf);
+
+        if region.visible {
+            assert!(
+                collapse(&text).contains(&word),
+                "iteration {iteration}: STALE OUTPUT for {:?} — fresh word \
+                 {word:?} missing from pdf text {:?}",
+                region.path,
+                collapse(&text)
+            );
+        }
+
+        // Only PREAMBLE-reachable dependencies participate in the format
+        // cache key. Body dependencies (chapters/) are protected by the
+        // X4 content digests instead — verified by the visible-word check.
+        if region.snapshot_key && region.path == "preamble-extra.tex" {
+            // The recorded digest must move when the dependency changes.
+            let meta = std::fs::read_to_string(
+                work.join(".tectdist/main-pre.meta"),
+            ).unwrap_or_default();
+            assert_ne!(
+                last_meta.as_deref(), Some(meta.as_str()),
+                "iteration {iteration}: STALE FORMAT key after editing {:?}",
+                region.path
+            );
+            last_meta = Some(meta);
+        }
+
+        // Shadow-full-build cross-check every third iteration.
+        if iteration % 3 == 0 && iteration > 0 {
+            let shadow = free_dir("mfuzz-multi-shadow");
+            for rel in ["main.tex", "preamble-extra.tex", "chapters/ch1.tex"] {
+                let from = work.join(rel);
+                let to = shadow.join(rel);
+                std::fs::create_dir_all(to.parent().unwrap()).unwrap();
+                std::fs::copy(&from, &to).unwrap();
+            }
+            let status = Command::new(image.join("bin/universal-darwin/pdftex"))
+                .args(["-interaction=batchmode", "-halt-on-error", "&pdflatex", "main.tex"])
+                .current_dir(&shadow)
+                .env("TEXMFROOT", &image)
+                .stdout(Stdio::null())
+                .stderr(Stdio::null())
+                .status()
+                .expect("shadow dispatch");
+            assert!(status.success(), "iteration {iteration}: shadow build failed");
+            assert_eq!(
+                collapse(&text),
+                collapse(&extract(&shadow.join("main.pdf"))),
+                "iteration {iteration}: fast-path output diverges from full \\
+                 shadow rebuild"
+            );
+            let _ = std::fs::remove_dir_all(&shadow);
+        }
+    }
+}
