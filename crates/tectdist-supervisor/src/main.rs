@@ -17,6 +17,7 @@
 //! `"request_id"` when the request supplied one.
 mod checkpoint;
 mod output_graph;
+mod output_store;
 use checkpoint::{CheckpointChain, CheckpointRecord};
 
 use serde::{Deserialize, Serialize};
