@@ -1,3 +1,8 @@
+// Forward-looking plan-X4 API: suffix convergence and replay decisions
+// are consumed once engine-side page checkpoints land (see
+// docs/FORK_SERVER_DESIGN.md). Unused until then.
+#![allow(dead_code)]
+
 //! Page-checkpoint state model (plan workstream X4 / §12–§14).
 //!
 //! Defines the supervisor-side contract for dependency-aware incremental

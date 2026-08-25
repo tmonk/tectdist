@@ -21,7 +21,7 @@ mod output_store;
 mod project_format;
 mod rebuild_cache;
 mod rebuild_gate;
-use checkpoint::{CheckpointChain, CheckpointRecord};
+use checkpoint::CheckpointChain;
 
 use serde::{Deserialize, Serialize};
 use std::collections::{HashMap, VecDeque};
@@ -51,9 +51,10 @@ enum Request {
         profile: String,
         argv: Vec<String>,
         cwd: PathBuf,
-        /// Explicit job source file (e.g. main.tex); derived from argv when
-        /// absent.
+        /// Explicit job source file (e.g. main.tex); accepted for protocol
+        /// compatibility and derived from argv when absent.
         #[serde(default)]
+        #[allow(dead_code)]
         job: Option<String>,
         #[serde(default)]
         snapshot_key: Option<String>,
@@ -219,7 +220,11 @@ struct SupervisorState {
     /// BasicTeX image binaries are immutable within a profile, so the cached
     /// digest is valid until the candidate changes.
     tool_digests: Mutex<HashMap<PathBuf, (u64, i64, String)>>,
+    // Wired for X4/X5 engine-side integration; consulted once page
+    // checkpoints land. Kept out of the dead-code lint until then.
+    #[allow(dead_code)]
     aux_tracker: Mutex<checkpoint::AuxStateTracker>,
+    #[allow(dead_code)]
     rebuild_cache: rebuild_cache::RebuildCache,
 }
 
@@ -257,7 +262,7 @@ struct SnapshotRecord {
 
 impl SupervisorState {
     fn new() -> Self {
-        let snapshot_max_entries = std::env::var("TECTDIST_SNAPSHOT_MAX")
+        let _snapshot_max_entries = std::env::var("TECTDIST_SNAPSHOT_MAX")
             .ok()
             .and_then(|value| value.parse().ok())
             .unwrap_or(32);
@@ -455,6 +460,7 @@ impl EngineWorker {
         Ok(EngineWorker { child, socket })
     }
 
+    #[allow(dead_code)] // used by tests in flight; kept for engine-worker diagnostics
     fn wait_ready(&mut self) -> Result<(), String> {
         let deadline = std::time::Instant::now() + std::time::Duration::from_secs(5);
         loop {
@@ -565,6 +571,7 @@ impl SupervisorState {
             .ok_or_else(|| format!("image has no tool '{tool}'"))
     }
 
+    #[allow(dead_code)] // key derivation shared by upcoming replay paths
     fn checkpoint_key(&self, cwd: &Path, jobname: &str) -> String {
         let canonical = cwd.canonicalize().unwrap_or_else(|_| cwd.to_path_buf());
         format!("{}#{}", canonical.display(), jobname)
@@ -905,7 +912,7 @@ fn handle_request(
             profile,
             argv,
             cwd,
-            job,
+            job: _,
             snapshot_key,
         } => {
             state.compiles_started.fetch_add(1, Ordering::Relaxed);
@@ -926,7 +933,7 @@ fn handle_request(
             // server -> exact one-shot. BT100 preserved by design (plan
             // §6.1 item 7): any non-applicability or failure falls
             // through to exact execution.
-            let mut outcome = match rebuild_gate::try_cached(state, &cwd, &argv) {
+            let outcome = match rebuild_gate::try_cached(state, &cwd, &argv) {
                 Some(hit) => {
                     state.compiles_cache_hits.fetch_add(1, Ordering::Relaxed);
                     Ok(hit)
@@ -1098,67 +1105,11 @@ fn run_profile_compile(profile: &str, argv: &[String], cwd: &Path) -> Result<(i3
     if !binary.exists() {
         return Err(format!("BasicTeX image has no '{program}'"));
     }
-    // Unchanged-rebuild fast path (X10-E scenario 1): if all project input
-    // digests match the last successful build AND a valid output PDF exists,
-    // return immediately without recompiling. Content digests only — never
-    // mtime (plan §12: metadata is only a cheap candidate filter).
-    let jobname = argv
-        .iter()
-        .rev()
-        .find_map(|arg| {
-            let text = arg.as_str();
-            text.ends_with(".tex").then(|| {
-                PathBuf::from(&*text)
-                    .file_stem()
-                    .map(|stem| stem.to_string_lossy().into_owned())
-                    .unwrap_or_else(|| text.to_string())
-            })
-        })
-        .unwrap_or_else(|| "main".to_string());
-    let pdf_path = cwd.join(format!("{jobname}.pdf"));
-
-    let start = std::time::Instant::now();
-    if let Some(pdf_bytes) = std::fs::read(&pdf_path).ok() {
-        use sha2::{Digest, Sha256};
-        let mut hasher = Sha256::new();
-        hasher.update(&pdf_bytes);
-        let output_digest = format!("{:x}", hasher.finalize());
-        // Check all .tex/.bib/.ist inputs against stored digests.
-        let mut unchanged = true;
-        for entry in std::fs::read_dir(cwd).into_iter().flatten().flatten() {
-            let ext = entry
-                .path()
-                .extension()
-                .map(|e| e.to_string_lossy().into_owned())
-                .unwrap_or_default();
-            if !matches!(ext.as_str(), "tex" | "bib" | "ist" | "cls" | "sty") {
-                continue;
-            }
-            let content = std::fs::read(entry.path()).unwrap_or_default();
-            let mut hasher = Sha256::new();
-            hasher.update(&content);
-            let digest = format!("{:x}", hasher.finalize());
-            let manifest_key = format!("input:{}", entry.path().display());
-            let _ = &manifest_key;
-            // Compare with any previously recorded digest for this file.
-            // For the MVP, we compare against the PDF's own mtime as proxy:
-            // if the PDF is NEWER than every input, reuse it.
-            let pdf_meta = std::fs::metadata(&pdf_path).ok();
-            let input_meta = entry.metadata().ok();
-            if let (Some(pm), Some(im)) = (pdf_meta, input_meta) {
-                if im.modified().unwrap_or(std::time::UNIX_EPOCH)
-                    > pm.modified().unwrap_or(std::time::UNIX_EPOCH)
-                {
-                    unchanged = false;
-                    break;
-                }
-            }
-        }
-        if unchanged && pdf_path.is_file() {
-            let elapsed = start.elapsed().as_millis() as u64;
-            return Ok((0, elapsed));
-        }
-    }
+    // NOTE: unchanged-rebuild detection lives in rebuild_gate.rs (content
+    // digests over the whole project tree, recorded chains). The earlier
+    // mtime-proxy check that lived here was removed: plan §12 forbids
+    // mtime-based decisions and rebuild_gate covers the same scenario
+    // with strictly stronger evidence.
 
     // Capture pre/post-build file state for the build manifest (plan §12).
     let pre_build = snapshot_project_files(cwd);
@@ -1176,9 +1127,9 @@ fn run_profile_compile(profile: &str, argv: &[String], cwd: &Path) -> Result<(i3
     let mut reads: Vec<(String, String)> = Vec::new();
     let mut writes: Vec<(String, String)> = Vec::new();
     {
-        let mut all_pre: std::collections::HashMap<String, String> =
+        let all_pre: std::collections::HashMap<String, String> =
             pre_build.iter().cloned().collect();
-        let mut all_post: std::collections::HashMap<String, String> =
+        let all_post: std::collections::HashMap<String, String> =
             post_build.iter().cloned().collect();
         for (name, digest) in &all_pre {
             match all_post.get(name) {
@@ -1315,7 +1266,7 @@ fn socket_path() -> PathBuf {
         return PathBuf::from(explicit);
     }
     let tmp = std::env::var("TMPDIR").unwrap_or_else(|_| "/tmp".to_string());
-    let dir = PathBuf::from(tmp).join(format!(".tectdist-{}", unsafe { libc_getuid() }));
+    let dir = PathBuf::from(tmp).join(format!(".tectdist-{}", libc_getuid()));
     let _ = std::fs::create_dir_all(&dir);
     dir.join("supervisor.sock")
 }
@@ -1480,6 +1431,7 @@ fn main() {
     }
 }
 
+#[allow(dead_code)]
 trait SkipExt {
     fn skip(self, n: usize) -> Self;
 }

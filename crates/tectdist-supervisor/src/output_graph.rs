@@ -1,3 +1,6 @@
+// Forward-looking plan-X5 object-graph model. Execution lands with engine-side page digests.
+#![allow(dead_code)]
+
 //! Output object graph model (plan workstream X5 / §6.6).
 //!
 //! Supervisor-side contract for incremental PDF/DVI/XDV assembly: stable
@@ -10,7 +13,6 @@
 //! these records.
 
 use std::collections::BTreeMap;
-use std::path::{Path, PathBuf};
 
 /// Content digest (SHA-256 hex) over the object's serialized bytes.
 pub type Digest = String;

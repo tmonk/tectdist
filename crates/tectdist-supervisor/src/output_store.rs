@@ -1,3 +1,6 @@
+// Forward-looking plan-X5 content-addressed store. Execution lands with engine-side page digests.
+#![allow(dead_code)]
+
 //! Content-addressed store for output objects (plan workstream X5).
 //!
 //! Stores serialized page/resource objects keyed by their logical identity
@@ -11,7 +14,7 @@ use std::collections::BTreeMap;
 use std::fs;
 use std::path::{Path, PathBuf};
 
-use super::output_graph::{Digest, LogicalId, ObjectKind, StoredObject};
+use super::output_graph::{Digest, LogicalId, ObjectKind};
 
 pub struct OutputStore {
     root: PathBuf,
@@ -106,7 +109,7 @@ impl OutputStore {
 
         // Copy unchanged resources.
         for key in new_resources.keys() {
-            let kind = key.split(':').next().unwrap_or("font");
+            let _kind = key.split(':').next().unwrap_or("font");
             let dest = output_dir.join(key.replace(':', "/"));
             if let Some(parent) = dest.parent() {
                 fs::create_dir_all(parent).map_err(|e| e.to_string())?;

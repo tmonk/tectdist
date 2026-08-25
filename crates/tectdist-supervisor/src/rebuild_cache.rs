@@ -1,3 +1,8 @@
+// Forward-looking plan-X4 API: content-addressed rebuild decisions.
+// The live gate lives in rebuild_gate.rs; this module remains the
+// richer decision model for engine-side integration.
+#![allow(dead_code)]
+
 //! Unchanged-rebuild cache (X10-E scenario 1, plan §12).
 //!
 //! Detects when all project input files are unchanged since the last
