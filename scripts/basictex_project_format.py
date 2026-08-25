@@ -25,11 +25,12 @@ import sys
 
 
 def extract_preamble(source_text):
-    """Return everything before \\begin{document}, comment-stripped."""
+    """Return (preamble, body) split at the first ^\\begin{document}."""
     match = re.search(r"(?m)^\\begin\{document\}", source_text)
     if match:
-        return source_text[:match.start()]
-    return source_text  # no begin{document}: entire input is preamble
+        return source_text[:match.start()], source_text[match.start():]
+    # No begin{document}: entire input is preamble; body is empty.
+    return source_text, "% no body: input had no \\begin{document}\n\\end{document}\n"
 
 
 def main(argv=None):
@@ -54,7 +55,7 @@ def main(argv=None):
     fmt_name = ns.format_name or (source.stem + "-pre")
 
     text = source.read_text(errors="replace")
-    preamble = extract_preamble(text)
+    preamble, body = extract_preamble(text)
     if ns.extra_packages:
         for pkg in ns.extra_packages:
             preamble += f"\\usepackage{{{pkg}}}\n"
@@ -63,7 +64,10 @@ def main(argv=None):
     preamble_file = out_dir / f"{fmt_name}.tex"
     preamble_file.parent.mkdir(parents=True, exist_ok=True)
     preamble_file.write_text(preamble)
+    body_file = out_dir / f"{fmt_name}-body.tex"
+    body_file.write_text(body)
     print(f"project-format: preamble written -> {preamble_file}")
+    print(f"project-format: paired body   -> {body_file}")
 
     binary = image_root / "bin/forkproto/pdftex"
     if not binary.is_file():
@@ -78,8 +82,17 @@ def main(argv=None):
 
     env = dict(os.environ)
     env["TEXMFROOT"] = str(image_root)
-    env["TEXMFCNF"] = str(image_root)
-    env["TEXFORMATS"] = f".:{out_dir}:{image_root}/texmf-dist/web2c"
+    # Do NOT set TEXMFCNF: pointing it at the image root hides
+    # texmf.cnf, so the engine starts with compiled-in array bounds and
+    # aborts loading the stock fmt with "! Must increase the
+    # hyph_size". Leaving TEXMFCNF unset lets the normal cnf lookup
+    # provide the values the fmt was built with.
+    # texmf-var/web2c/pdftex holds the stock pdflatex.fmt; without it
+    # kpathsea falls back to mktexfmt and the ini run aborts.
+    env["TEXFORMATS"] = (
+        f".:{out_dir}:{image_root}/texmf-var/web2c/pdftex:"
+        f"{image_root}/texmf-dist/web2c")
+    env["PATH"] = f"{binary.parent}:{env.get('PATH', '')}"
     env.pop("TECTDIST_FORKSERVER_SOCKET", None)
     env.pop("TECTDIST_FORK_JOB", None)
 
