@@ -6,9 +6,9 @@
     "total_packages": 372,
     "tested": 194,
     "untested": 178,
-    "pass": 142,
+    "pass": 146,
     "fail": 0,
-    "reference_blocked": 52,
+    "reference_blocked": 48,
     "reference_failures_recorded": 0,
     "pipelines_passed": 7,
     "pipelines_total": 7,
@@ -17,11 +17,11 @@
       "total": 207,
       "explained_by_standalone_failure": 207,
       "pair_specific": 0,
-      "standalone_failed_packages": 52
+      "standalone_failed_packages": 48
     },
     "standalone_probes": {
-      "pass": 157,
-      "fail": 52
+      "pass": 161,
+      "fail": 48
     }
   },
   "gate_pass": true,
@@ -63,8 +63,8 @@
       "loadable_styles": 9,
       "smoke_cases": 0,
       "interaction_cases": 4,
-      "standalone_verdict": "standalone-fail",
-      "bt100_verdict": "reference-blocked"
+      "standalone_verdict": "standalone-pass",
+      "bt100_verdict": "pass"
     },
     {
       "package": "amsfonts",
@@ -353,8 +353,8 @@
       "loadable_styles": 114,
       "smoke_cases": 0,
       "interaction_cases": 9,
-      "standalone_verdict": "standalone-fail",
-      "bt100_verdict": "reference-blocked"
+      "standalone_verdict": "standalone-pass",
+      "bt100_verdict": "pass"
     },
     {
       "package": "bibtex",
@@ -413,8 +413,8 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 8,
-      "standalone_verdict": "standalone-fail",
-      "bt100_verdict": "reference-blocked"
+      "standalone_verdict": "standalone-pass",
+      "bt100_verdict": "pass"
     },
     {
       "package": "bidishadowtext",
@@ -3503,8 +3503,8 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 3,
-      "standalone_verdict": "standalone-fail",
-      "bt100_verdict": "reference-blocked"
+      "standalone_verdict": "standalone-pass",
+      "bt100_verdict": "pass"
     },
     {
       "package": "xechangebar",

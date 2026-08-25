@@ -12,7 +12,7 @@
       "case": "mflogo+simple-thesis-dissertation",
       "class": "explained-by-standalone-failure",
       "culprit_errors": {
-        "simple-thesis-dissertation": "! LaTeX Error: File `simplethesisdissertation.sty' not found."
+        "simple-thesis-dissertation": "! LaTeX Error: File `environ.sty' not found."
       },
       "culprits": [
         "simple-thesis-dissertation"
@@ -32,7 +32,7 @@
       "case": "hopatch+xebaposter",
       "class": "explained-by-standalone-failure",
       "culprit_errors": {
-        "xebaposter": "! LaTeX Error: File `xebaposter.sty' not found."
+        "xebaposter": ""
       },
       "culprits": [
         "xebaposter"
@@ -72,7 +72,7 @@
       "case": "businesscard-qrcode+xltxtra",
       "class": "explained-by-standalone-failure",
       "culprit_errors": {
-        "businesscard-qrcode": "! LaTeX Error: File `businesscard-qrcode.sty' not found.",
+        "businesscard-qrcode": "! LaTeX Error: File `marvosym.sty' not found.",
         "xltxtra": "! Emergency stop."
       },
       "culprits": [
@@ -136,7 +136,7 @@
       "case": "feynmp-auto+simple-thesis-dissertation",
       "class": "explained-by-standalone-failure",
       "culprit_errors": {
-        "simple-thesis-dissertation": "! LaTeX Error: File `simplethesisdissertation.sty' not found."
+        "simple-thesis-dissertation": "! LaTeX Error: File `environ.sty' not found."
       },
       "culprits": [
         "simple-thesis-dissertation"
@@ -146,7 +146,7 @@
       "case": "bidipresentation+fontwrap",
       "class": "explained-by-standalone-failure",
       "culprit_errors": {
-        "bidipresentation": "! LaTeX Error: File `bidipresentation.sty' not found.",
+        "bidipresentation": "",
         "fontwrap": "! Fatal Package fontspec Error: The fontspec package requires either XeTeX or"
       },
       "culprits": [
@@ -158,7 +158,7 @@
       "case": "bidipagegrid+koma-script",
       "class": "explained-by-standalone-failure",
       "culprit_errors": {
-        "koma-script": "! LaTeX Error: File `koma-script-source-doc.sty' not found."
+        "koma-script": "! LaTeX Error: File `hypdoc.sty' not found."
       },
       "culprits": [
         "koma-script"
@@ -208,7 +208,7 @@
       "case": "makecmds+simple-resume-cv",
       "class": "explained-by-standalone-failure",
       "culprit_errors": {
-        "simple-resume-cv": "! LaTeX Error: File `simpleresumecv.sty' not found."
+        "simple-resume-cv": "! LaTeX Error: File `hyphenat.sty' not found."
       },
       "culprits": [
         "simple-resume-cv"
@@ -270,7 +270,7 @@
       "case": "koma-script+philokalia",
       "class": "explained-by-standalone-failure",
       "culprit_errors": {
-        "koma-script": "! LaTeX Error: File `koma-script-source-doc.sty' not found.",
+        "koma-script": "! LaTeX Error: File `hypdoc.sty' not found.",
         "philokalia": "! Emergency stop."
       },
       "culprits": [
@@ -312,7 +312,7 @@
       "case": "beamer+ntgclass",
       "class": "explained-by-standalone-failure",
       "culprit_errors": {
-        "beamer": "! LaTeX Error: File `beamer.sty' not found."
+        "beamer": ""
       },
       "culprits": [
         "beamer"
@@ -374,7 +374,7 @@
       "case": "ragged2e+xebaposter",
       "class": "explained-by-standalone-failure",
       "culprit_errors": {
-        "xebaposter": "! LaTeX Error: File `xebaposter.sty' not found."
+        "xebaposter": ""
       },
       "culprits": [
         "xebaposter"
@@ -464,7 +464,7 @@
       "case": "ltxmisc+typehtml",
       "class": "explained-by-standalone-failure",
       "culprit_errors": {
-        "ltxmisc": "! LaTeX Error: File `abstbook.sty' not found."
+        "ltxmisc": "! LaTeX Error: File `minitoc.sty' not found."
       },
       "culprits": [
         "ltxmisc"
@@ -494,7 +494,7 @@
       "case": "bidipresentation+pgf",
       "class": "explained-by-standalone-failure",
       "culprit_errors": {
-        "bidipresentation": "! LaTeX Error: File `bidipresentation.sty' not found."
+        "bidipresentation": ""
       },
       "culprits": [
         "bidipresentation"
@@ -546,7 +546,7 @@
       "case": "beamer+revtex",
       "class": "explained-by-standalone-failure",
       "culprit_errors": {
-        "beamer": "! LaTeX Error: File `beamer.sty' not found.",
+        "beamer": "",
         "revtex": "! Undefined control sequence."
       },
       "culprits": [
@@ -580,7 +580,7 @@
       "case": "beamer+xcolor",
       "class": "explained-by-standalone-failure",
       "culprit_errors": {
-        "beamer": "! LaTeX Error: File `beamer.sty' not found."
+        "beamer": ""
       },
       "culprits": [
         "beamer"
@@ -620,7 +620,7 @@
       "case": "businesscard-qrcode+url",
       "class": "explained-by-standalone-failure",
       "culprit_errors": {
-        "businesscard-qrcode": "! LaTeX Error: File `businesscard-qrcode.sty' not found."
+        "businesscard-qrcode": "! LaTeX Error: File `marvosym.sty' not found."
       },
       "culprits": [
         "businesscard-qrcode"
@@ -660,7 +660,7 @@
       "case": "amsfonts+beamer",
       "class": "explained-by-standalone-failure",
       "culprit_errors": {
-        "beamer": "! LaTeX Error: File `beamer.sty' not found."
+        "beamer": ""
       },
       "culprits": [
         "beamer"
@@ -670,7 +670,7 @@
       "case": "businesscard-qrcode+eso-pic",
       "class": "explained-by-standalone-failure",
       "culprit_errors": {
-        "businesscard-qrcode": "! LaTeX Error: File `businesscard-qrcode.sty' not found."
+        "businesscard-qrcode": "! LaTeX Error: File `marvosym.sty' not found."
       },
       "culprits": [
         "businesscard-qrcode"
@@ -690,7 +690,7 @@
       "case": "businesscard-qrcode+xecolor",
       "class": "explained-by-standalone-failure",
       "culprit_errors": {
-        "businesscard-qrcode": "! LaTeX Error: File `businesscard-qrcode.sty' not found.",
+        "businesscard-qrcode": "! LaTeX Error: File `marvosym.sty' not found.",
         "xecolor": "! Fatal Package fontspec Error: The fontspec package requires either XeTeX or"
       },
       "culprits": [
@@ -702,7 +702,7 @@
       "case": "bidipresentation+extsizes",
       "class": "explained-by-standalone-failure",
       "culprit_errors": {
-        "bidipresentation": "! LaTeX Error: File `bidipresentation.sty' not found."
+        "bidipresentation": ""
       },
       "culprits": [
         "bidipresentation"
@@ -732,7 +732,7 @@
       "case": "koma-script+lineno",
       "class": "explained-by-standalone-failure",
       "culprit_errors": {
-        "koma-script": "! LaTeX Error: File `koma-script-source-doc.sty' not found.",
+        "koma-script": "! LaTeX Error: File `hypdoc.sty' not found.",
         "lineno": "! Package ednmath0 Error: Bad lineno.sty version."
       },
       "culprits": [
@@ -744,7 +744,7 @@
       "case": "feynmp-auto+koma-script",
       "class": "explained-by-standalone-failure",
       "culprit_errors": {
-        "koma-script": "! LaTeX Error: File `koma-script-source-doc.sty' not found."
+        "koma-script": "! LaTeX Error: File `hypdoc.sty' not found."
       },
       "culprits": [
         "koma-script"
@@ -786,7 +786,7 @@
       "case": "koma-script+tipa",
       "class": "explained-by-standalone-failure",
       "culprit_errors": {
-        "koma-script": "! LaTeX Error: File `koma-script-source-doc.sty' not found."
+        "koma-script": "! LaTeX Error: File `hypdoc.sty' not found."
       },
       "culprits": [
         "koma-script"
@@ -806,7 +806,7 @@
       "case": "infwarerr+simple-resume-cv",
       "class": "explained-by-standalone-failure",
       "culprit_errors": {
-        "simple-resume-cv": "! LaTeX Error: File `simpleresumecv.sty' not found."
+        "simple-resume-cv": "! LaTeX Error: File `hyphenat.sty' not found."
       },
       "culprits": [
         "simple-resume-cv"
@@ -826,7 +826,7 @@
       "case": "beamer+l3packages",
       "class": "explained-by-standalone-failure",
       "culprit_errors": {
-        "beamer": "! LaTeX Error: File `beamer.sty' not found."
+        "beamer": ""
       },
       "culprits": [
         "beamer"
@@ -836,7 +836,7 @@
       "case": "amsmath+simple-thesis-dissertation",
       "class": "explained-by-standalone-failure",
       "culprit_errors": {
-        "simple-thesis-dissertation": "! LaTeX Error: File `simplethesisdissertation.sty' not found."
+        "simple-thesis-dissertation": "! LaTeX Error: File `environ.sty' not found."
       },
       "culprits": [
         "simple-thesis-dissertation"
@@ -868,7 +868,7 @@
       "case": "bidipresentation+intcalc",
       "class": "explained-by-standalone-failure",
       "culprit_errors": {
-        "bidipresentation": "! LaTeX Error: File `bidipresentation.sty' not found."
+        "bidipresentation": ""
       },
       "culprits": [
         "bidipresentation"
@@ -878,7 +878,7 @@
       "case": "bidishadowtext+ltx-talk",
       "class": "explained-by-standalone-failure",
       "culprit_errors": {
-        "ltx-talk": "! LaTeX Error: File `ltx-talk.sty' not found."
+        "ltx-talk": "! LaTeX Error: This file needs \\DocumentMetadata."
       },
       "culprits": [
         "ltx-talk"
@@ -908,7 +908,7 @@
       "case": "simple-resume-cv+xesearch",
       "class": "explained-by-standalone-failure",
       "culprit_errors": {
-        "simple-resume-cv": "! LaTeX Error: File `simpleresumecv.sty' not found.",
+        "simple-resume-cv": "! LaTeX Error: File `hyphenat.sty' not found.",
         "xesearch": "! Undefined control sequence."
       },
       "culprits": [
@@ -1014,7 +1014,7 @@
       "case": "bidipresentation+mfnfss",
       "class": "explained-by-standalone-failure",
       "culprit_errors": {
-        "bidipresentation": "! LaTeX Error: File `bidipresentation.sty' not found."
+        "bidipresentation": ""
       },
       "culprits": [
         "bidipresentation"
@@ -1097,7 +1097,7 @@
       "class": "explained-by-standalone-failure",
       "culprit_errors": {
         "hypcap": "! Package hypcap Error: You have to load 'hyperref' first.",
-        "koma-script": "! LaTeX Error: File `koma-script-source-doc.sty' not found."
+        "koma-script": "! LaTeX Error: File `hypdoc.sty' not found."
       },
       "culprits": [
         "hypcap",
@@ -1148,7 +1148,7 @@
       "case": "ltx-talk+pdfmanagement-testphase",
       "class": "explained-by-standalone-failure",
       "culprit_errors": {
-        "ltx-talk": "! LaTeX Error: File `ltx-talk.sty' not found."
+        "ltx-talk": "! LaTeX Error: This file needs \\DocumentMetadata."
       },
       "culprits": [
         "ltx-talk"
@@ -1210,7 +1210,7 @@
       "case": "koma-script+mdwtools",
       "class": "explained-by-standalone-failure",
       "culprit_errors": {
-        "koma-script": "! LaTeX Error: File `koma-script-source-doc.sty' not found."
+        "koma-script": "! LaTeX Error: File `hypdoc.sty' not found."
       },
       "culprits": [
         "koma-script"
@@ -1220,7 +1220,7 @@
       "case": "amscls+pagesel",
       "class": "explained-by-standalone-failure",
       "culprit_errors": {
-        "amscls": "! LaTeX Error: File `amsart.sty' not found."
+        "amscls": ""
       },
       "culprits": [
         "amscls"
@@ -1240,7 +1240,7 @@
       "case": "simple-resume-cv+xechangebar",
       "class": "explained-by-standalone-failure",
       "culprit_errors": {
-        "simple-resume-cv": "! LaTeX Error: File `simpleresumecv.sty' not found."
+        "simple-resume-cv": "! LaTeX Error: File `hyphenat.sty' not found."
       },
       "culprits": [
         "simple-resume-cv"
@@ -1344,7 +1344,7 @@
       "case": "psnfss+simple-resume-cv",
       "class": "explained-by-standalone-failure",
       "culprit_errors": {
-        "simple-resume-cv": "! LaTeX Error: File `simpleresumecv.sty' not found."
+        "simple-resume-cv": "! LaTeX Error: File `hyphenat.sty' not found."
       },
       "culprits": [
         "simple-resume-cv"
@@ -1374,7 +1374,7 @@
       "case": "fp+ltxmisc",
       "class": "explained-by-standalone-failure",
       "culprit_errors": {
-        "ltxmisc": "! LaTeX Error: File `abstbook.sty' not found."
+        "ltxmisc": "! LaTeX Error: File `minitoc.sty' not found."
       },
       "culprits": [
         "ltxmisc"
@@ -1384,7 +1384,7 @@
       "case": "bidipresentation+mathtools",
       "class": "explained-by-standalone-failure",
       "culprit_errors": {
-        "bidipresentation": "! LaTeX Error: File `bidipresentation.sty' not found."
+        "bidipresentation": ""
       },
       "culprits": [
         "bidipresentation"
@@ -1394,7 +1394,7 @@
       "case": "amscls+fp",
       "class": "explained-by-standalone-failure",
       "culprit_errors": {
-        "amscls": "! LaTeX Error: File `amsart.sty' not found."
+        "amscls": ""
       },
       "culprits": [
         "amscls"
@@ -1476,7 +1476,7 @@
       "case": "bidipresentation+metalogo",
       "class": "explained-by-standalone-failure",
       "culprit_errors": {
-        "bidipresentation": "! LaTeX Error: File `bidipresentation.sty' not found."
+        "bidipresentation": ""
       },
       "culprits": [
         "bidipresentation"
@@ -1486,7 +1486,7 @@
       "case": "amscls+hyperref",
       "class": "explained-by-standalone-failure",
       "culprit_errors": {
-        "amscls": "! LaTeX Error: File `amsart.sty' not found."
+        "amscls": ""
       },
       "culprits": [
         "amscls"
@@ -1556,7 +1556,7 @@
       "case": "beamer+booktabs",
       "class": "explained-by-standalone-failure",
       "culprit_errors": {
-        "beamer": "! LaTeX Error: File `beamer.sty' not found."
+        "beamer": ""
       },
       "culprits": [
         "beamer"
@@ -1566,8 +1566,8 @@
       "case": "bidipresentation+simple-thesis-dissertation",
       "class": "explained-by-standalone-failure",
       "culprit_errors": {
-        "bidipresentation": "! LaTeX Error: File `bidipresentation.sty' not found.",
-        "simple-thesis-dissertation": "! LaTeX Error: File `simplethesisdissertation.sty' not found."
+        "bidipresentation": "",
+        "simple-thesis-dissertation": "! LaTeX Error: File `environ.sty' not found."
       },
       "culprits": [
         "bidipresentation",
@@ -1658,7 +1658,7 @@
       "case": "koma-script+lua-unicode-math",
       "class": "explained-by-standalone-failure",
       "culprit_errors": {
-        "koma-script": "! LaTeX Error: File `koma-script-source-doc.sty' not found.",
+        "koma-script": "! LaTeX Error: File `hypdoc.sty' not found.",
         "lua-unicode-math": "! Critical Package lua-unicode-math Error: lua-unicode-math can only be used"
       },
       "culprits": [
@@ -1720,7 +1720,7 @@
       "case": "businesscard-qrcode+emp",
       "class": "explained-by-standalone-failure",
       "culprit_errors": {
-        "businesscard-qrcode": "! LaTeX Error: File `businesscard-qrcode.sty' not found."
+        "businesscard-qrcode": "! LaTeX Error: File `marvosym.sty' not found."
       },
       "culprits": [
         "businesscard-qrcode"
@@ -1784,7 +1784,7 @@
       "case": "ltx-talk+translator",
       "class": "explained-by-standalone-failure",
       "culprit_errors": {
-        "ltx-talk": "! LaTeX Error: File `ltx-talk.sty' not found."
+        "ltx-talk": "! LaTeX Error: This file needs \\DocumentMetadata."
       },
       "culprits": [
         "ltx-talk"
@@ -1805,7 +1805,7 @@
       "class": "explained-by-standalone-failure",
       "culprit_errors": {
         "cqubeamer": "! Undefined control sequence.",
-        "ltxmisc": "! LaTeX Error: File `abstbook.sty' not found."
+        "ltxmisc": "! LaTeX Error: File `minitoc.sty' not found."
       },
       "culprits": [
         "cqubeamer",
@@ -1846,7 +1846,7 @@
       "case": "ltx-talk+ptext",
       "class": "explained-by-standalone-failure",
       "culprit_errors": {
-        "ltx-talk": "! LaTeX Error: File `ltx-talk.sty' not found.",
+        "ltx-talk": "! LaTeX Error: This file needs \\DocumentMetadata.",
         "ptext": "! LaTeX Error: File `biditools.sty' not found."
       },
       "culprits": [
@@ -1898,7 +1898,7 @@
       "case": "beamer+xeindex",
       "class": "explained-by-standalone-failure",
       "culprit_errors": {
-        "beamer": "! LaTeX Error: File `beamer.sty' not found.",
+        "beamer": "",
         "xeindex": "! Undefined control sequence."
       },
       "culprits": [
@@ -1950,7 +1950,7 @@
       "case": "ltx-talk+pslatex",
       "class": "explained-by-standalone-failure",
       "culprit_errors": {
-        "ltx-talk": "! LaTeX Error: File `ltx-talk.sty' not found."
+        "ltx-talk": "! LaTeX Error: This file needs \\DocumentMetadata."
       },
       "culprits": [
         "ltx-talk"
@@ -1970,7 +1970,7 @@
       "case": "beamer+latex-firstaid-dev",
       "class": "explained-by-standalone-failure",
       "culprit_errors": {
-        "beamer": "! LaTeX Error: File `beamer.sty' not found."
+        "beamer": ""
       },
       "culprits": [
         "beamer"
@@ -1980,7 +1980,7 @@
       "case": "beamer+uniquecounter",
       "class": "explained-by-standalone-failure",
       "culprit_errors": {
-        "beamer": "! LaTeX Error: File `beamer.sty' not found."
+        "beamer": ""
       },
       "culprits": [
         "beamer"
@@ -2022,7 +2022,7 @@
       "case": "amscls+natbib",
       "class": "explained-by-standalone-failure",
       "culprit_errors": {
-        "amscls": "! LaTeX Error: File `amsart.sty' not found."
+        "amscls": ""
       },
       "culprits": [
         "amscls"
@@ -2057,7 +2057,7 @@
       "class": "explained-by-standalone-failure",
       "culprit_errors": {
         "mathspec": "! Emergency stop.",
-        "simple-resume-cv": "! LaTeX Error: File `simpleresumecv.sty' not found."
+        "simple-resume-cv": "! LaTeX Error: File `hyphenat.sty' not found."
       },
       "culprits": [
         "mathspec",
@@ -2078,7 +2078,7 @@
       "case": "ulem+xebaposter",
       "class": "explained-by-standalone-failure",
       "culprit_errors": {
-        "xebaposter": "! LaTeX Error: File `xebaposter.sty' not found."
+        "xebaposter": ""
       },
       "culprits": [
         "xebaposter"
@@ -2151,12 +2151,9 @@
   ],
   "schema_version": 1,
   "standalone_failed_packages": [
-    "amscls",
     "arabxetex",
     "babel",
     "babelbib",
-    "beamer",
-    "bidipresentation",
     "businesscard-qrcode",
     "cqubeamer",
     "ctable",
@@ -2194,7 +2191,6 @@
     "ucharclasses",
     "unicode-bidi",
     "unicode-math",
-    "xebaposter",
     "xecolor",
     "xeindex",
     "xesearch",

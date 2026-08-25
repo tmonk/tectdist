@@ -1,38 +1,43 @@
 {
   "counters": {
     "no-style": 0,
-    "standalone-fail": 52,
-    "standalone-pass": 157
+    "standalone-fail": 48,
+    "standalone-pass": 161
   },
   "interactions_image_sha256": "395f0b4d7ce47684c021e8734421bd530206e58a96949cb6103a6333ad2b36b6",
   "results": [
     {
       "exit": 0,
+      "kind": "sty",
       "package": "ae",
       "style": "ae",
       "verdict": "standalone-pass"
     },
     {
-      "error": "! LaTeX Error: File `amsart.sty' not found.",
-      "exit": 1,
+      "exit": 0,
+      "kind": "cls",
       "package": "amscls",
       "style": "amsart",
-      "verdict": "standalone-fail"
+      "usepackage_verdict": "standalone-fail",
+      "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "amsfonts",
       "style": "amsfonts",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "amsmath",
       "style": "amsbsy",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "anysize",
       "style": "anysize",
       "verdict": "standalone-pass"
@@ -40,30 +45,35 @@
     {
       "error": "! Fatal Package fontspec Error: The fontspec package requires either XeTeX or",
       "exit": 1,
+      "kind": "sty",
       "package": "arabxetex",
       "style": "arabxetex",
       "verdict": "standalone-fail"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "atbegshi",
       "style": "atbegshi",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "attachfile2",
       "style": "attachfile2",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "atveryend",
       "style": "atveryend",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "auxhook",
       "style": "auxhook",
       "verdict": "standalone-pass"
@@ -71,12 +81,14 @@
     {
       "error": "! Package babel Error: You are loading directly a language style.",
       "exit": 1,
+      "kind": "sty",
       "package": "babel",
       "style": "UKenglish",
       "verdict": "standalone-fail"
     },
     {
       "exit": 0,
+      "kind": null,
       "package": "babel-basque",
       "style": "babel-basque",
       "usepackage_verdict": "standalone-fail",
@@ -84,6 +96,7 @@
     },
     {
       "exit": 0,
+      "kind": null,
       "package": "babel-czech",
       "style": "babel-czech",
       "usepackage_verdict": "standalone-fail",
@@ -91,6 +104,7 @@
     },
     {
       "exit": 0,
+      "kind": null,
       "package": "babel-danish",
       "style": "babel-danish",
       "usepackage_verdict": "standalone-fail",
@@ -98,6 +112,7 @@
     },
     {
       "exit": 0,
+      "kind": null,
       "package": "babel-dutch",
       "style": "babel-dutch",
       "usepackage_verdict": "standalone-fail",
@@ -105,6 +120,7 @@
     },
     {
       "exit": 0,
+      "kind": null,
       "package": "babel-english",
       "style": "babel-english",
       "usepackage_verdict": "standalone-fail",
@@ -112,6 +128,7 @@
     },
     {
       "exit": 0,
+      "kind": null,
       "package": "babel-finnish",
       "style": "babel-finnish",
       "usepackage_verdict": "standalone-fail",
@@ -119,6 +136,7 @@
     },
     {
       "exit": 0,
+      "kind": null,
       "package": "babel-french",
       "style": "babel-french",
       "usepackage_verdict": "standalone-fail",
@@ -126,6 +144,7 @@
     },
     {
       "exit": 0,
+      "kind": null,
       "package": "babel-german",
       "style": "babel-german",
       "usepackage_verdict": "standalone-fail",
@@ -133,6 +152,7 @@
     },
     {
       "exit": 0,
+      "kind": null,
       "package": "babel-hungarian",
       "style": "babel-hungarian",
       "usepackage_verdict": "standalone-fail",
@@ -140,6 +160,7 @@
     },
     {
       "exit": 0,
+      "kind": null,
       "package": "babel-italian",
       "style": "babel-italian",
       "usepackage_verdict": "standalone-fail",
@@ -147,6 +168,7 @@
     },
     {
       "exit": 0,
+      "kind": null,
       "package": "babel-norsk",
       "style": "babel-norsk",
       "usepackage_verdict": "standalone-fail",
@@ -154,6 +176,7 @@
     },
     {
       "exit": 0,
+      "kind": null,
       "package": "babel-polish",
       "style": "babel-polish",
       "usepackage_verdict": "standalone-fail",
@@ -161,6 +184,7 @@
     },
     {
       "exit": 0,
+      "kind": null,
       "package": "babel-portuges",
       "style": "babel-portuges",
       "usepackage_verdict": "standalone-fail",
@@ -168,6 +192,7 @@
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "babel-spanish",
       "style": "romanidx",
       "usepackage_verdict": "standalone-fail",
@@ -175,6 +200,7 @@
     },
     {
       "exit": 0,
+      "kind": null,
       "package": "babel-swedish",
       "style": "babel-swedish",
       "usepackage_verdict": "standalone-fail",
@@ -183,123 +209,144 @@
     {
       "error": "! Undefined control sequence.",
       "exit": 1,
+      "kind": "sty",
       "package": "babelbib",
       "style": "babelbib",
       "verdict": "standalone-fail"
     },
     {
-      "error": "! LaTeX Error: File `beamer.sty' not found.",
-      "exit": 1,
+      "exit": 0,
+      "kind": "cls",
       "package": "beamer",
       "style": "beamer",
-      "verdict": "standalone-fail"
+      "usepackage_verdict": "standalone-fail",
+      "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "bibtex",
       "style": "apalike",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "bidi-atbegshi",
       "style": "bidi-atbegshi",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "bidicontour",
       "style": "bidicontour",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "bidipagegrid",
       "style": "bidipagegrid",
       "verdict": "standalone-pass"
     },
     {
-      "error": "! LaTeX Error: File `bidipresentation.sty' not found.",
-      "exit": 1,
+      "exit": 0,
+      "kind": "cls",
       "package": "bidipresentation",
       "style": "bidipresentation",
-      "verdict": "standalone-fail"
+      "usepackage_verdict": "standalone-fail",
+      "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "bidishadowtext",
       "style": "bidishadowtext",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "bigintcalc",
       "style": "bigintcalc",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "bitset",
       "style": "bitset",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "bookmark",
       "style": "bookmark",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "booktabs",
       "style": "booktabs",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "breqn",
       "style": "breqn",
       "verdict": "standalone-pass"
     },
     {
-      "error": "! LaTeX Error: File `businesscard-qrcode.sty' not found.",
+      "error": "! LaTeX Error: File `marvosym.sty' not found.",
       "exit": 1,
+      "kind": "cls",
       "package": "businesscard-qrcode",
       "style": "businesscard-qrcode",
+      "usepackage_verdict": "standalone-fail",
       "verdict": "standalone-fail"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "caption",
       "style": "bicaption",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "carlisle",
       "style": "dotlessj",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "cite",
       "style": "chapterbib",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "cmap",
       "style": "cmap",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "colorprofiles",
       "style": "colorprofiles",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "colortbl",
       "style": "colortbl",
       "verdict": "standalone-pass"
@@ -307,12 +354,14 @@
     {
       "error": "! Undefined control sequence.",
       "exit": 1,
+      "kind": "sty",
       "package": "cqubeamer",
       "style": "cqubeamer",
       "verdict": "standalone-fail"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "crop",
       "style": "crop",
       "verdict": "standalone-pass"
@@ -320,6 +369,7 @@
     {
       "error": "! LaTeX Error: File `transparent.sty' not found.",
       "exit": 1,
+      "kind": "sty",
       "package": "ctable",
       "style": "ctable",
       "verdict": "standalone-fail"
@@ -327,132 +377,154 @@
     {
       "error": "! Undefined control sequence.",
       "exit": 1,
+      "kind": "sty",
       "package": "ctablestack",
       "style": "ctablestack",
       "verdict": "standalone-fail"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "dvips",
       "style": "blackdvi",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "emp",
       "style": "emp",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "epstopdf-pkg",
       "style": "epstopdf",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "eso-pic",
       "style": "eso-pic",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "etex-pkg",
       "style": "etex",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "etexcmds",
       "style": "etexcmds",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "etoolbox",
       "style": "etoolbox",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "euler",
       "style": "euler",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "eurosym",
       "style": "eurosym",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "everysel",
       "style": "everysel",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "everyshi",
       "style": "everyshi",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "extsizes",
       "style": "autopagewidth",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "fancybox",
       "style": "fancybox",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "fancyhdr",
       "style": "extramarks",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "fancyref",
       "style": "fancyref",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "fancyvrb",
       "style": "fancyvrb",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "feynmf",
       "style": "feynmf",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "feynmp-auto",
       "style": "feynmp-auto",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "filehook",
       "style": "filehook",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "firstaid",
       "style": "filehook-ltx",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "fix2col",
       "style": "fix2col",
       "verdict": "standalone-pass"
@@ -460,12 +532,14 @@
     {
       "error": "! LaTeX Error: File `svn-prov.sty' not found.",
       "exit": 1,
+      "kind": "sty",
       "package": "fixlatvian",
       "style": "fixlatvian",
       "verdict": "standalone-fail"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "float",
       "style": "float",
       "verdict": "standalone-pass"
@@ -473,6 +547,7 @@
     {
       "error": "! Fatal Package fontspec Error: The fontspec package requires either XeTeX or",
       "exit": 1,
+      "kind": "sty",
       "package": "fontbook",
       "style": "fontbook",
       "verdict": "standalone-fail"
@@ -480,6 +555,7 @@
     {
       "error": "! Fatal Package fontspec Error: The fontspec package requires either XeTeX or",
       "exit": 1,
+      "kind": "sty",
       "package": "fontspec",
       "style": "fontspec",
       "verdict": "standalone-fail"
@@ -487,30 +563,35 @@
     {
       "error": "! Fatal Package fontspec Error: The fontspec package requires either XeTeX or",
       "exit": 1,
+      "kind": "sty",
       "package": "fontwrap",
       "style": "fontwrap",
       "verdict": "standalone-fail"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "footnotehyper",
       "style": "footnotehyper",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "fp",
       "style": "defpattern",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "geometry",
       "style": "geometry",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "gettitlestring",
       "style": "gettitlestring",
       "verdict": "standalone-pass"
@@ -518,42 +599,49 @@
     {
       "error": "! LaTeX Error: File `environ.sty' not found.",
       "exit": 1,
+      "kind": "sty",
       "package": "gmp",
       "style": "gmp",
       "verdict": "standalone-fail"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "graphics",
       "style": "color",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "grfext",
       "style": "grfext",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "grffile",
       "style": "grffile",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "hologo",
       "style": "hologo",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "hopatch",
       "style": "hopatch",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "hycolor",
       "style": "hycolor",
       "verdict": "standalone-pass"
@@ -561,12 +649,14 @@
     {
       "error": "! Package hypcap Error: You have to load 'hyperref' first.",
       "exit": 1,
+      "kind": "sty",
       "package": "hypcap",
       "style": "hypcap",
       "verdict": "standalone-fail"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "hyperref",
       "style": "backref",
       "verdict": "standalone-pass"
@@ -574,30 +664,35 @@
     {
       "error": "! LaTeX Error: File `catchfile.sty' not found.",
       "exit": 1,
+      "kind": "sty",
       "package": "ifplatform",
       "style": "ifplatform",
       "verdict": "standalone-fail"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "iftex",
       "style": "ifetex",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "index",
       "style": "index",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "infwarerr",
       "style": "infwarerr",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "intcalc",
       "style": "intcalc",
       "verdict": "standalone-pass"
@@ -605,121 +700,142 @@
     {
       "error": "! LaTeX Error: Variant form 'cx' deprecated for base form '\\prop_item:cn'. One",
       "exit": 1,
+      "kind": "sty",
       "package": "interchar",
       "style": "interchar",
       "verdict": "standalone-fail"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "jknapltx",
       "style": "greekctr",
       "verdict": "standalone-pass"
     },
     {
-      "error": "! LaTeX Error: File `koma-script-source-doc.sty' not found.",
+      "error": "! LaTeX Error: File `hypdoc.sty' not found.",
       "exit": 1,
+      "kind": "cls",
       "package": "koma-script",
       "style": "koma-script-source-doc",
+      "usepackage_verdict": "standalone-fail",
       "verdict": "standalone-fail"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "kvdefinekeys",
       "style": "kvdefinekeys",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "kvoptions",
       "style": "kvoptions",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "kvsetkeys",
       "style": "kvsetkeys",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "l3experimental",
       "style": "l3draw",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "l3kernel",
       "style": "expl3",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "l3kernel-dev",
       "style": "expl3",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "l3packages",
       "style": "l3keys2e",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "latex",
       "style": "alltt",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "latex-amsmath-dev",
       "style": "amsbsy",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "latex-base-dev",
       "style": "alltt",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "latex-firstaid-dev",
       "style": "filehook-ltx",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "latex-graphics-dev",
       "style": "color",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "latex-lab",
       "style": "latex-lab-kernel-changes",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "latex-lab-dev",
       "style": "latex-lab-enumitem",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "latex-tools-dev",
       "style": "afterpage",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "latexbug",
       "style": "latexbug",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "letltxmacro",
       "style": "letltxmacro",
       "verdict": "standalone-pass"
@@ -727,45 +843,54 @@
     {
       "error": "! Package ednmath0 Error: Bad lineno.sty version.",
       "exit": 1,
+      "kind": "sty",
       "package": "lineno",
       "style": "ednmath0",
       "verdict": "standalone-fail"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "listings",
       "style": "listings",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "lm",
       "style": "lmodern",
       "verdict": "standalone-pass"
     },
     {
-      "error": "! LaTeX Error: File `ltx-talk.sty' not found.",
+      "error": "! LaTeX Error: This file needs \\DocumentMetadata.",
       "exit": 1,
+      "kind": "cls",
       "package": "ltx-talk",
       "style": "ltx-talk",
+      "usepackage_verdict": "standalone-fail",
       "verdict": "standalone-fail"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "ltxcmds",
       "style": "ltxcmds",
       "verdict": "standalone-pass"
     },
     {
-      "error": "! LaTeX Error: File `abstbook.sty' not found.",
+      "error": "! LaTeX Error: File `minitoc.sty' not found.",
       "exit": 1,
+      "kind": "cls",
       "package": "ltxmisc",
       "style": "abstbook",
+      "usepackage_verdict": "standalone-fail",
       "verdict": "standalone-fail"
     },
     {
       "error": "! Critical Package lua-unicode-math Error: lua-unicode-math can only be used",
       "exit": 1,
+      "kind": "sty",
       "package": "lua-unicode-math",
       "style": "lua-unicode-math",
       "verdict": "standalone-fail"
@@ -773,6 +898,7 @@
     {
       "error": "! Undefined control sequence.",
       "exit": 1,
+      "kind": "sty",
       "package": "luamml",
       "style": "luamml",
       "verdict": "standalone-fail"
@@ -780,6 +906,7 @@
     {
       "error": "! Undefined control sequence.",
       "exit": 1,
+      "kind": "sty",
       "package": "luaotfload",
       "style": "luaotfload",
       "verdict": "standalone-fail"
@@ -787,6 +914,7 @@
     {
       "error": "! Undefined control sequence.",
       "exit": 1,
+      "kind": "sty",
       "package": "luatexbase",
       "style": "luatexbase",
       "verdict": "standalone-fail"
@@ -794,12 +922,14 @@
     {
       "error": "! LaTeX Error: File `ifptex.sty' not found.",
       "exit": 1,
+      "kind": "sty",
       "package": "lwarp",
       "style": "lwarp",
       "verdict": "standalone-fail"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "makecmds",
       "style": "makecmds",
       "verdict": "standalone-pass"
@@ -807,48 +937,56 @@
     {
       "error": "! Emergency stop.",
       "exit": 1,
+      "kind": "sty",
       "package": "mathspec",
       "style": "mathspec",
       "verdict": "standalone-fail"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "mathtools",
       "style": "empheq",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "mdwtools",
       "style": "at",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "memoir",
       "style": "memhfixc",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "metalogo",
       "style": "metalogo",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "mflogo",
       "style": "mflogo",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "mfnfss",
       "style": "oldgerm",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "mfpic",
       "style": "mfpic",
       "verdict": "standalone-pass"
@@ -856,12 +994,14 @@
     {
       "error": "! Undefined control sequence.",
       "exit": 1,
+      "kind": "sty",
       "package": "mfpic4ode",
       "style": "mfpic4ode",
       "verdict": "standalone-fail"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "microtype",
       "style": "letterspace",
       "verdict": "standalone-pass"
@@ -869,6 +1009,7 @@
     {
       "error": "! LaTeX Error: File `moreverb.sty' not found.",
       "exit": 1,
+      "kind": "sty",
       "package": "mpgraphics",
       "style": "mpgraphics",
       "verdict": "standalone-fail"
@@ -876,42 +1017,49 @@
     {
       "error": "! LaTeX Error: File `tkz-tab.sty' not found.",
       "exit": 1,
+      "kind": "sty",
       "package": "na-position",
       "style": "na-position",
       "verdict": "standalone-fail"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "natbib",
       "style": "bibentry",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "newfloat",
       "style": "newfloat",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "ntgclass",
       "style": "a4",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "oberdiek",
       "style": "aliascnt",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "pagesel",
       "style": "pagesel",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "parskip",
       "style": "parskip",
       "verdict": "standalone-pass"
@@ -919,42 +1067,49 @@
     {
       "error": "! LaTeX Error: File `pdfcol.sty' not found.",
       "exit": 1,
+      "kind": "sty",
       "package": "pdfcolfoot",
       "style": "pdfcolfoot",
       "verdict": "standalone-fail"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "pdfescape",
       "style": "pdfescape",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "pdflscape",
       "style": "pdflscape",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "pdfmanagement-testphase",
       "style": "color-ltx",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "pdfpages",
       "style": "pdfpages",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "pdftexcmds",
       "style": "pdftexcmds",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "pgf",
       "style": "pgf",
       "verdict": "standalone-pass"
@@ -962,36 +1117,42 @@
     {
       "error": "! Emergency stop.",
       "exit": 1,
+      "kind": "sty",
       "package": "philokalia",
       "style": "philokalia",
       "verdict": "standalone-fail"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "polyglossia",
       "style": "arabicnumbers",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "psfrag",
       "style": "psfrag",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "pslatex",
       "style": "pslatex",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "psnfss",
       "style": "avant",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "pspicture",
       "style": "pspicture",
       "verdict": "standalone-pass"
@@ -999,30 +1160,35 @@
     {
       "error": "! LaTeX Error: File `biditools.sty' not found.",
       "exit": 1,
+      "kind": "sty",
       "package": "ptext",
       "style": "ptext",
       "verdict": "standalone-fail"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "ragged2e",
       "style": "ragged2e",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "rcs",
       "style": "rcs",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "refcount",
       "style": "refcount",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "rerunfilecheck",
       "style": "rerunfilecheck",
       "verdict": "standalone-pass"
@@ -1030,62 +1196,74 @@
     {
       "error": "! Undefined control sequence.",
       "exit": 1,
+      "kind": "sty",
       "package": "revtex",
       "style": "ltxdocext",
       "verdict": "standalone-fail"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "sansmath",
       "style": "sansmath",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "section",
       "style": "section",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "seminar",
       "style": "npsfont",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "sepnum",
       "style": "sepnum",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "setspace",
       "style": "setspace",
       "verdict": "standalone-pass"
     },
     {
-      "error": "! LaTeX Error: File `simpleresumecv.sty' not found.",
+      "error": "! LaTeX Error: File `hyphenat.sty' not found.",
       "exit": 1,
+      "kind": "cls",
       "package": "simple-resume-cv",
       "style": "simpleresumecv",
+      "usepackage_verdict": "standalone-fail",
       "verdict": "standalone-fail"
     },
     {
-      "error": "! LaTeX Error: File `simplethesisdissertation.sty' not found.",
+      "error": "! LaTeX Error: File `environ.sty' not found.",
       "exit": 1,
+      "kind": "cls",
       "package": "simple-thesis-dissertation",
       "style": "simplethesisdissertation",
+      "usepackage_verdict": "standalone-fail",
       "verdict": "standalone-fail"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "stringenc",
       "style": "stringenc",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "subfig",
       "style": "subfig",
       "verdict": "standalone-pass"
@@ -1093,30 +1271,35 @@
     {
       "error": "! Package tagpdf Error: PDF resource management is no active!",
       "exit": 1,
+      "kind": "sty",
       "package": "tagpdf",
       "style": "tagpdf",
       "verdict": "standalone-fail"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "tetragonos",
       "style": "tetragonos",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "tex4ebook",
       "style": "tex4ebook",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "tex4ht",
       "style": "tex4ht",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "textcase",
       "style": "textcase",
       "verdict": "standalone-pass"
@@ -1124,36 +1307,42 @@
     {
       "error": "! LaTeX Error: File `soul.sty' not found.",
       "exit": 1,
+      "kind": "sty",
       "package": "textpath",
       "style": "textpathmp",
       "verdict": "standalone-fail"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "thumbpdf",
       "style": "thumbpdf",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "tipa",
       "style": "exaccent",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "tools",
       "style": "afterpage",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "translator",
       "style": "translator",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "typehtml",
       "style": "typehtml",
       "verdict": "standalone-pass"
@@ -1161,6 +1350,7 @@
     {
       "error": "! Package ucharcat Error: \\Ucharcat may only be used with xetex and luatex.",
       "exit": 1,
+      "kind": "sty",
       "package": "ucharcat",
       "style": "ucharcat",
       "verdict": "standalone-fail"
@@ -1168,18 +1358,21 @@
     {
       "error": "! Emergency stop.",
       "exit": 1,
+      "kind": "sty",
       "package": "ucharclasses",
       "style": "ucharclasses",
       "verdict": "standalone-fail"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "ulem",
       "style": "ulem",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "underscore",
       "style": "underscore",
       "verdict": "standalone-pass"
@@ -1187,6 +1380,7 @@
     {
       "error": "! Undefined control sequence.",
       "exit": 1,
+      "kind": "sty",
       "package": "unicode-bidi",
       "style": "unicode-bidi",
       "verdict": "standalone-fail"
@@ -1194,49 +1388,57 @@
     {
       "error": "! Package unicode-math Error: Cannot be run with pdftex!",
       "exit": 1,
+      "kind": "sty",
       "package": "unicode-math",
       "style": "unicode-math",
       "verdict": "standalone-fail"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "uniquecounter",
       "style": "uniquecounter",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "unisugar",
       "style": "unisugar",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "upquote",
       "style": "upquote",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "url",
       "style": "url",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "xcolor",
       "style": "xcolor",
       "verdict": "standalone-pass"
     },
     {
-      "error": "! LaTeX Error: File `xebaposter.sty' not found.",
-      "exit": 1,
+      "exit": 0,
+      "kind": "cls",
       "package": "xebaposter",
       "style": "xebaposter",
-      "verdict": "standalone-fail"
+      "usepackage_verdict": "standalone-fail",
+      "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "xechangebar",
       "style": "xechangebar",
       "verdict": "standalone-pass"
@@ -1244,12 +1446,14 @@
     {
       "error": "! Fatal Package fontspec Error: The fontspec package requires either XeTeX or",
       "exit": 1,
+      "kind": "sty",
       "package": "xecolor",
       "style": "xecolor",
       "verdict": "standalone-fail"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "xecyr",
       "style": "xecyr",
       "verdict": "standalone-pass"
@@ -1257,6 +1461,7 @@
     {
       "error": "! Undefined control sequence.",
       "exit": 1,
+      "kind": "sty",
       "package": "xeindex",
       "style": "xeindex",
       "verdict": "standalone-fail"
@@ -1264,12 +1469,14 @@
     {
       "error": "! Undefined control sequence.",
       "exit": 1,
+      "kind": "sty",
       "package": "xesearch",
       "style": "xesearch",
       "verdict": "standalone-fail"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "xespotcolor",
       "style": "xespotcolor",
       "verdict": "standalone-pass"
@@ -1277,6 +1484,7 @@
     {
       "error": "! Bad character code (4095).",
       "exit": 1,
+      "kind": "sty",
       "package": "xetexko",
       "style": "xetexko",
       "verdict": "standalone-fail"
@@ -1284,18 +1492,21 @@
     {
       "error": "! Undefined control sequence.",
       "exit": 1,
+      "kind": "sty",
       "package": "xevlna",
       "style": "xevlna",
       "verdict": "standalone-fail"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "xfrac",
       "style": "xfrac",
       "verdict": "standalone-pass"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "xkeyval",
       "style": "pst-xkey",
       "verdict": "standalone-pass"
@@ -1303,12 +1514,14 @@
     {
       "error": "! Emergency stop.",
       "exit": 1,
+      "kind": "sty",
       "package": "xltxtra",
       "style": "xltxtra",
       "verdict": "standalone-fail"
     },
     {
       "exit": 0,
+      "kind": "sty",
       "package": "xpatch",
       "style": "xpatch",
       "verdict": "standalone-pass"
@@ -1316,6 +1529,7 @@
     {
       "error": "! LaTeX Error: *** this package currently works only with XeTeX ***",
       "exit": 1,
+      "kind": "sty",
       "package": "xunicode",
       "style": "xunicode",
       "verdict": "standalone-fail"
@@ -1323,6 +1537,7 @@
     {
       "error": "! LaTeX Error: File `stmaryrd.sty' not found.",
       "exit": 1,
+      "kind": "sty",
       "package": "zbmath-review-template",
       "style": "zb-basics",
       "verdict": "standalone-fail"

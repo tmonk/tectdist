@@ -8,13 +8,13 @@ Gate: **PASS**
 | Total packages | 372 |
 | Tested | 194 |
 | Untested | 178 |
-| Pass | 142 |
+| Pass | 146 |
 | Fail | 0 |
-| Reference-blocked | 52 |
+| Reference-blocked | 48 |
 | Reference failures recorded | 0 |
 
 Output pipelines: 7/7 qualified
-Standalone probes: 157 pass / 52 fail
+Standalone probes: 161 pass / 48 fail
 
 ## Reference-failure attribution
 
@@ -22,17 +22,14 @@ Standalone probes: 157 pass / 52 fail
 
 - explained by a component failing standalone: 207
 - pair-specific (unattributed): 0
-- components failing standalone: 52
+- components failing standalone: 48
 
 | standalone-failing package | cause |
 |---|---|
-| amscls | ! LaTeX Error: File `amsart.sty' not found. |
 | arabxetex | ! Fatal Package fontspec Error: The fontspec package requires either XeTeX or |
 | babel | ! Package babel Error: You are loading directly a language style. |
 | babelbib | ! Undefined control sequence. |
-| beamer | ! LaTeX Error: File `beamer.sty' not found. |
-| bidipresentation | ! LaTeX Error: File `bidipresentation.sty' not found. |
-| businesscard-qrcode | ! LaTeX Error: File `businesscard-qrcode.sty' not found. |
+| businesscard-qrcode | ! LaTeX Error: File `marvosym.sty' not found. |
 | cqubeamer | ! Undefined control sequence. |
 | ctable | ! LaTeX Error: File `transparent.sty' not found. |
 | ctablestack | ! Undefined control sequence. |
@@ -44,10 +41,10 @@ Standalone probes: 157 pass / 52 fail
 | hypcap | ! Package hypcap Error: You have to load 'hyperref' first. |
 | ifplatform | ! LaTeX Error: File `catchfile.sty' not found. |
 | interchar | ! LaTeX Error: Variant form 'cx' deprecated for base form '\prop_item:cn'. One |
-| koma-script | ! LaTeX Error: File `koma-script-source-doc.sty' not found. |
+| koma-script | ! LaTeX Error: File `hypdoc.sty' not found. |
 | lineno | ! Package ednmath0 Error: Bad lineno.sty version. |
-| ltx-talk | ! LaTeX Error: File `ltx-talk.sty' not found. |
-| ltxmisc | ! LaTeX Error: File `abstbook.sty' not found. |
+| ltx-talk | ! LaTeX Error: This file needs \DocumentMetadata. |
+| ltxmisc | ! LaTeX Error: File `minitoc.sty' not found. |
 | lua-unicode-math | ! Critical Package lua-unicode-math Error: lua-unicode-math can only be used |
 | luamml | ! Undefined control sequence. |
 | luaotfload | ! Undefined control sequence. |
@@ -61,15 +58,14 @@ Standalone probes: 157 pass / 52 fail
 | philokalia | ! Emergency stop. |
 | ptext | ! LaTeX Error: File `biditools.sty' not found. |
 | revtex | ! Undefined control sequence. |
-| simple-resume-cv | ! LaTeX Error: File `simpleresumecv.sty' not found. |
-| simple-thesis-dissertation | ! LaTeX Error: File `simplethesisdissertation.sty' not found. |
+| simple-resume-cv | ! LaTeX Error: File `hyphenat.sty' not found. |
+| simple-thesis-dissertation | ! LaTeX Error: File `environ.sty' not found. |
 | tagpdf | ! Package tagpdf Error: PDF resource management is no active! |
 | textpath | ! LaTeX Error: File `soul.sty' not found. |
 | ucharcat | ! Package ucharcat Error: \Ucharcat may only be used with xetex and luatex. |
 | ucharclasses | ! Emergency stop. |
 | unicode-bidi | ! Undefined control sequence. |
 | unicode-math | ! Package unicode-math Error: Cannot be run with pdftex! |
-| xebaposter | ! LaTeX Error: File `xebaposter.sty' not found. |
 | xecolor | ! Fatal Package fontspec Error: The fontspec package requires either XeTeX or |
 | xeindex | ! Undefined control sequence. |
 | xesearch | ! Undefined control sequence. |

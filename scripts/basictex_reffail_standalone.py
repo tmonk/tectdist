@@ -39,13 +39,37 @@ Standalone probe.
 \end{document}
 """
 
+CLASS_DOC = r"""\documentclass{%s}
+\begin{document}
+Standalone probe.
+\end{document}
+"""
 
-def source_for(pkg: str, style: str) -> str:
+
+def file_kind(binary_dir: Path, env: dict, name: str):
+    """Resolve a style base name through kpathsea: .sty preferred,
+    .cls second. Returns the extension or None."""
+    for ext in ("sty", "cls"):
+        try:
+            proc = subprocess.run(
+                [str(binary_dir / "kpsewhich"), f"{name}.{ext}"],
+                env=env, capture_output=True, text=True, timeout=30)
+        except subprocess.TimeoutExpired:
+            continue
+        if proc.returncode == 0 and proc.stdout.strip():
+            return ext
+    return None
+
+
+def source_for(pkg: str, style: str, kind=None) -> str:
     """Choose a probe document appropriate to the package family."""
     if pkg.startswith("babel-"):
         # Language packages ship .ldf files loaded through babel options,
         # never as standalone styles.
         return BABEL_DOC % pkg[len("babel-"):]
+    if kind == "cls":
+        # Classes must be loaded via \documentclass.
+        return CLASS_DOC % style
     return DOC % style
 
 
@@ -106,7 +130,10 @@ def main(argv=None) -> int:
             results.append(entry)
             continue
         work = Path(tempfile.mkdtemp(prefix="bt100-probe-"))
-        (work / "main.tex").write_text(source_for(pkg, entry["style"]))
+        kind = file_kind(binary_dir, env, entry["style"])
+        entry["kind"] = kind
+        (work / "main.tex").write_text(
+            source_for(pkg, entry["style"], kind))
         try:
             proc = subprocess.run(
                 [str(binary_dir / "pdflatex"), "-interaction=batchmode",
@@ -121,7 +148,7 @@ def main(argv=None) -> int:
         # For family templates also record how the package behaves under
         # the plain \usepackage convention the interaction runner uses;
         # attribution needs the matching convention.
-        if pkg.startswith("babel-"):
+        if pkg.startswith("babel-") or kind == "cls":
             (work / "up.tex").write_text(DOC % entry["style"])
             try:
                 proc2 = subprocess.run(
