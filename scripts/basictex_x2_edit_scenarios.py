@@ -175,6 +175,18 @@ def main(argv=None) -> int:
             best = r["wall_ms"] if best is None else min(best, r["wall_ms"])
         results["warm-body-edit-format-reused"] = best
 
+        # 3b. unchanged recompile: X4 gate replays the cached success
+        # without any engine run.
+        set_source(False, "v2 edited sentence.")
+        r = timed_compile(sup, work, argv)  # ensure chain matches current
+        assert r["exit"] == 0
+        best = None
+        for _ in range(args.trials):
+            r = timed_compile(sup, work, argv)
+            assert r["exit"] == 0, f"unchanged compile failed: {r}"
+            best = r["wall_ms"] if best is None else min(best, r["wall_ms"])
+        results["unchanged-rebuild-cache-hit"] = best
+
         # 3. preamble edit: format must rebuild on EVERY trial (alternate
         # between two distinct preambles so each trial invalidates).
         best = None

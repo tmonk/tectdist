@@ -20,7 +20,7 @@ modifications documented in `docs/FORK_SERVER_DESIGN.md`.
 | **X1** Supervisor + fork servers | ~65% | IPC+locks ✓, pdfTeX fork server proven (1.5 ms children), launch-variant matrix mapped, -fmt bypass root-caused |
 | **X2** Preamble snapshots | ~85% | Builder validated end-to-end (paired-body contract, 2.1x A/B), hyph_size root-caused (TEXMFCNF override), supervisor fast path live with IPC test; measured through supervisor: body edit 156->67 ms (2.33x), rebuild 273 ms |
 | **X3** Helper acceleration | ✅ complete | Broker MVP done, 5/5 helpers < 2 ms gates, mutation corpus passes |
-| **X4** Checkpoints/replay | ~45% | Model ✓, chains in supervisor ✓, manifest capture ✓, aux tracker ✓; engine API pending |
+| **X4** Checkpoints/replay | ~65% | Model ✓, chains ✓, manifest ✓, aux tracker ✓, **unchanged-rebuild gate live: 12 ms vs 152 ms stock (12.7x)**; page-level engine API pending |
 | **X5** Output graphs | model ✓ | Graph model ✓, planner ✓, content store ✓; execution pending engine patches |
 | **X6** Runtime-warm clean | not started | Needs X4/X5 completion first |
 | **R** Release qualification | queued | All prior gates |
