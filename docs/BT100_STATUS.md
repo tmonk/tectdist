@@ -16,7 +16,7 @@ modifications documented in `docs/FORK_SERVER_DESIGN.md`.
 |---|---|---|
 | **B0** Contract reset | ✅ complete | BasicTeX pinned, manifests generated, budgets frozen |
 | **B1** Substrate | ✅ complete | Image verified (19,935 files), size gate PASS, pipelines 7/7 |
-| **B2** Compatibility factory | ~92% | **accelerated-chain exactness proven**: 26/26 pairs green through the live supervisor (cold X2 + warm X4 replay), page counts identical to reference | Ledger 372 rows, smoke 192/192 pass, interactions 507/507 ref-green pass, **all ref-failures attributed (0 pair-specific)**, probes: 209 packages → 161 pass / 48 reference-blocked, report gate PASS |
+| **B2** Compatibility factory | ~95% | 713+725 ref-green pairs (supervisor + CLI), 13/13 documents directionally equivalent (11 byte-identical), all ref-failures attributed, failure equivalence 48/48, corpus 14 docs incl. multifile, report gate PASS |
 | **X1** Supervisor + fork servers | ~65% | IPC+locks ✓, pdfTeX fork server proven (1.5 ms children), launch-variant matrix mapped, -fmt bypass root-caused |
 | **X2** Preamble snapshots | ~85% | Builder validated end-to-end (paired-body contract, 2.1x A/B), hyph_size root-caused (TEXMFCNF override), supervisor fast path live with IPC test; measured through supervisor: body edit 156->67 ms (2.33x), rebuild 273 ms |
 | **X3** Helper acceleration | ✅ complete | Broker MVP done, 5/5 helpers < 2 ms gates, mutation corpus passes |
