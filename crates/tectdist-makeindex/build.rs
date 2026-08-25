@@ -20,7 +20,11 @@ fn main() {
         // fatal MakeIndex condition never terminates the host process.
         .define("main", "makeindex_main")
         .define("exit", "tectdist_makeindex_exit")
-        .flag_if_supported("-O2");
+        .flag_if_supported("-O2")
+        // The vendored C is pinned upstream (docs/ENGINE_PIN.md); silence
+        // its benign -Wformat-extra-args noise from the FATAL macro rather
+        // than modifying pinned sources.
+        .warnings(false);
     build.compile("tectdist_makeindex");
     println!("cargo:include={}", root.join("c").display());
 }
