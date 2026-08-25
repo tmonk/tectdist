@@ -253,7 +253,18 @@ work; scripts/basictex_project_format.py provides the CLI scaffolding.
 
 Verified live: xelatex documents compile through the COMPOSED path
 (worker preloading an X2 project format), exit 0, pdftotext output
-identical to the reference. Build-tree gotchas encountered and fixed:
+identical to the reference.
+
+BASE-worker caveat discovered: XeTeX's non-init mainbody executes
+`goto lab1` early, jumping past the fixdateandtime convergence point —
+so a hook placed there never runs in preloaded-format runs (engine hits
+the `**` prompt and dies on EOF). Relocation target identified: insert
+the hook immediately after the `lab1 :` label in xetexini.c (~line
+4762). A relocation+instrumentation attempt was interrupted by a
+freetype rebuild loop; the deployed forkproto/xetex binary predates
+this and works for the COMPOSED path only. Base-path support for
+xetex requires finishing the relocation (bounded work, ~15 min with
+CXXFLAGS=-std=c++17 on the make line). Build-tree gotchas encountered and fixed:
 a corrupted texmfmp.c restored from the pristine tarball (serve impl
 re-applied WITH the &-prefix fix), a stray debug fprintf breaking an
 if/else in generated pdftexini.c, and an empty build-tree

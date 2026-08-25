@@ -284,6 +284,7 @@ pub fn fast_compile(
         &digest_hex(digest_input.as_bytes()),
         &capability_flags,
         cancelled,
+        program,
     )?;
 
     // Body file: written next to the format every time (cheap, keeps in
@@ -358,6 +359,7 @@ fn ensure_format(
     cache_digest: &str,
     capability_flags: &[&String],
     cancelled: Option<&std::sync::atomic::AtomicBool>,
+    program: &str,
 ) -> Result<(), String> {
     let format_dir = cwd.join(FORMAT_DIR);
     std::fs::create_dir_all(&format_dir)
@@ -386,11 +388,9 @@ fn ensure_format(
         // may do during the dump; forward them so the snapshot matches
         // the semantics of the request that triggered the build.
         .args(capability_flags.iter().map(|f| f.as_str()))
-        .args([
-            "-interaction=batchmode",
-            "-halt-on-error",
-            "&pdflatex",
-        ])
+        .args(["-interaction=batchmode", "-halt-on-error"])
+        // Load the SAME engine family's format (xelatex builds via xetex).
+        .arg(format!("&{program}"))
         .arg(pre_file.file_name().unwrap().to_string_lossy().as_ref())
         .current_dir(&format_dir)
         .env("TEXMFROOT", image_root)
