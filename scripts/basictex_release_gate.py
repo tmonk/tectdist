@@ -158,6 +158,13 @@ def main(argv=None) -> int:
             "body-edit": data["speedup_body_edit_vs_stock"],
             "unchanged": data["speedup_unchanged_vs_stock"],
         }
+        # Declared manifest scenarios measured alongside (structural
+        # section additions reuse the format like body edits).
+        scenarios = data.get("scenarios", {})
+        if "structural-edit-format-reused" in scenarios:
+            speedups["structural-edit"] = round(
+                scenarios["stock-one-shot"]
+                / max(scenarios["structural-edit-format-reused"], 1), 3)
         meets = all(v >= 10.0 for v in speedups.values()) and \
             x10e.returncode == 0
         detail = ", ".join(f"{k} {v}x" for k, v in speedups.items())

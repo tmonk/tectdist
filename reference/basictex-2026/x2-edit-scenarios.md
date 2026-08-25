@@ -2,11 +2,12 @@
 
 | scenario | ms (min) |
 |---|---:|
-| stock-one-shot | 151 |
-| cold-first-with-format-build | 273 |
+| stock-one-shot | 148 |
+| cold-first-with-format-build | 269 |
 | warm-body-edit-format-reused | 79 |
-| unchanged-rebuild-cache-hit | 12 |
-| preamble-edit-format-rebuilt | 278 |
+| unchanged-rebuild-cache-hit | 11 |
+| structural-edit-format-reused | 77 |
+| preamble-edit-format-rebuilt | 275 |
 
-Body-edit speedup vs stock: 1.911x
-Unchanged speedup vs stock: 12.583x
+Body-edit speedup vs stock: 1.873x
+Unchanged speedup vs stock: 13.455x

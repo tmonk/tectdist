@@ -203,6 +203,26 @@ def main(argv=None) -> int:
             best = r["wall_ms"] if best is None else min(best, r["wall_ms"])
         results["unchanged-rebuild-cache-hit"] = best
 
+        # 2b. structural edit: append a whole section (manifest
+        # edit_operations "structural-section") — format reused.
+        set_source(False, "v2 edited sentence.")
+        r = timed_compile(sup, work, argv)
+        assert r["exit"] == 0
+        best = None
+        for i in range(args.trials):
+            section = (
+                f"\\section{{Added {i}}}\n"
+                f"Structural content number {i} with math $a_{i}^2$.\n")
+            text = (work / "main.tex").read_text()
+            (work / "main.tex").write_text(
+                text.replace("\\end{document}",
+                             section + "\\end{document}"))
+            (work / "main.pdf").unlink(missing_ok=True)
+            r = timed_compile(sup, work, argv)
+            assert r["exit"] == 0, f"structural-edit compile failed: {r}"
+            best = r["wall_ms"] if best is None else min(best, r["wall_ms"])
+        results["structural-edit-format-reused"] = best
+
         # 3. preamble edit: format must rebuild on EVERY trial (alternate
         # between two distinct preambles so each trial invalidates).
         best = None
