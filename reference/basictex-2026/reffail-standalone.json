@@ -1,8 +1,8 @@
 {
   "counters": {
     "no-style": 0,
-    "standalone-fail": 48,
-    "standalone-pass": 161
+    "standalone-fail": 65,
+    "standalone-pass": 195
   },
   "interactions_image_sha256": "395f0b4d7ce47684c021e8734421bd530206e58a96949cb6103a6333ad2b36b6",
   "results": [
@@ -69,6 +69,13 @@
       "kind": "sty",
       "package": "atveryend",
       "style": "atveryend",
+      "verdict": "standalone-pass"
+    },
+    {
+      "error": "",
+      "kind": "mpost",
+      "package": "automata",
+      "style": "texmf-dist/metapost/automata/automata",
       "verdict": "standalone-pass"
     },
     {
@@ -215,6 +222,13 @@
       "verdict": "standalone-fail"
     },
     {
+      "error": "",
+      "kind": "mpost",
+      "package": "bbcard",
+      "style": "texmf-dist/metapost/bbcard/bbcard",
+      "verdict": "standalone-pass"
+    },
+    {
       "exit": 0,
       "kind": "cls",
       "package": "beamer",
@@ -280,6 +294,13 @@
       "verdict": "standalone-pass"
     },
     {
+      "error": "",
+      "kind": "mpost",
+      "package": "blockdraw_mp",
+      "style": "texmf-dist/metapost/blockdraw_mp/blockdraw",
+      "verdict": "standalone-pass"
+    },
+    {
       "exit": 0,
       "kind": "sty",
       "package": "bookmark",
@@ -291,6 +312,13 @@
       "kind": "sty",
       "package": "booktabs",
       "style": "booktabs",
+      "verdict": "standalone-pass"
+    },
+    {
+      "error": "",
+      "kind": "mpost",
+      "package": "bpolynomial",
+      "style": "texmf-dist/metapost/bpolynomial/bpolynomial",
       "verdict": "standalone-pass"
     },
     {
@@ -331,10 +359,24 @@
       "verdict": "standalone-pass"
     },
     {
+      "error": "! LaTeX Error: The font size command \\normalsize is not defined:",
+      "kind": "font",
+      "package": "cm",
+      "style": "texmf-dist/fonts/tfm/public/cm/cmb10",
+      "verdict": "standalone-fail"
+    },
+    {
       "exit": 0,
       "kind": "sty",
       "package": "cmap",
       "style": "cmap",
+      "verdict": "standalone-pass"
+    },
+    {
+      "error": "",
+      "kind": "mpost",
+      "package": "cmarrows",
+      "style": "texmf-dist/metapost/cmarrows/cmarrows",
       "verdict": "standalone-pass"
     },
     {
@@ -383,6 +425,20 @@
       "verdict": "standalone-fail"
     },
     {
+      "error": "! drv: \"verbatimtex%&latex\" is missing.",
+      "kind": "mpost",
+      "package": "drv",
+      "style": "texmf-dist/metapost/drv/drv",
+      "verdict": "standalone-fail"
+    },
+    {
+      "error": "",
+      "kind": "mpost",
+      "package": "dviincl",
+      "style": "texmf-dist/metapost/dviincl/fix_brks",
+      "verdict": "standalone-pass"
+    },
+    {
       "exit": 0,
       "kind": "sty",
       "package": "dvips",
@@ -390,10 +446,24 @@
       "verdict": "standalone-pass"
     },
     {
+      "error": "! LaTeX Error: The font size command \\normalsize is not defined:",
+      "kind": "font",
+      "package": "ec",
+      "style": "texmf-dist/fonts/tfm/jknappen/ec/ecbi0500",
+      "verdict": "standalone-fail"
+    },
+    {
       "exit": 0,
       "kind": "sty",
       "package": "emp",
       "style": "emp",
+      "verdict": "standalone-pass"
+    },
+    {
+      "error": "",
+      "kind": "mpost",
+      "package": "epsincl",
+      "style": "texmf-dist/metapost/epsincl/epsincl",
       "verdict": "standalone-pass"
     },
     {
@@ -409,6 +479,13 @@
       "package": "eso-pic",
       "style": "eso-pic",
       "verdict": "standalone-pass"
+    },
+    {
+      "error": "! LaTeX Error: The font size command \\normalsize is not defined:",
+      "kind": "font",
+      "package": "etex",
+      "style": "texmf-dist/fonts/tfm/public/etex/xbmc10",
+      "verdict": "standalone-fail"
     },
     {
       "exit": 0,
@@ -460,6 +537,20 @@
       "verdict": "standalone-pass"
     },
     {
+      "error": "! ! Unable to read mpx file.",
+      "kind": "mpost",
+      "package": "expressg",
+      "style": "texmf-dist/metapost/expressg/aam",
+      "verdict": "standalone-fail"
+    },
+    {
+      "error": "",
+      "kind": "mpost",
+      "package": "exteps",
+      "style": "texmf-dist/metapost/exteps/exteps",
+      "verdict": "standalone-pass"
+    },
+    {
       "exit": 0,
       "kind": "sty",
       "package": "extsizes",
@@ -492,6 +583,13 @@
       "kind": "sty",
       "package": "fancyvrb",
       "style": "fancyvrb",
+      "verdict": "standalone-pass"
+    },
+    {
+      "error": "",
+      "kind": "mpost",
+      "package": "featpost",
+      "style": "texmf-dist/metapost/featpost/featpost",
       "verdict": "standalone-pass"
     },
     {
@@ -536,6 +634,13 @@
       "package": "fixlatvian",
       "style": "fixlatvian",
       "verdict": "standalone-fail"
+    },
+    {
+      "error": "",
+      "kind": "mpost",
+      "package": "fiziko",
+      "style": "texmf-dist/metapost/fiziko/fiziko",
+      "verdict": "standalone-pass"
     },
     {
       "exit": 0,
@@ -583,6 +688,13 @@
       "verdict": "standalone-pass"
     },
     {
+      "error": "",
+      "kind": "mpost",
+      "package": "garrigues",
+      "style": "texmf-dist/metapost/garrigues/garrigues",
+      "verdict": "standalone-pass"
+    },
+    {
       "exit": 0,
       "kind": "sty",
       "package": "geometry",
@@ -626,6 +738,20 @@
       "verdict": "standalone-pass"
     },
     {
+      "error": "",
+      "kind": "mpost",
+      "package": "hatching",
+      "style": "texmf-dist/metapost/hatching/hatching",
+      "verdict": "standalone-pass"
+    },
+    {
+      "error": "",
+      "kind": "mpost",
+      "package": "hershey-mp",
+      "style": "texmf-dist/metapost/hershey-mp/hershey",
+      "verdict": "standalone-pass"
+    },
+    {
       "exit": 0,
       "kind": "sty",
       "package": "hologo",
@@ -638,6 +764,13 @@
       "package": "hopatch",
       "style": "hopatch",
       "verdict": "standalone-pass"
+    },
+    {
+      "error": "! ! Unable to read mpx file.",
+      "kind": "mpost",
+      "package": "huffman",
+      "style": "texmf-dist/metapost/huffman/huffman",
+      "verdict": "standalone-fail"
     },
     {
       "exit": 0,
@@ -711,6 +844,20 @@
       "package": "jknapltx",
       "style": "greekctr",
       "verdict": "standalone-pass"
+    },
+    {
+      "error": "! LaTeX Error: The font size command \\normalsize is not defined:",
+      "kind": "font",
+      "package": "knuth-lib",
+      "style": "texmf-dist/fonts/tfm/public/knuth-lib/logo10",
+      "verdict": "standalone-fail"
+    },
+    {
+      "error": "! LaTeX Error: The font size command \\normalsize is not defined:",
+      "kind": "font",
+      "package": "knuth-local",
+      "style": "texmf-dist/fonts/tfm/public/knuth-local/domino",
+      "verdict": "standalone-fail"
     },
     {
       "error": "! LaTeX Error: File `hypdoc.sty' not found.",
@@ -799,6 +946,13 @@
       "verdict": "standalone-pass"
     },
     {
+      "error": "! LaTeX Error: The font size command \\normalsize is not defined:",
+      "kind": "font",
+      "package": "latex-fonts",
+      "style": "texmf-dist/fonts/tfm/public/latex-fonts/icmcsc10",
+      "verdict": "standalone-fail"
+    },
+    {
       "exit": 0,
       "kind": "sty",
       "package": "latex-graphics-dev",
@@ -831,6 +985,13 @@
       "kind": "sty",
       "package": "latexbug",
       "style": "latexbug",
+      "verdict": "standalone-pass"
+    },
+    {
+      "error": "",
+      "kind": "mpost",
+      "package": "latexmp",
+      "style": "texmf-dist/metapost/latexmp/latexmp",
       "verdict": "standalone-pass"
     },
     {
@@ -950,6 +1111,13 @@
       "verdict": "standalone-pass"
     },
     {
+      "error": "",
+      "kind": "mpost",
+      "package": "mcf2graph",
+      "style": "texmf-dist/metapost/mcf2graph/mcf2graph",
+      "verdict": "standalone-pass"
+    },
+    {
       "exit": 0,
       "kind": "sty",
       "package": "mdwtools",
@@ -964,10 +1132,45 @@
       "verdict": "standalone-pass"
     },
     {
+      "error": "",
+      "kind": "mpost",
+      "package": "metago",
+      "style": "texmf-dist/metapost/metago/metago",
+      "verdict": "standalone-pass"
+    },
+    {
       "exit": 0,
       "kind": "sty",
       "package": "metalogo",
       "style": "metalogo",
+      "verdict": "standalone-pass"
+    },
+    {
+      "error": "! ! Unable to read mpx file.",
+      "kind": "mpost",
+      "package": "metaobj",
+      "style": "texmf-dist/metapost/metaobj/connections",
+      "verdict": "standalone-fail"
+    },
+    {
+      "error": "",
+      "kind": "mpost",
+      "package": "metaplot",
+      "style": "texmf-dist/metapost/metaplot/axes",
+      "verdict": "standalone-pass"
+    },
+    {
+      "error": "",
+      "kind": "mpost",
+      "package": "metapost-colorbrewer",
+      "style": "texmf-dist/metapost/metapost-colorbrewer/colorbrewer-cmyk",
+      "verdict": "standalone-pass"
+    },
+    {
+      "error": "",
+      "kind": "mpost",
+      "package": "metauml",
+      "style": "texmf-dist/metapost/metauml/metauml",
       "verdict": "standalone-pass"
     },
     {
@@ -1007,12 +1210,82 @@
       "verdict": "standalone-pass"
     },
     {
+      "error": "! Isolated expression.",
+      "kind": "mpost",
+      "package": "minim-hatching",
+      "style": "texmf-dist/metapost/minim-hatching/minim-hatching",
+      "verdict": "standalone-fail"
+    },
+    {
+      "error": "",
+      "kind": "mpost",
+      "package": "mp-geom2d",
+      "style": "texmf-dist/metapost/mp-geom2d/geom2d-arc",
+      "verdict": "standalone-pass"
+    },
+    {
+      "error": "! Isolated expression.",
+      "kind": "mpost",
+      "package": "mp-neuralnetwork",
+      "style": "texmf-dist/metapost/mp-neuralnetwork/mp-neuralnetwork-metaobj-patch",
+      "verdict": "standalone-fail"
+    },
+    {
+      "error": "",
+      "kind": "mpost",
+      "package": "mp3d",
+      "style": "texmf-dist/metapost/mp3d/3d",
+      "verdict": "standalone-pass"
+    },
+    {
+      "error": "",
+      "kind": "mpost",
+      "package": "mparrows",
+      "style": "texmf-dist/metapost/mparrows/mparrows",
+      "verdict": "standalone-pass"
+    },
+    {
+      "error": "",
+      "kind": "mpost",
+      "package": "mpattern",
+      "style": "texmf-dist/metapost/mpattern/mpattern",
+      "verdict": "standalone-pass"
+    },
+    {
+      "error": "",
+      "kind": "mpost",
+      "package": "mpchess",
+      "style": "texmf-dist/metapost/mpchess/mpchess-cburnett",
+      "verdict": "standalone-pass"
+    },
+    {
+      "error": "",
+      "kind": "mpost",
+      "package": "mpcolornames",
+      "style": "texmf-dist/metapost/mpcolornames/mpcolornames-spec-dvipsnam-def",
+      "verdict": "standalone-pass"
+    },
+    {
       "error": "! LaTeX Error: File `moreverb.sty' not found.",
       "exit": 1,
       "kind": "sty",
       "package": "mpgraphics",
       "style": "mpgraphics",
       "verdict": "standalone-fail"
+    },
+    {
+      "error": "",
+      "kind": "mpost",
+      "package": "mpkiviat",
+      "style": "texmf-dist/metapost/mpkiviat/mpkiviat",
+      "verdict": "standalone-pass"
+    },
+    {
+      "error": "",
+      "kind": "mpost",
+      "package": "mptrees",
+      "style": "texmf-dist/metapost/mptrees/mptrees",
+      "verdict": "standalone-pass"
     },
     {
       "error": "! LaTeX Error: File `tkz-tab.sty' not found.",
@@ -1101,6 +1374,13 @@
       "verdict": "standalone-pass"
     },
     {
+      "error": "! Font \\probe=texmf-dist/fonts/tfm/public/pdftex/dummy-space not loadable: Metr",
+      "kind": "font",
+      "package": "pdftex",
+      "style": "texmf-dist/fonts/tfm/public/pdftex/dummy-space",
+      "verdict": "standalone-fail"
+    },
+    {
       "exit": 0,
       "kind": "sty",
       "package": "pdftexcmds",
@@ -1121,6 +1401,13 @@
       "package": "philokalia",
       "style": "philokalia",
       "verdict": "standalone-fail"
+    },
+    {
+      "error": "",
+      "kind": "mpost",
+      "package": "piechartmp",
+      "style": "texmf-dist/metapost/piechartmp/piechartmp",
+      "verdict": "standalone-pass"
     },
     {
       "exit": 0,
@@ -1187,6 +1474,13 @@
       "verdict": "standalone-pass"
     },
     {
+      "error": "",
+      "kind": "mpost",
+      "package": "repere",
+      "style": "texmf-dist/metapost/repere/repere",
+      "verdict": "standalone-pass"
+    },
+    {
       "exit": 0,
       "kind": "sty",
       "package": "rerunfilecheck",
@@ -1200,6 +1494,13 @@
       "package": "revtex",
       "style": "ltxdocext",
       "verdict": "standalone-fail"
+    },
+    {
+      "error": "",
+      "kind": "mpost",
+      "package": "roundrect",
+      "style": "texmf-dist/metapost/roundrect/roundrect",
+      "verdict": "standalone-pass"
     },
     {
       "exit": 0,
@@ -1237,6 +1538,13 @@
       "verdict": "standalone-pass"
     },
     {
+      "error": "",
+      "kind": "mpost",
+      "package": "shapes",
+      "style": "texmf-dist/metapost/shapes/shapes",
+      "verdict": "standalone-pass"
+    },
+    {
       "error": "! LaTeX Error: File `hyphenat.sty' not found.",
       "exit": 1,
       "kind": "cls",
@@ -1255,6 +1563,20 @@
       "verdict": "standalone-fail"
     },
     {
+      "error": "",
+      "kind": "mpost",
+      "package": "slideshow",
+      "style": "texmf-dist/metapost/slideshow/pathalong",
+      "verdict": "standalone-pass"
+    },
+    {
+      "error": "",
+      "kind": "mpost",
+      "package": "splines",
+      "style": "texmf-dist/metapost/splines/splines",
+      "verdict": "standalone-pass"
+    },
+    {
       "exit": 0,
       "kind": "sty",
       "package": "stringenc",
@@ -1262,11 +1584,25 @@
       "verdict": "standalone-pass"
     },
     {
+      "error": "! ! Unable to read mpx file.",
+      "kind": "mpost",
+      "package": "suanpan",
+      "style": "texmf-dist/metapost/suanpan/abacus",
+      "verdict": "standalone-fail"
+    },
+    {
       "exit": 0,
       "kind": "sty",
       "package": "subfig",
       "style": "subfig",
       "verdict": "standalone-pass"
+    },
+    {
+      "error": "! Font \\probe=texmf-dist/fonts/tfm/adobe/symbol/psyr not loadable: Metric (TFM)",
+      "kind": "font",
+      "package": "symbol",
+      "style": "texmf-dist/fonts/tfm/adobe/symbol/psyr",
+      "verdict": "standalone-fail"
     },
     {
       "error": "! Package tagpdf Error: PDF resource management is no active!",
@@ -1313,11 +1649,25 @@
       "verdict": "standalone-fail"
     },
     {
+      "error": "",
+      "kind": "mpost",
+      "package": "threeddice",
+      "style": "texmf-dist/metapost/threeddice/threeddice",
+      "verdict": "standalone-pass"
+    },
+    {
       "exit": 0,
       "kind": "sty",
       "package": "thumbpdf",
       "style": "thumbpdf",
       "verdict": "standalone-pass"
+    },
+    {
+      "error": "! Font \\probe=texmf-dist/fonts/tfm/adobe/times/psyro not loadable: Metric (TFM)",
+      "kind": "font",
+      "package": "times",
+      "style": "texmf-dist/fonts/tfm/adobe/times/psyro",
+      "verdict": "standalone-fail"
     },
     {
       "exit": 0,
@@ -1532,6 +1882,13 @@
       "kind": "sty",
       "package": "xunicode",
       "style": "xunicode",
+      "verdict": "standalone-fail"
+    },
+    {
+      "error": "! Font \\probe=texmf-dist/fonts/tfm/adobe/zapfding/pzdr not loadable: Metric (TF",
+      "kind": "font",
+      "package": "zapfding",
+      "style": "texmf-dist/fonts/tfm/adobe/zapfding/pzdr",
       "verdict": "standalone-fail"
     },
     {

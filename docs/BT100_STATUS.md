@@ -34,6 +34,7 @@ modifications documented in `docs/FORK_SERVER_DESIGN.md`.
 | Fork child creation | 1.5 ms p50 | < 2 ms gate PASS |
 | Action restore (bibtex) | 0.55 ms p50 | < 2 ms gate PASS |
 | Interaction coverage | 507+218 ref-green / 0 fail | CLI battery + supervisor-path battery |
+| Extra-family probes | 51 pkgs: 34 equivalent-pass / 17 equivalent-fail / **0 mismatches** | fonts via \font, metapost via mpost |
 | Document equivalence | **14/14 docs**: 12 core byte-identical incl. Beamer + multifile and XeTeX, 2 extension equivalent-fail | CLI candidate vs pinned reference |
 | Supervisor-path battery (cumulative) | 713 ref-green / 0 stage failures | 11 seeds, post-hardening chain |
 | Supervisor chain (warm body edit) | 67 ms vs 152 ms stock | 2.3x via project format |

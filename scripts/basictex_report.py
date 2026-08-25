@@ -101,6 +101,15 @@ def main(argv=None):
             # this package passes standalone, every one of those pairs
             # is attributed to the other component.
             bt_status = "pass"
+        elif sa in ("standalone-pass", "equivalent-pass"):
+            # Extra-family probe evidence (fonts via \font declarations,
+            # metapost via mpost wrappers): both sides compiled.
+            bt_status = "pass"
+        elif sa == "equivalent-fail":
+            bt_status = "reference-blocked"
+        elif sa is not None and sa != "standalone-pass":
+            # Style-probe standalone failure without dual-side data.
+            bt_status = "reference-blocked"
         else:
             bt_status = "untested"
 

@@ -6,15 +6,15 @@ Gate: **PASS**
 | metric | count |
 |---|---:|
 | Total packages | 372 |
-| Tested | 194 |
-| Untested | 178 |
-| Pass | 146 |
+| Tested | 260 |
+| Untested | 112 |
+| Pass | 195 |
 | Fail | 0 |
-| Reference-blocked | 48 |
+| Reference-blocked | 65 |
 | Reference failures recorded | 0 |
 
 Output pipelines: 7/7 qualified
-Standalone probes: 161 pass / 48 fail
+Standalone probes: 195 pass / 65 fail
 
 ## Reference-failure attribution
 
@@ -22,7 +22,7 @@ Standalone probes: 161 pass / 48 fail
 
 - explained by a component failing standalone: 207
 - pair-specific (unattributed): 0
-- components failing standalone: 48
+- components failing standalone: 65
 
 | standalone-failing package | cause |
 |---|---|
@@ -30,18 +30,27 @@ Standalone probes: 161 pass / 48 fail
 | babel | ! Package babel Error: You are loading directly a language style. |
 | babelbib | ! Undefined control sequence. |
 | businesscard-qrcode | ! LaTeX Error: File `marvosym.sty' not found. |
+| cm | ! LaTeX Error: The font size command \normalsize is not defined: |
 | cqubeamer | ! Undefined control sequence. |
 | ctable | ! LaTeX Error: File `transparent.sty' not found. |
 | ctablestack | ! Undefined control sequence. |
+| drv | ! drv: "verbatimtex%&latex" is missing. |
+| ec | ! LaTeX Error: The font size command \normalsize is not defined: |
+| etex | ! LaTeX Error: The font size command \normalsize is not defined: |
+| expressg | ! ! Unable to read mpx file. |
 | fixlatvian | ! LaTeX Error: File `svn-prov.sty' not found. |
 | fontbook | ! Fatal Package fontspec Error: The fontspec package requires either XeTeX or |
 | fontspec | ! Fatal Package fontspec Error: The fontspec package requires either XeTeX or |
 | fontwrap | ! Fatal Package fontspec Error: The fontspec package requires either XeTeX or |
 | gmp | ! LaTeX Error: File `environ.sty' not found. |
+| huffman | ! ! Unable to read mpx file. |
 | hypcap | ! Package hypcap Error: You have to load 'hyperref' first. |
 | ifplatform | ! LaTeX Error: File `catchfile.sty' not found. |
 | interchar | ! LaTeX Error: Variant form 'cx' deprecated for base form '\prop_item:cn'. One |
+| knuth-lib | ! LaTeX Error: The font size command \normalsize is not defined: |
+| knuth-local | ! LaTeX Error: The font size command \normalsize is not defined: |
 | koma-script | ! LaTeX Error: File `hypdoc.sty' not found. |
+| latex-fonts | ! LaTeX Error: The font size command \normalsize is not defined: |
 | lineno | ! Package ednmath0 Error: Bad lineno.sty version. |
 | ltx-talk | ! LaTeX Error: This file needs \DocumentMetadata. |
 | ltxmisc | ! LaTeX Error: File `minitoc.sty' not found. |
@@ -51,17 +60,24 @@ Standalone probes: 161 pass / 48 fail
 | luatexbase | ! Undefined control sequence. |
 | lwarp | ! LaTeX Error: File `ifptex.sty' not found. |
 | mathspec | ! Emergency stop. |
+| metaobj | ! ! Unable to read mpx file. |
 | mfpic4ode | ! Undefined control sequence. |
+| minim-hatching | ! Isolated expression. |
+| mp-neuralnetwork | ! Isolated expression. |
 | mpgraphics | ! LaTeX Error: File `moreverb.sty' not found. |
 | na-position | ! LaTeX Error: File `tkz-tab.sty' not found. |
 | pdfcolfoot | ! LaTeX Error: File `pdfcol.sty' not found. |
+| pdftex | ! Font \probe=texmf-dist/fonts/tfm/public/pdftex/dummy-space not loadable: Metr |
 | philokalia | ! Emergency stop. |
 | ptext | ! LaTeX Error: File `biditools.sty' not found. |
 | revtex | ! Undefined control sequence. |
 | simple-resume-cv | ! LaTeX Error: File `hyphenat.sty' not found. |
 | simple-thesis-dissertation | ! LaTeX Error: File `environ.sty' not found. |
+| suanpan | ! ! Unable to read mpx file. |
+| symbol | ! Font \probe=texmf-dist/fonts/tfm/adobe/symbol/psyr not loadable: Metric (TFM) |
 | tagpdf | ! Package tagpdf Error: PDF resource management is no active! |
 | textpath | ! LaTeX Error: File `soul.sty' not found. |
+| times | ! Font \probe=texmf-dist/fonts/tfm/adobe/times/psyro not loadable: Metric (TFM) |
 | ucharcat | ! Package ucharcat Error: \Ucharcat may only be used with xetex and luatex. |
 | ucharclasses | ! Emergency stop. |
 | unicode-bidi | ! Undefined control sequence. |
@@ -73,6 +89,7 @@ Standalone probes: 161 pass / 48 fail
 | xevlna | ! Undefined control sequence. |
 | xltxtra | ! Emergency stop. |
 | xunicode | ! LaTeX Error: *** this package currently works only with XeTeX *** |
+| zapfding | ! Font \probe=texmf-dist/fonts/tfm/adobe/zapfding/pzdr not loadable: Metric (TF |
 | zbmath-review-template | ! LaTeX Error: File `stmaryrd.sty' not found. |
 
 
@@ -83,60 +100,26 @@ Standalone probes: 161 pass / 48 fail
 | 00texlive.config |
 | 00texlive.installation |
 | attachfile2.universal-darwin |
-| automata |
-| babel-basque |
-| babel-czech |
-| babel-danish |
-| babel-dutch |
-| babel-english |
-| babel-finnish |
-| babel-french |
-| babel-german |
-| babel-hungarian |
-| babel-italian |
-| babel-norsk |
-| babel-polish |
-| babel-portuges |
-| babel-swedish |
-| bbcard |
 | bibtex.universal-darwin |
-| blockdraw_mp |
-| bpolynomial |
-| cm |
-| cmarrows |
 | collection-basic |
 | collection-latex |
 | collection-latexrecommended |
 | collection-metapost |
 | collection-xetex |
 | dehyph |
-| drv |
-| dviincl |
 | dvipdfmx |
 | dvipdfmx.universal-darwin |
 | dvips.universal-darwin |
-| ec |
 | enctex |
-| epsincl |
 | epstopdf |
 | epstopdf.universal-darwin |
-| etex |
 | euenc |
-| expressg |
-| exteps |
 | extractbb |
 | extractbb.universal-darwin |
-| featpost |
-| fiziko |
 | font-change-xetex |
-| garrigues |
-| geometry |
 | glyphlist |
 | graphics-cfg |
 | graphics-def |
-| hatching |
-| hershey-mp |
-| huffman |
 | hyph-utf8 |
 | hyphen-base |
 | hyphen-basque |
@@ -155,8 +138,6 @@ Standalone probes: 161 pass / 48 fail
 | hyphen-spanish |
 | hyphen-swedish |
 | hyphenex |
-| knuth-lib |
-| knuth-local |
 | kpathsea |
 | kpathsea.universal-darwin |
 | l3backend |
@@ -165,9 +146,7 @@ Standalone probes: 161 pass / 48 fail
 | latex-bin-dev |
 | latex-bin-dev.universal-darwin |
 | latex-bin.universal-darwin |
-| latex-fonts |
 | latexconfig |
-| latexmp |
 | lm-math |
 | lua-alt-getopt |
 | lua-uni-algos |
@@ -182,47 +161,22 @@ Standalone probes: 161 pass / 48 fail
 | make4ht.universal-darwin |
 | makeindex |
 | makeindex.universal-darwin |
-| mcf2graph |
 | metafont |
 | metafont.universal-darwin |
-| metago |
-| metaobj |
-| metaplot |
 | metapost |
-| metapost-colorbrewer |
 | metapost.universal-darwin |
-| metauml |
 | mfware |
 | mfware.universal-darwin |
-| minim-hatching |
 | modes |
-| mp-geom2d |
-| mp-neuralnetwork |
-| mp3d |
-| mparrows |
-| mpattern |
-| mpchess |
-| mpcolornames |
-| mpkiviat |
 | mptopdf |
 | mptopdf.universal-darwin |
-| mptrees |
-| pdftex |
 | pdftex.universal-darwin |
-| piechartmp |
 | plain |
-| repere |
 | roex |
-| roundrect |
 | scheme-basic |
 | scheme-infraonly |
 | scheme-minimal |
 | scheme-small |
-| shapes |
-| slideshow |
-| splines |
-| suanpan |
-| symbol |
 | synctex |
 | synctex.universal-darwin |
 | tex |
@@ -239,9 +193,7 @@ Standalone probes: 161 pass / 48 fail
 | texlive-scripts.universal-darwin |
 | texlive.infra |
 | texlive.infra.universal-darwin |
-| threeddice |
 | thumbpdf.universal-darwin |
-| times |
 | tlshell |
 | tlshell.universal-darwin |
 | unicode-data |
@@ -257,4 +209,3 @@ Standalone probes: 161 pass / 48 fail
 | xetex.universal-darwin |
 | xetexconfig |
 | xetexfontinfo |
-| zapfding |

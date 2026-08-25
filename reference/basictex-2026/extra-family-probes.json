@@ -1,0 +1,435 @@
+{
+  "counters": {
+    "equivalent-fail": 17,
+    "equivalent-pass": 34,
+    "mismatch": 0
+  },
+  "results": [
+    {
+      "candidate_exit": 0,
+      "family": "mpost",
+      "package": "automata",
+      "ref_exit": 0,
+      "style": "texmf-dist/metapost/automata/automata",
+      "verdict": "equivalent-pass"
+    },
+    {
+      "candidate_exit": 0,
+      "family": "mpost",
+      "package": "bbcard",
+      "ref_exit": 0,
+      "style": "texmf-dist/metapost/bbcard/bbcard",
+      "verdict": "equivalent-pass"
+    },
+    {
+      "candidate_exit": 0,
+      "family": "mpost",
+      "package": "blockdraw_mp",
+      "ref_exit": 0,
+      "style": "texmf-dist/metapost/blockdraw_mp/blockdraw",
+      "verdict": "equivalent-pass"
+    },
+    {
+      "candidate_exit": 0,
+      "family": "mpost",
+      "package": "bpolynomial",
+      "ref_exit": 0,
+      "style": "texmf-dist/metapost/bpolynomial/bpolynomial",
+      "verdict": "equivalent-pass"
+    },
+    {
+      "candidate_exit": 1,
+      "error": "! LaTeX Error: The font size command \\normalsize is not defined:",
+      "family": "font",
+      "package": "cm",
+      "ref_exit": 1,
+      "style": "texmf-dist/fonts/tfm/public/cm/cmb10",
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 0,
+      "family": "mpost",
+      "package": "cmarrows",
+      "ref_exit": 0,
+      "style": "texmf-dist/metapost/cmarrows/cmarrows",
+      "verdict": "equivalent-pass"
+    },
+    {
+      "candidate_exit": 3,
+      "error": "! drv: \"verbatimtex%&latex\" is missing.",
+      "family": "mpost",
+      "package": "drv",
+      "ref_exit": 3,
+      "style": "texmf-dist/metapost/drv/drv",
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 0,
+      "family": "mpost",
+      "package": "dviincl",
+      "ref_exit": 0,
+      "style": "texmf-dist/metapost/dviincl/fix_brks",
+      "verdict": "equivalent-pass"
+    },
+    {
+      "candidate_exit": 1,
+      "error": "! LaTeX Error: The font size command \\normalsize is not defined:",
+      "family": "font",
+      "package": "ec",
+      "ref_exit": 1,
+      "style": "texmf-dist/fonts/tfm/jknappen/ec/ecbi0500",
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 0,
+      "family": "mpost",
+      "package": "epsincl",
+      "ref_exit": 0,
+      "style": "texmf-dist/metapost/epsincl/epsincl",
+      "verdict": "equivalent-pass"
+    },
+    {
+      "candidate_exit": 1,
+      "error": "! LaTeX Error: The font size command \\normalsize is not defined:",
+      "family": "font",
+      "package": "etex",
+      "ref_exit": 1,
+      "style": "texmf-dist/fonts/tfm/public/etex/xbmc10",
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 3,
+      "error": "! ! Unable to read mpx file.",
+      "family": "mpost",
+      "package": "expressg",
+      "ref_exit": 3,
+      "style": "texmf-dist/metapost/expressg/aam",
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 0,
+      "family": "mpost",
+      "package": "exteps",
+      "ref_exit": 0,
+      "style": "texmf-dist/metapost/exteps/exteps",
+      "verdict": "equivalent-pass"
+    },
+    {
+      "candidate_exit": 0,
+      "family": "mpost",
+      "package": "featpost",
+      "ref_exit": 0,
+      "style": "texmf-dist/metapost/featpost/featpost",
+      "verdict": "equivalent-pass"
+    },
+    {
+      "candidate_exit": 0,
+      "family": "mpost",
+      "package": "fiziko",
+      "ref_exit": 0,
+      "style": "texmf-dist/metapost/fiziko/fiziko",
+      "verdict": "equivalent-pass"
+    },
+    {
+      "candidate_exit": 0,
+      "family": "mpost",
+      "package": "garrigues",
+      "ref_exit": 0,
+      "style": "texmf-dist/metapost/garrigues/garrigues",
+      "verdict": "equivalent-pass"
+    },
+    {
+      "candidate_exit": 0,
+      "family": "mpost",
+      "package": "hatching",
+      "ref_exit": 0,
+      "style": "texmf-dist/metapost/hatching/hatching",
+      "verdict": "equivalent-pass"
+    },
+    {
+      "candidate_exit": 0,
+      "family": "mpost",
+      "package": "hershey-mp",
+      "ref_exit": 0,
+      "style": "texmf-dist/metapost/hershey-mp/hershey",
+      "verdict": "equivalent-pass"
+    },
+    {
+      "candidate_exit": 3,
+      "error": "! ! Unable to read mpx file.",
+      "family": "mpost",
+      "package": "huffman",
+      "ref_exit": 3,
+      "style": "texmf-dist/metapost/huffman/huffman",
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 1,
+      "error": "! LaTeX Error: The font size command \\normalsize is not defined:",
+      "family": "font",
+      "package": "knuth-lib",
+      "ref_exit": 1,
+      "style": "texmf-dist/fonts/tfm/public/knuth-lib/logo10",
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 1,
+      "error": "! LaTeX Error: The font size command \\normalsize is not defined:",
+      "family": "font",
+      "package": "knuth-local",
+      "ref_exit": 1,
+      "style": "texmf-dist/fonts/tfm/public/knuth-local/domino",
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 1,
+      "error": "! LaTeX Error: The font size command \\normalsize is not defined:",
+      "family": "font",
+      "package": "latex-fonts",
+      "ref_exit": 1,
+      "style": "texmf-dist/fonts/tfm/public/latex-fonts/icmcsc10",
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 0,
+      "family": "mpost",
+      "package": "latexmp",
+      "ref_exit": 0,
+      "style": "texmf-dist/metapost/latexmp/latexmp",
+      "verdict": "equivalent-pass"
+    },
+    {
+      "candidate_exit": 0,
+      "family": "mpost",
+      "package": "mcf2graph",
+      "ref_exit": 0,
+      "style": "texmf-dist/metapost/mcf2graph/mcf2graph",
+      "verdict": "equivalent-pass"
+    },
+    {
+      "candidate_exit": 0,
+      "family": "mpost",
+      "package": "metago",
+      "ref_exit": 0,
+      "style": "texmf-dist/metapost/metago/metago",
+      "verdict": "equivalent-pass"
+    },
+    {
+      "candidate_exit": 3,
+      "error": "! ! Unable to read mpx file.",
+      "family": "mpost",
+      "package": "metaobj",
+      "ref_exit": 3,
+      "style": "texmf-dist/metapost/metaobj/connections",
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 0,
+      "family": "mpost",
+      "package": "metaplot",
+      "ref_exit": 0,
+      "style": "texmf-dist/metapost/metaplot/axes",
+      "verdict": "equivalent-pass"
+    },
+    {
+      "candidate_exit": 0,
+      "family": "mpost",
+      "package": "metapost-colorbrewer",
+      "ref_exit": 0,
+      "style": "texmf-dist/metapost/metapost-colorbrewer/colorbrewer-cmyk",
+      "verdict": "equivalent-pass"
+    },
+    {
+      "candidate_exit": 0,
+      "family": "mpost",
+      "package": "metauml",
+      "ref_exit": 0,
+      "style": "texmf-dist/metapost/metauml/metauml",
+      "verdict": "equivalent-pass"
+    },
+    {
+      "candidate_exit": 2,
+      "error": "! Isolated expression.",
+      "family": "mpost",
+      "package": "minim-hatching",
+      "ref_exit": 2,
+      "style": "texmf-dist/metapost/minim-hatching/minim-hatching",
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 0,
+      "family": "mpost",
+      "package": "mp-geom2d",
+      "ref_exit": 0,
+      "style": "texmf-dist/metapost/mp-geom2d/geom2d-arc",
+      "verdict": "equivalent-pass"
+    },
+    {
+      "candidate_exit": 2,
+      "error": "! Isolated expression.",
+      "family": "mpost",
+      "package": "mp-neuralnetwork",
+      "ref_exit": 2,
+      "style": "texmf-dist/metapost/mp-neuralnetwork/mp-neuralnetwork-metaobj-patch",
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 0,
+      "family": "mpost",
+      "package": "mp3d",
+      "ref_exit": 0,
+      "style": "texmf-dist/metapost/mp3d/3d",
+      "verdict": "equivalent-pass"
+    },
+    {
+      "candidate_exit": 0,
+      "family": "mpost",
+      "package": "mparrows",
+      "ref_exit": 0,
+      "style": "texmf-dist/metapost/mparrows/mparrows",
+      "verdict": "equivalent-pass"
+    },
+    {
+      "candidate_exit": 0,
+      "family": "mpost",
+      "package": "mpattern",
+      "ref_exit": 0,
+      "style": "texmf-dist/metapost/mpattern/mpattern",
+      "verdict": "equivalent-pass"
+    },
+    {
+      "candidate_exit": 0,
+      "family": "mpost",
+      "package": "mpchess",
+      "ref_exit": 0,
+      "style": "texmf-dist/metapost/mpchess/mpchess-cburnett",
+      "verdict": "equivalent-pass"
+    },
+    {
+      "candidate_exit": 0,
+      "family": "mpost",
+      "package": "mpcolornames",
+      "ref_exit": 0,
+      "style": "texmf-dist/metapost/mpcolornames/mpcolornames-spec-dvipsnam-def",
+      "verdict": "equivalent-pass"
+    },
+    {
+      "candidate_exit": 0,
+      "family": "mpost",
+      "package": "mpkiviat",
+      "ref_exit": 0,
+      "style": "texmf-dist/metapost/mpkiviat/mpkiviat",
+      "verdict": "equivalent-pass"
+    },
+    {
+      "candidate_exit": 0,
+      "family": "mpost",
+      "package": "mptrees",
+      "ref_exit": 0,
+      "style": "texmf-dist/metapost/mptrees/mptrees",
+      "verdict": "equivalent-pass"
+    },
+    {
+      "candidate_exit": 1,
+      "error": "! Font \\probe=texmf-dist/fonts/tfm/public/pdftex/dummy-space not loadable: Metr",
+      "family": "font",
+      "package": "pdftex",
+      "ref_exit": 1,
+      "style": "texmf-dist/fonts/tfm/public/pdftex/dummy-space",
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 0,
+      "family": "mpost",
+      "package": "piechartmp",
+      "ref_exit": 0,
+      "style": "texmf-dist/metapost/piechartmp/piechartmp",
+      "verdict": "equivalent-pass"
+    },
+    {
+      "candidate_exit": 0,
+      "family": "mpost",
+      "package": "repere",
+      "ref_exit": 0,
+      "style": "texmf-dist/metapost/repere/repere",
+      "verdict": "equivalent-pass"
+    },
+    {
+      "candidate_exit": 0,
+      "family": "mpost",
+      "package": "roundrect",
+      "ref_exit": 0,
+      "style": "texmf-dist/metapost/roundrect/roundrect",
+      "verdict": "equivalent-pass"
+    },
+    {
+      "candidate_exit": 0,
+      "family": "mpost",
+      "package": "shapes",
+      "ref_exit": 0,
+      "style": "texmf-dist/metapost/shapes/shapes",
+      "verdict": "equivalent-pass"
+    },
+    {
+      "candidate_exit": 0,
+      "family": "mpost",
+      "package": "slideshow",
+      "ref_exit": 0,
+      "style": "texmf-dist/metapost/slideshow/pathalong",
+      "verdict": "equivalent-pass"
+    },
+    {
+      "candidate_exit": 0,
+      "family": "mpost",
+      "package": "splines",
+      "ref_exit": 0,
+      "style": "texmf-dist/metapost/splines/splines",
+      "verdict": "equivalent-pass"
+    },
+    {
+      "candidate_exit": 3,
+      "error": "! ! Unable to read mpx file.",
+      "family": "mpost",
+      "package": "suanpan",
+      "ref_exit": 3,
+      "style": "texmf-dist/metapost/suanpan/abacus",
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 1,
+      "error": "! Font \\probe=texmf-dist/fonts/tfm/adobe/symbol/psyr not loadable: Metric (TFM)",
+      "family": "font",
+      "package": "symbol",
+      "ref_exit": 1,
+      "style": "texmf-dist/fonts/tfm/adobe/symbol/psyr",
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 0,
+      "family": "mpost",
+      "package": "threeddice",
+      "ref_exit": 0,
+      "style": "texmf-dist/metapost/threeddice/threeddice",
+      "verdict": "equivalent-pass"
+    },
+    {
+      "candidate_exit": 1,
+      "error": "! Font \\probe=texmf-dist/fonts/tfm/adobe/times/psyro not loadable: Metric (TFM)",
+      "family": "font",
+      "package": "times",
+      "ref_exit": 1,
+      "style": "texmf-dist/fonts/tfm/adobe/times/psyro",
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 1,
+      "error": "! Font \\probe=texmf-dist/fonts/tfm/adobe/zapfding/pzdr not loadable: Metric (TF",
+      "family": "font",
+      "package": "zapfding",
+      "ref_exit": 1,
+      "style": "texmf-dist/fonts/tfm/adobe/zapfding/pzdr",
+      "verdict": "equivalent-fail"
+    }
+  ],
+  "schema_version": 1
+}

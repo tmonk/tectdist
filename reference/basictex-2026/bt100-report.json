@@ -4,11 +4,11 @@
   "gate": "BT100",
   "summary": {
     "total_packages": 372,
-    "tested": 194,
-    "untested": 178,
-    "pass": 146,
+    "tested": 260,
+    "untested": 112,
+    "pass": 195,
     "fail": 0,
-    "reference_blocked": 48,
+    "reference_blocked": 65,
     "reference_failures_recorded": 0,
     "pipelines_passed": 7,
     "pipelines_total": 7,
@@ -17,11 +17,11 @@
       "total": 207,
       "explained_by_standalone_failure": 207,
       "pair_specific": 0,
-      "standalone_failed_packages": 48
+      "standalone_failed_packages": 65
     },
     "standalone_probes": {
-      "pass": 161,
-      "fail": 48
+      "pass": 195,
+      "fail": 65
     }
   },
   "gate_pass": true,
@@ -153,8 +153,8 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
-      "standalone_verdict": null,
-      "bt100_verdict": "untested"
+      "standalone_verdict": "standalone-pass",
+      "bt100_verdict": "pass"
     },
     {
       "package": "auxhook",
@@ -184,7 +184,7 @@
       "smoke_cases": 0,
       "interaction_cases": 0,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "untested"
+      "bt100_verdict": "pass"
     },
     {
       "package": "babel-czech",
@@ -194,7 +194,7 @@
       "smoke_cases": 0,
       "interaction_cases": 0,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "untested"
+      "bt100_verdict": "pass"
     },
     {
       "package": "babel-danish",
@@ -204,7 +204,7 @@
       "smoke_cases": 0,
       "interaction_cases": 0,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "untested"
+      "bt100_verdict": "pass"
     },
     {
       "package": "babel-dutch",
@@ -214,7 +214,7 @@
       "smoke_cases": 0,
       "interaction_cases": 0,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "untested"
+      "bt100_verdict": "pass"
     },
     {
       "package": "babel-english",
@@ -224,7 +224,7 @@
       "smoke_cases": 0,
       "interaction_cases": 0,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "untested"
+      "bt100_verdict": "pass"
     },
     {
       "package": "babel-finnish",
@@ -234,7 +234,7 @@
       "smoke_cases": 0,
       "interaction_cases": 0,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "untested"
+      "bt100_verdict": "pass"
     },
     {
       "package": "babel-french",
@@ -244,7 +244,7 @@
       "smoke_cases": 0,
       "interaction_cases": 0,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "untested"
+      "bt100_verdict": "pass"
     },
     {
       "package": "babel-german",
@@ -254,7 +254,7 @@
       "smoke_cases": 0,
       "interaction_cases": 0,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "untested"
+      "bt100_verdict": "pass"
     },
     {
       "package": "babel-hungarian",
@@ -264,7 +264,7 @@
       "smoke_cases": 0,
       "interaction_cases": 0,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "untested"
+      "bt100_verdict": "pass"
     },
     {
       "package": "babel-italian",
@@ -274,7 +274,7 @@
       "smoke_cases": 0,
       "interaction_cases": 0,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "untested"
+      "bt100_verdict": "pass"
     },
     {
       "package": "babel-norsk",
@@ -284,7 +284,7 @@
       "smoke_cases": 0,
       "interaction_cases": 0,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "untested"
+      "bt100_verdict": "pass"
     },
     {
       "package": "babel-polish",
@@ -294,7 +294,7 @@
       "smoke_cases": 0,
       "interaction_cases": 0,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "untested"
+      "bt100_verdict": "pass"
     },
     {
       "package": "babel-portuges",
@@ -304,7 +304,7 @@
       "smoke_cases": 0,
       "interaction_cases": 0,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "untested"
+      "bt100_verdict": "pass"
     },
     {
       "package": "babel-spanish",
@@ -324,7 +324,7 @@
       "smoke_cases": 0,
       "interaction_cases": 0,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "untested"
+      "bt100_verdict": "pass"
     },
     {
       "package": "babelbib",
@@ -343,8 +343,8 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
-      "standalone_verdict": null,
-      "bt100_verdict": "untested"
+      "standalone_verdict": "standalone-pass",
+      "bt100_verdict": "pass"
     },
     {
       "package": "beamer",
@@ -453,8 +453,8 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
-      "standalone_verdict": null,
-      "bt100_verdict": "untested"
+      "standalone_verdict": "standalone-pass",
+      "bt100_verdict": "pass"
     },
     {
       "package": "bookmark",
@@ -483,8 +483,8 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
-      "standalone_verdict": null,
-      "bt100_verdict": "untested"
+      "standalone_verdict": "standalone-pass",
+      "bt100_verdict": "pass"
     },
     {
       "package": "breqn",
@@ -543,8 +543,8 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
-      "standalone_verdict": null,
-      "bt100_verdict": "untested"
+      "standalone_verdict": "standalone-fail",
+      "bt100_verdict": "reference-blocked"
     },
     {
       "package": "cmap",
@@ -563,8 +563,8 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
-      "standalone_verdict": null,
-      "bt100_verdict": "untested"
+      "standalone_verdict": "standalone-pass",
+      "bt100_verdict": "pass"
     },
     {
       "package": "collection-basic",
@@ -693,8 +693,8 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
-      "standalone_verdict": null,
-      "bt100_verdict": "untested"
+      "standalone_verdict": "standalone-fail",
+      "bt100_verdict": "reference-blocked"
     },
     {
       "package": "dviincl",
@@ -703,8 +703,8 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
-      "standalone_verdict": null,
-      "bt100_verdict": "untested"
+      "standalone_verdict": "standalone-pass",
+      "bt100_verdict": "pass"
     },
     {
       "package": "dvipdfmx",
@@ -753,8 +753,8 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
-      "standalone_verdict": null,
-      "bt100_verdict": "untested"
+      "standalone_verdict": "standalone-fail",
+      "bt100_verdict": "reference-blocked"
     },
     {
       "package": "emp",
@@ -783,8 +783,8 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
-      "standalone_verdict": null,
-      "bt100_verdict": "untested"
+      "standalone_verdict": "standalone-pass",
+      "bt100_verdict": "pass"
     },
     {
       "package": "epstopdf",
@@ -833,8 +833,8 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
-      "standalone_verdict": null,
-      "bt100_verdict": "untested"
+      "standalone_verdict": "standalone-fail",
+      "bt100_verdict": "reference-blocked"
     },
     {
       "package": "etex-pkg",
@@ -923,8 +923,8 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
-      "standalone_verdict": null,
-      "bt100_verdict": "untested"
+      "standalone_verdict": "standalone-fail",
+      "bt100_verdict": "reference-blocked"
     },
     {
       "package": "exteps",
@@ -933,8 +933,8 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
-      "standalone_verdict": null,
-      "bt100_verdict": "untested"
+      "standalone_verdict": "standalone-pass",
+      "bt100_verdict": "pass"
     },
     {
       "package": "extractbb",
@@ -1013,8 +1013,8 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
-      "standalone_verdict": null,
-      "bt100_verdict": "untested"
+      "standalone_verdict": "standalone-pass",
+      "bt100_verdict": "pass"
     },
     {
       "package": "feynmf",
@@ -1083,8 +1083,8 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
-      "standalone_verdict": null,
-      "bt100_verdict": "untested"
+      "standalone_verdict": "standalone-pass",
+      "bt100_verdict": "pass"
     },
     {
       "package": "float",
@@ -1163,8 +1163,8 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
-      "standalone_verdict": null,
-      "bt100_verdict": "untested"
+      "standalone_verdict": "standalone-pass",
+      "bt100_verdict": "pass"
     },
     {
       "package": "geometry",
@@ -1174,7 +1174,7 @@
       "smoke_cases": 0,
       "interaction_cases": 0,
       "standalone_verdict": "standalone-pass",
-      "bt100_verdict": "untested"
+      "bt100_verdict": "pass"
     },
     {
       "package": "gettitlestring",
@@ -1263,8 +1263,8 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
-      "standalone_verdict": null,
-      "bt100_verdict": "untested"
+      "standalone_verdict": "standalone-pass",
+      "bt100_verdict": "pass"
     },
     {
       "package": "hershey-mp",
@@ -1273,8 +1273,8 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
-      "standalone_verdict": null,
-      "bt100_verdict": "untested"
+      "standalone_verdict": "standalone-pass",
+      "bt100_verdict": "pass"
     },
     {
       "package": "hologo",
@@ -1303,8 +1303,8 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
-      "standalone_verdict": null,
-      "bt100_verdict": "untested"
+      "standalone_verdict": "standalone-fail",
+      "bt100_verdict": "reference-blocked"
     },
     {
       "package": "hycolor",
@@ -1593,8 +1593,8 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
-      "standalone_verdict": null,
-      "bt100_verdict": "untested"
+      "standalone_verdict": "standalone-fail",
+      "bt100_verdict": "reference-blocked"
     },
     {
       "package": "knuth-local",
@@ -1603,8 +1603,8 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
-      "standalone_verdict": null,
-      "bt100_verdict": "untested"
+      "standalone_verdict": "standalone-fail",
+      "bt100_verdict": "reference-blocked"
     },
     {
       "package": "koma-script",
@@ -1813,8 +1813,8 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
-      "standalone_verdict": null,
-      "bt100_verdict": "untested"
+      "standalone_verdict": "standalone-fail",
+      "bt100_verdict": "reference-blocked"
     },
     {
       "package": "latex-graphics-dev",
@@ -1883,8 +1883,8 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
-      "standalone_verdict": null,
-      "bt100_verdict": "untested"
+      "standalone_verdict": "standalone-pass",
+      "bt100_verdict": "pass"
     },
     {
       "package": "letltxmacro",
@@ -2183,8 +2183,8 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
-      "standalone_verdict": null,
-      "bt100_verdict": "untested"
+      "standalone_verdict": "standalone-pass",
+      "bt100_verdict": "pass"
     },
     {
       "package": "mdwtools",
@@ -2233,8 +2233,8 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
-      "standalone_verdict": null,
-      "bt100_verdict": "untested"
+      "standalone_verdict": "standalone-pass",
+      "bt100_verdict": "pass"
     },
     {
       "package": "metalogo",
@@ -2253,8 +2253,8 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
-      "standalone_verdict": null,
-      "bt100_verdict": "untested"
+      "standalone_verdict": "standalone-fail",
+      "bt100_verdict": "reference-blocked"
     },
     {
       "package": "metaplot",
@@ -2263,8 +2263,8 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
-      "standalone_verdict": null,
-      "bt100_verdict": "untested"
+      "standalone_verdict": "standalone-pass",
+      "bt100_verdict": "pass"
     },
     {
       "package": "metapost",
@@ -2283,8 +2283,8 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
-      "standalone_verdict": null,
-      "bt100_verdict": "untested"
+      "standalone_verdict": "standalone-pass",
+      "bt100_verdict": "pass"
     },
     {
       "package": "metapost.universal-darwin",
@@ -2303,8 +2303,8 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
-      "standalone_verdict": null,
-      "bt100_verdict": "untested"
+      "standalone_verdict": "standalone-pass",
+      "bt100_verdict": "pass"
     },
     {
       "package": "mflogo",
@@ -2383,8 +2383,8 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
-      "standalone_verdict": null,
-      "bt100_verdict": "untested"
+      "standalone_verdict": "standalone-fail",
+      "bt100_verdict": "reference-blocked"
     },
     {
       "package": "modes",
@@ -2403,8 +2403,8 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
-      "standalone_verdict": null,
-      "bt100_verdict": "untested"
+      "standalone_verdict": "standalone-pass",
+      "bt100_verdict": "pass"
     },
     {
       "package": "mp-neuralnetwork",
@@ -2413,8 +2413,8 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
-      "standalone_verdict": null,
-      "bt100_verdict": "untested"
+      "standalone_verdict": "standalone-fail",
+      "bt100_verdict": "reference-blocked"
     },
     {
       "package": "mp3d",
@@ -2423,8 +2423,8 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
-      "standalone_verdict": null,
-      "bt100_verdict": "untested"
+      "standalone_verdict": "standalone-pass",
+      "bt100_verdict": "pass"
     },
     {
       "package": "mparrows",
@@ -2433,8 +2433,8 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
-      "standalone_verdict": null,
-      "bt100_verdict": "untested"
+      "standalone_verdict": "standalone-pass",
+      "bt100_verdict": "pass"
     },
     {
       "package": "mpattern",
@@ -2443,8 +2443,8 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
-      "standalone_verdict": null,
-      "bt100_verdict": "untested"
+      "standalone_verdict": "standalone-pass",
+      "bt100_verdict": "pass"
     },
     {
       "package": "mpchess",
@@ -2453,8 +2453,8 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
-      "standalone_verdict": null,
-      "bt100_verdict": "untested"
+      "standalone_verdict": "standalone-pass",
+      "bt100_verdict": "pass"
     },
     {
       "package": "mpcolornames",
@@ -2463,8 +2463,8 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
-      "standalone_verdict": null,
-      "bt100_verdict": "untested"
+      "standalone_verdict": "standalone-pass",
+      "bt100_verdict": "pass"
     },
     {
       "package": "mpgraphics",
@@ -2483,8 +2483,8 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
-      "standalone_verdict": null,
-      "bt100_verdict": "untested"
+      "standalone_verdict": "standalone-pass",
+      "bt100_verdict": "pass"
     },
     {
       "package": "mptopdf",
@@ -2513,8 +2513,8 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
-      "standalone_verdict": null,
-      "bt100_verdict": "untested"
+      "standalone_verdict": "standalone-pass",
+      "bt100_verdict": "pass"
     },
     {
       "package": "na-position",
@@ -2643,8 +2643,8 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
-      "standalone_verdict": null,
-      "bt100_verdict": "untested"
+      "standalone_verdict": "standalone-fail",
+      "bt100_verdict": "reference-blocked"
     },
     {
       "package": "pdftex.universal-darwin",
@@ -2693,8 +2693,8 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
-      "standalone_verdict": null,
-      "bt100_verdict": "untested"
+      "standalone_verdict": "standalone-pass",
+      "bt100_verdict": "pass"
     },
     {
       "package": "plain",
@@ -2803,8 +2803,8 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
-      "standalone_verdict": null,
-      "bt100_verdict": "untested"
+      "standalone_verdict": "standalone-pass",
+      "bt100_verdict": "pass"
     },
     {
       "package": "rerunfilecheck",
@@ -2843,8 +2843,8 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
-      "standalone_verdict": null,
-      "bt100_verdict": "untested"
+      "standalone_verdict": "standalone-pass",
+      "bt100_verdict": "pass"
     },
     {
       "package": "sansmath",
@@ -2943,8 +2943,8 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
-      "standalone_verdict": null,
-      "bt100_verdict": "untested"
+      "standalone_verdict": "standalone-pass",
+      "bt100_verdict": "pass"
     },
     {
       "package": "simple-resume-cv",
@@ -2973,8 +2973,8 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
-      "standalone_verdict": null,
-      "bt100_verdict": "untested"
+      "standalone_verdict": "standalone-pass",
+      "bt100_verdict": "pass"
     },
     {
       "package": "splines",
@@ -2983,8 +2983,8 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
-      "standalone_verdict": null,
-      "bt100_verdict": "untested"
+      "standalone_verdict": "standalone-pass",
+      "bt100_verdict": "pass"
     },
     {
       "package": "stringenc",
@@ -3003,8 +3003,8 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
-      "standalone_verdict": null,
-      "bt100_verdict": "untested"
+      "standalone_verdict": "standalone-fail",
+      "bt100_verdict": "reference-blocked"
     },
     {
       "package": "subfig",
@@ -3023,8 +3023,8 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
-      "standalone_verdict": null,
-      "bt100_verdict": "untested"
+      "standalone_verdict": "standalone-fail",
+      "bt100_verdict": "reference-blocked"
     },
     {
       "package": "synctex",
@@ -3253,8 +3253,8 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
-      "standalone_verdict": null,
-      "bt100_verdict": "untested"
+      "standalone_verdict": "standalone-pass",
+      "bt100_verdict": "pass"
     },
     {
       "package": "thumbpdf",
@@ -3283,8 +3283,8 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
-      "standalone_verdict": null,
-      "bt100_verdict": "untested"
+      "standalone_verdict": "standalone-fail",
+      "bt100_verdict": "reference-blocked"
     },
     {
       "package": "tipa",
@@ -3733,8 +3733,8 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
-      "standalone_verdict": null,
-      "bt100_verdict": "untested"
+      "standalone_verdict": "standalone-fail",
+      "bt100_verdict": "reference-blocked"
     },
     {
       "package": "zbmath-review-template",
