@@ -66,6 +66,18 @@ basictex_reffail_classify, forkserver_apply_patch, tectonic_perf_matrix
 | DIGEST_STRATEGY.md | Convergence digest design, mutation corpus results |
 | ENGINE_PIN.md | Tectonic revision matrix, pin evidence, TEXFORMATS recipe |
 
+## Compile-chain architecture note (2026-08)
+
+The supervisor dispatch order is X4 gate -> X2 project format -> X1
+fork server -> exact one-shot. Because the X2 preamble snapshot is
+strictly faster than a fork-server round trip for LaTeX documents
+(~67 ms vs IPC + fork overhead), **X2 supersedes X1 for standard LaTeX
+documents**; the resident worker remains the acceleration path for
+shapes X2 must decline (plain TeX without \begin{document},
+macro-indirected inputs, output relocation, explicit format selection)
+and becomes the primary lever again once engine-side page checkpoints
+enable partial replay inside the resident process.
+
 ## Remaining blockers
 
 All remaining runtime acceleration requires `.ch` change files against
