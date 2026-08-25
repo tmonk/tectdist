@@ -209,3 +209,53 @@ fn output_directory_requests_escalate_to_exact_path() {
     assert!(!work.join(".tectdist").exists(),
             "fast path must NOT engage for -output-directory requests");
 }
+
+#[test]
+fn preamble_input_file_edit_rebuilds_format() {
+    let Some(_image) = basic_tex_root() else {
+        eprintln!("skipping: BasicTeX reference image not present on this host");
+        return;
+    };
+    let supervisor = start_supervisor("pfmt-dep");
+
+    let work = free_dir("pfmtdep-work");
+    // Preamble pulls in an extra file: its contents are part of the
+    // snapshot even though they live outside the preamble text.
+    std::fs::write(
+        work.join("main.tex"),
+        "\\documentclass{article}\n\\input{setup}\n\\begin{document}\nValue: \\the\\mylen.\n\\end{document}\n",
+    )
+    .unwrap();
+    std::fs::write(work.join("setup.tex"), "\\newlength{\\mylen}\\setlength{\\mylen}{5pt}\n").unwrap();
+
+    let payload = serde_json::json!({
+        "type": "compile",
+        "profile": "basictex-2026",
+        "cwd": work.to_str().unwrap(),
+        "argv": ["pdflatex", "-interaction=batchmode", "main.tex"],
+        "snapshot_key": null,
+    });
+
+    let first = client(&supervisor.socket, payload.clone());
+    assert_eq!(first["compile_accepted"]["exit_status"], 0,
+               "first compile failed: {first}");
+    let meta_before = std::fs::read_to_string(
+        work.join(".tectdist/main-pre.meta")).unwrap();
+
+    // Edit ONLY the preamble-input'ed dependency file.
+    std::fs::write(
+        work.join("setup.tex"),
+        "\\newlength{\\mylen}\\setlength{\\mylen}{9pt}\n",
+    )
+    .unwrap();
+    let second = client(&supervisor.socket, payload);
+    assert_eq!(second["compile_accepted"]["exit_status"], 0,
+               "second compile failed: {second}");
+
+    // The format must have been rebuilt (meta digest changed), proving
+    // dependency files participate in the cache key.
+    let meta_after = std::fs::read_to_string(
+        work.join(".tectdist/main-pre.meta")).unwrap();
+    assert_ne!(meta_before.trim(), meta_after.trim(),
+               "dependency edit must rebuild the format");
+}

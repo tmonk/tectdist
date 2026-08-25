@@ -18,6 +18,7 @@
 //! from there because TEXFORMATS lists that directory first.
 
 use sha2::{Digest, Sha256};
+use std::collections::BTreeMap;
 use std::path::Path;
 use std::process::Command;
 use std::time::Instant;
@@ -61,6 +62,48 @@ fn split_source(source_text: &str) -> Option<Split<'_>> {
         preamble: format!("{}\n\\dump\n", &source_text[..at]),
         body: &source_text[at..],
     })
+}
+
+
+/// Digest every file referenced by \\input{...} / \\include{...} in the
+/// preamble text, resolved relative to the project directory. Files that
+/// cannot be read are skipped (the engine will surface them at compile
+/// time exactly as a stock run would).
+fn preamble_dependency_digests(
+    cwd: &Path,
+    preamble: &str,
+) -> Vec<(String, String)> {
+    const OPENERS: [&str; 2] = ["\\input{", "\\include{"];
+    let mut out: BTreeMap<String, String> = BTreeMap::new();
+    for opener in OPENERS {
+        let mut search_from = 0;
+        while let Some(rel) = preamble[search_from..].find(opener) {
+            let start = search_from + rel + opener.len();
+            let Some(end_rel) = preamble[start..].find('}') else {
+                break;
+            };
+            let target = preamble[start..start + end_rel].trim();
+            search_from = start + end_rel;
+            if target.is_empty() || target.contains('$') {
+                continue; // literal path needed; skip macros/jobs
+            }
+            for candidate in [
+                cwd.join(format!("{target}.tex")),
+                cwd.join(target),
+            ] {
+                if let Ok(bytes) = std::fs::read(&candidate) {
+                    let key = candidate
+                        .strip_prefix(cwd)
+                        .unwrap_or(&candidate)
+                        .to_string_lossy()
+                        .into_owned();
+                    out.insert(key, digest_hex(&bytes));
+                    break;
+                }
+            }
+        }
+    }
+    out.into_iter().collect()
 }
 
 pub struct FastCompile {
@@ -138,11 +181,21 @@ pub fn fast_compile(image_root: &Path, cwd: &Path, argv: &[String]) -> Result<Fa
 
     let fmt_name = format!("{job_stem}-pre");
     // The cache key includes capability flags so a shell-escape build is
-    // never served to a restricted run or vice versa.
+    // never served to a restricted run or vice versa, plus the contents of
+    // any files the preamble \input's/\includes — editing such a file
+    // must rebuild the snapshot even though the preamble text itself is
+    // unchanged.
     let mut digest_input = split.preamble.clone();
     for flag in &capability_flags {
         digest_input.push('\n');
         digest_input.push_str(flag);
+    }
+    for (dep_name, dep_digest) in preamble_dependency_digests(cwd, &split.preamble)
+    {
+        digest_input.push('\n');
+        digest_input.push_str(&dep_name);
+        digest_input.push('=');
+        digest_input.push_str(&dep_digest);
     }
     ensure_format(
         image_root,
@@ -262,6 +315,10 @@ fn ensure_format(
                 image_root.join("texmf-dist/web2c").display()
             ),
         )
+        // The ini run executes \input/\include from the preamble; those
+        // files live in the project directory, not .tectdist/. Trailing
+        // colon keeps the system texmf tree appended.
+        .env("TEXINPUTS", format!("{}:", cwd.display()))
         .env(
             "PATH",
             format!(
