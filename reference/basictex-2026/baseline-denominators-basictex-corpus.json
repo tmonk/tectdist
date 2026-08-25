@@ -6,22 +6,26 @@
       "sequence": [
         "pdflatex {job}.tex"
       ],
-      "trials": 3,
-      "reference_median_ms": 69.5,
-      "candidate_median_ms": 75.7,
+      "trials": 5,
+      "reference_median_ms": 69.8,
+      "candidate_median_ms": 77.6,
       "candidate_mode": "basictex-profile",
-      "speedup_vs_reference": 0.919,
+      "speedup_vs_reference": 0.899,
       "x10_budget_ms": 7.0,
       "_samples": {
         "reference_ms": [
-          69.549958,
-          69.21975,
-          70.385625
+          74.059917,
+          69.803291,
+          68.972417,
+          69.593208,
+          70.550791
         ],
         "candidate_ms": [
-          384.293833,
-          74.987041,
-          75.709209
+          382.79475,
+          76.43675,
+          78.399083,
+          76.465083,
+          77.614
         ]
       }
     },
@@ -29,22 +33,26 @@
       "sequence": [
         "pdflatex {job}.tex"
       ],
-      "trials": 3,
-      "reference_median_ms": 56.3,
-      "candidate_median_ms": 64.2,
+      "trials": 5,
+      "reference_median_ms": 56.9,
+      "candidate_median_ms": 63.5,
       "candidate_mode": "basictex-profile",
-      "speedup_vs_reference": 0.878,
-      "x10_budget_ms": 5.6,
+      "speedup_vs_reference": 0.897,
+      "x10_budget_ms": 5.7,
       "_samples": {
         "reference_ms": [
-          55.939834,
-          56.344041,
-          58.247875
+          58.332041,
+          56.682,
+          57.355125,
+          56.47525,
+          56.92375
         ],
         "candidate_ms": [
-          62.270459,
-          67.475208,
-          64.186209
+          63.451083,
+          63.786167,
+          63.0905,
+          64.542291,
+          63.3125
         ]
       }
     },
@@ -55,22 +63,26 @@
         "pdflatex {job}.tex",
         "pdflatex {job}.tex"
       ],
-      "trials": 3,
-      "reference_median_ms": 171.9,
-      "candidate_median_ms": 194.1,
+      "trials": 5,
+      "reference_median_ms": 168.1,
+      "candidate_median_ms": 197.8,
       "candidate_mode": "basictex-profile",
-      "speedup_vs_reference": 0.886,
-      "x10_budget_ms": 17.2,
+      "speedup_vs_reference": 0.85,
+      "x10_budget_ms": 16.8,
       "_samples": {
         "reference_ms": [
-          185.999,
-          171.922,
-          170.451584
+          167.960625,
+          168.08375,
+          168.061375,
+          168.651625,
+          168.184042
         ],
         "candidate_ms": [
-          197.499166,
-          192.932208,
-          194.129167
+          197.768375,
+          198.778458,
+          198.5315,
+          196.151833,
+          195.467375
         ]
       }
     },
@@ -79,22 +91,26 @@
         "latex {job}.tex",
         "dvips {job}.dvi"
       ],
-      "trials": 3,
-      "reference_median_ms": 56.7,
-      "candidate_median_ms": 69.9,
+      "trials": 5,
+      "reference_median_ms": 58.2,
+      "candidate_median_ms": 73.7,
       "candidate_mode": "basictex-profile",
-      "speedup_vs_reference": 0.812,
-      "x10_budget_ms": 5.7,
+      "speedup_vs_reference": 0.79,
+      "x10_budget_ms": 5.8,
       "_samples": {
         "reference_ms": [
-          75.342625,
-          56.147833,
-          56.705917
+          58.151625,
+          57.231916,
+          58.066541,
+          59.320042,
+          58.3585
         ],
         "candidate_ms": [
-          69.392167,
-          69.877834,
-          73.832458
+          70.793875,
+          70.921708,
+          74.176792,
+          74.704917,
+          73.651
         ]
       }
     },
@@ -103,22 +119,26 @@
         "pdflatex {job}.tex",
         "pdflatex {job}.tex"
       ],
-      "trials": 3,
-      "reference_median_ms": 242.6,
-      "candidate_median_ms": 254.8,
+      "trials": 5,
+      "reference_median_ms": 239.3,
+      "candidate_median_ms": 255.4,
       "candidate_mode": "basictex-profile",
-      "speedup_vs_reference": 0.952,
-      "x10_budget_ms": 24.3,
+      "speedup_vs_reference": 0.937,
+      "x10_budget_ms": 23.9,
       "_samples": {
         "reference_ms": [
-          236.166042,
-          242.628041,
-          248.787791
+          260.531,
+          238.720958,
+          239.379458,
+          239.307542,
+          239.179125
         ],
         "candidate_ms": [
-          254.840458,
-          251.454583,
-          262.977666
+          257.663125,
+          255.396458,
+          253.31025,
+          254.008208,
+          255.928792
         ]
       }
     },
@@ -126,22 +146,26 @@
       "sequence": [
         "lualatex {job}.tex"
       ],
-      "trials": 3,
-      "reference_median_ms": 239.8,
-      "candidate_median_ms": 246.7,
+      "trials": 5,
+      "reference_median_ms": 241.5,
+      "candidate_median_ms": 250.2,
       "candidate_mode": "basictex-profile",
-      "speedup_vs_reference": 0.972,
-      "x10_budget_ms": 24.0,
+      "speedup_vs_reference": 0.965,
+      "x10_budget_ms": 24.1,
       "_samples": {
         "reference_ms": [
-          369.664042,
-          237.030416,
-          239.755375
+          241.485541,
+          241.902416,
+          240.72975,
+          241.9375,
+          241.021209
         ],
         "candidate_ms": [
-          244.109208,
-          246.702041,
-          247.414083
+          246.33075,
+          253.201083,
+          250.242167,
+          248.276583,
+          252.331375
         ]
       }
     },
@@ -149,22 +173,26 @@
       "sequence": [
         "mpost fig.mp"
       ],
-      "trials": 3,
-      "reference_median_ms": 28.4,
-      "candidate_median_ms": 34.6,
+      "trials": 5,
+      "reference_median_ms": 30.1,
+      "candidate_median_ms": 37.5,
       "candidate_mode": "basictex-profile",
-      "speedup_vs_reference": 0.821,
-      "x10_budget_ms": 2.8,
+      "speedup_vs_reference": 0.803,
+      "x10_budget_ms": 3.0,
       "_samples": {
         "reference_ms": [
-          79.873958,
-          28.439,
-          27.454
+          29.480292,
+          29.515292,
+          30.07025,
+          31.516292,
+          31.266333
         ],
         "candidate_ms": [
-          34.644792,
-          34.4985,
-          34.730667
+          37.467667,
+          37.455459,
+          36.505959,
+          37.393375,
+          38.646958
         ]
       }
     },
@@ -172,22 +200,26 @@
       "sequence": [
         "tex {job}.tex"
       ],
-      "trials": 3,
-      "reference_median_ms": 9.7,
-      "candidate_median_ms": 16.6,
+      "trials": 5,
+      "reference_median_ms": 10.2,
+      "candidate_median_ms": 17.8,
       "candidate_mode": "basictex-profile",
-      "speedup_vs_reference": 0.585,
+      "speedup_vs_reference": 0.573,
       "x10_budget_ms": 1.0,
       "_samples": {
         "reference_ms": [
-          29.822709,
-          9.569542,
-          9.703083
+          10.207583,
+          17.303625,
+          10.019417,
+          10.494959,
+          9.569833
         ],
         "candidate_ms": [
-          16.664875,
-          16.545666,
-          16.575667
+          21.913458,
+          19.067125,
+          17.270458,
+          17.818167,
+          16.311
         ]
       }
     },
@@ -196,22 +228,26 @@
         "pdflatex {job}.tex",
         "pdflatex {job}.tex"
       ],
-      "trials": 3,
-      "reference_median_ms": 119.8,
-      "candidate_median_ms": 133.9,
+      "trials": 5,
+      "reference_median_ms": 118.2,
+      "candidate_median_ms": 131.6,
       "candidate_mode": "basictex-profile",
-      "speedup_vs_reference": 0.895,
-      "x10_budget_ms": 12.0,
+      "speedup_vs_reference": 0.898,
+      "x10_budget_ms": 11.8,
       "_samples": {
         "reference_ms": [
-          118.236625,
-          119.841333,
-          122.109375
+          117.956208,
+          118.6915,
+          118.212791,
+          118.607833,
+          118.034416
         ],
         "candidate_ms": [
-          133.926708,
-          138.601875,
-          133.2115
+          130.072417,
+          131.573583,
+          134.621625,
+          131.917875,
+          129.472167
         ]
       }
     },
@@ -220,22 +256,26 @@
         "pdflatex {job}.tex",
         "pdflatex {job}.tex"
       ],
-      "trials": 3,
-      "reference_median_ms": 172.5,
-      "candidate_median_ms": 188.5,
+      "trials": 5,
+      "reference_median_ms": 170.4,
+      "candidate_median_ms": 183.8,
       "candidate_mode": "basictex-profile",
-      "speedup_vs_reference": 0.915,
-      "x10_budget_ms": 17.3,
+      "speedup_vs_reference": 0.927,
+      "x10_budget_ms": 17.0,
       "_samples": {
         "reference_ms": [
-          172.503666,
-          169.777791,
-          173.654458
+          170.55275,
+          168.82725,
+          168.132125,
+          171.319666,
+          170.382791
         ],
         "candidate_ms": [
-          180.866459,
-          200.857708,
-          188.451958
+          182.950917,
+          183.847708,
+          180.776417,
+          184.832792,
+          184.139083
         ]
       }
     },
@@ -244,22 +284,26 @@
         "pdflatex {job}.tex",
         "pdflatex {job}.tex"
       ],
-      "trials": 3,
-      "reference_median_ms": 334.9,
-      "candidate_median_ms": 353.8,
+      "trials": 5,
+      "reference_median_ms": 331.3,
+      "candidate_median_ms": 345.4,
       "candidate_mode": "basictex-profile",
-      "speedup_vs_reference": 0.947,
-      "x10_budget_ms": 33.5,
+      "speedup_vs_reference": 0.959,
+      "x10_budget_ms": 33.1,
       "_samples": {
         "reference_ms": [
-          334.930708,
-          337.412875,
-          329.922042
+          328.265709,
+          330.676459,
+          341.928833,
+          332.506625,
+          331.280625
         ],
         "candidate_ms": [
-          353.789416,
-          359.312125,
-          334.853334
+          341.158792,
+          345.392375,
+          369.323417,
+          350.787708,
+          343.208916
         ]
       }
     },
@@ -268,22 +312,26 @@
         "pdflatex {job}.tex",
         "pdflatex {job}.tex"
       ],
-      "trials": 3,
-      "reference_median_ms": 166.8,
-      "candidate_median_ms": 179.9,
+      "trials": 5,
+      "reference_median_ms": 171.2,
+      "candidate_median_ms": 186.8,
       "candidate_mode": "basictex-profile",
-      "speedup_vs_reference": 0.927,
-      "x10_budget_ms": 16.7,
+      "speedup_vs_reference": 0.917,
+      "x10_budget_ms": 17.1,
       "_samples": {
         "reference_ms": [
-          166.7525,
-          166.13875,
-          175.646209
+          169.680833,
+          171.184458,
+          174.506416,
+          170.636083,
+          171.276333
         ],
         "candidate_ms": [
-          179.460125,
-          179.933208,
-          185.016459
+          185.365209,
+          187.639458,
+          189.794666,
+          186.775292,
+          185.423208
         ]
       }
     },
@@ -291,22 +339,26 @@
       "sequence": [
         "xelatex {job}.tex"
       ],
-      "trials": 3,
-      "reference_median_ms": 189.2,
-      "candidate_median_ms": 197.4,
+      "trials": 5,
+      "reference_median_ms": 193.7,
+      "candidate_median_ms": 203.1,
       "candidate_mode": "basictex-profile",
-      "speedup_vs_reference": 0.958,
-      "x10_budget_ms": 18.9,
+      "speedup_vs_reference": 0.954,
+      "x10_budget_ms": 19.4,
       "_samples": {
         "reference_ms": [
-          548.481416,
-          189.174625,
-          189.103625
+          195.886208,
+          193.696042,
+          192.033083,
+          193.732375,
+          197.480458
         ],
         "candidate_ms": [
-          200.509625,
-          197.391375,
-          196.518625
+          203.1385,
+          199.718125,
+          198.612208,
+          206.010583,
+          210.225417
         ]
       }
     }
