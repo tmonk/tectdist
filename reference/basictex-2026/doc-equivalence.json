@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "rows": [
+    {
+      "document": "multifile",
+      "reference_exit": 0,
+      "candidate_exit": 0,
+      "reference_pages": 4,
+      "candidate_pages": 4,
+      "text_identical": true,
+      "verdict": "pass"
+    },
+    {
+      "document": "paper",
+      "reference_exit": 0,
+      "candidate_exit": 0,
+      "reference_pages": 1,
+      "candidate_pages": 1,
+      "text_identical": true,
+      "verdict": "pass"
+    },
+    {
+      "document": "tiny",
+      "reference_exit": 0,
+      "candidate_exit": 0,
+      "reference_pages": 1,
+      "candidate_pages": 1,
+      "text_identical": true,
+      "verdict": "pass"
+    }
+  ]
+}

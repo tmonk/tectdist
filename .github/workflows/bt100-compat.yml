@@ -82,6 +82,11 @@ jobs:
           python3 scripts/basictex_supervisor_interactions.py \
             --reference "reference/basictex-2026/installer/expanded/BasicTeX-2026-Start.pkg/Payload/usr/local/texlive/2026basic" \
             --pairs 60
+      - name: Document-level equivalence (pages + text)
+        run: |
+          python3 scripts/basictex_doc_equivalence.py \
+            --reference "reference/basictex-2026/installer/expanded/BasicTeX-2026-Start.pkg/Payload/usr/local/texlive/2026basic" \
+            --documents multifile paper tiny bibtex index tikz shell-escape references graphics thesis
       - uses: actions/upload-artifact@v4
         with:
           name: bt100-interactions
@@ -95,5 +100,6 @@ jobs:
             reference/basictex-2026/x2-edit-scenarios.md
             reference/basictex-2026/supervisor-interactions.json
             reference/basictex-2026/supervisor-interactions.md
+            reference/basictex-2026/doc-equivalence.json
             reference/basictex-2026/bt100-report.json
             reference/basictex-2026/bt100-report.md
