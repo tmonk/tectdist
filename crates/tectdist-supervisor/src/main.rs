@@ -16,6 +16,7 @@
 //! Responses carry `"ok"` plus payload fields; every response echoes
 //! `"request_id"` when the request supplied one.
 mod checkpoint;
+mod rebuild_cache;
 mod output_graph;
 mod output_store;
 use checkpoint::{CheckpointChain, CheckpointRecord};
@@ -205,6 +206,8 @@ struct SupervisorState {
     /// BasicTeX image binaries are immutable within a profile, so the cached
     /// digest is valid until the candidate changes.
     tool_digests: Mutex<HashMap<PathBuf, (u64, i64, String)>>,
+    aux_tracker: Mutex<checkpoint::AuxStateTracker>,
+    rebuild_cache: rebuild_cache::RebuildCache,
 }
 
 impl SupervisorState {
@@ -265,6 +268,8 @@ impl SupervisorState {
             image_root: PathBuf::from(
                 std::env::var("TECTDIST_BASICTEX_ROOT").unwrap_or_default(),
             ),
+            aux_tracker: Mutex::new(checkpoint::AuxStateTracker::new()),
+            rebuild_cache: rebuild_cache::RebuildCache::new(),
             started: std::time::Instant::now(),
             compiles_started: AtomicU64::new(0),
             compiles_succeeded: AtomicU64::new(0),
