@@ -2,7 +2,7 @@
 
 | verdict | cases |
 |---|---:|
-| pass | 43 |
+| pass | 33 |
 | cold-fail | 0 |
 | warm-fail | 0 |
-| reference-failure | 57 |
+| reference-failure | 27 |
