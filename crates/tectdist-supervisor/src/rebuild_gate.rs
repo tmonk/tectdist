@@ -17,21 +17,14 @@ use std::time::Instant;
 use crate::checkpoint::CheckpointChain;
 use crate::SupervisorState;
 
-/// File extensions that constitute build INPUTS for the gate. Build
-/// artifacts (.pdf, .log, .aux, ...) are excluded on both sides so that
-/// ordinary engine side effects never invalidate an otherwise unchanged
-/// rebuild.
-const SOURCE_EXTENSIONS: &[&str] = &[
-    "tex", "bib", "ist", "sty", "cls", "clo", "cfg", "fd", "def", "ldf",
-];
-
-fn is_source(name: &str) -> bool {
-    Path::new(name)
-        .extension()
-        .and_then(|e| e.to_str())
-        .map(|e| SOURCE_EXTENSIONS.contains(&e))
-        .unwrap_or(false)
-}
+// NOTE on scope: the gate deliberately compares EVERY file in the project
+// tree, not an extension whitelist. Anything readable by the engine can be
+// an input — \input accepts arbitrary extensions, shell-escape scripts may
+// generate data files, and bibtex rewrites .bbl between engine runs. A
+// whitelist would produce false cache hits for exactly those cases.
+// Including artifacts is safe: they only change during a real compile,
+// which immediately re-records the chain; a cache-hit replay touches
+// nothing, so equality persists.
 
 /// Attempt to serve this compile from the unchanged-rebuild cache.
 ///
@@ -48,10 +41,7 @@ pub fn try_cached(state: &SupervisorState, cwd: &Path, argv: &[String]) -> Optio
     // by relative path so \input'ed subdirectory files invalidate too;
     // None (tree unprovable) means a real compile.
     let files = crate::snapshot_project_tree(cwd)?;
-    let current: BTreeMap<String, String> = files
-        .into_iter()
-        .filter(|(name, _)| is_source(name))
-        .collect();
+    let current: BTreeMap<String, String> = files.into_iter().collect();
     if current.is_empty() {
         return None;
     }
@@ -60,9 +50,7 @@ pub fn try_cached(state: &SupervisorState, cwd: &Path, argv: &[String]) -> Optio
     let mut recorded: BTreeMap<String, String> = BTreeMap::new();
     for record in &chain.records {
         if let Some(name) = record.shipped_pages.first() {
-            if is_source(name) {
-                recorded.insert(name.clone(), record.dependency_epoch.clone());
-            }
+            recorded.insert(name.clone(), record.dependency_epoch.clone());
         }
     }
     if recorded.is_empty() || current != recorded {

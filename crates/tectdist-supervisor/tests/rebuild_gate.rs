@@ -184,3 +184,47 @@ fn subdirectory_input_edit_invalidates_gate() {
         "subdir edit must NOT be served from cache: {status1}"
     );
 }
+
+#[test]
+fn external_artifact_change_invalidates_gate() {
+    let Some(_image) = basic_tex_root() else {
+        eprintln!("skipping: BasicTeX reference image not present on this host");
+        return;
+    };
+    let supervisor = start_supervisor("gate-art");
+
+    let work = free_dir("gateart-work");
+    std::fs::write(work.join("main.tex"), DOC).unwrap();
+
+    let payload = serde_json::json!({
+        "type": "compile",
+        "profile": "basictex-2026",
+        "cwd": work.to_str().unwrap(),
+        "argv": ["pdflatex", "-interaction=batchmode", "main.tex"],
+        "snapshot_key": null,
+    });
+
+    // Build + record; then an unchanged recompile hits.
+    let first = client(&supervisor.socket, payload.clone());
+    assert_eq!(first["compile_accepted"]["exit_status"], 0);
+    let _second = client(&supervisor.socket, payload.clone());
+    let status0 = client(&supervisor.socket, serde_json::json!({"type":"status"}));
+    assert_eq!(status0["status"]["compiles_cache_hits"], 1);
+
+    // An externally modified artifact (as bibtex rewriting .bbl, or a
+    // shell-escape script regenerating data) must invalidate: the gate
+    // hashes EVERY project file, no extension whitelist.
+    let aux = work.join("main.aux");
+    let mut content = std::fs::read_to_string(&aux).unwrap();
+    content.push_str("% external touch\n");
+    std::fs::write(&aux, content).unwrap();
+
+    let third = client(&supervisor.socket, payload);
+    assert_eq!(third["compile_accepted"]["exit_status"], 0);
+
+    let status1 = client(&supervisor.socket, serde_json::json!({"type":"status"}));
+    assert_eq!(
+        status1["status"]["compiles_cache_hits"], 1,
+        "artifact edit must NOT be served from cache: {status1}"
+    );
+}
