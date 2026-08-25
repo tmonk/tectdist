@@ -65,6 +65,8 @@ def main(argv=None):
     parser.add_argument("--markdown", default=str(REFERENCE_DIR / "bt100-report.md"))
     parser.add_argument("--shard", default="0/1", help="i/n shard selection")
     parser.add_argument("--styles-per-package", type=int, default=2)
+    parser.add_argument("--results-output",
+                        default=str(REFERENCE_DIR / "bt100-smoke-results.json"))
     ns = parser.parse_args(argv)
 
     ledger = json.loads(Path(ns.ledger).read_text())
@@ -152,6 +154,22 @@ def main(argv=None):
         "results": results,
     }
     Path(ns.output).write_text(json.dumps(report, indent=2) + "\n")
+
+    # Dedicated compact results file consumed by basictex_report.py. The
+    # full report file doubles as its own input otherwise (self-referential).
+    results_path = Path(getattr(ns, "results_output"))
+    results_path.parent.mkdir(parents=True, exist_ok=True)
+    results_path.write_text(json.dumps({
+        "schema_version": 1,
+        "image_files_sha256": report["image_files_sha256"],
+        "shard": ns.shard,
+        "counters": counters,
+        "results": [
+            {"package": r.get("package"), "style": r.get("style"),
+             "verdict": r.get("verdict")}
+            for r in results
+        ],
+    }, indent=2) + "\n")
 
     lines = ["# BT100 minimal-load compatibility report", "",
              f"Shard {ns.shard}; image `{report['image_files_sha256'][:16]}…`",

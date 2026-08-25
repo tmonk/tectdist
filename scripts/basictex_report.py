@@ -36,7 +36,14 @@ def main(argv=None):
 
     ref_dir = Path(ns.reference)
     ledger = load_json(ref_dir / "package-ledger.json")
-    smoke = load_json(ref_dir / "bt100-report.json")
+    # Smoke evidence lives in dedicated bt100-smoke-results*.json files
+    # (one per CI shard); the main bt100-report.json is this generator's
+    # own output and must not be read back.
+    smoke_rows = []
+    for path in sorted(ref_dir.glob("bt100-smoke-results*.json")):
+        if data := load_json(path):
+            smoke_rows.extend(data.get("results", []))
+    smoke = {"results": smoke_rows} if smoke_rows else None
     interactions = load_json(ref_dir / "bt100-interactions.json")
     pipelines = load_json(ref_dir / "pipeline-qualification.json")
 

@@ -1,0 +1,481 @@
+{
+  "schema_version": 1,
+  "image_files_sha256": "395f0b4d7ce47684c021e8734421bd530206e58a96949cb6103a6333ad2b36b6",
+  "shard": "0/4",
+  "counters": {
+    "pass": 50,
+    "fail": 0,
+    "reference-failure": 17
+  },
+  "results": [
+    {
+      "case": "ae/ae",
+      "package": "ae",
+      "style": "ae",
+      "verdict": "pass",
+      "pages": 1
+    },
+    {
+      "case": "ae/aecompl",
+      "package": "ae",
+      "style": "aecompl",
+      "verdict": "pass",
+      "pages": 1
+    },
+    {
+      "case": "anysize/anysize",
+      "package": "anysize",
+      "style": "anysize",
+      "verdict": "pass",
+      "pages": 1
+    },
+    {
+      "case": "atveryend/atveryend",
+      "package": "atveryend",
+      "style": "atveryend",
+      "verdict": "pass",
+      "pages": 1
+    },
+    {
+      "case": "babelbib/babelbib",
+      "package": "babelbib",
+      "style": "babelbib",
+      "verdict": "reference-failure",
+      "reference_exit": 1
+    },
+    {
+      "case": "bidicontour/bidicontour",
+      "package": "bidicontour",
+      "style": "bidicontour",
+      "verdict": "pass",
+      "pages": 1
+    },
+    {
+      "case": "bigintcalc/bigintcalc",
+      "package": "bigintcalc",
+      "style": "bigintcalc",
+      "verdict": "pass",
+      "pages": 1
+    },
+    {
+      "case": "breqn/breqn",
+      "package": "breqn",
+      "style": "breqn",
+      "verdict": "pass",
+      "pages": 1
+    },
+    {
+      "case": "breqn/flexisym",
+      "package": "breqn",
+      "style": "flexisym",
+      "verdict": "pass",
+      "pages": 1
+    },
+    {
+      "case": "cite/chapterbib",
+      "package": "cite",
+      "style": "chapterbib",
+      "verdict": "pass",
+      "pages": 1
+    },
+    {
+      "case": "cite/cite",
+      "package": "cite",
+      "style": "cite",
+      "verdict": "pass",
+      "pages": 1
+    },
+    {
+      "case": "cqubeamer/cqubeamer",
+      "package": "cqubeamer",
+      "style": "cqubeamer",
+      "verdict": "reference-failure",
+      "reference_exit": 1
+    },
+    {
+      "case": "dvips/blackdvi",
+      "package": "dvips",
+      "style": "blackdvi",
+      "verdict": "pass",
+      "pages": 1
+    },
+    {
+      "case": "dvips/colordvi",
+      "package": "dvips",
+      "style": "colordvi",
+      "verdict": "pass",
+      "pages": 1
+    },
+    {
+      "case": "etex-pkg/etex",
+      "package": "etex-pkg",
+      "style": "etex",
+      "verdict": "pass",
+      "pages": 1
+    },
+    {
+      "case": "eurosym/eurosym",
+      "package": "eurosym",
+      "style": "eurosym",
+      "verdict": "pass",
+      "pages": 1
+    },
+    {
+      "case": "fancybox/fancybox",
+      "package": "fancybox",
+      "style": "fancybox",
+      "verdict": "pass",
+      "pages": 1
+    },
+    {
+      "case": "feynmf/feynmf",
+      "package": "feynmf",
+      "style": "feynmf",
+      "verdict": "pass",
+      "pages": 1
+    },
+    {
+      "case": "feynmf/feynmp",
+      "package": "feynmf",
+      "style": "feynmp",
+      "verdict": "pass",
+      "pages": 1
+    },
+    {
+      "case": "fix2col/fix2col",
+      "package": "fix2col",
+      "style": "fix2col",
+      "verdict": "pass",
+      "pages": 1
+    },
+    {
+      "case": "fontspec/fontspec",
+      "package": "fontspec",
+      "style": "fontspec",
+      "verdict": "reference-failure",
+      "reference_exit": 1
+    },
+    {
+      "case": "fontspec/fontspec-luatex",
+      "package": "fontspec",
+      "style": "fontspec-luatex",
+      "verdict": "reference-failure",
+      "reference_exit": 1
+    },
+    {
+      "case": "geometry/geometry",
+      "package": "geometry",
+      "style": "geometry",
+      "verdict": "pass",
+      "pages": 1
+    },
+    {
+      "case": "grfext/grfext",
+      "package": "grfext",
+      "style": "grfext",
+      "verdict": "pass",
+      "pages": 1
+    },
+    {
+      "case": "hycolor/hycolor",
+      "package": "hycolor",
+      "style": "hycolor",
+      "verdict": "pass",
+      "pages": 1
+    },
+    {
+      "case": "hycolor/xcolor-patch",
+      "package": "hycolor",
+      "style": "xcolor-patch",
+      "verdict": "pass",
+      "pages": 1
+    },
+    {
+      "case": "iftex/ifetex",
+      "package": "iftex",
+      "style": "ifetex",
+      "verdict": "pass",
+      "pages": 1
+    },
+    {
+      "case": "iftex/ifluatex",
+      "package": "iftex",
+      "style": "ifluatex",
+      "verdict": "pass",
+      "pages": 1
+    },
+    {
+      "case": "interchar/interchar",
+      "package": "interchar",
+      "style": "interchar",
+      "verdict": "reference-failure",
+      "reference_exit": 1
+    },
+    {
+      "case": "kvoptions/kvoptions",
+      "package": "kvoptions",
+      "style": "kvoptions",
+      "verdict": "pass",
+      "pages": 1
+    },
+    {
+      "case": "kvoptions/kvoptions-patch",
+      "package": "kvoptions",
+      "style": "kvoptions-patch",
+      "verdict": "pass",
+      "pages": 1
+    },
+    {
+      "case": "l3kernel-dev/expl3",
+      "package": "l3kernel-dev",
+      "style": "expl3",
+      "verdict": "pass",
+      "pages": 1
+    },
+    {
+      "case": "l3kernel-dev/l3doc",
+      "package": "l3kernel-dev",
+      "style": "l3doc",
+      "verdict": "reference-failure",
+      "reference_exit": 1
+    },
+    {
+      "case": "latex-base-dev/alltt",
+      "package": "latex-base-dev",
+      "style": "alltt",
+      "verdict": "pass",
+      "pages": 1
+    },
+    {
+      "case": "latex-base-dev/article",
+      "package": "latex-base-dev",
+      "style": "article",
+      "verdict": "reference-failure",
+      "reference_exit": 1
+    },
+    {
+      "case": "latex-lab-dev/latex-lab-enumitem",
+      "package": "latex-lab-dev",
+      "style": "latex-lab-enumitem",
+      "verdict": "pass",
+      "pages": 1
+    },
+    {
+      "case": "latex-lab-dev/latex-lab-kernel-changes",
+      "package": "latex-lab-dev",
+      "style": "latex-lab-kernel-changes",
+      "verdict": "pass",
+      "pages": 1
+    },
+    {
+      "case": "lineno/ednmath0",
+      "package": "lineno",
+      "style": "ednmath0",
+      "verdict": "reference-failure",
+      "reference_exit": 1
+    },
+    {
+      "case": "lineno/edtable",
+      "package": "lineno",
+      "style": "edtable",
+      "verdict": "reference-failure",
+      "reference_exit": 1
+    },
+    {
+      "case": "ltxcmds/ltxcmds",
+      "package": "ltxcmds",
+      "style": "ltxcmds",
+      "verdict": "pass",
+      "pages": 1
+    },
+    {
+      "case": "luaotfload/luaotfload",
+      "package": "luaotfload",
+      "style": "luaotfload",
+      "verdict": "reference-failure",
+      "reference_exit": 1
+    },
+    {
+      "case": "mathspec/mathspec",
+      "package": "mathspec",
+      "style": "mathspec",
+      "verdict": "reference-failure",
+      "reference_exit": 1
+    },
+    {
+      "case": "metalogo/metalogo",
+      "package": "metalogo",
+      "style": "metalogo",
+      "verdict": "pass",
+      "pages": 1
+    },
+    {
+      "case": "mfpic4ode/mfpic4ode",
+      "package": "mfpic4ode",
+      "style": "mfpic4ode",
+      "verdict": "reference-failure",
+      "reference_exit": 1
+    },
+    {
+      "case": "natbib/bibentry",
+      "package": "natbib",
+      "style": "bibentry",
+      "verdict": "pass",
+      "pages": 1
+    },
+    {
+      "case": "natbib/natbib",
+      "package": "natbib",
+      "style": "natbib",
+      "verdict": "pass",
+      "pages": 1
+    },
+    {
+      "case": "pagesel/pagesel",
+      "package": "pagesel",
+      "style": "pagesel",
+      "verdict": "pass",
+      "pages": 1
+    },
+    {
+      "case": "pagesel/pagesel-2016-05-16",
+      "package": "pagesel",
+      "style": "pagesel-2016-05-16",
+      "verdict": "pass",
+      "pages": 1
+    },
+    {
+      "case": "pdflscape/pdflscape",
+      "package": "pdflscape",
+      "style": "pdflscape",
+      "verdict": "pass",
+      "pages": 1
+    },
+    {
+      "case": "pdflscape/pdflscape-nometadata",
+      "package": "pdflscape",
+      "style": "pdflscape-nometadata",
+      "verdict": "pass",
+      "pages": 1
+    },
+    {
+      "case": "pgf/pgf",
+      "package": "pgf",
+      "style": "pgf",
+      "verdict": "pass",
+      "pages": 1
+    },
+    {
+      "case": "pgf/pgfarrows",
+      "package": "pgf",
+      "style": "pgfarrows",
+      "verdict": "pass",
+      "pages": 1
+    },
+    {
+      "case": "pslatex/pslatex",
+      "package": "pslatex",
+      "style": "pslatex",
+      "verdict": "pass",
+      "pages": 1
+    },
+    {
+      "case": "ragged2e/ragged2e",
+      "package": "ragged2e",
+      "style": "ragged2e",
+      "verdict": "pass",
+      "pages": 1
+    },
+    {
+      "case": "revtex/ltxdocext",
+      "package": "revtex",
+      "style": "ltxdocext",
+      "verdict": "reference-failure",
+      "reference_exit": 1
+    },
+    {
+      "case": "revtex/ltxfront",
+      "package": "revtex",
+      "style": "ltxfront",
+      "verdict": "reference-failure",
+      "reference_exit": 1
+    },
+    {
+      "case": "sepnum/sepnum",
+      "package": "sepnum",
+      "style": "sepnum",
+      "verdict": "pass",
+      "pages": 1
+    },
+    {
+      "case": "stringenc/stringenc",
+      "package": "stringenc",
+      "style": "stringenc",
+      "verdict": "pass",
+      "pages": 1
+    },
+    {
+      "case": "tex4ebook/tex4ebook",
+      "package": "tex4ebook",
+      "style": "tex4ebook",
+      "verdict": "pass",
+      "pages": 1
+    },
+    {
+      "case": "thumbpdf/thumbpdf",
+      "package": "thumbpdf",
+      "style": "thumbpdf",
+      "verdict": "pass",
+      "pages": 1
+    },
+    {
+      "case": "typehtml/typehtml",
+      "package": "typehtml",
+      "style": "typehtml",
+      "verdict": "pass",
+      "pages": 1
+    },
+    {
+      "case": "underscore/underscore",
+      "package": "underscore",
+      "style": "underscore",
+      "verdict": "pass",
+      "pages": 1
+    },
+    {
+      "case": "unisugar/unisugar",
+      "package": "unisugar",
+      "style": "unisugar",
+      "verdict": "pass",
+      "pages": 1
+    },
+    {
+      "case": "xebaposter/xebaposter",
+      "package": "xebaposter",
+      "style": "xebaposter",
+      "verdict": "reference-failure",
+      "reference_exit": 1
+    },
+    {
+      "case": "xeindex/xeindex",
+      "package": "xeindex",
+      "style": "xeindex",
+      "verdict": "reference-failure",
+      "reference_exit": 1
+    },
+    {
+      "case": "xevlna/xevlna",
+      "package": "xevlna",
+      "style": "xevlna",
+      "verdict": "reference-failure",
+      "reference_exit": 1
+    },
+    {
+      "case": "xpatch/xpatch",
+      "package": "xpatch",
+      "style": "xpatch",
+      "verdict": "pass",
+      "pages": 1
+    }
+  ]
+}

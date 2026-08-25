@@ -51,7 +51,7 @@
       "revision": "15878",
       "licence": "unknown",
       "loadable_styles": 2,
-      "smoke_cases": 0,
+      "smoke_cases": 2,
       "interaction_cases": 9,
       "standalone_verdict": "standalone-pass",
       "bt100_verdict": "pass"
@@ -91,7 +91,7 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 0,
+      "smoke_cases": 1,
       "interaction_cases": 5,
       "standalone_verdict": "standalone-pass",
       "bt100_verdict": "pass"
@@ -141,7 +141,7 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 0,
+      "smoke_cases": 1,
       "interaction_cases": 4,
       "standalone_verdict": "standalone-pass",
       "bt100_verdict": "pass"
@@ -331,7 +331,7 @@
       "revision": "76790",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 0,
+      "smoke_cases": 1,
       "interaction_cases": 4,
       "standalone_verdict": "standalone-fail",
       "bt100_verdict": "reference-blocked"
@@ -391,7 +391,7 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 0,
+      "smoke_cases": 1,
       "interaction_cases": 5,
       "standalone_verdict": "standalone-pass",
       "bt100_verdict": "pass"
@@ -431,7 +431,7 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 0,
+      "smoke_cases": 1,
       "interaction_cases": 3,
       "standalone_verdict": "standalone-pass",
       "bt100_verdict": "pass"
@@ -491,7 +491,7 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 3,
-      "smoke_cases": 0,
+      "smoke_cases": 2,
       "interaction_cases": 3,
       "standalone_verdict": "standalone-pass",
       "bt100_verdict": "pass"
@@ -531,7 +531,7 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 4,
-      "smoke_cases": 0,
+      "smoke_cases": 2,
       "interaction_cases": 3,
       "standalone_verdict": "standalone-pass",
       "bt100_verdict": "pass"
@@ -641,7 +641,7 @@
       "revision": "54512",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 0,
+      "smoke_cases": 1,
       "interaction_cases": 6,
       "standalone_verdict": "standalone-fail",
       "bt100_verdict": "reference-blocked"
@@ -731,7 +731,7 @@
       "revision": "77830",
       "licence": "unknown",
       "loadable_styles": 3,
-      "smoke_cases": 0,
+      "smoke_cases": 2,
       "interaction_cases": 5,
       "standalone_verdict": "standalone-pass",
       "bt100_verdict": "pass"
@@ -841,7 +841,7 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 0,
+      "smoke_cases": 1,
       "interaction_cases": 4,
       "standalone_verdict": "standalone-pass",
       "bt100_verdict": "pass"
@@ -891,7 +891,7 @@
       "revision": "78101",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 0,
+      "smoke_cases": 1,
       "interaction_cases": 5,
       "standalone_verdict": "standalone-pass",
       "bt100_verdict": "pass"
@@ -971,7 +971,7 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 0,
+      "smoke_cases": 1,
       "interaction_cases": 2,
       "standalone_verdict": "standalone-pass",
       "bt100_verdict": "pass"
@@ -1021,7 +1021,7 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 2,
-      "smoke_cases": 0,
+      "smoke_cases": 2,
       "interaction_cases": 5,
       "standalone_verdict": "standalone-pass",
       "bt100_verdict": "pass"
@@ -1061,7 +1061,7 @@
       "revision": "38770",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 0,
+      "smoke_cases": 1,
       "interaction_cases": 7,
       "standalone_verdict": "standalone-pass",
       "bt100_verdict": "pass"
@@ -1121,7 +1121,7 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 3,
-      "smoke_cases": 0,
+      "smoke_cases": 2,
       "interaction_cases": 5,
       "standalone_verdict": "standalone-fail",
       "bt100_verdict": "reference-blocked"
@@ -1171,7 +1171,7 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 0,
+      "smoke_cases": 1,
       "interaction_cases": 0,
       "standalone_verdict": "standalone-pass",
       "bt100_verdict": "pass"
@@ -1241,7 +1241,7 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 0,
+      "smoke_cases": 1,
       "interaction_cases": 7,
       "standalone_verdict": "standalone-pass",
       "bt100_verdict": "pass"
@@ -1311,7 +1311,7 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 2,
-      "smoke_cases": 0,
+      "smoke_cases": 2,
       "interaction_cases": 5,
       "standalone_verdict": "standalone-pass",
       "bt100_verdict": "pass"
@@ -1531,7 +1531,7 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 6,
-      "smoke_cases": 0,
+      "smoke_cases": 2,
       "interaction_cases": 4,
       "standalone_verdict": "standalone-pass",
       "bt100_verdict": "pass"
@@ -1571,7 +1571,7 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 0,
+      "smoke_cases": 1,
       "interaction_cases": 3,
       "standalone_verdict": "standalone-fail",
       "bt100_verdict": "reference-blocked"
@@ -1651,7 +1651,7 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 2,
-      "smoke_cases": 0,
+      "smoke_cases": 2,
       "interaction_cases": 3,
       "standalone_verdict": "standalone-pass",
       "bt100_verdict": "pass"
@@ -1711,7 +1711,7 @@
       "revision": "77953",
       "licence": "unknown",
       "loadable_styles": 2,
-      "smoke_cases": 0,
+      "smoke_cases": 2,
       "interaction_cases": 4,
       "standalone_verdict": "standalone-pass",
       "bt100_verdict": "pass"
@@ -1751,7 +1751,7 @@
       "revision": "77483",
       "licence": "unknown",
       "loadable_styles": 44,
-      "smoke_cases": 0,
+      "smoke_cases": 2,
       "interaction_cases": 3,
       "standalone_verdict": "standalone-pass",
       "bt100_verdict": "pass"
@@ -1841,7 +1841,7 @@
       "revision": "77531",
       "licence": "unknown",
       "loadable_styles": 23,
-      "smoke_cases": 0,
+      "smoke_cases": 2,
       "interaction_cases": 3,
       "standalone_verdict": "standalone-pass",
       "bt100_verdict": "pass"
@@ -1901,7 +1901,7 @@
       "revision": "77875",
       "licence": "unknown",
       "loadable_styles": 5,
-      "smoke_cases": 0,
+      "smoke_cases": 2,
       "interaction_cases": 7,
       "standalone_verdict": "standalone-fail",
       "bt100_verdict": "reference-blocked"
@@ -1951,7 +1951,7 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 0,
+      "smoke_cases": 1,
       "interaction_cases": 11,
       "standalone_verdict": "standalone-pass",
       "bt100_verdict": "pass"
@@ -2041,7 +2041,7 @@
       "revision": "74324",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 0,
+      "smoke_cases": 1,
       "interaction_cases": 3,
       "standalone_verdict": "standalone-fail",
       "bt100_verdict": "reference-blocked"
@@ -2161,7 +2161,7 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 0,
+      "smoke_cases": 1,
       "interaction_cases": 7,
       "standalone_verdict": "standalone-fail",
       "bt100_verdict": "reference-blocked"
@@ -2241,7 +2241,7 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 0,
+      "smoke_cases": 1,
       "interaction_cases": 7,
       "standalone_verdict": "standalone-pass",
       "bt100_verdict": "pass"
@@ -2341,7 +2341,7 @@
       "revision": "75712",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 0,
+      "smoke_cases": 1,
       "interaction_cases": 4,
       "standalone_verdict": "standalone-fail",
       "bt100_verdict": "reference-blocked"
@@ -2531,7 +2531,7 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 2,
-      "smoke_cases": 0,
+      "smoke_cases": 2,
       "interaction_cases": 6,
       "standalone_verdict": "standalone-pass",
       "bt100_verdict": "pass"
@@ -2571,7 +2571,7 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 2,
-      "smoke_cases": 0,
+      "smoke_cases": 2,
       "interaction_cases": 4,
       "standalone_verdict": "standalone-pass",
       "bt100_verdict": "pass"
@@ -2611,7 +2611,7 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 2,
-      "smoke_cases": 0,
+      "smoke_cases": 2,
       "interaction_cases": 3,
       "standalone_verdict": "standalone-pass",
       "bt100_verdict": "pass"
@@ -2671,7 +2671,7 @@
       "revision": "78101",
       "licence": "unknown",
       "loadable_styles": 37,
-      "smoke_cases": 0,
+      "smoke_cases": 2,
       "interaction_cases": 10,
       "standalone_verdict": "standalone-pass",
       "bt100_verdict": "pass"
@@ -2731,7 +2731,7 @@
       "revision": "67469",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 0,
+      "smoke_cases": 1,
       "interaction_cases": 5,
       "standalone_verdict": "standalone-pass",
       "bt100_verdict": "pass"
@@ -2771,7 +2771,7 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 0,
+      "smoke_cases": 1,
       "interaction_cases": 4,
       "standalone_verdict": "standalone-pass",
       "bt100_verdict": "pass"
@@ -2821,7 +2821,7 @@
       "revision": "67271",
       "licence": "unknown",
       "loadable_styles": 6,
-      "smoke_cases": 0,
+      "smoke_cases": 2,
       "interaction_cases": 3,
       "standalone_verdict": "standalone-fail",
       "bt100_verdict": "reference-blocked"
@@ -2921,7 +2921,7 @@
       "revision": "20186",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 0,
+      "smoke_cases": 1,
       "interaction_cases": 5,
       "standalone_verdict": "standalone-pass",
       "bt100_verdict": "pass"
@@ -2991,7 +2991,7 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 0,
+      "smoke_cases": 1,
       "interaction_cases": 3,
       "standalone_verdict": "standalone-pass",
       "bt100_verdict": "pass"
@@ -3101,7 +3101,7 @@
       "revision": "78132",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 0,
+      "smoke_cases": 1,
       "interaction_cases": 4,
       "standalone_verdict": "standalone-pass",
       "bt100_verdict": "pass"
@@ -3261,7 +3261,7 @@
       "revision": "62518",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 0,
+      "smoke_cases": 1,
       "interaction_cases": 3,
       "standalone_verdict": "standalone-pass",
       "bt100_verdict": "pass"
@@ -3341,7 +3341,7 @@
       "revision": "17134",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 0,
+      "smoke_cases": 1,
       "interaction_cases": 5,
       "standalone_verdict": "standalone-pass",
       "bt100_verdict": "pass"
@@ -3381,7 +3381,7 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 0,
+      "smoke_cases": 1,
       "interaction_cases": 5,
       "standalone_verdict": "standalone-pass",
       "bt100_verdict": "pass"
@@ -3441,7 +3441,7 @@
       "revision": "22357",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 0,
+      "smoke_cases": 1,
       "interaction_cases": 7,
       "standalone_verdict": "standalone-pass",
       "bt100_verdict": "pass"
@@ -3501,7 +3501,7 @@
       "revision": "75290",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 0,
+      "smoke_cases": 1,
       "interaction_cases": 3,
       "standalone_verdict": "standalone-pass",
       "bt100_verdict": "pass"
@@ -3541,7 +3541,7 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 0,
+      "smoke_cases": 1,
       "interaction_cases": 5,
       "standalone_verdict": "standalone-fail",
       "bt100_verdict": "reference-blocked"
@@ -3671,7 +3671,7 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 0,
+      "smoke_cases": 1,
       "interaction_cases": 3,
       "standalone_verdict": "standalone-fail",
       "bt100_verdict": "reference-blocked"
@@ -3711,7 +3711,7 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 0,
+      "smoke_cases": 1,
       "interaction_cases": 6,
       "standalone_verdict": "standalone-pass",
       "bt100_verdict": "pass"
