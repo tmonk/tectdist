@@ -178,7 +178,12 @@ pub struct FastCompile {
 /// Returns Err(reason) when not applicable or on any build/dispatch
 /// failure; the caller escalates to the exact one-shot path, preserving
 /// BT100 semantics (plan §6.1 item 7).
-pub fn fast_compile(image_root: &Path, cwd: &Path, argv: &[String]) -> Result<FastCompile, String> {
+pub fn fast_compile(
+    image_root: &Path,
+    cwd: &Path,
+    argv: &[String],
+    cancelled: Option<&std::sync::atomic::AtomicBool>,
+) -> Result<FastCompile, String> {
     let program = argv.first().ok_or("empty argv")?;
     if !ELIGIBLE_ENGINES.contains(&program.as_str()) {
         return Err(format!("engine '{program}' not eligible"));
@@ -278,6 +283,7 @@ pub fn fast_compile(image_root: &Path, cwd: &Path, argv: &[String]) -> Result<Fa
         &split.preamble,
         &digest_hex(digest_input.as_bytes()),
         &capability_flags,
+        cancelled,
     )?;
 
     // Body file: written next to the format every time (cheap, keeps in
@@ -333,7 +339,8 @@ pub fn fast_compile(image_root: &Path, cwd: &Path, argv: &[String]) -> Result<Fa
         .ok()
         .and_then(|value| value.parse().ok())
         .unwrap_or(300);
-    let status = run_with_timeout(&mut body_cmd, body_timeout)?;
+    let status =
+        run_with_timeout(&mut body_cmd, body_timeout, cancelled)?;
     let duration_ms = started.elapsed().as_millis() as u64;
     Ok(FastCompile {
         exit_status: status.code().unwrap_or(-1),
@@ -342,6 +349,7 @@ pub fn fast_compile(image_root: &Path, cwd: &Path, argv: &[String]) -> Result<Fa
 }
 
 /// Build the format unless a meta record proves it is current.
+#[allow(clippy::too_many_arguments)]
 fn ensure_format(
     image_root: &Path,
     cwd: &Path,
@@ -349,6 +357,7 @@ fn ensure_format(
     preamble: &str,
     cache_digest: &str,
     capability_flags: &[&String],
+    cancelled: Option<&std::sync::atomic::AtomicBool>,
 ) -> Result<(), String> {
     let format_dir = cwd.join(FORMAT_DIR);
     std::fs::create_dir_all(&format_dir)
@@ -411,7 +420,7 @@ fn ensure_format(
         )
         // Deliberately NO TEXMFCNF override — see module docs.
         ;
-    let ini_status = run_with_timeout(&mut ini_cmd, 300)?;
+    let ini_status = run_with_timeout(&mut ini_cmd, 300, cancelled)?;
 
     if !ini_status.success() || !fmt_file.is_file() {
 
@@ -438,6 +447,7 @@ fn ensure_format(
 fn run_with_timeout(
     cmd: &mut Command,
     timeout_secs: u64,
+    cancelled: Option<&std::sync::atomic::AtomicBool>,
 ) -> Result<std::process::ExitStatus, String> {
     let mut child = cmd
         .stdout(std::process::Stdio::piped())
@@ -449,6 +459,13 @@ fn run_with_timeout(
         match child.try_wait() {
             Ok(Some(status)) => return Ok(status),
             Ok(None) => {
+                if let Some(flag) = cancelled {
+                    if flag.load(std::sync::atomic::Ordering::SeqCst) {
+                        let _ = child.kill();
+                        let _ = child.wait();
+                        return Err("compile was cancelled".to_string());
+                    }
+                }
                 if Instant::now() >= deadline {
                     let _ = child.kill();
                     let _ = child.wait();

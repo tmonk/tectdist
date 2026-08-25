@@ -29,7 +29,7 @@ use std::io::{BufRead, BufReader, Write};
 use std::os::unix::fs::PermissionsExt;
 use std::os::unix::net::{UnixListener, UnixStream};
 use std::path::{Path, PathBuf};
-use std::sync::atomic::{AtomicU64, Ordering};
+use std::sync::atomic::{AtomicU64, Ordering, AtomicBool};
 use std::sync::{Arc, Mutex};
 
 const PROTOCOL_VERSION: u32 = 1;
@@ -45,6 +45,12 @@ enum Request {
     },
     Shutdown {
         request_id: Option<u64>,
+    },
+    /// Abort any in-flight compile for the named project directory.
+    Cancel {
+        request_id: Option<u64>,
+        #[serde(default)]
+        cwd: PathBuf,
     },
     Compile {
         request_id: Option<u64>,
@@ -115,6 +121,7 @@ struct Response {
 #[derive(Debug, Serialize, Default)]
 #[serde(rename_all = "snake_case")]
 enum Payload {
+    Cancelled { delivered: bool },
     #[default]
     Empty,
     Pong {
@@ -220,6 +227,9 @@ struct SupervisorState {
     /// BasicTeX image binaries are immutable within a profile, so the cached
     /// digest is valid until the candidate changes.
     tool_digests: Mutex<HashMap<PathBuf, (u64, i64, String)>>,
+    /// Per-project cancellation flags, registered while a compile runs
+    /// (X1 contract item: cancellation). Engine poll loops check these.
+    cancel_flags: Mutex<HashMap<PathBuf, Arc<AtomicBool>>>,
     // Wired for X4/X5 engine-side integration; consulted once page
     // checkpoints land. Kept out of the dead-code lint until then.
     #[allow(dead_code)]
@@ -290,6 +300,7 @@ impl SupervisorState {
             compiles_succeeded: AtomicU64::new(0),
             compiles_failed: AtomicU64::new(0),
             compiles_cache_hits: AtomicU64::new(0),
+            cancel_flags: Mutex::new(HashMap::new()),
             project_locks: Mutex::new(HashMap::new()),
             snapshots: Mutex::new(HashMap::new()),
         }
@@ -378,6 +389,34 @@ impl SupervisorState {
                         .collect()
                 })
                 .unwrap_or_default(),
+        }
+    }
+
+    /// Register a cancellation flag for a project; returns the shared flag
+    /// the engine poll loops observe.
+    fn register_cancel(&self, project: &Path) -> (PathBuf, Arc<AtomicBool>) {
+        let key = project.canonicalize().unwrap_or_else(|_| project.to_path_buf());
+        let flag = Arc::new(AtomicBool::new(false));
+        if let Ok(mut flags) = self.cancel_flags.lock() {
+            flags.insert(key.clone(), Arc::clone(&flag));
+        }
+        (key, flag)
+    }
+
+    fn take_cancel(&self, key: &Path) {
+        if let Ok(mut flags) = self.cancel_flags.lock() {
+            flags.remove(key);
+        }
+    }
+
+    fn cancel_project(&self, project: &Path) -> bool {
+        let key = project.canonicalize().unwrap_or_else(|_| project.to_path_buf());
+        match self.cancel_flags.lock() {
+            Ok(mut flags) => flags.get(&key).map(|flag| {
+                flag.store(true, Ordering::SeqCst);
+                true
+            }).unwrap_or(false),
+            Err(_) => false,
         }
     }
 
@@ -767,6 +806,15 @@ fn handle_request(
                 payload: Payload::Empty,
             }
         }
+        Request::Cancel { request_id, cwd } => {
+            let delivered = state.cancel_project(&cwd);
+            Response {
+                ok: true,
+                request_id,
+                error: None,
+                payload: Payload::Cancelled { delivered },
+            }
+        }
         Request::Snapshots { request_id } => Response {
             ok: true,
             request_id,
@@ -933,6 +981,7 @@ fn handle_request(
             // server -> exact one-shot. BT100 preserved by design (plan
             // §6.1 item 7): any non-applicability or failure falls
             // through to exact execution.
+            let (_cancel_key, cancel_flag) = state.register_cancel(&cwd);
             let outcome = match rebuild_gate::try_cached(state, &cwd, &argv) {
                 Some(hit) => {
                     state.compiles_cache_hits.fetch_add(1, Ordering::Relaxed);
@@ -941,7 +990,10 @@ fn handle_request(
                 None => {
                     let job = derive_job_name(&argv, &cwd);
                     let attempted = if profile == "basictex-2026" {
-                        match project_format::fast_compile(&state.image_root, &cwd, &argv) {
+                        match project_format::fast_compile(
+                            &state.image_root, &cwd, &argv,
+                            Some(cancel_flag.as_ref()),
+                        ) {
                             Ok(fast) => Ok((fast.exit_status, fast.duration_ms)),
                             Err(error) => {
                                 eprintln!(
@@ -954,21 +1006,22 @@ fn handle_request(
                                             eprintln!(
                                                     "supervisor: fork server unavailable ({error}); using one-shot execution"
                                                 );
-                                            run_profile_compile(&profile, &argv, &cwd)
+                                            run_profile_compile(&profile, &argv, &cwd, &cancel_flag)
                                         }
                                     }
                                 } else {
-                                    run_profile_compile(&profile, &argv, &cwd)
+                                    run_profile_compile(&profile, &argv, &cwd, &cancel_flag)
                                 }
                             }
                         }
                     } else {
-                        run_profile_compile(&profile, &argv, &cwd)
+                        run_profile_compile(&profile, &argv, &cwd, &cancel_flag)
                     };
                     // Cache-hit telemetry only counts real skips.
                     attempted
                 }
             };
+            state.take_cancel(&_cancel_key);
             state.release_lock(&cwd);
             // Record checkpoint chain after each successful compile (plan
             // §12: every completed build produces a manifest for dependency-
@@ -1085,7 +1138,12 @@ impl SupervisorState {
     }
 }
 
-fn run_profile_compile(profile: &str, argv: &[String], cwd: &Path) -> Result<(i32, u64), String> {
+fn run_profile_compile(
+    profile: &str,
+    argv: &[String],
+    cwd: &Path,
+    cancel_flag: &Arc<AtomicBool>,
+) -> Result<(i32, u64), String> {
     if profile != "basictex-2026" {
         return Err(format!("unsupported profile '{profile}'"));
     }
@@ -1134,6 +1192,11 @@ fn run_profile_compile(profile: &str, argv: &[String], cwd: &Path) -> Result<(i3
         match child.try_wait() {
             Ok(Some(status)) => break status,
             Ok(None) => {
+                if cancel_flag.load(Ordering::SeqCst) {
+                    let _ = child.kill();
+                    let _ = child.wait();
+                    return Err("compile was cancelled".to_string());
+                }
                 if std::time::Instant::now() >= deadline {
                     let _ = child.kill();
                     let _ = child.wait();
