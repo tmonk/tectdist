@@ -264,12 +264,14 @@ fixdateandtime convergence point. Hook relocated to just after
 byte-identical outputs).
 
 REMAINING base-worker gap: children forked at lab1 die reading their
-job (`**` + EOF, ~1 ms) — the buffer/first/limitfield state at that
-point differs from what the pdftex-style install expects (the
-first-line read block sits later in xetexini.c, ~4974). Composed mode
-is unaffected (its body files are consumed through the normal X2 body
-flow). Finishing base-mode needs tracing first/last initialisation at
-lab1 vs the ~4974 read block. Build-tree gotchas encountered and fixed:
+job (`**` + EOF, ~1 ms) even with a normalized install window
+(first clamped to >=1, bounds-checked against bufsize — hardening now
+in texmfmp.c serve()). texmf.cnf sets parse_first_line=t with a
+`.tex`-engine override f, so first-line semantics differ per engine;
+composing the exact consumption conditions for xetex's lab1 flow needs
+a dedicated trace. Composed mode is unaffected (its body files are
+consumed through the normal X2 body flow) and is the production-relevant
+mode for every corpus document. Build-tree gotchas encountered and fixed:
 a corrupted texmfmp.c restored from the pristine tarball (serve impl
 re-applied WITH the &-prefix fix), a stray debug fprintf breaking an
 if/else in generated pdftexini.c, and an empty build-tree
