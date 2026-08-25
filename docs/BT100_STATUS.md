@@ -18,7 +18,7 @@ modifications documented in `docs/FORK_SERVER_DESIGN.md`.
 | **B1** Substrate | ✅ complete | Image verified (19,935 files), size gate PASS, pipelines 7/7 |
 | **B2** Compatibility factory | ~90% | Ledger 372 rows, smoke 192/192 pass, interactions 507/507 ref-green pass, **all ref-failures attributed (0 pair-specific)**, probes: 209 packages → 161 pass / 48 reference-blocked, report gate PASS |
 | **X1** Supervisor + fork servers | ~65% | IPC+locks ✓, pdfTeX fork server proven (1.5 ms children), launch-variant matrix mapped, -fmt bypass root-caused |
-| **X2** Preamble snapshots | ~50% | \dump round proven (9/9 children at 15 ms), TEXFORMATS recipe documented, hyph_size limitation isolated |
+| **X2** Preamble snapshots | ~85% | Builder validated end-to-end (paired-body contract, 2.1x A/B), hyph_size root-caused (TEXMFCNF override), supervisor fast path live with IPC test; measured through supervisor: body edit 156->67 ms (2.33x), rebuild 273 ms |
 | **X3** Helper acceleration | ✅ complete | Broker MVP done, 5/5 helpers < 2 ms gates, mutation corpus passes |
 | **X4** Checkpoints/replay | ~45% | Model ✓, chains in supervisor ✓, manifest capture ✓, aux tracker ✓; engine API pending |
 | **X5** Output graphs | model ✓ | Graph model ✓, planner ✓, content store ✓; execution pending engine patches |

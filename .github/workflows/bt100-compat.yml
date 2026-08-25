@@ -50,7 +50,7 @@ jobs:
         with:
           python-version: '3.11'
       - name: Build native candidate
-        run: cargo build --release --locked -p tectdist-cli
+        run: cargo build --release --locked -p tectdist-cli -p tectdist-supervisor
       - name: Interaction sample
         env:
           PAIRS: ${{ github.event.inputs.pairs || '300' }}
@@ -75,6 +75,8 @@ jobs:
             --candidate ./target/release/tectdist
       - name: BT100 report (gate)
         run: python3 scripts/basictex_report.py
+      - name: X2 edit-scenario measurements (project format)
+        run: python3 scripts/basictex_x2_edit_scenarios.py
       - uses: actions/upload-artifact@v4
         with:
           name: bt100-interactions
@@ -84,5 +86,7 @@ jobs:
             reference/basictex-2026/reffail-standalone.json
             reference/basictex-2026/ref-fail-classification.json
             reference/basictex-2026/fail-equivalence.json
+            reference/basictex-2026/x2-edit-scenarios.json
+            reference/basictex-2026/x2-edit-scenarios.md
             reference/basictex-2026/bt100-report.json
             reference/basictex-2026/bt100-report.md
