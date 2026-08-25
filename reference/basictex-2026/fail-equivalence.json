@@ -1,0 +1,298 @@
+{
+  "counters": {
+    "equivalent-fail": 48,
+    "equivalent-pass": 0,
+    "mismatch": 0
+  },
+  "rows": [
+    {
+      "candidate_exit": 1,
+      "package": "arabxetex",
+      "ref_exit": 1,
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 1,
+      "package": "babel",
+      "ref_exit": 1,
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 1,
+      "package": "babelbib",
+      "ref_exit": 1,
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 1,
+      "package": "businesscard-qrcode",
+      "ref_exit": 1,
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 1,
+      "package": "cqubeamer",
+      "ref_exit": 1,
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 1,
+      "package": "ctable",
+      "ref_exit": 1,
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 1,
+      "package": "ctablestack",
+      "ref_exit": 1,
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 1,
+      "package": "fixlatvian",
+      "ref_exit": 1,
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 1,
+      "package": "fontbook",
+      "ref_exit": 1,
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 1,
+      "package": "fontspec",
+      "ref_exit": 1,
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 1,
+      "package": "fontwrap",
+      "ref_exit": 1,
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 1,
+      "package": "gmp",
+      "ref_exit": 1,
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 1,
+      "package": "hypcap",
+      "ref_exit": 1,
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 1,
+      "package": "ifplatform",
+      "ref_exit": 1,
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 1,
+      "package": "interchar",
+      "ref_exit": 1,
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 1,
+      "package": "koma-script",
+      "ref_exit": 1,
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 1,
+      "package": "lineno",
+      "ref_exit": 1,
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 1,
+      "package": "ltx-talk",
+      "ref_exit": 1,
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 1,
+      "package": "ltxmisc",
+      "ref_exit": 1,
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 1,
+      "package": "lua-unicode-math",
+      "ref_exit": 1,
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 1,
+      "package": "luamml",
+      "ref_exit": 1,
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 1,
+      "package": "luaotfload",
+      "ref_exit": 1,
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 1,
+      "package": "luatexbase",
+      "ref_exit": 1,
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 1,
+      "package": "lwarp",
+      "ref_exit": 1,
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 1,
+      "package": "mathspec",
+      "ref_exit": 1,
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 1,
+      "package": "mfpic4ode",
+      "ref_exit": 1,
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 1,
+      "package": "mpgraphics",
+      "ref_exit": 1,
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 1,
+      "package": "na-position",
+      "ref_exit": 1,
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 1,
+      "package": "pdfcolfoot",
+      "ref_exit": 1,
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 1,
+      "package": "philokalia",
+      "ref_exit": 1,
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 1,
+      "package": "ptext",
+      "ref_exit": 1,
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 1,
+      "package": "revtex",
+      "ref_exit": 1,
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 1,
+      "package": "simple-resume-cv",
+      "ref_exit": 1,
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 1,
+      "package": "simple-thesis-dissertation",
+      "ref_exit": 1,
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 1,
+      "package": "tagpdf",
+      "ref_exit": 1,
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 1,
+      "package": "textpath",
+      "ref_exit": 1,
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 1,
+      "package": "ucharcat",
+      "ref_exit": 1,
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 1,
+      "package": "ucharclasses",
+      "ref_exit": 1,
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 1,
+      "package": "unicode-bidi",
+      "ref_exit": 1,
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 1,
+      "package": "unicode-math",
+      "ref_exit": 1,
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 1,
+      "package": "xecolor",
+      "ref_exit": 1,
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 1,
+      "package": "xeindex",
+      "ref_exit": 1,
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 1,
+      "package": "xesearch",
+      "ref_exit": 1,
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 1,
+      "package": "xetexko",
+      "ref_exit": 1,
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 1,
+      "package": "xevlna",
+      "ref_exit": 1,
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 1,
+      "package": "xltxtra",
+      "ref_exit": 1,
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 1,
+      "package": "xunicode",
+      "ref_exit": 1,
+      "verdict": "equivalent-fail"
+    },
+    {
+      "candidate_exit": 1,
+      "package": "zbmath-review-template",
+      "ref_exit": 1,
+      "verdict": "equivalent-fail"
+    }
+  ],
+  "schema_version": 1
+}
