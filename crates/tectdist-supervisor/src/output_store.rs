@@ -38,9 +38,13 @@ impl OutputStore {
     }
 
     pub fn get(&self, kind: ObjectKind, digest: &str) -> Result<Option<Vec<u8>>, String> {
-        if digest.len() < 2 { return Ok(None); }
+        if digest.len() < 2 {
+            return Ok(None);
+        }
         let path = self.kind_dir(kind).join(&digest[..2]).join(digest);
-        if !path.is_file() { return Ok(None); }
+        if !path.is_file() {
+            return Ok(None);
+        }
         let bytes = fs::read(&path).map_err(|e| e.to_string())?;
         let actual = sha256_hex(&bytes);
         if actual != digest {
@@ -50,12 +54,19 @@ impl OutputStore {
     }
 
     pub fn exists(&self, kind: ObjectKind, digest: &str) -> bool {
-        if digest.len() < 2 { return false; }
-        self.kind_dir(kind).join(&digest[..2]).join(digest).is_file()
+        if digest.len() < 2 {
+            return false;
+        }
+        self.kind_dir(kind)
+            .join(&digest[..2])
+            .join(digest)
+            .is_file()
     }
 
     pub fn remove(&self, kind: ObjectKind, digest: &str) -> Result<bool, String> {
-        if digest.len() < 2 { return Ok(false); }
+        if digest.len() < 2 {
+            return Ok(false);
+        }
         let path = self.kind_dir(kind).join(&digest[..2]).join(digest);
         if path.is_file() {
             fs::remove_file(&path).map_err(|e| e.to_string())?;
@@ -68,7 +79,9 @@ impl OutputStore {
         let mut count = 0;
         for kind_name in ["page", "font", "image", "annot", "resdict"] {
             let dir = self.root.join(kind_name);
-            if !dir.is_dir() { continue; }
+            if !dir.is_dir() {
+                continue;
+            }
             for sub in fs::read_dir(&dir).map_err(|e| e.to_string())?.flatten() {
                 if sub.path().is_dir() {
                     count += fs::read_dir(sub.path()).map_err(|e| e.to_string())?.count();
@@ -105,7 +118,8 @@ impl OutputStore {
 
         // Copy pages with matching digests from the store.
         for (index, digest) in new_page_digests.iter().enumerate() {
-            let cached = self.kind_dir(ObjectKind::Page)
+            let cached = self
+                .kind_dir(ObjectKind::Page)
                 .join(&digest[..2])
                 .join(digest.as_str());
             let dest = output_dir.join(format!("page-{:06}.pdf", index + 1));
@@ -139,16 +153,25 @@ mod tests {
     struct TempDir(PathBuf);
     impl TempDir {
         fn new() -> std::io::Result<Self> {
-            let dir = std::env::temp_dir().join(
-                format!("bt100-store-{}-{}", std::process::id(),
-                        std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).unwrap().subsec_nanos()));
+            let dir = std::env::temp_dir().join(format!(
+                "bt100-store-{}-{}",
+                std::process::id(),
+                std::time::SystemTime::now()
+                    .duration_since(std::time::UNIX_EPOCH)
+                    .unwrap()
+                    .subsec_nanos()
+            ));
             fs::create_dir_all(&dir)?;
             Ok(Self(dir))
         }
-        fn path(&self) -> &Path { &self.0 }
+        fn path(&self) -> &Path {
+            &self.0
+        }
     }
     impl Drop for TempDir {
-        fn drop(&mut self) { let _ = fs::remove_dir_all(&self.0); }
+        fn drop(&mut self) {
+            let _ = fs::remove_dir_all(&self.0);
+        }
     }
 
     #[test]
@@ -167,7 +190,10 @@ mod tests {
     fn get_missing_returns_none() {
         let dir = TempDir::new().unwrap();
         let store = OutputStore::open(dir.path());
-        assert!(store.get(ObjectKind::Page, "nonexistent").unwrap().is_none());
+        assert!(store
+            .get(ObjectKind::Page, "nonexistent")
+            .unwrap()
+            .is_none());
     }
 
     #[test]
@@ -178,8 +204,10 @@ mod tests {
         let digest = store.put(&id, b"original").unwrap();
         let tamper_path = dir.path().join("image").join(&digest[..2]).join(&digest);
         fs::write(&tamper_path, b"tampered").unwrap();
-        assert!(store.get(ObjectKind::Image, &digest).is_err(),
-                "poisoned entry must be rejected");
+        assert!(
+            store.get(ObjectKind::Image, &digest).is_err(),
+            "poisoned entry must be rejected"
+        );
     }
 
     #[test]
@@ -197,8 +225,12 @@ mod tests {
     fn counts_objects_across_kinds() {
         let dir = TempDir::new().unwrap();
         let store = OutputStore::open(dir.path());
-        store.put(&LogicalId::new(ObjectKind::Page, "p"), b"a").unwrap();
-        store.put(&LogicalId::new(ObjectKind::FontProgram, "f"), b"b").unwrap();
+        store
+            .put(&LogicalId::new(ObjectKind::Page, "p"), b"a")
+            .unwrap();
+        store
+            .put(&LogicalId::new(ObjectKind::FontProgram, "f"), b"b")
+            .unwrap();
         assert_eq!(store.count().unwrap(), 2);
     }
 }

@@ -1,8 +1,4 @@
-//! Project-format preamble snapshot integration tests (plan X2).
-//!
-//! Each test boots a fresh supervisor WITHOUT the fork server so the
-//! project-format fast path is the only accelerator in play, then
-//! verifies the format is built, reused, and produces a valid PDF.
+//! Unchanged-rebuild gate integration tests (plan X4 / X10-E scenario 1).
 use std::io::{BufRead, BufReader, Write};
 use std::os::unix::net::UnixStream;
 use std::path::{Path, PathBuf};
@@ -10,7 +6,7 @@ use std::process::{Command, Stdio};
 use std::time::{Duration, Instant};
 
 fn free_dir(tag: &str) -> PathBuf {
-    let dir = std::env::temp_dir().join(format!("pf-{}-{}", tag, std::process::id()));
+    let dir = std::env::temp_dir().join(format!("rg-{}-{}", tag, std::process::id()));
     let _ = std::fs::remove_dir_all(&dir);
     std::fs::create_dir_all(&dir).unwrap();
     dir
@@ -45,7 +41,6 @@ fn start_supervisor(tag: &str) -> Supervisor {
     if let Some(root) = basic_tex_root() {
         command.env("TECTDIST_BASICTEX_ROOT", &root);
     }
-    // Fork server deliberately NOT enabled.
     let log = std::fs::File::create(dir.join("serve.log")).unwrap();
     command.stdout(log.try_clone().unwrap()).stderr(log);
     let child = command.spawn().expect("spawn supervisor");
@@ -75,20 +70,19 @@ fn client(socket: &Path, payload: serde_json::Value) -> serde_json::Value {
 }
 
 const DOC: &str = "\\documentclass{article}\n\
-                   \\usepackage{amsmath}\n\
                    \\begin{document}\n\
-                   Project format proof. $e^{i\\pi}+1=0$.\n\
+                   Rebuild gate proof.\n\
                    \\end{document}\n";
 
 #[test]
-fn project_format_builds_reuses_and_produces_pdf() {
+fn unchanged_recompile_is_served_from_cache() {
     let Some(_image) = basic_tex_root() else {
         eprintln!("skipping: BasicTeX reference image not present on this host");
         return;
     };
-    let supervisor = start_supervisor("pfmt");
+    let supervisor = start_supervisor("gate");
 
-    let work = free_dir("pfmt-work");
+    let work = free_dir("gate-work");
     std::fs::write(work.join("main.tex"), DOC).unwrap();
 
     let payload = serde_json::json!({
@@ -99,26 +93,42 @@ fn project_format_builds_reuses_and_produces_pdf() {
         "snapshot_key": null,
     });
 
+    // First compile: cold miss, runs an engine.
     let first = client(&supervisor.socket, payload.clone());
     assert_eq!(first["ok"], true, "first compile failed: {first}");
+    assert_eq!(first["compile_accepted"]["exit_status"], 0);
+
+    // Status before: zero cache hits.
+    let status0 = client(&supervisor.socket, serde_json::json!({"type":"status"}));
     assert_eq!(
-        first["compile_accepted"]["exit_status"], 0,
-        "first compile nonzero: {first}"
-    );
-    assert!(work.join("main.pdf").is_file(), "PDF must exist");
-    assert!(
-        work.join(".tectdist/main-pre.fmt").is_file(),
-        "project format must be built on first compile"
+        status0["status"]["compiles_cache_hits"], 0,
+        "no hits expected yet: {status0}"
     );
 
-    // Second compile reuses the cached format (meta digest match) and
-    // must still succeed with identical job output.
-    std::fs::remove_file(work.join("main.pdf")).unwrap();
-    let second = client(&supervisor.socket, payload);
+    // Second compile with UNCHANGED inputs must be served from cache.
+    let second = client(&supervisor.socket, payload.clone());
     assert_eq!(second["ok"], true, "second compile failed: {second}");
     assert_eq!(second["compile_accepted"]["exit_status"], 0);
-    assert!(
-        work.join("main.pdf").is_file(),
-        "PDF must exist after reuse"
+
+    let status1 = client(&supervisor.socket, serde_json::json!({"type":"status"}));
+    assert_eq!(
+        status1["status"]["compiles_cache_hits"], 1,
+        "unchanged recompile should be a cache hit: {status1}"
+    );
+
+    // Editing the source invalidates the gate; next compile is a real run.
+    std::fs::write(
+        work.join("main.tex"),
+        DOC.replace("Rebuild gate proof.", "Edited content."),
+    )
+    .unwrap();
+    let third = client(&supervisor.socket, payload);
+    assert_eq!(third["ok"], true, "edited compile failed: {third}");
+    assert_eq!(third["compile_accepted"]["exit_status"], 0);
+
+    let status2 = client(&supervisor.socket, serde_json::json!({"type":"status"}));
+    assert_eq!(
+        status2["status"]["compiles_cache_hits"], 1,
+        "edited recompile must NOT be a cache hit: {status2}"
     );
 }

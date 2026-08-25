@@ -44,10 +44,19 @@ fn start_supervisor(tag: &str, image_root: Option<&Path>) -> Supervisor {
     }
     let output_log = dir.join("serve-output.log");
     let log_file = std::fs::File::create(&output_log).unwrap();
-    command.stdout(log_file.try_clone().unwrap()).stderr(log_file.try_clone().unwrap());
+    command
+        .stdout(log_file.try_clone().unwrap())
+        .stderr(log_file.try_clone().unwrap());
     let child = command.spawn().expect("spawn supervisor");
-    let supervisor = Supervisor { child, socket, _dir: dir };
-    wait_for_socket(&supervisor.socket, &supervisor._dir.join("serve-output.log"));
+    let supervisor = Supervisor {
+        child,
+        socket,
+        _dir: dir,
+    };
+    wait_for_socket(
+        &supervisor.socket,
+        &supervisor._dir.join("serve-output.log"),
+    );
     supervisor
 }
 
@@ -77,8 +86,7 @@ fn request(socket: &Path, payload: &str) -> serde_json::Value {
 }
 
 fn basic_tex_root() -> Option<PathBuf> {
-    let root = Path::new(env!("CARGO_MANIFEST_DIR"))
-        .join("../../reference/basictex-2026/image");
+    let root = Path::new(env!("CARGO_MANIFEST_DIR")).join("../../reference/basictex-2026/image");
     root.is_dir().then_some(root.canonicalize().unwrap_or(root))
 }
 
@@ -130,10 +138,16 @@ fn project_lock_refuses_concurrent_same_project_compiles() {
     let supervisor = start_supervisor("locks", Some(&image));
 
     let work = free_dir("project-work");
-    std::fs::write(work.join("main.tex"), "\\documentclass{article}\\begin{document}x\\end{document}\n").unwrap();
+    std::fs::write(
+        work.join("main.tex"),
+        "\\documentclass{article}\\begin{document}x\\end{document}\n",
+    )
+    .unwrap();
     std::fs::write(
         work.join("slow.tex"),
-        r"\documentclass{article}\begin{document}\input{slow-body}\end{document}".replace("slow-body", "x").as_bytes(),
+        r"\documentclass{article}\begin{document}\input{slow-body}\end{document}"
+            .replace("slow-body", "x")
+            .as_bytes(),
     )
     .unwrap();
 
@@ -141,9 +155,13 @@ fn project_lock_refuses_concurrent_same_project_compiles() {
     // project must be refused with ok=false rather than queued silently.
     let hold = Command::new(env!("CARGO_BIN_EXE_tectdist-supervisor"))
         .args([
-            "compile", "basictex-2026",
+            "compile",
+            "basictex-2026",
             work.to_str().unwrap(),
-            "pdflatex", "-interaction=batchmode", "-jobname=held", "main.tex",
+            "pdflatex",
+            "-interaction=batchmode",
+            "-jobname=held",
+            "main.tex",
         ])
         .env("TECTDIST_BASICTEX_ROOT", &image)
         .env("TECTDIST_SUPERVISOR_SOCKET", &supervisor.socket)
@@ -158,9 +176,13 @@ fn project_lock_refuses_concurrent_same_project_compiles() {
     );
     let again = Command::new(env!("CARGO_BIN_EXE_tectdist-supervisor"))
         .args([
-            "compile", "basictex-2026",
+            "compile",
+            "basictex-2026",
             work.to_str().unwrap(),
-            "pdflatex", "-interaction=batchmode", "-jobname=held2", "main.tex",
+            "pdflatex",
+            "-interaction=batchmode",
+            "-jobname=held2",
+            "main.tex",
         ])
         .env("TECTDIST_BASICTEX_ROOT", &image)
         .env("TECTDIST_SUPERVISOR_SOCKET", &supervisor.socket)
@@ -172,7 +194,10 @@ fn project_lock_refuses_concurrent_same_project_compiles() {
     );
 
     let status = request(&supervisor.socket, r#"{"type":"status"}"#);
-    assert_eq!(status["status"]["active_locks"].as_array().map(Vec::len), Some(0));
+    assert_eq!(
+        status["status"]["active_locks"].as_array().map(Vec::len),
+        Some(0)
+    );
 }
 
 #[test]
@@ -187,12 +212,16 @@ fn snapshot_registry_lru_and_touch() {
         let response = request(
             socket,
             &json!({"type": "snapshot_register", "key": key,
-                    "bytes_estimate": 1000}).to_string(),
+                    "bytes_estimate": 1000})
+            .to_string(),
         );
         assert_eq!(response["ok"], true);
     }
     let listing = request(socket, r#"{"type":"snapshots"}"#);
-    assert_eq!(listing["snapshots"]["entries"].as_array().map(Vec::len), Some(2));
+    assert_eq!(
+        listing["snapshots"]["entries"].as_array().map(Vec::len),
+        Some(2)
+    );
 
     // Touch keeps a key alive; unknown keys error.
     let touched = request(socket, r#"{"type":"snapshot_touch","key":"snap-a"}"#);
@@ -239,7 +268,8 @@ fn compile_reports_snapshot_hit_telemetry() {
     let register = request(
         &supervisor.socket,
         &json!({"type": "snapshot_register", "key": "snap-key-1",
-                "bytes_estimate": 4096}).to_string(),
+                "bytes_estimate": 4096})
+        .to_string(),
     );
     assert_eq!(register["ok"], true);
 
@@ -262,10 +292,16 @@ fn action_broker_bibtex_hit_miss_and_invalidation() {
     let _cache = free_dir("action-cache");
     let work = free_dir("action-work");
 
-    std::fs::write(work.join("refs.bib"),
-        "@book{k1, author={Alpha Author}, title={First Book}, publisher={P}, year={2001}}\n").unwrap();
-    std::fs::write(work.join("main.aux"),
-        "\\relax\n\\citation{k1}\n\\bibstyle{plain}\n\\bibdata{refs}\n\\bibcite{k1}{1}\n").unwrap();
+    std::fs::write(
+        work.join("refs.bib"),
+        "@book{k1, author={Alpha Author}, title={First Book}, publisher={P}, year={2001}}\n",
+    )
+    .unwrap();
+    std::fs::write(
+        work.join("main.aux"),
+        "\\relax\n\\citation{k1}\n\\bibstyle{plain}\n\\bibdata{refs}\n\\bibcite{k1}{1}\n",
+    )
+    .unwrap();
 
     let make_request = |_seed: usize| {
         use serde_json::json;
@@ -277,7 +313,8 @@ fn action_broker_bibtex_hit_miss_and_invalidation() {
             "inputs": ["main.aux", "refs.bib"],
             "outputs": ["main.bbl", "main.blg"],
             "request_id": 1,
-        }).to_string()
+        })
+        .to_string()
     };
 
     // Miss: exact execution through the pinned image.
@@ -309,13 +346,19 @@ fn action_broker_bibtex_hit_miss_and_invalidation() {
     eprintln!("restore time: {restore_ms} ms");
 
     // Invalidation: changed .bib produces a different key -> fresh run.
-    std::fs::write(work.join("refs.bib"),
-        "@book{k1, author={Beta Author}, title={First Book}, publisher={P}, year={2001}}\n").unwrap();
+    std::fs::write(
+        work.join("refs.bib"),
+        "@book{k1, author={Beta Author}, title={First Book}, publisher={P}, year={2001}}\n",
+    )
+    .unwrap();
     let third = request(&supervisor.socket, &make_request(3));
     assert_eq!(third["ok"], true);
     assert_eq!(third["action_result"]["cache_hit"], false);
     let bbl3 = std::fs::read_to_string(work.join("main.bbl")).unwrap();
-    assert!(bbl3.contains("Beta"), "changed bib must produce fresh output");
+    assert!(
+        bbl3.contains("Beta"),
+        "changed bib must produce fresh output"
+    );
 }
 
 #[test]
@@ -346,9 +389,7 @@ fn fork_server_worker_compiles_through_resident_engine() {
 
     let client = |payload: serde_json::Value| -> serde_json::Value {
         let mut stream = UnixStream::connect(&socket).expect("connect");
-        stream
-            .write_all(payload.to_string().as_bytes())
-            .unwrap();
+        stream.write_all(payload.to_string().as_bytes()).unwrap();
         stream.write_all(b"\n").unwrap();
         let mut reader = BufReader::new(stream);
         let mut line = String::new();
@@ -409,30 +450,48 @@ fn checkpoint_chain_put_get_evict_and_lru() {
                 })
             })
             .collect();
-        request(socket, &json!({
-            "type": "checkpoint_put", "key": key,
-            "jobname": "main", "records": records,
-        }).to_string())
+        request(
+            socket,
+            &json!({
+                "type": "checkpoint_put", "key": key,
+                "jobname": "main", "records": records,
+            })
+            .to_string(),
+        )
     };
 
     put("proj#main", &[0, 1]);
     put("proj#appendix", &[0]);
 
     // Get roundtrip preserves record order and digests.
-    let chain = request(socket, &json!({"type": "checkpoint_get", "key": "proj#main"}).to_string());
+    let chain = request(
+        socket,
+        &json!({"type": "checkpoint_get", "key": "proj#main"}).to_string(),
+    );
     assert_eq!(chain["ok"], true);
-    let pages = chain["checkpoint_chain_data"]["pages"].as_array().expect("pages");
+    let pages = chain["checkpoint_chain_data"]["pages"]
+        .as_array()
+        .expect("pages");
     assert_eq!(pages.len(), 2);
     assert_eq!(pages[0]["state_digest"], "st-proj#main-0");
 
     // Eviction removes exactly the requested chain.
-    let evicted = request(socket, &json!({"type": "checkpoint_evict", "key": "proj#appendix"}).to_string());
+    let evicted = request(
+        socket,
+        &json!({"type": "checkpoint_evict", "key": "proj#appendix"}).to_string(),
+    );
     assert_eq!(evicted["ok"], true);
-    let gone = request(socket, &json!({"type": "checkpoint_get", "key": "proj#appendix"}).to_string());
+    let gone = request(
+        socket,
+        &json!({"type": "checkpoint_get", "key": "proj#appendix"}).to_string(),
+    );
     assert_eq!(gone["ok"], false);
 
     // Unknown key errors on get.
-    let missing = request(socket, &json!({"type": "checkpoint_get", "key": "nope"}).to_string());
+    let missing = request(
+        socket,
+        &json!({"type": "checkpoint_get", "key": "nope"}).to_string(),
+    );
     assert_eq!(missing["ok"], false);
 }
 
@@ -452,7 +511,9 @@ fn checkpoint_lru_respects_max_chains() {
     let mut child = command.spawn().expect("spawn");
     let deadline = Instant::now() + Duration::from_secs(5);
     while Instant::now() < deadline {
-        if UnixStream::connect(&socket).is_ok() { break; }
+        if UnixStream::connect(&socket).is_ok() {
+            break;
+        }
         std::thread::sleep(Duration::from_millis(20));
     }
 
@@ -476,7 +537,7 @@ fn checkpoint_lru_respects_max_chains() {
 
     put("k1");
     put("k2");
-    put("k3");  // evicts k1 (LRU)
+    put("k3"); // evicts k1 (LRU)
 
     let get = |key: &str| {
         let mut stream = UnixStream::connect(&socket).unwrap();

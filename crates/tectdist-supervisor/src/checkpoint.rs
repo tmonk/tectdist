@@ -64,7 +64,10 @@ fn sorted_by_path(records: &[FileRecord]) -> Vec<&FileRecord> {
 }
 
 fn index(records: &[FileRecord]) -> BTreeMap<String, Digest> {
-    records.iter().map(|r| (r.path.clone(), r.digest.clone())).collect()
+    records
+        .iter()
+        .map(|r| (r.path.clone(), r.digest.clone()))
+        .collect()
 }
 
 /// Identifier for one stored checkpoint (opaque token minted by the worker).
@@ -97,7 +100,10 @@ pub struct CheckpointChain {
 
 impl CheckpointChain {
     pub fn new(jobname: &str) -> Self {
-        Self { jobname: jobname.to_string(), records: Vec::new() }
+        Self {
+            jobname: jobname.to_string(),
+            records: Vec::new(),
+        }
     }
 
     pub fn push(&mut self, record: CheckpointRecord) {
@@ -151,8 +157,11 @@ pub fn decide_suffix(
     // Pairwise page comparison using per-page engine state digests recorded
     // at each shipout. Old records store one entry per shipped page in
     // order; the engine recomputes equivalent digests during replay.
-    let old_page_digests: Vec<&Digest> =
-        old.records.iter().map(|record| &record.engine_state_digest).collect();
+    let old_page_digests: Vec<&Digest> = old
+        .records
+        .iter()
+        .map(|record| &record.engine_state_digest)
+        .collect();
 
     let common = old_page_digests.len().min(new_page_digests.len());
     let mut reused = 0usize;
@@ -223,17 +232,22 @@ impl AuxStateTracker {
     }
 
     /// Load aux state from maps (called by supervisor after parsing .aux).
-    pub fn load_from_maps(&mut self,
-                           labels: &BTreeMap<String, String>,
-                           citations: &BTreeMap<String, String>) {
+    pub fn load_from_maps(
+        &mut self,
+        labels: &BTreeMap<String, String>,
+        citations: &BTreeMap<String, String>,
+    ) {
         self.labels = labels.clone();
         self.citations = citations.clone();
     }
 
     /// Compare with new aux state; returns true when unchanged (no rerun
     /// needed for cross-references).
-    pub fn converged(&self, new_labels: &BTreeMap<String, String>,
-                      new_citations: &BTreeMap<String, String>) -> bool {
+    pub fn converged(
+        &self,
+        new_labels: &BTreeMap<String, String>,
+        new_citations: &BTreeMap<String, String>,
+    ) -> bool {
         self.labels == *new_labels && self.citations == *new_citations
     }
 }
@@ -285,21 +299,36 @@ mod tests {
     fn manifest_read_digest_stable_and_order_insensitive() {
         let a = BuildManifest {
             reads: vec![
-                FileRecord { path: "a.tex".into(), digest: "da".into() },
-                FileRecord { path: "b.sty".into(), digest: "db".into() },
+                FileRecord {
+                    path: "a.tex".into(),
+                    digest: "da".into(),
+                },
+                FileRecord {
+                    path: "b.sty".into(),
+                    digest: "db".into(),
+                },
             ],
             writes: vec![],
         };
         let b = BuildManifest {
             reads: vec![
-                FileRecord { path: "b.sty".into(), digest: "db".into() },
-                FileRecord { path: "a.tex".into(), digest: "da".into() },
+                FileRecord {
+                    path: "b.sty".into(),
+                    digest: "db".into(),
+                },
+                FileRecord {
+                    path: "a.tex".into(),
+                    digest: "da".into(),
+                },
             ],
             writes: vec![],
         };
         assert_eq!(a.reads_digest(), b.reads_digest());
         let c = BuildManifest {
-            reads: vec![FileRecord { path: "a.tex".into(), digest: "DIFF".into() }],
+            reads: vec![FileRecord {
+                path: "a.tex".into(),
+                digest: "DIFF".into(),
+            }],
             writes: vec![],
         };
         assert_ne!(a.reads_digest(), c.reads_digest());
@@ -378,25 +407,40 @@ mod tests {
     #[test]
     fn unchanged_inputs_yield_no_affected_checkpoint() {
         let manifest = BuildManifest {
-            reads: vec![FileRecord { path: "main.tex".into(), digest: "d1".into() }],
+            reads: vec![FileRecord {
+                path: "main.tex".into(),
+                digest: "d1".into(),
+            }],
             writes: vec![],
         };
         let mut chain = CheckpointChain::new("doc");
         chain.push(record(9, 0, "st", "ep"));
-        let unchanged = vec![FileRecord { path: "main.tex".into(), digest: "d1".into() }];
-        assert_eq!(earliest_affected_checkpoint(&manifest, &chain, &unchanged), None);
+        let unchanged = vec![FileRecord {
+            path: "main.tex".into(),
+            digest: "d1".into(),
+        }];
+        assert_eq!(
+            earliest_affected_checkpoint(&manifest, &chain, &unchanged),
+            None
+        );
     }
 
     #[test]
     fn mutated_input_maps_to_latest_checkpoint() {
         let manifest = BuildManifest {
-            reads: vec![FileRecord { path: "main.tex".into(), digest: "old".into() }],
+            reads: vec![FileRecord {
+                path: "main.tex".into(),
+                digest: "old".into(),
+            }],
             writes: vec![],
         };
         let mut chain = CheckpointChain::new("doc");
         chain.push(record(7, 0, "st", "ep"));
         chain.push(record(8, 1, "st2", "ep"));
-        let mutated = vec![FileRecord { path: "main.tex".into(), digest: "new".into() }];
+        let mutated = vec![FileRecord {
+            path: "main.tex".into(),
+            digest: "new".into(),
+        }];
         assert_eq!(
             earliest_affected_checkpoint(&manifest, &chain, &mutated),
             Some(8)
@@ -408,7 +452,10 @@ mod tests {
         let manifest = BuildManifest::default();
         let mut chain = CheckpointChain::new("doc");
         chain.push(record(5, 0, "st", "ep"));
-        let new_file = vec![FileRecord { path: "never-seen.tex".into(), digest: "d".into() }];
+        let new_file = vec![FileRecord {
+            path: "never-seen.tex".into(),
+            digest: "d".into(),
+        }];
         assert_eq!(
             earliest_affected_checkpoint(&manifest, &chain, &new_file),
             Some(5)

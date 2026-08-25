@@ -66,11 +66,7 @@ pub struct FastCompile {
 /// Returns Err(reason) when not applicable or on any build/dispatch
 /// failure; the caller escalates to the exact one-shot path, preserving
 /// BT100 semantics (plan §6.1 item 7).
-pub fn fast_compile(
-    image_root: &Path,
-    cwd: &Path,
-    argv: &[String],
-) -> Result<FastCompile, String> {
+pub fn fast_compile(image_root: &Path, cwd: &Path, argv: &[String]) -> Result<FastCompile, String> {
     let program = argv.first().ok_or("empty argv")?;
     if !ELIGIBLE_ENGINES.contains(&program.as_str()) {
         return Err(format!("engine '{program}' not eligible"));
@@ -93,8 +89,13 @@ pub fn fast_compile(
         .to_owned();
 
     let fmt_name = format!("{job_stem}-pre");
-    ensure_format(image_root, cwd, &fmt_name, &split.preamble,
-                  &digest_hex(split.preamble.as_bytes()))?;
+    ensure_format(
+        image_root,
+        cwd,
+        &fmt_name,
+        &split.preamble,
+        &digest_hex(split.preamble.as_bytes()),
+    )?;
 
     // Body file: written next to the format every time (cheap, keeps in
     // sync with source edits).
@@ -113,7 +114,10 @@ pub fn fast_compile(
             &format!("&{fmt_name}"),
         ])
         // Body lives in <cwd>/.tectdist; reference it relative to cwd.
-        .arg(format!("{FORMAT_DIR}/{}", body_file.file_name().unwrap().to_string_lossy()))
+        .arg(format!(
+            "{FORMAT_DIR}/{}",
+            body_file.file_name().unwrap().to_string_lossy()
+        ))
         .current_dir(cwd)
         .env("TEXMFROOT", image_root)
         .env(
@@ -197,7 +201,10 @@ fn ensure_format(
             "PATH",
             format!(
                 "{}:{}",
-                binary.parent().map(|p| p.display().to_string()).unwrap_or_default(),
+                binary
+                    .parent()
+                    .map(|p| p.display().to_string())
+                    .unwrap_or_default(),
                 std::env::var("PATH").unwrap_or_default()
             ),
         )
@@ -240,10 +247,8 @@ fn engine_binary(image_root: &Path) -> Result<std::path::PathBuf, String> {
     // changes dump semantics.
     candidates.sort_by_key(|path| {
         (
-            path.file_name().and_then(|n| n.to_str()).unwrap_or("")
-                == "universal-darwin",
-            path.file_name().and_then(|n| n.to_str()).unwrap_or("")
-                == "forkproto",
+            path.file_name().and_then(|n| n.to_str()).unwrap_or("") == "universal-darwin",
+            path.file_name().and_then(|n| n.to_str()).unwrap_or("") == "forkproto",
         )
     });
     candidates

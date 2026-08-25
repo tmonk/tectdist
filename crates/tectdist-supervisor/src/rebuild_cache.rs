@@ -22,7 +22,9 @@ pub struct RebuildCache {
 
 impl RebuildCache {
     pub fn new() -> Self {
-        Self { inner: Mutex::new(HashMap::new()) }
+        Self {
+            inner: Mutex::new(HashMap::new()),
+        }
     }
 
     fn key(cwd: &Path, jobname: &str) -> String {
@@ -40,17 +42,21 @@ impl RebuildCache {
     pub fn snapshot_inputs(dir: &Path) -> Vec<(String, String)> {
         let mut entries = Vec::new();
         if let Ok(readings) = std::fs::read_dir(dir) {
-            let mut paths: Vec<_> = readings.flatten()
+            let mut paths: Vec<_> = readings
+                .flatten()
                 .map(|e| e.path())
                 .filter(|p| p.is_file())
-                .filter(|p| matches!(
-                    p.extension().and_then(|e| e.to_str()),
-                    Some("tex") | Some("bib") | Some("ist") | Some("cls") | Some("sty")
-                ))
+                .filter(|p| {
+                    matches!(
+                        p.extension().and_then(|e| e.to_str()),
+                        Some("tex") | Some("bib") | Some("ist") | Some("cls") | Some("sty")
+                    )
+                })
                 .collect();
             paths.sort();
             for path in paths {
-                let name = path.file_name()
+                let name = path
+                    .file_name()
                     .map(|n| n.to_string_lossy().into_owned())
                     .unwrap_or_default();
                 if let Some(digest) = Self::file_digest(&path) {
@@ -76,24 +82,24 @@ impl RebuildCache {
         let entry = cache.get(&Self::key(cwd, jobname))?;
 
         // Verify output digest.
-        if entry.output_digest != output_digest { return None; }
+        if entry.output_digest != output_digest {
+            return None;
+        }
 
         // Verify all input digests match.
         for (name, old_digest) in &entry.inputs {
             let current = Path::new(cwd).join(name);
             let bytes = std::fs::read(&current).ok()?;
             let current_digest = sha256_hex(&bytes);
-            if current_digest != *old_digest { return None; }
+            if current_digest != *old_digest {
+                return None;
+            }
         }
         Some(pdf_path)
     }
 
     /// Record a successful build's input/output digests.
-    pub fn record_build(
-        cache: &Mutex<HashMap<String, CachedBuild>>,
-        cwd: &Path,
-        jobname: &str,
-    ) {
+    pub fn record_build(cache: &Mutex<HashMap<String, CachedBuild>>, cwd: &Path, jobname: &str) {
         let inputs = Self::snapshot_inputs(cwd);
         let pdf_path = cwd.join(format!("{jobname}.pdf"));
         let output_digest = match std::fs::read(&pdf_path) {
@@ -102,7 +108,13 @@ impl RebuildCache {
         };
         let key = Self::key(cwd, jobname);
         if let Ok(mut cache) = cache.lock() {
-            cache.insert(key, CachedBuild { output_digest, inputs });
+            cache.insert(
+                key,
+                CachedBuild {
+                    output_digest,
+                    inputs,
+                },
+            );
         }
     }
 }

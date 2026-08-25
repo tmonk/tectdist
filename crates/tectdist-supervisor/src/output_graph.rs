@@ -48,7 +48,10 @@ impl ObjectKind {
 
 impl LogicalId {
     pub fn new(kind: ObjectKind, key: impl Into<String>) -> Self {
-        Self { kind, key: key.into() }
+        Self {
+            kind,
+            key: key.into(),
+        }
     }
 }
 
@@ -143,8 +146,7 @@ pub fn plan_assembly(
             }
         }
         None => {
-            plan.regenerated_resources =
-                new_resources.keys().cloned().collect();
+            plan.regenerated_resources = new_resources.keys().cloned().collect();
         }
     }
 
@@ -186,7 +188,10 @@ mod tests {
         PageEntry {
             page_id: LogicalId::new(ObjectKind::Page, id_key),
             content_digest: digest.into(),
-            resource_ids: res.iter().map(|r| LogicalId::new(ObjectKind::FontProgram, *r)).collect(),
+            resource_ids: res
+                .iter()
+                .map(|r| LogicalId::new(ObjectKind::FontProgram, *r))
+                .collect(),
         }
     }
 
@@ -300,15 +305,9 @@ mod tests {
     #[test]
     fn deterministic_ordering_regardless_of_input_order() {
         let mut previous = OutputGraph::default();
-        previous.pages = vec![
-            page("p0", "d0", &[]),
-            page("p1", "d1", &[]),
-        ];
+        previous.pages = vec![page("p0", "d0", &[]), page("p1", "d1", &[])];
         // Reverse input order.
-        let new_pages = vec![
-            page("p1", "CHANGED-B", &[]),
-            page("p0", "CHANGED-A", &[]),
-        ];
+        let new_pages = vec![page("p1", "CHANGED-B", &[]), page("p0", "CHANGED-A", &[])];
         let new_resources = BTreeMap::new();
         let plan = plan_assembly(Some(&previous), &new_pages, &new_resources);
         // Positions are positional, not keyed: both diverge.
@@ -316,4 +315,3 @@ mod tests {
         assert!(plan.reused_pages.is_empty());
     }
 }
-

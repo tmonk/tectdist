@@ -16,10 +16,11 @@
 //! Responses carry `"ok"` plus payload fields; every response echoes
 //! `"request_id"` when the request supplied one.
 mod checkpoint;
-mod rebuild_cache;
 mod output_graph;
 mod output_store;
 mod project_format;
+mod rebuild_cache;
+mod rebuild_gate;
 use checkpoint::{CheckpointChain, CheckpointRecord};
 
 use serde::{Deserialize, Serialize};
@@ -36,9 +37,15 @@ const PROTOCOL_VERSION: u32 = 1;
 #[derive(Debug, Deserialize)]
 #[serde(tag = "type", rename_all = "snake_case")]
 enum Request {
-    Ping { request_id: Option<u64> },
-    Status { request_id: Option<u64> },
-    Shutdown { request_id: Option<u64> },
+    Ping {
+        request_id: Option<u64>,
+    },
+    Status {
+        request_id: Option<u64>,
+    },
+    Shutdown {
+        request_id: Option<u64>,
+    },
     Compile {
         request_id: Option<u64>,
         profile: String,
@@ -119,6 +126,8 @@ enum Payload {
         compiles_started: u64,
         compiles_succeeded: u64,
         compiles_failed: u64,
+        #[serde(default)]
+        compiles_cache_hits: u64,
         active_locks: Vec<String>,
     },
     CompileAccepted {
@@ -186,6 +195,9 @@ struct SupervisorState {
     compiles_started: AtomicU64,
     compiles_succeeded: AtomicU64,
     compiles_failed: AtomicU64,
+    /// Compiles served from the unchanged-rebuild cache without running
+    /// an engine (plan X4 / X10-E scenario 1).
+    compiles_cache_hits: AtomicU64,
     /// Project locks keyed by canonicalised project path.
     project_locks: Mutex<HashMap<PathBuf, u64>>,
     /// Preamble-snapshot registry (plan X2 scaffold): keys with LRU eviction
@@ -223,16 +235,16 @@ impl SupervisorState {
             .unwrap_or(0);
         let candidate = (metadata.len(), mtime);
         let mut cache = self.tool_digests.lock().expect("tool digests poisoned");
-        if let Some((cached_size, cached_mtime, cached_digest)) =
-            cache.get(binary)
-        {
+        if let Some((cached_size, cached_mtime, cached_digest)) = cache.get(binary) {
             if *cached_size == candidate.0 && *cached_mtime == candidate.1 {
                 return Ok(cached_digest.clone());
             }
         }
         let digest = sha256_file(binary)?;
-        cache
-            .insert(binary.to_path_buf(), (candidate.0, candidate.1, digest.clone()));
+        cache.insert(
+            binary.to_path_buf(),
+            (candidate.0, candidate.1, digest.clone()),
+        );
         Ok(digest)
     }
 }
@@ -249,8 +261,7 @@ impl SupervisorState {
             .ok()
             .and_then(|value| value.parse().ok())
             .unwrap_or(32);
-        let use_forkserver =
-            std::env::var("TECTDIST_USE_FORKSERVER").as_deref() == Ok("1");
+        let use_forkserver = std::env::var("TECTDIST_USE_FORKSERVER").as_deref() == Ok("1");
         let checkpoint_max_chains = std::env::var("TECTDIST_CHECKPOINT_MAX")
             .ok()
             .and_then(|value| value.parse().ok())
@@ -266,15 +277,14 @@ impl SupervisorState {
                 .ok()
                 .and_then(|value| value.parse().ok())
                 .unwrap_or(32),
-            image_root: PathBuf::from(
-                std::env::var("TECTDIST_BASICTEX_ROOT").unwrap_or_default(),
-            ),
+            image_root: PathBuf::from(std::env::var("TECTDIST_BASICTEX_ROOT").unwrap_or_default()),
             aux_tracker: Mutex::new(checkpoint::AuxStateTracker::new()),
             rebuild_cache: rebuild_cache::RebuildCache::new(),
             started: std::time::Instant::now(),
             compiles_started: AtomicU64::new(0),
             compiles_succeeded: AtomicU64::new(0),
             compiles_failed: AtomicU64::new(0),
+            compiles_cache_hits: AtomicU64::new(0),
             project_locks: Mutex::new(HashMap::new()),
             snapshots: Mutex::new(HashMap::new()),
         }
@@ -282,15 +292,14 @@ impl SupervisorState {
 
     /// Register or refresh a snapshot key; evict least-recently-used entries
     /// beyond the configured limit. Returns evicted keys for telemetry.
-    fn snapshot_register(
-        &self,
-        key: &str,
-        bytes_estimate: u64,
-    ) -> Vec<String> {
+    fn snapshot_register(&self, key: &str, bytes_estimate: u64) -> Vec<String> {
         let mut snapshots = self.snapshots.lock().expect("snapshots poisoned");
         snapshots.insert(
             key.to_string(),
-            SnapshotRecord { bytes_estimate, last_used: std::time::Instant::now() },
+            SnapshotRecord {
+                bytes_estimate,
+                last_used: std::time::Instant::now(),
+            },
         );
         let mut evicted = Vec::new();
         while snapshots.len() > self.snapshot_max_entries {
@@ -310,7 +319,12 @@ impl SupervisorState {
     }
 
     fn snapshot_touch(&self, key: &str) -> bool {
-        match self.snapshots.lock().expect("snapshots poisoned").get_mut(key) {
+        match self
+            .snapshots
+            .lock()
+            .expect("snapshots poisoned")
+            .get_mut(key)
+        {
             Some(record) => {
                 record.last_used = std::time::Instant::now();
                 true
@@ -320,7 +334,11 @@ impl SupervisorState {
     }
 
     fn snapshot_release(&self, key: &str) -> bool {
-        self.snapshots.lock().expect("snapshots poisoned").remove(key).is_some()
+        self.snapshots
+            .lock()
+            .expect("snapshots poisoned")
+            .remove(key)
+            .is_some()
     }
 
     fn snapshot_list(&self) -> Vec<SnapshotEntry> {
@@ -344,9 +362,17 @@ impl SupervisorState {
             compiles_started: self.compiles_started.load(Ordering::Relaxed),
             compiles_succeeded: self.compiles_succeeded.load(Ordering::Relaxed),
             compiles_failed: self.compiles_failed.load(Ordering::Relaxed),
-            active_locks: self.project_locks.lock().map(|locks| {
-                locks.keys().map(|path| path.display().to_string()).collect()
-            }).unwrap_or_default(),
+            compiles_cache_hits: self.compiles_cache_hits.load(Ordering::Relaxed),
+            active_locks: self
+                .project_locks
+                .lock()
+                .map(|locks| {
+                    locks
+                        .keys()
+                        .map(|path| path.display().to_string())
+                        .collect()
+                })
+                .unwrap_or_default(),
         }
     }
 
@@ -354,7 +380,9 @@ impl SupervisorState {
     /// while isolating distinct projects from each other.
     fn acquire_lock(&self, project: &Path) -> Result<(), String> {
         let mut locks = self.project_locks.lock().map_err(|_| "lock poisoned")?;
-        let key = project.canonicalize().unwrap_or_else(|_| project.to_path_buf());
+        let key = project
+            .canonicalize()
+            .unwrap_or_else(|_| project.to_path_buf());
         if locks.contains_key(&key) {
             return Err(format!(
                 "project {} already has an active build",
@@ -367,13 +395,13 @@ impl SupervisorState {
 
     fn release_lock(&self, project: &Path) {
         if let Ok(mut locks) = self.project_locks.lock() {
-            let key = project.canonicalize().unwrap_or_else(|_| project.to_path_buf());
+            let key = project
+                .canonicalize()
+                .unwrap_or_else(|_| project.to_path_buf());
             locks.remove(&key);
         }
     }
 }
-
-
 
 // ------------------------------------------------------------------
 // Exact-engine fork-server worker (plan X1): resident pdfTeX holding the
@@ -405,8 +433,7 @@ impl EngineWorker {
         if !binary.is_file() {
             return Err(format!("fork-server binary missing: {}", binary.display()));
         }
-        let base_format = image_root
-            .join("texmf-var/web2c/pdftex/latex.fmt");
+        let base_format = image_root.join("texmf-var/web2c/pdftex/latex.fmt");
         if !base_format.is_file() {
             return Err("image lacks texmf-var/web2c/pdftex/latex.fmt".to_string());
         }
@@ -432,9 +459,7 @@ impl EngineWorker {
         let deadline = std::time::Instant::now() + std::time::Duration::from_secs(5);
         loop {
             if self.socket.exists() {
-                if let Some(status) = self.child.try_wait()
-                    .map_err(|e| e.to_string())?
-                {
+                if let Some(status) = self.child.try_wait().map_err(|e| e.to_string())? {
                     return Err(format!("fork server exited early: {status}"));
                 }
                 return Ok(());
@@ -480,9 +505,7 @@ impl EngineWorker {
                 }
             }
         }
-        let mut stream = stream.ok_or_else(|| {
-            format!("connect engine: {last_error}")
-        })?;
+        let mut stream = stream.ok_or_else(|| format!("connect engine: {last_error}"))?;
         stream
             .write_all(format!("compile {job}\n").as_bytes())
             .map_err(|e| e.to_string())?;
@@ -549,11 +572,7 @@ impl SupervisorState {
 
     /// Insert or replace a chain; evicts the least-recently-used chain beyond
     /// the configured limit. Returns evicted keys for telemetry.
-    fn checkpoint_chain_put(
-        &self,
-        key: String,
-        chain: CheckpointChain,
-    ) -> Vec<String> {
+    fn checkpoint_chain_put(&self, key: String, chain: CheckpointChain) -> Vec<String> {
         let mut chains = self.checkpoint_chains.lock().expect("checkpoints poisoned");
         let mut order = self.checkpoint_chain_order.lock().expect("order poisoned");
         order.retain(|existing| existing != &key);
@@ -645,10 +664,9 @@ fn run_action(
 
     // Cache hit: restore declared outputs atomically.
     if meta_path.is_file() {
-        let meta: serde_json::Value = serde_json::from_str(
-            &std::fs::read_to_string(&meta_path).map_err(|e| e.to_string())?,
-        )
-        .map_err(|e| e.to_string())?;
+        let meta: serde_json::Value =
+            serde_json::from_str(&std::fs::read_to_string(&meta_path).map_err(|e| e.to_string())?)
+                .map_err(|e| e.to_string())?;
         let exit_status = meta["exit_status"].as_i64().unwrap_or(1) as i32;
         for output in outputs {
             let cached = cache_dir.join(output);
@@ -723,7 +741,9 @@ fn handle_request(
             ok: true,
             request_id,
             error: None,
-            payload: Payload::Pong { protocol_version: PROTOCOL_VERSION },
+            payload: Payload::Pong {
+                protocol_version: PROTOCOL_VERSION,
+            },
         },
         Request::Status { request_id } => Response {
             ok: true,
@@ -749,7 +769,11 @@ fn handle_request(
                 evicted: Vec::new(),
             },
         },
-        Request::SnapshotRegister { request_id, key, bytes_estimate } => {
+        Request::SnapshotRegister {
+            request_id,
+            key,
+            bytes_estimate,
+        } => {
             let evicted = state.snapshot_register(&key, bytes_estimate);
             Response {
                 ok: true,
@@ -766,7 +790,11 @@ fn handle_request(
             Response {
                 ok: found,
                 request_id,
-                error: if found { None } else { Some("unknown snapshot key".into()) },
+                error: if found {
+                    None
+                } else {
+                    Some("unknown snapshot key".into())
+                },
                 payload: Payload::Empty,
             }
         }
@@ -775,7 +803,11 @@ fn handle_request(
             Response {
                 ok: found,
                 request_id,
-                error: if found { None } else { Some("unknown snapshot key".into()) },
+                error: if found {
+                    None
+                } else {
+                    Some("unknown snapshot key".into())
+                },
                 payload: Payload::Empty,
             }
         }
@@ -801,33 +833,31 @@ fn handle_request(
                 },
             }
         }
-        Request::CheckpointGet { request_id, key } => {
-            match state.checkpoint_chain_get(&key) {
-                Some(chain) => Response {
-                    ok: true,
-                    request_id,
-                    error: None,
-                    payload: Payload::CheckpointChainData {
-                        jobname: chain.jobname,
-                        pages: chain
-                            .records
-                            .iter()
-                            .map(|record| CheckpointPageSummary {
-                                sequence: record.sequence,
-                                state_digest: record.engine_state_digest.clone(),
-                            })
-                            .collect(),
-                        evicted_keys: Vec::new(),
-                    },
+        Request::CheckpointGet { request_id, key } => match state.checkpoint_chain_get(&key) {
+            Some(chain) => Response {
+                ok: true,
+                request_id,
+                error: None,
+                payload: Payload::CheckpointChainData {
+                    jobname: chain.jobname,
+                    pages: chain
+                        .records
+                        .iter()
+                        .map(|record| CheckpointPageSummary {
+                            sequence: record.sequence,
+                            state_digest: record.engine_state_digest.clone(),
+                        })
+                        .collect(),
+                    evicted_keys: Vec::new(),
                 },
-                None => Response {
-                    ok: false,
-                    request_id,
-                    error: Some("unknown checkpoint chain".into()),
-                    payload: Payload::Empty,
-                },
-            }
-        }
+            },
+            None => Response {
+                ok: false,
+                request_id,
+                error: Some("unknown checkpoint chain".into()),
+                payload: Payload::Empty,
+            },
+        },
         Request::CheckpointEvict { request_id, key } => {
             let evicted = state.checkpoint_chain_evict(&key);
             Response {
@@ -841,10 +871,16 @@ fn handle_request(
                 payload: Payload::Empty,
             }
         }
-        Request::Action { request_id, tool, cwd, argv, inputs, outputs } => {
+        Request::Action {
+            request_id,
+            tool,
+            cwd,
+            argv,
+            inputs,
+            outputs,
+        } => {
             let started = std::time::Instant::now();
-            match run_action(state, &tool, &cwd, &argv, &inputs, &outputs)
-            {
+            match run_action(state, &tool, &cwd, &argv, &inputs, &outputs) {
                 Ok((cache_hit, exit_status)) => Response {
                     ok: true,
                     request_id,
@@ -864,12 +900,18 @@ fn handle_request(
                 },
             }
         }
-        Request::Compile { request_id, profile, argv, cwd, job, snapshot_key } => {
+        Request::Compile {
+            request_id,
+            profile,
+            argv,
+            cwd,
+            job,
+            snapshot_key,
+        } => {
             state.compiles_started.fetch_add(1, Ordering::Relaxed);
             // Snapshot keys participate in telemetry now; workers consume the
             // actual COW parent in milestone X2.
-            let snapshot_hit =
-                snapshot_key.as_ref().map(|key| state.snapshot_touch(key));
+            let snapshot_hit = snapshot_key.as_ref().map(|key| state.snapshot_touch(key));
             if let Err(error) = state.acquire_lock(&cwd) {
                 state.compiles_failed.fetch_add(1, Ordering::Relaxed);
                 return Response {
@@ -879,45 +921,56 @@ fn handle_request(
                     payload: Payload::Empty,
                 };
             }
-            // Milestone X2 fast path first (largest measured win, ~2x on
-            // preamble-heavy documents): build/reuse a per-project preamble
-            // format and compile the paired body. Not applicable or any
-            // failure escalates to the X1 fork server, then the exact
-            // one-shot path — preserving BT100 (plan §6.1 item 7).
-            let mut outcome = if profile == "basictex-2026" {
-                match project_format::fast_compile(&state.image_root, &cwd, &argv)
-                {
-                    Ok(fast) => Ok((fast.exit_status, fast.duration_ms)),
-                    Err(error) => {
-                        eprintln!(
-                            "supervisor: project format not used ({error}); trying fork server"
-                        );
-                        let job = derive_job_name(&argv, &cwd);
-                        if state.use_forkserver {
-                            match state.forkserver_compile(&cwd, &job) {
-                                Ok((exit_status, duration_ms)) => {
-                                    Ok((exit_status, duration_ms))
-                                }
-                                Err(error) => {
-                                    eprintln!(
-                                        "supervisor: fork server unavailable ({error}); using one-shot execution"
+            // Compile chain, fastest first, every escalation logged:
+            // X4 unchanged-rebuild gate -> X2 project format -> X1 fork
+            // server -> exact one-shot. BT100 preserved by design (plan
+            // §6.1 item 7): any non-applicability or failure falls
+            // through to exact execution.
+            let mut outcome = match rebuild_gate::try_cached(state, &cwd, &argv) {
+                Some(hit) => {
+                    state.compiles_cache_hits.fetch_add(1, Ordering::Relaxed);
+                    Ok(hit)
+                }
+                None => {
+                    let job = derive_job_name(&argv, &cwd);
+                    let attempted = if profile == "basictex-2026" {
+                        match project_format::fast_compile(&state.image_root, &cwd, &argv) {
+                            Ok(fast) => Ok((fast.exit_status, fast.duration_ms)),
+                            Err(error) => {
+                                eprintln!(
+                                        "supervisor: project format not used ({error}); trying fork server"
                                     );
+                                if state.use_forkserver {
+                                    match state.forkserver_compile(&cwd, &job) {
+                                        Ok((code, ms)) => Ok((code, ms)),
+                                        Err(error) => {
+                                            eprintln!(
+                                                    "supervisor: fork server unavailable ({error}); using one-shot execution"
+                                                );
+                                            run_profile_compile(&profile, &argv, &cwd)
+                                        }
+                                    }
+                                } else {
                                     run_profile_compile(&profile, &argv, &cwd)
                                 }
                             }
-                        } else {
-                            run_profile_compile(&profile, &argv, &cwd)
                         }
-                    }
+                    } else {
+                        run_profile_compile(&profile, &argv, &cwd)
+                    };
+                    // Cache-hit telemetry only counts real skips.
+                    attempted
                 }
-            } else {
-                run_profile_compile(&profile, &argv, &cwd)
             };
             state.release_lock(&cwd);
             // Record checkpoint chain after each successful compile (plan
             // §12: every completed build produces a manifest for dependency-
             // to-checkpoint mapping on future compiles).
-            if outcome.as_ref().map(|(code, _)| *code == 0).unwrap_or(false) {
+            if outcome
+                .as_ref()
+                .map(|(code, _)| *code == 0)
+                .unwrap_or(false)
+            {
                 let jobname = derive_job_name(&argv, &cwd);
                 let files = snapshot_project_files(&cwd);
                 let chain_key = format!("{}#{}", cwd.display(), jobname);
@@ -976,7 +1029,7 @@ fn handle_request(
 /// engine/tool; the remainder are forwarded unchanged.
 /// Derive the job source file from compile argv (last .tex argument),
 /// falling back to a directory scan.
-fn derive_job_name(argv: &[String], cwd: &Path) -> String {
+pub(crate) fn derive_job_name(argv: &[String], cwd: &Path) -> String {
     for argument in argv.iter().rev() {
         let text = argument.clone();
         if text.ends_with(".tex") && !text.contains('=') {
@@ -1002,11 +1055,7 @@ fn derive_job_name(argv: &[String], cwd: &Path) -> String {
 impl SupervisorState {
     /// Route one compile through the resident fork-server engine, spawning it
     /// on first use. Returns None when the fast path is disabled.
-    fn forkserver_compile(
-        &self,
-        cwd: &Path,
-        job: &str,
-    ) -> Result<(i32, u64), String> {
+    fn forkserver_compile(&self, cwd: &Path, job: &str) -> Result<(i32, u64), String> {
         let mut guard = self.engine_worker.lock().expect("engine worker poisoned");
         if guard.is_none() {
             *guard = Some(EngineWorker::spawn(&self.image_root, cwd)?);
@@ -1049,13 +1098,17 @@ fn run_profile_compile(profile: &str, argv: &[String], cwd: &Path) -> Result<(i3
     // digests match the last successful build AND a valid output PDF exists,
     // return immediately without recompiling. Content digests only — never
     // mtime (plan §12: metadata is only a cheap candidate filter).
-    let jobname = argv.iter().rev()
+    let jobname = argv
+        .iter()
+        .rev()
         .find_map(|arg| {
             let text = arg.as_str();
-            text.ends_with(".tex")
-                .then(|| PathBuf::from(&*text).file_stem()
+            text.ends_with(".tex").then(|| {
+                PathBuf::from(&*text)
+                    .file_stem()
                     .map(|stem| stem.to_string_lossy().into_owned())
-                    .unwrap_or_else(|| text.to_string()))
+                    .unwrap_or_else(|| text.to_string())
+            })
         })
         .unwrap_or_else(|| "main".to_string());
     let pdf_path = cwd.join(format!("{jobname}.pdf"));
@@ -1069,7 +1122,9 @@ fn run_profile_compile(profile: &str, argv: &[String], cwd: &Path) -> Result<(i3
         // Check all .tex/.bib/.ist inputs against stored digests.
         let mut unchanged = true;
         for entry in std::fs::read_dir(cwd).into_iter().flatten().flatten() {
-            let ext = entry.path().extension()
+            let ext = entry
+                .path()
+                .extension()
                 .map(|e| e.to_string_lossy().into_owned())
                 .unwrap_or_default();
             if !matches!(ext.as_str(), "tex" | "bib" | "ist" | "cls" | "sty") {
@@ -1140,14 +1195,16 @@ fn run_profile_compile(profile: &str, argv: &[String], cwd: &Path) -> Result<(i3
         writes.sort();
     }
 
-
-    Ok((status.code().unwrap_or(128), start.elapsed().as_millis() as u64))
+    Ok((
+        status.code().unwrap_or(128),
+        start.elapsed().as_millis() as u64,
+    ))
 }
 
 /// Compute a content digest over a set of (name, digest) pairs.
 
 /// Snapshot all files in a directory (name → sha256) for the build manifest.
-fn snapshot_project_files(cwd: &Path) -> Vec<(String, String)> {
+pub(crate) fn snapshot_project_files(cwd: &Path) -> Vec<(String, String)> {
     let mut entries = Vec::new();
     if let Ok(dir_entries) = std::fs::read_dir(cwd) {
         for entry in dir_entries.flatten() {
@@ -1155,7 +1212,8 @@ fn snapshot_project_files(cwd: &Path) -> Vec<(String, String)> {
             if !path.is_file() {
                 continue;
             }
-            let name = path.file_name()
+            let name = path
+                .file_name()
                 .map(|n| n.to_string_lossy().into_owned())
                 .unwrap_or_default();
             if let Ok(bytes) = std::fs::read(&path) {
@@ -1179,8 +1237,7 @@ fn socket_path() -> PathBuf {
         return PathBuf::from(explicit);
     }
     let tmp = std::env::var("TMPDIR").unwrap_or_else(|_| "/tmp".to_string());
-    let dir = PathBuf::from(tmp)
-        .join(format!(".tectdist-{}", unsafe { libc_getuid() }));
+    let dir = PathBuf::from(tmp).join(format!(".tectdist-{}", unsafe { libc_getuid() }));
     let _ = std::fs::create_dir_all(&dir);
     dir.join("supervisor.sock")
 }
@@ -1257,12 +1314,15 @@ fn serve(socket: &Path) -> Result<(), String> {
                         }
                     }
                     Err(error) => {
-                        respond(&mut writer, &Response {
-                            ok: false,
-                            request_id: None,
-                            error: Some(format!("bad request: {error}")),
-                            payload: Payload::Empty,
-                        });
+                        respond(
+                            &mut writer,
+                            &Response {
+                                ok: false,
+                                request_id: None,
+                                error: Some(format!("bad request: {error}")),
+                                payload: Payload::Empty,
+                            },
+                        );
                     }
                 }
             }
@@ -1274,14 +1334,18 @@ fn serve(socket: &Path) -> Result<(), String> {
 }
 
 fn client_send(request: &serde_json::Value) -> Result<serde_json::Value, String> {
-    let mut stream = UnixStream::connect(socket_path())
-        .map_err(|_| "supervisor not running".to_string())?;
+    let mut stream =
+        UnixStream::connect(socket_path()).map_err(|_| "supervisor not running".to_string())?;
     let mut line = serde_json::to_string(request).expect("serialise");
     line.push('\n');
-    stream.write_all(line.as_bytes()).map_err(|e| e.to_string())?;
+    stream
+        .write_all(line.as_bytes())
+        .map_err(|e| e.to_string())?;
     let mut reader = BufReader::new(stream);
     let mut response_line = String::new();
-    reader.read_line(&mut response_line).map_err(|e| e.to_string())?;
+    reader
+        .read_line(&mut response_line)
+        .map_err(|e| e.to_string())?;
     serde_json::from_str(&response_line).map_err(|e| e.to_string())
 }
 
@@ -1294,33 +1358,27 @@ fn main() {
                 std::process::exit(1);
             }
         }
-        Some("ping") => {
-            match client_send(&serde_json::json!({"type": "ping"})) {
-                Ok(response) => println!("{response}"),
-                Err(error) => {
-                    eprintln!("supervisor: {error}");
-                    std::process::exit(1);
-                }
+        Some("ping") => match client_send(&serde_json::json!({"type": "ping"})) {
+            Ok(response) => println!("{response}"),
+            Err(error) => {
+                eprintln!("supervisor: {error}");
+                std::process::exit(1);
             }
-        }
-        Some("status") => {
-            match client_send(&serde_json::json!({"type": "status"})) {
-                Ok(response) => println!("{response}"),
-                Err(error) => {
-                    eprintln!("supervisor: {error}");
-                    std::process::exit(1);
-                }
+        },
+        Some("status") => match client_send(&serde_json::json!({"type": "status"})) {
+            Ok(response) => println!("{response}"),
+            Err(error) => {
+                eprintln!("supervisor: {error}");
+                std::process::exit(1);
             }
-        }
-        Some("shutdown") => {
-            match client_send(&serde_json::json!({"type": "shutdown"})) {
-                Ok(_) => {}
-                Err(error) => {
-                    eprintln!("supervisor: {error}");
-                    std::process::exit(1);
-                }
+        },
+        Some("shutdown") => match client_send(&serde_json::json!({"type": "shutdown"})) {
+            Ok(_) => {}
+            Err(error) => {
+                eprintln!("supervisor: {error}");
+                std::process::exit(1);
             }
-        }
+        },
         Some("compile") => {
             // compile <profile> <cwd> <program> [args...]
             let profile = arguments.get(1).cloned().unwrap_or_default();
