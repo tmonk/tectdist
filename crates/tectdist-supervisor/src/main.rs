@@ -889,6 +889,31 @@ fn handle_request(
                 run_profile_compile(&profile, &argv, &cwd)
             };
             state.release_lock(&cwd);
+            // Record checkpoint chain after each successful compile (plan
+            // §12: every completed build produces a manifest for dependency-
+            // to-checkpoint mapping on future compiles).
+            if outcome.as_ref().map(|(code, _)| *code == 0).unwrap_or(false) {
+                let jobname = derive_job_name(&argv, &cwd);
+                let files = snapshot_project_files(&cwd);
+                let chain_key = format!("{}#{}", cwd.display(), jobname);
+                let records: Vec<checkpoint::CheckpointRecord> = files
+                    .iter()
+                    .enumerate()
+                    .map(|(index, (name, digest))| checkpoint::CheckpointRecord {
+                        id: index as u64,
+                        sequence: index as u64,
+                        engine_state_digest: digest.clone(),
+                        dependency_epoch: digest.clone(),
+                        auxiliary_state_digest: String::new(),
+                        shipped_pages: vec![name.clone()],
+                    })
+                    .collect();
+                let mut chain = checkpoint::CheckpointChain::new(&jobname);
+                for record in records {
+                    chain.push(record);
+                }
+                state.checkpoint_chain_put(chain_key, chain);
+            }
             match outcome {
                 Ok((exit_status, duration_ms)) => {
                     if exit_status == 0 {
