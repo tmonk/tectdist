@@ -2,7 +2,7 @@
   "counters": {
     "no-style": 0,
     "standalone-fail": 53,
-    "standalone-pass": 106
+    "standalone-pass": 142
   },
   "interactions_image_sha256": "395f0b4d7ce47684c021e8734421bd530206e58a96949cb6103a6333ad2b36b6",
   "results": [
@@ -46,6 +46,12 @@
     },
     {
       "exit": 0,
+      "package": "atbegshi",
+      "style": "atbegshi",
+      "verdict": "standalone-pass"
+    },
+    {
+      "exit": 0,
       "package": "attachfile2",
       "style": "attachfile2",
       "verdict": "standalone-pass"
@@ -54,6 +60,12 @@
       "exit": 0,
       "package": "atveryend",
       "style": "atveryend",
+      "verdict": "standalone-pass"
+    },
+    {
+      "exit": 0,
+      "package": "auxhook",
+      "style": "auxhook",
       "verdict": "standalone-pass"
     },
     {
@@ -123,6 +135,12 @@
     },
     {
       "exit": 0,
+      "package": "bigintcalc",
+      "style": "bigintcalc",
+      "verdict": "standalone-pass"
+    },
+    {
+      "exit": 0,
       "package": "bitset",
       "style": "bitset",
       "verdict": "standalone-pass"
@@ -174,6 +192,18 @@
       "exit": 0,
       "package": "cmap",
       "style": "cmap",
+      "verdict": "standalone-pass"
+    },
+    {
+      "exit": 0,
+      "package": "colorprofiles",
+      "style": "colorprofiles",
+      "verdict": "standalone-pass"
+    },
+    {
+      "exit": 0,
+      "package": "colortbl",
+      "style": "colortbl",
       "verdict": "standalone-pass"
     },
     {
@@ -229,6 +259,18 @@
     },
     {
       "exit": 0,
+      "package": "etex-pkg",
+      "style": "etex",
+      "verdict": "standalone-pass"
+    },
+    {
+      "exit": 0,
+      "package": "etexcmds",
+      "style": "etexcmds",
+      "verdict": "standalone-pass"
+    },
+    {
+      "exit": 0,
       "package": "etoolbox",
       "style": "etoolbox",
       "verdict": "standalone-pass"
@@ -247,6 +289,12 @@
     },
     {
       "exit": 0,
+      "package": "everysel",
+      "style": "everysel",
+      "verdict": "standalone-pass"
+    },
+    {
+      "exit": 0,
       "package": "everyshi",
       "style": "everyshi",
       "verdict": "standalone-pass"
@@ -261,6 +309,12 @@
       "exit": 0,
       "package": "fancybox",
       "style": "fancybox",
+      "verdict": "standalone-pass"
+    },
+    {
+      "exit": 0,
+      "package": "fancyhdr",
+      "style": "extramarks",
       "verdict": "standalone-pass"
     },
     {
@@ -291,6 +345,12 @@
       "exit": 0,
       "package": "filehook",
       "style": "filehook",
+      "verdict": "standalone-pass"
+    },
+    {
+      "exit": 0,
+      "package": "firstaid",
+      "style": "filehook-ltx",
       "verdict": "standalone-pass"
     },
     {
@@ -347,6 +407,12 @@
     },
     {
       "exit": 0,
+      "package": "geometry",
+      "style": "geometry",
+      "verdict": "standalone-pass"
+    },
+    {
+      "exit": 0,
       "package": "gettitlestring",
       "style": "gettitlestring",
       "verdict": "standalone-pass"
@@ -389,6 +455,12 @@
       "verdict": "standalone-pass"
     },
     {
+      "exit": 0,
+      "package": "hycolor",
+      "style": "hycolor",
+      "verdict": "standalone-pass"
+    },
+    {
       "error": "! Package hypcap Error: You have to load 'hyperref' first.",
       "exit": 1,
       "package": "hypcap",
@@ -407,6 +479,12 @@
       "package": "ifplatform",
       "style": "ifplatform",
       "verdict": "standalone-fail"
+    },
+    {
+      "exit": 0,
+      "package": "iftex",
+      "style": "ifetex",
+      "verdict": "standalone-pass"
     },
     {
       "exit": 0,
@@ -454,6 +532,12 @@
     },
     {
       "exit": 0,
+      "package": "kvoptions",
+      "style": "kvoptions",
+      "verdict": "standalone-pass"
+    },
+    {
+      "exit": 0,
       "package": "kvsetkeys",
       "style": "kvsetkeys",
       "verdict": "standalone-pass"
@@ -462,6 +546,12 @@
       "exit": 0,
       "package": "l3experimental",
       "style": "l3draw",
+      "verdict": "standalone-pass"
+    },
+    {
+      "exit": 0,
+      "package": "l3kernel",
+      "style": "expl3",
       "verdict": "standalone-pass"
     },
     {
@@ -502,6 +592,12 @@
     },
     {
       "exit": 0,
+      "package": "latex-graphics-dev",
+      "style": "color",
+      "verdict": "standalone-pass"
+    },
+    {
+      "exit": 0,
       "package": "latex-lab",
       "style": "latex-lab-kernel-changes",
       "verdict": "standalone-pass"
@@ -519,11 +615,29 @@
       "verdict": "standalone-pass"
     },
     {
+      "exit": 0,
+      "package": "latexbug",
+      "style": "latexbug",
+      "verdict": "standalone-pass"
+    },
+    {
+      "exit": 0,
+      "package": "letltxmacro",
+      "style": "letltxmacro",
+      "verdict": "standalone-pass"
+    },
+    {
       "error": "! Package ednmath0 Error: Bad lineno.sty version.",
       "exit": 1,
       "package": "lineno",
       "style": "ednmath0",
       "verdict": "standalone-fail"
+    },
+    {
+      "exit": 0,
+      "package": "listings",
+      "style": "listings",
+      "verdict": "standalone-pass"
     },
     {
       "exit": 0,
@@ -613,6 +727,12 @@
     },
     {
       "exit": 0,
+      "package": "memoir",
+      "style": "memhfixc",
+      "verdict": "standalone-pass"
+    },
+    {
+      "exit": 0,
       "package": "metalogo",
       "style": "metalogo",
       "verdict": "standalone-pass"
@@ -670,6 +790,12 @@
     },
     {
       "exit": 0,
+      "package": "newfloat",
+      "style": "newfloat",
+      "verdict": "standalone-pass"
+    },
+    {
+      "exit": 0,
       "package": "ntgclass",
       "style": "a4",
       "verdict": "standalone-pass"
@@ -684,6 +810,12 @@
       "exit": 0,
       "package": "pagesel",
       "style": "pagesel",
+      "verdict": "standalone-pass"
+    },
+    {
+      "exit": 0,
+      "package": "parskip",
+      "style": "parskip",
       "verdict": "standalone-pass"
     },
     {
@@ -780,6 +912,24 @@
       "verdict": "standalone-pass"
     },
     {
+      "exit": 0,
+      "package": "rcs",
+      "style": "rcs",
+      "verdict": "standalone-pass"
+    },
+    {
+      "exit": 0,
+      "package": "refcount",
+      "style": "refcount",
+      "verdict": "standalone-pass"
+    },
+    {
+      "exit": 0,
+      "package": "rerunfilecheck",
+      "style": "rerunfilecheck",
+      "verdict": "standalone-pass"
+    },
+    {
       "error": "! Undefined control sequence.",
       "exit": 1,
       "package": "revtex",
@@ -790,6 +940,30 @@
       "exit": 0,
       "package": "sansmath",
       "style": "sansmath",
+      "verdict": "standalone-pass"
+    },
+    {
+      "exit": 0,
+      "package": "section",
+      "style": "section",
+      "verdict": "standalone-pass"
+    },
+    {
+      "exit": 0,
+      "package": "seminar",
+      "style": "npsfont",
+      "verdict": "standalone-pass"
+    },
+    {
+      "exit": 0,
+      "package": "sepnum",
+      "style": "sepnum",
+      "verdict": "standalone-pass"
+    },
+    {
+      "exit": 0,
+      "package": "setspace",
+      "style": "setspace",
       "verdict": "standalone-pass"
     },
     {
@@ -807,6 +981,18 @@
       "verdict": "standalone-fail"
     },
     {
+      "exit": 0,
+      "package": "stringenc",
+      "style": "stringenc",
+      "verdict": "standalone-pass"
+    },
+    {
+      "exit": 0,
+      "package": "subfig",
+      "style": "subfig",
+      "verdict": "standalone-pass"
+    },
+    {
       "error": "! Package tagpdf Error: PDF resource management is no active!",
       "exit": 1,
       "package": "tagpdf",
@@ -821,8 +1007,20 @@
     },
     {
       "exit": 0,
+      "package": "tex4ebook",
+      "style": "tex4ebook",
+      "verdict": "standalone-pass"
+    },
+    {
+      "exit": 0,
       "package": "tex4ht",
       "style": "tex4ht",
+      "verdict": "standalone-pass"
+    },
+    {
+      "exit": 0,
+      "package": "textcase",
+      "style": "textcase",
       "verdict": "standalone-pass"
     },
     {
@@ -842,6 +1040,12 @@
       "exit": 0,
       "package": "tipa",
       "style": "exaccent",
+      "verdict": "standalone-pass"
+    },
+    {
+      "exit": 0,
+      "package": "tools",
+      "style": "afterpage",
       "verdict": "standalone-pass"
     },
     {
@@ -967,6 +1171,12 @@
       "verdict": "standalone-fail"
     },
     {
+      "exit": 0,
+      "package": "xespotcolor",
+      "style": "xespotcolor",
+      "verdict": "standalone-pass"
+    },
+    {
       "error": "! Bad character code (4095).",
       "exit": 1,
       "package": "xetexko",
@@ -984,6 +1194,12 @@
       "exit": 0,
       "package": "xfrac",
       "style": "xfrac",
+      "verdict": "standalone-pass"
+    },
+    {
+      "exit": 0,
+      "package": "xkeyval",
+      "style": "pst-xkey",
       "verdict": "standalone-pass"
     },
     {

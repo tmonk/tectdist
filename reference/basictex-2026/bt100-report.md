@@ -14,6 +14,7 @@ Gate: **PASS**
 | Reference failures recorded | 0 |
 
 Output pipelines: 7/7 qualified
+Standalone probes: 142 pass / 53 fail
 
 ## Reference-failure attribution
 

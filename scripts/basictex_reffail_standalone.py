@@ -42,6 +42,9 @@ def main(argv=None) -> int:
     ap.add_argument("--out", type=Path,
                     default=REF / "reffail-standalone.json")
     ap.add_argument("--timeout", type=int, default=60)
+    ap.add_argument("--all", action="store_true",
+                    help="probe every style-providing package, not just "
+                         "those appearing in reference-failure pairs")
     args = ap.parse_args(argv)
 
     ledger = json.loads(args.ledger.read_text())
@@ -52,10 +55,13 @@ def main(argv=None) -> int:
         if row["loadable_styles"]:
             style_of[row["package"]] = row["loadable_styles"][0]
 
-    targets = sorted({pkg
-                      for r in interactions["results"]
-                      if r["verdict"] == "reference-failure"
-                      for pkg in r["case"].split("+")})
+    if args.all:
+        targets = sorted(style_of)
+    else:
+        targets = sorted({pkg
+                          for r in interactions["results"]
+                          if r["verdict"] == "reference-failure"
+                          for pkg in r["case"].split("+")})
     print(f"probing {len(targets)} packages standalone")
 
     root = Path(args.reference).resolve()

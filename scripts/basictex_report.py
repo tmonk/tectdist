@@ -60,6 +60,13 @@ def main(argv=None):
                 interaction_verdicts.setdefault(part.strip(), []).append(
                     result.get("verdict", "unknown"))
 
+    # Standalone probe verdicts (reference-only minimal-load compile).
+    standalone_verdicts = {}
+    standalone = load_json(ref_dir / "reffail-standalone.json")
+    if standalone:
+        for result in standalone.get("results", []):
+            standalone_verdicts[result["package"]] = result.get("verdict")
+
     rows = []
     for entry in ledger["rows"]:
         name = entry["package"]
@@ -83,6 +90,7 @@ def main(argv=None):
             "loadable_styles": len(entry["loadable_styles"]),
             "smoke_cases": len(smoke_set),
             "interaction_cases": len(inter_set),
+            "standalone_verdict": standalone_verdicts.get(name),
             "bt100_verdict": bt_status,
         })
 
@@ -136,6 +144,12 @@ def main(argv=None):
                 "pair_specific": unattributed,
                 "standalone_failed_packages": len(standalone_failed),
             },
+            "standalone_probes": {
+                "pass": sum(1 for v in standalone_verdicts.values()
+                            if v == "standalone-pass"),
+                "fail": sum(1 for v in standalone_verdicts.values()
+                            if v == "standalone-fail"),
+            },
         },
         "gate_pass": gate_pass,
         "rows": rows,
@@ -159,6 +173,7 @@ def main(argv=None):
         f"| Reference failures recorded | {ref_failures} |",
         "",
         f"Output pipelines: {report['summary']['pipelines_passed']}/{report['summary']['pipelines_total']} qualified",
+        f"Standalone probes: {report['summary']['standalone_probes']['pass']} pass / {report['summary']['standalone_probes']['fail']} fail",
         "",
     ]
     if attribution:

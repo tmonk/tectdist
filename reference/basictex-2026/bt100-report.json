@@ -18,6 +18,10 @@
       "explained_by_standalone_failure": 207,
       "pair_specific": 0,
       "standalone_failed_packages": 53
+    },
+    "standalone_probes": {
+      "pass": 142,
+      "fail": 53
     }
   },
   "gate_pass": true,
@@ -29,6 +33,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -38,6 +43,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -47,6 +53,7 @@
       "loadable_styles": 2,
       "smoke_cases": 0,
       "interaction_cases": 9,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -56,6 +63,7 @@
       "loadable_styles": 9,
       "smoke_cases": 0,
       "interaction_cases": 4,
+      "standalone_verdict": "standalone-fail",
       "bt100_verdict": "partial"
     },
     {
@@ -65,6 +73,7 @@
       "loadable_styles": 6,
       "smoke_cases": 0,
       "interaction_cases": 11,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -74,6 +83,7 @@
       "loadable_styles": 9,
       "smoke_cases": 0,
       "interaction_cases": 3,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -83,6 +93,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 5,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -92,6 +103,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 10,
+      "standalone_verdict": "standalone-fail",
       "bt100_verdict": "partial"
     },
     {
@@ -101,6 +113,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 4,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "pass"
     },
     {
@@ -110,6 +123,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 6,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -119,6 +133,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -128,6 +143,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 4,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -137,6 +153,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -146,6 +163,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 4,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "pass"
     },
     {
@@ -155,6 +173,7 @@
       "loadable_styles": 52,
       "smoke_cases": 0,
       "interaction_cases": 6,
+      "standalone_verdict": "standalone-fail",
       "bt100_verdict": "partial"
     },
     {
@@ -164,6 +183,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -173,6 +193,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -182,6 +203,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -191,6 +213,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -200,6 +223,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -209,6 +233,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -218,6 +243,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -227,6 +253,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -236,6 +263,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -245,6 +273,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -254,6 +283,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -263,6 +293,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -272,6 +303,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -281,6 +313,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 1,
+      "standalone_verdict": "standalone-fail",
       "bt100_verdict": "partial"
     },
     {
@@ -290,6 +323,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -299,6 +333,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 4,
+      "standalone_verdict": "standalone-fail",
       "bt100_verdict": "partial"
     },
     {
@@ -308,6 +343,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -317,6 +353,7 @@
       "loadable_styles": 114,
       "smoke_cases": 0,
       "interaction_cases": 9,
+      "standalone_verdict": "standalone-fail",
       "bt100_verdict": "partial"
     },
     {
@@ -326,6 +363,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 6,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -335,6 +373,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -344,6 +383,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 6,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -353,6 +393,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 5,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -362,6 +403,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 5,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -371,6 +413,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 8,
+      "standalone_verdict": "standalone-fail",
       "bt100_verdict": "partial"
     },
     {
@@ -380,6 +423,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 5,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -389,6 +433,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 3,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "pass"
     },
     {
@@ -398,6 +443,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 7,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -407,6 +453,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -416,6 +463,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 8,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -425,6 +473,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 3,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -434,6 +483,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -443,6 +493,7 @@
       "loadable_styles": 3,
       "smoke_cases": 0,
       "interaction_cases": 3,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -452,6 +503,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 5,
+      "standalone_verdict": "standalone-fail",
       "bt100_verdict": "partial"
     },
     {
@@ -461,6 +513,7 @@
       "loadable_styles": 22,
       "smoke_cases": 0,
       "interaction_cases": 5,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -470,6 +523,7 @@
       "loadable_styles": 6,
       "smoke_cases": 0,
       "interaction_cases": 6,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -479,6 +533,7 @@
       "loadable_styles": 4,
       "smoke_cases": 0,
       "interaction_cases": 3,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -488,6 +543,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -497,6 +553,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 7,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -506,6 +563,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -515,6 +573,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -524,6 +583,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -533,6 +593,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -542,6 +603,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -551,6 +613,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -560,6 +623,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 6,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "pass"
     },
     {
@@ -569,6 +633,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 6,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "pass"
     },
     {
@@ -578,6 +643,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 6,
+      "standalone_verdict": "standalone-fail",
       "bt100_verdict": "partial"
     },
     {
@@ -587,6 +653,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 3,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -596,6 +663,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 5,
+      "standalone_verdict": "standalone-fail",
       "bt100_verdict": "partial"
     },
     {
@@ -605,6 +673,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 4,
+      "standalone_verdict": "standalone-fail",
       "bt100_verdict": "partial"
     },
     {
@@ -614,6 +683,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -623,6 +693,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -632,6 +703,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -641,6 +713,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -650,6 +723,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -659,6 +733,7 @@
       "loadable_styles": 3,
       "smoke_cases": 0,
       "interaction_cases": 5,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -668,6 +743,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -677,6 +753,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -686,6 +763,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 9,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -695,6 +773,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -704,6 +783,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -713,6 +793,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -722,6 +803,7 @@
       "loadable_styles": 2,
       "smoke_cases": 0,
       "interaction_cases": 9,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -731,6 +813,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -740,6 +823,7 @@
       "loadable_styles": 2,
       "smoke_cases": 0,
       "interaction_cases": 8,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -749,6 +833,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -758,6 +843,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 4,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "pass"
     },
     {
@@ -767,6 +853,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 4,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "pass"
     },
     {
@@ -776,6 +863,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 3,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -785,6 +873,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -794,6 +883,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 7,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -803,6 +893,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 5,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -812,6 +903,7 @@
       "loadable_styles": 2,
       "smoke_cases": 0,
       "interaction_cases": 6,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "pass"
     },
     {
@@ -821,6 +913,7 @@
       "loadable_styles": 2,
       "smoke_cases": 0,
       "interaction_cases": 10,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -830,6 +923,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -839,6 +933,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -848,6 +943,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -857,6 +953,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -866,6 +963,7 @@
       "loadable_styles": 7,
       "smoke_cases": 0,
       "interaction_cases": 4,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -875,6 +973,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 2,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -884,6 +983,7 @@
       "loadable_styles": 4,
       "smoke_cases": 0,
       "interaction_cases": 2,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "pass"
     },
     {
@@ -893,6 +993,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 5,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -902,6 +1003,7 @@
       "loadable_styles": 4,
       "smoke_cases": 0,
       "interaction_cases": 6,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -911,6 +1013,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -920,6 +1023,7 @@
       "loadable_styles": 2,
       "smoke_cases": 0,
       "interaction_cases": 5,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -929,6 +1033,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 10,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -938,6 +1043,7 @@
       "loadable_styles": 8,
       "smoke_cases": 0,
       "interaction_cases": 6,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -947,6 +1053,7 @@
       "loadable_styles": 2,
       "smoke_cases": 0,
       "interaction_cases": 2,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "pass"
     },
     {
@@ -956,6 +1063,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 7,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -965,6 +1073,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 4,
+      "standalone_verdict": "standalone-fail",
       "bt100_verdict": "partial"
     },
     {
@@ -974,6 +1083,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -983,6 +1093,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 4,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -992,6 +1103,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -1001,6 +1113,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 4,
+      "standalone_verdict": "standalone-fail",
       "bt100_verdict": "partial"
     },
     {
@@ -1010,6 +1123,7 @@
       "loadable_styles": 3,
       "smoke_cases": 0,
       "interaction_cases": 5,
+      "standalone_verdict": "standalone-fail",
       "bt100_verdict": "partial"
     },
     {
@@ -1019,6 +1133,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 3,
+      "standalone_verdict": "standalone-fail",
       "bt100_verdict": "partial"
     },
     {
@@ -1028,6 +1143,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 9,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -1037,6 +1153,7 @@
       "loadable_styles": 13,
       "smoke_cases": 0,
       "interaction_cases": 4,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -1046,6 +1163,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -1055,6 +1173,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "untested"
     },
     {
@@ -1064,6 +1183,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 6,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -1073,6 +1193,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -1082,6 +1203,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 4,
+      "standalone_verdict": "standalone-fail",
       "bt100_verdict": "partial"
     },
     {
@@ -1091,6 +1213,7 @@
       "loadable_styles": 9,
       "smoke_cases": 0,
       "interaction_cases": 6,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -1100,6 +1223,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -1109,6 +1233,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -1118,6 +1243,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 7,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -1127,6 +1253,7 @@
       "loadable_styles": 2,
       "smoke_cases": 0,
       "interaction_cases": 5,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -1136,6 +1263,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -1145,6 +1273,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -1154,6 +1283,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 5,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -1163,6 +1293,7 @@
       "loadable_styles": 2,
       "smoke_cases": 0,
       "interaction_cases": 6,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -1172,6 +1303,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -1181,6 +1313,7 @@
       "loadable_styles": 2,
       "smoke_cases": 0,
       "interaction_cases": 5,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "pass"
     },
     {
@@ -1190,6 +1323,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 4,
+      "standalone_verdict": "standalone-fail",
       "bt100_verdict": "partial"
     },
     {
@@ -1199,6 +1333,7 @@
       "loadable_styles": 8,
       "smoke_cases": 0,
       "interaction_cases": 6,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -1208,6 +1343,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -1217,6 +1353,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -1226,6 +1363,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -1235,6 +1373,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -1244,6 +1383,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -1253,6 +1393,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -1262,6 +1403,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -1271,6 +1413,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -1280,6 +1423,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -1289,6 +1433,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -1298,6 +1443,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -1307,6 +1453,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -1316,6 +1463,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -1325,6 +1473,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -1334,6 +1483,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -1343,6 +1493,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -1352,6 +1503,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -1361,6 +1513,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -1370,6 +1523,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 3,
+      "standalone_verdict": "standalone-fail",
       "bt100_verdict": "partial"
     },
     {
@@ -1379,6 +1533,7 @@
       "loadable_styles": 6,
       "smoke_cases": 0,
       "interaction_cases": 4,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "pass"
     },
     {
@@ -1388,6 +1543,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 10,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -1397,6 +1553,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 5,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -1406,6 +1563,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 5,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -1415,6 +1573,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 3,
+      "standalone_verdict": "standalone-fail",
       "bt100_verdict": "partial"
     },
     {
@@ -1424,6 +1583,7 @@
       "loadable_styles": 11,
       "smoke_cases": 0,
       "interaction_cases": 9,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -1433,6 +1593,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -1442,6 +1603,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -1451,6 +1613,7 @@
       "loadable_styles": 27,
       "smoke_cases": 0,
       "interaction_cases": 8,
+      "standalone_verdict": "standalone-fail",
       "bt100_verdict": "partial"
     },
     {
@@ -1460,6 +1623,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -1469,6 +1633,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -1478,6 +1643,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 6,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -1487,6 +1653,7 @@
       "loadable_styles": 2,
       "smoke_cases": 0,
       "interaction_cases": 3,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "pass"
     },
     {
@@ -1496,6 +1663,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 7,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -1505,6 +1673,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -1514,6 +1683,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -1523,6 +1693,7 @@
       "loadable_styles": 4,
       "smoke_cases": 0,
       "interaction_cases": 4,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -1532,6 +1703,7 @@
       "loadable_styles": 2,
       "smoke_cases": 0,
       "interaction_cases": 3,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "pass"
     },
     {
@@ -1541,6 +1713,7 @@
       "loadable_styles": 2,
       "smoke_cases": 0,
       "interaction_cases": 4,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -1550,6 +1723,7 @@
       "loadable_styles": 7,
       "smoke_cases": 0,
       "interaction_cases": 4,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -1559,6 +1733,7 @@
       "loadable_styles": 43,
       "smoke_cases": 0,
       "interaction_cases": 8,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -1568,6 +1743,7 @@
       "loadable_styles": 9,
       "smoke_cases": 0,
       "interaction_cases": 3,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -1577,6 +1753,7 @@
       "loadable_styles": 44,
       "smoke_cases": 0,
       "interaction_cases": 3,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -1586,6 +1763,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -1595,6 +1773,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -1604,6 +1783,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -1613,6 +1793,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -1622,6 +1803,7 @@
       "loadable_styles": 2,
       "smoke_cases": 0,
       "interaction_cases": 9,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -1631,6 +1813,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -1640,6 +1823,7 @@
       "loadable_styles": 9,
       "smoke_cases": 0,
       "interaction_cases": 3,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "pass"
     },
     {
@@ -1649,6 +1833,7 @@
       "loadable_styles": 21,
       "smoke_cases": 0,
       "interaction_cases": 6,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -1658,6 +1843,7 @@
       "loadable_styles": 23,
       "smoke_cases": 0,
       "interaction_cases": 3,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -1667,6 +1853,7 @@
       "loadable_styles": 44,
       "smoke_cases": 0,
       "interaction_cases": 4,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -1676,6 +1863,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 6,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "pass"
     },
     {
@@ -1685,6 +1873,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -1694,6 +1883,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -1703,6 +1893,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 2,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "pass"
     },
     {
@@ -1712,6 +1903,7 @@
       "loadable_styles": 5,
       "smoke_cases": 0,
       "interaction_cases": 7,
+      "standalone_verdict": "standalone-fail",
       "bt100_verdict": "partial"
     },
     {
@@ -1721,6 +1913,7 @@
       "loadable_styles": 7,
       "smoke_cases": 0,
       "interaction_cases": 4,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "pass"
     },
     {
@@ -1730,6 +1923,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 8,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -1739,6 +1933,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -1748,6 +1943,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 5,
+      "standalone_verdict": "standalone-fail",
       "bt100_verdict": "partial"
     },
     {
@@ -1757,6 +1953,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 11,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -1766,6 +1963,7 @@
       "loadable_styles": 11,
       "smoke_cases": 0,
       "interaction_cases": 3,
+      "standalone_verdict": "standalone-fail",
       "bt100_verdict": "partial"
     },
     {
@@ -1775,6 +1973,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -1784,6 +1983,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -1793,6 +1993,7 @@
       "loadable_styles": 16,
       "smoke_cases": 0,
       "interaction_cases": 3,
+      "standalone_verdict": "standalone-fail",
       "bt100_verdict": "partial"
     },
     {
@@ -1802,6 +2003,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -1811,6 +2013,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -1820,6 +2023,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -1829,6 +2033,7 @@
       "loadable_styles": 4,
       "smoke_cases": 0,
       "interaction_cases": 3,
+      "standalone_verdict": "standalone-fail",
       "bt100_verdict": "partial"
     },
     {
@@ -1838,6 +2043,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 3,
+      "standalone_verdict": "standalone-fail",
       "bt100_verdict": "partial"
     },
     {
@@ -1847,6 +2053,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -1856,6 +2063,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -1865,6 +2073,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -1874,6 +2083,7 @@
       "loadable_styles": 8,
       "smoke_cases": 0,
       "interaction_cases": 6,
+      "standalone_verdict": "standalone-fail",
       "bt100_verdict": "partial"
     },
     {
@@ -1883,6 +2093,7 @@
       "loadable_styles": 595,
       "smoke_cases": 0,
       "interaction_cases": 5,
+      "standalone_verdict": "standalone-fail",
       "bt100_verdict": "partial"
     },
     {
@@ -1892,6 +2103,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -1901,6 +2113,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -1910,6 +2123,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -1919,6 +2133,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 7,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -1928,6 +2143,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -1937,6 +2153,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -1946,6 +2163,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 7,
+      "standalone_verdict": "standalone-fail",
       "bt100_verdict": "partial"
     },
     {
@@ -1955,6 +2173,7 @@
       "loadable_styles": 3,
       "smoke_cases": 0,
       "interaction_cases": 7,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -1964,6 +2183,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -1973,6 +2193,7 @@
       "loadable_styles": 10,
       "smoke_cases": 0,
       "interaction_cases": 6,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -1982,6 +2203,7 @@
       "loadable_styles": 2,
       "smoke_cases": 0,
       "interaction_cases": 8,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "pass"
     },
     {
@@ -1991,6 +2213,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -2000,6 +2223,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -2009,6 +2233,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -2018,6 +2243,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 7,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -2027,6 +2253,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -2036,6 +2263,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -2045,6 +2273,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -2054,6 +2283,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -2063,6 +2293,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -2072,6 +2303,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -2081,6 +2313,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 9,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -2090,6 +2323,7 @@
       "loadable_styles": 2,
       "smoke_cases": 0,
       "interaction_cases": 5,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -2099,6 +2333,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 5,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -2108,6 +2343,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 4,
+      "standalone_verdict": "standalone-fail",
       "bt100_verdict": "partial"
     },
     {
@@ -2117,6 +2353,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -2126,6 +2363,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -2135,6 +2373,7 @@
       "loadable_styles": 3,
       "smoke_cases": 0,
       "interaction_cases": 4,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -2144,6 +2383,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -2153,6 +2393,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -2162,6 +2403,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -2171,6 +2413,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -2180,6 +2423,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -2189,6 +2433,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -2198,6 +2443,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -2207,6 +2453,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -2216,6 +2463,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -2225,6 +2473,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 3,
+      "standalone_verdict": "standalone-fail",
       "bt100_verdict": "partial"
     },
     {
@@ -2234,6 +2483,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -2243,6 +2493,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -2252,6 +2503,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -2261,6 +2513,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -2270,6 +2523,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 6,
+      "standalone_verdict": "standalone-fail",
       "bt100_verdict": "partial"
     },
     {
@@ -2279,6 +2533,7 @@
       "loadable_styles": 2,
       "smoke_cases": 0,
       "interaction_cases": 6,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -2288,6 +2543,7 @@
       "loadable_styles": 3,
       "smoke_cases": 0,
       "interaction_cases": 3,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "pass"
     },
     {
@@ -2297,6 +2553,7 @@
       "loadable_styles": 9,
       "smoke_cases": 0,
       "interaction_cases": 8,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -2306,6 +2563,7 @@
       "loadable_styles": 34,
       "smoke_cases": 0,
       "interaction_cases": 5,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -2315,6 +2573,7 @@
       "loadable_styles": 2,
       "smoke_cases": 0,
       "interaction_cases": 4,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -2324,6 +2583,7 @@
       "loadable_styles": 2,
       "smoke_cases": 0,
       "interaction_cases": 5,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "pass"
     },
     {
@@ -2333,6 +2593,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 5,
+      "standalone_verdict": "standalone-fail",
       "bt100_verdict": "partial"
     },
     {
@@ -2342,6 +2603,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 5,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -2351,6 +2613,7 @@
       "loadable_styles": 2,
       "smoke_cases": 0,
       "interaction_cases": 3,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -2360,6 +2623,7 @@
       "loadable_styles": 8,
       "smoke_cases": 0,
       "interaction_cases": 3,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -2369,6 +2633,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 8,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -2378,6 +2643,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -2387,6 +2653,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -2396,6 +2663,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 8,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -2405,6 +2673,7 @@
       "loadable_styles": 37,
       "smoke_cases": 0,
       "interaction_cases": 10,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -2414,6 +2683,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 5,
+      "standalone_verdict": "standalone-fail",
       "bt100_verdict": "partial"
     },
     {
@@ -2423,6 +2693,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -2432,6 +2703,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -2441,6 +2713,7 @@
       "loadable_styles": 11,
       "smoke_cases": 0,
       "interaction_cases": 4,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -2450,6 +2723,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 8,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -2459,6 +2733,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 5,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -2468,6 +2743,7 @@
       "loadable_styles": 15,
       "smoke_cases": 0,
       "interaction_cases": 3,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -2477,6 +2753,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 8,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -2486,6 +2763,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 4,
+      "standalone_verdict": "standalone-fail",
       "bt100_verdict": "partial"
     },
     {
@@ -2495,6 +2773,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 4,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -2504,6 +2783,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 3,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "pass"
     },
     {
@@ -2513,6 +2793,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 6,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "pass"
     },
     {
@@ -2522,6 +2803,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -2531,6 +2813,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 5,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "pass"
     },
     {
@@ -2540,6 +2823,7 @@
       "loadable_styles": 6,
       "smoke_cases": 0,
       "interaction_cases": 3,
+      "standalone_verdict": "standalone-fail",
       "bt100_verdict": "partial"
     },
     {
@@ -2549,6 +2833,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -2558,6 +2843,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -2567,6 +2853,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 3,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -2576,6 +2863,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -2585,6 +2873,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -2594,6 +2883,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -2603,6 +2893,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -2612,6 +2903,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 3,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "pass"
     },
     {
@@ -2621,6 +2913,7 @@
       "loadable_styles": 14,
       "smoke_cases": 0,
       "interaction_cases": 1,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "pass"
     },
     {
@@ -2630,6 +2923,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 5,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "pass"
     },
     {
@@ -2639,6 +2933,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 4,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "pass"
     },
     {
@@ -2648,6 +2943,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -2657,6 +2953,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 6,
+      "standalone_verdict": "standalone-fail",
       "bt100_verdict": "partial"
     },
     {
@@ -2666,6 +2963,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 4,
+      "standalone_verdict": "standalone-fail",
       "bt100_verdict": "partial"
     },
     {
@@ -2675,6 +2973,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -2684,6 +2983,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -2693,6 +2993,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 3,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "pass"
     },
     {
@@ -2702,6 +3003,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -2711,6 +3013,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 6,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "pass"
     },
     {
@@ -2720,6 +3023,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -2729,6 +3033,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -2738,6 +3043,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -2747,6 +3053,7 @@
       "loadable_styles": 8,
       "smoke_cases": 0,
       "interaction_cases": 4,
+      "standalone_verdict": "standalone-fail",
       "bt100_verdict": "partial"
     },
     {
@@ -2756,6 +3063,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 7,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -2765,6 +3073,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -2774,6 +3083,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -2783,6 +3093,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -2792,6 +3103,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 4,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "pass"
     },
     {
@@ -2801,6 +3113,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -2810,6 +3123,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 3,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -2819,6 +3133,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -2828,6 +3143,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -2837,6 +3153,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -2846,6 +3163,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -2855,6 +3173,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -2864,6 +3183,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -2873,6 +3193,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -2882,6 +3203,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -2891,6 +3213,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -2900,6 +3223,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -2909,6 +3233,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 2,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "pass"
     },
     {
@@ -2918,6 +3243,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 2,
+      "standalone_verdict": "standalone-fail",
       "bt100_verdict": "partial"
     },
     {
@@ -2927,6 +3253,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -2936,6 +3263,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 3,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -2945,6 +3273,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -2954,6 +3283,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -2963,6 +3293,7 @@
       "loadable_styles": 6,
       "smoke_cases": 0,
       "interaction_cases": 7,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -2972,6 +3303,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -2981,6 +3313,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -2990,6 +3323,7 @@
       "loadable_styles": 42,
       "smoke_cases": 0,
       "interaction_cases": 3,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "pass"
     },
     {
@@ -2999,6 +3333,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 6,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -3008,6 +3343,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 5,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -3017,6 +3353,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 3,
+      "standalone_verdict": "standalone-fail",
       "bt100_verdict": "partial"
     },
     {
@@ -3026,6 +3363,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 4,
+      "standalone_verdict": "standalone-fail",
       "bt100_verdict": "partial"
     },
     {
@@ -3035,6 +3373,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 7,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -3044,6 +3383,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 5,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -3053,6 +3393,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 6,
+      "standalone_verdict": "standalone-fail",
       "bt100_verdict": "partial"
     },
     {
@@ -3062,6 +3403,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -3071,6 +3413,7 @@
       "loadable_styles": 3,
       "smoke_cases": 0,
       "interaction_cases": 4,
+      "standalone_verdict": "standalone-fail",
       "bt100_verdict": "partial"
     },
     {
@@ -3080,6 +3423,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -3089,6 +3433,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 5,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -3098,6 +3443,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 7,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -3107,6 +3453,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 6,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -3116,6 +3463,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 5,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -3125,6 +3473,7 @@
       "loadable_styles": 2,
       "smoke_cases": 0,
       "interaction_cases": 11,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -3134,6 +3483,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -3143,6 +3493,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -3152,6 +3503,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 3,
+      "standalone_verdict": "standalone-fail",
       "bt100_verdict": "partial"
     },
     {
@@ -3161,6 +3513,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 6,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -3170,6 +3523,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 3,
+      "standalone_verdict": "standalone-fail",
       "bt100_verdict": "partial"
     },
     {
@@ -3179,6 +3533,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 4,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -3188,6 +3543,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 5,
+      "standalone_verdict": "standalone-fail",
       "bt100_verdict": "partial"
     },
     {
@@ -3197,6 +3553,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -3206,6 +3563,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -3215,6 +3573,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 5,
+      "standalone_verdict": "standalone-fail",
       "bt100_verdict": "partial"
     },
     {
@@ -3224,6 +3583,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 1,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "pass"
     },
     {
@@ -3233,6 +3593,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -3242,6 +3603,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -3251,6 +3613,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -3260,6 +3623,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -3269,6 +3633,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -3278,6 +3643,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -3287,6 +3653,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -3296,6 +3663,7 @@
       "loadable_styles": 6,
       "smoke_cases": 0,
       "interaction_cases": 4,
+      "standalone_verdict": "standalone-fail",
       "bt100_verdict": "partial"
     },
     {
@@ -3305,6 +3673,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 3,
+      "standalone_verdict": "standalone-fail",
       "bt100_verdict": "partial"
     },
     {
@@ -3314,6 +3683,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 5,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -3323,6 +3693,7 @@
       "loadable_styles": 4,
       "smoke_cases": 0,
       "interaction_cases": 4,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "pass"
     },
     {
@@ -3332,6 +3703,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 4,
+      "standalone_verdict": "standalone-fail",
       "bt100_verdict": "partial"
     },
     {
@@ -3341,6 +3713,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 6,
+      "standalone_verdict": "standalone-pass",
       "bt100_verdict": "partial"
     },
     {
@@ -3350,6 +3723,7 @@
       "loadable_styles": 1,
       "smoke_cases": 0,
       "interaction_cases": 7,
+      "standalone_verdict": "standalone-fail",
       "bt100_verdict": "partial"
     },
     {
@@ -3359,6 +3733,7 @@
       "loadable_styles": 0,
       "smoke_cases": 0,
       "interaction_cases": 0,
+      "standalone_verdict": null,
       "bt100_verdict": "untested"
     },
     {
@@ -3368,6 +3743,7 @@
       "loadable_styles": 2,
       "smoke_cases": 0,
       "interaction_cases": 3,
+      "standalone_verdict": "standalone-fail",
       "bt100_verdict": "partial"
     }
   ]
