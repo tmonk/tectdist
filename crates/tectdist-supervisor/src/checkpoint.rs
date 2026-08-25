@@ -201,6 +201,43 @@ pub fn decide_suffix(
     SuffixDecision::ReuseSuffix { reused }
 }
 
+/// Cross-reference convergence tracker (plan §12.3).
+///
+/// Tracks auxiliary records (labels, citations, TOC/LOF/LOT entries,
+/// page labels, outlines) separately from page content so that a
+/// cross-reference change triggers only the stages whose input record
+/// changed — not a full global pass.
+#[derive(Debug, Clone, Default)]
+pub struct AuxStateTracker {
+    /// Label → page number mapping from the last build.
+    labels: BTreeMap<String, String>,
+    /// Citation key → sort key mapping.
+    citations: BTreeMap<String, String>,
+    /// TOC entry titles in order.
+    toc_entries: Vec<String>,
+}
+
+impl AuxStateTracker {
+    pub fn new() -> Self {
+        Self::default()
+    }
+
+    /// Load aux state from maps (called by supervisor after parsing .aux).
+    pub fn load_from_maps(&mut self,
+                           labels: &BTreeMap<String, String>,
+                           citations: &BTreeMap<String, String>) {
+        self.labels = labels.clone();
+        self.citations = citations.clone();
+    }
+
+    /// Compare with new aux state; returns true when unchanged (no rerun
+    /// needed for cross-references).
+    pub fn converged(&self, new_labels: &BTreeMap<String, String>,
+                      new_citations: &BTreeMap<String, String>) -> bool {
+        self.labels == *new_labels && self.citations == *new_citations
+    }
+}
+
 /// Map a set of changed files onto the earliest affected checkpoint using a
 /// completed build's manifest (plan §12.1). Returns None when no change
 /// intersects files read before/at a checkpoint boundary — i.e., unchanged
@@ -376,5 +413,31 @@ mod tests {
             earliest_affected_checkpoint(&manifest, &chain, &new_file),
             Some(5)
         );
+    }
+}
+
+#[cfg(test)]
+mod aux_tests {
+    use super::*;
+
+    #[test]
+    fn converged_when_labels_and_citations_unchanged() {
+        let mut labels = BTreeMap::new();
+        let mut citations = BTreeMap::new();
+        labels.insert("label:sec1".to_string(), "3".to_string());
+        citations.insert("cite:knuth".to_string(), "Kn84".to_string());
+
+        let mut tracker = AuxStateTracker::new();
+        tracker.load_from_maps(&labels, &citations);
+        assert!(tracker.converged(&labels, &citations));
+    }
+
+    #[test]
+    fn detects_label_page_change() {
+        let mut labels = BTreeMap::new();
+        labels.insert("label:sec1".to_string(), "5".to_string());
+        let citations = BTreeMap::new();
+        let tracker = AuxStateTracker::new();
+        assert!(!tracker.converged(&labels, &citations));
     }
 }
