@@ -6,19 +6,19 @@
       "stage": "workspace-tests",
       "status": "pass",
       "detail": "returncode=0, 90 tests passed",
-      "seconds": 17.4
+      "seconds": 23.7
     },
     {
       "stage": "differential",
       "status": "pass",
       "detail": "differential: OK",
-      "seconds": 0.6
+      "seconds": 57.4
     },
     {
       "stage": "bib-differential",
       "status": "pass",
       "detail": "differential corpus passed (10 cases)",
-      "seconds": 2.9
+      "seconds": 3.9
     },
     {
       "stage": "bt100-report-gate",
@@ -30,19 +30,19 @@
       "stage": "doc-equivalence",
       "status": "pass",
       "detail": "14/14 documents equivalent -> /Users/tom/Library/CloudStorage/Dropbox/projects/tectdist/reference/basictex-2026/doc-equivalence.json",
-      "seconds": 4.3
+      "seconds": 4.4
     },
     {
       "stage": "fail-equivalence",
       "status": "pass",
       "detail": "{'equivalent-fail': 65, 'equivalent-pass': 0, 'mismatch': 0} -> /Users/tom/Library/CloudStorage/Dropbox/projects/tectdist/reference/basictex-2026/fail-equivalence.json",
-      "seconds": 8.3
+      "seconds": 8.6
     },
     {
       "stage": "x10-e-edit",
       "status": "fail",
-      "detail": "body-edit 1.911x, unchanged 12.583x \u2014 below 10x; requires engine-side page checkpoints (documented)",
-      "seconds": 2.6
+      "detail": "body-edit 2.078x, unchanged 13.333x, structural-edit 1.839x \u2014 below 10x; requires engine-side page checkpoints (documented)",
+      "seconds": 3.1
     },
     {
       "stage": "x10-c-warm-clean",

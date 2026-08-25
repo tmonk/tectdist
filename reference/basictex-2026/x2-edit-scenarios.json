@@ -3,13 +3,13 @@
   "trials_per_scenario": 3,
   "statistic": "min",
   "scenarios": {
-    "stock-one-shot": 148,
-    "cold-first-with-format-build": 269,
-    "warm-body-edit-format-reused": 79,
-    "unchanged-rebuild-cache-hit": 11,
-    "structural-edit-format-reused": 77,
-    "preamble-edit-format-rebuilt": 275
+    "stock-one-shot": 160,
+    "cold-first-with-format-build": 288,
+    "warm-body-edit-format-reused": 77,
+    "unchanged-rebuild-cache-hit": 12,
+    "structural-edit-format-reused": 87,
+    "preamble-edit-format-rebuilt": 325
   },
-  "speedup_body_edit_vs_stock": 1.873,
-  "speedup_unchanged_vs_stock": 13.455
+  "speedup_body_edit_vs_stock": 2.078,
+  "speedup_unchanged_vs_stock": 13.333
 }
