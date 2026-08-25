@@ -4,15 +4,21 @@
   "gate": "BT100",
   "summary": {
     "total_packages": 372,
-    "tested": 195,
-    "untested": 177,
-    "pass": 77,
+    "tested": 194,
+    "untested": 178,
+    "pass": 35,
     "fail": 0,
-    "partial": 118,
-    "reference_failures_recorded": 80,
+    "partial": 159,
+    "reference_failures_recorded": 0,
     "pipelines_passed": 7,
     "pipelines_total": 7,
-    "pipeline_ok": true
+    "pipeline_ok": true,
+    "interaction_reference_failures": {
+      "total": 207,
+      "explained_by_standalone_failure": 207,
+      "pair_specific": 0,
+      "standalone_failed_packages": 53
+    }
   },
   "gate_pass": true,
   "rows": [
@@ -39,17 +45,17 @@
       "revision": "15878",
       "licence": "unknown",
       "loadable_styles": 2,
-      "smoke_cases": 2,
-      "interaction_cases": 2,
-      "bt100_verdict": "pass"
+      "smoke_cases": 0,
+      "interaction_cases": 9,
+      "bt100_verdict": "partial"
     },
     {
       "package": "amscls",
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 9,
-      "smoke_cases": 2,
-      "interaction_cases": 2,
+      "smoke_cases": 0,
+      "interaction_cases": 4,
       "bt100_verdict": "partial"
     },
     {
@@ -57,26 +63,26 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 6,
-      "smoke_cases": 2,
-      "interaction_cases": 1,
-      "bt100_verdict": "pass"
+      "smoke_cases": 0,
+      "interaction_cases": 11,
+      "bt100_verdict": "partial"
     },
     {
       "package": "amsmath",
       "revision": "78101",
       "licence": "unknown",
       "loadable_styles": 9,
-      "smoke_cases": 2,
-      "interaction_cases": 1,
-      "bt100_verdict": "pass"
+      "smoke_cases": 0,
+      "interaction_cases": 3,
+      "bt100_verdict": "partial"
     },
     {
       "package": "anysize",
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 2,
+      "smoke_cases": 0,
+      "interaction_cases": 5,
       "bt100_verdict": "partial"
     },
     {
@@ -84,8 +90,8 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 10,
       "bt100_verdict": "partial"
     },
     {
@@ -93,8 +99,8 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 4,
       "bt100_verdict": "pass"
     },
     {
@@ -102,9 +108,9 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 1,
-      "bt100_verdict": "pass"
+      "smoke_cases": 0,
+      "interaction_cases": 6,
+      "bt100_verdict": "partial"
     },
     {
       "package": "attachfile2.universal-darwin",
@@ -120,9 +126,9 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 1,
-      "bt100_verdict": "pass"
+      "smoke_cases": 0,
+      "interaction_cases": 4,
+      "bt100_verdict": "partial"
     },
     {
       "package": "automata",
@@ -138,17 +144,17 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 1,
-      "bt100_verdict": "partial"
+      "smoke_cases": 0,
+      "interaction_cases": 4,
+      "bt100_verdict": "pass"
     },
     {
       "package": "babel",
       "revision": "77829",
       "licence": "unknown",
       "loadable_styles": 52,
-      "smoke_cases": 2,
-      "interaction_cases": 2,
+      "smoke_cases": 0,
+      "interaction_cases": 6,
       "bt100_verdict": "partial"
     },
     {
@@ -273,8 +279,8 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 1,
       "bt100_verdict": "partial"
     },
     {
@@ -291,8 +297,8 @@
       "revision": "76790",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 1,
+      "smoke_cases": 0,
+      "interaction_cases": 4,
       "bt100_verdict": "partial"
     },
     {
@@ -309,8 +315,8 @@
       "revision": "78101",
       "licence": "unknown",
       "loadable_styles": 114,
-      "smoke_cases": 2,
-      "interaction_cases": 3,
+      "smoke_cases": 0,
+      "interaction_cases": 9,
       "bt100_verdict": "partial"
     },
     {
@@ -318,8 +324,8 @@
       "revision": "77830",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 3,
+      "smoke_cases": 0,
+      "interaction_cases": 6,
       "bt100_verdict": "partial"
     },
     {
@@ -336,8 +342,8 @@
       "revision": "62009",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 2,
+      "smoke_cases": 0,
+      "interaction_cases": 6,
       "bt100_verdict": "partial"
     },
     {
@@ -345,26 +351,26 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 0,
-      "bt100_verdict": "pass"
+      "smoke_cases": 0,
+      "interaction_cases": 5,
+      "bt100_verdict": "partial"
     },
     {
       "package": "bidipagegrid",
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 1,
-      "bt100_verdict": "pass"
+      "smoke_cases": 0,
+      "interaction_cases": 5,
+      "bt100_verdict": "partial"
     },
     {
       "package": "bidipresentation",
       "revision": "35267",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 1,
+      "smoke_cases": 0,
+      "interaction_cases": 8,
       "bt100_verdict": "partial"
     },
     {
@@ -372,26 +378,26 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 1,
-      "bt100_verdict": "pass"
+      "smoke_cases": 0,
+      "interaction_cases": 5,
+      "bt100_verdict": "partial"
     },
     {
       "package": "bigintcalc",
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
+      "smoke_cases": 0,
       "interaction_cases": 3,
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "bitset",
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 1,
+      "smoke_cases": 0,
+      "interaction_cases": 7,
       "bt100_verdict": "partial"
     },
     {
@@ -408,8 +414,8 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 1,
+      "smoke_cases": 0,
+      "interaction_cases": 8,
       "bt100_verdict": "partial"
     },
     {
@@ -417,9 +423,9 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 4,
-      "bt100_verdict": "pass"
+      "smoke_cases": 0,
+      "interaction_cases": 3,
+      "bt100_verdict": "partial"
     },
     {
       "package": "bpolynomial",
@@ -435,17 +441,17 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 3,
-      "smoke_cases": 2,
-      "interaction_cases": 1,
-      "bt100_verdict": "pass"
+      "smoke_cases": 0,
+      "interaction_cases": 3,
+      "bt100_verdict": "partial"
     },
     {
       "package": "businesscard-qrcode",
       "revision": "76924",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 5,
       "bt100_verdict": "partial"
     },
     {
@@ -453,8 +459,8 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 22,
-      "smoke_cases": 2,
-      "interaction_cases": 3,
+      "smoke_cases": 0,
+      "interaction_cases": 5,
       "bt100_verdict": "partial"
     },
     {
@@ -462,8 +468,8 @@
       "revision": "59577",
       "licence": "unknown",
       "loadable_styles": 6,
-      "smoke_cases": 2,
-      "interaction_cases": 2,
+      "smoke_cases": 0,
+      "interaction_cases": 6,
       "bt100_verdict": "partial"
     },
     {
@@ -471,9 +477,9 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 4,
-      "smoke_cases": 2,
-      "interaction_cases": 0,
-      "bt100_verdict": "pass"
+      "smoke_cases": 0,
+      "interaction_cases": 3,
+      "bt100_verdict": "partial"
     },
     {
       "package": "cm",
@@ -489,9 +495,9 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 2,
-      "bt100_verdict": "pass"
+      "smoke_cases": 0,
+      "interaction_cases": 7,
+      "bt100_verdict": "partial"
     },
     {
       "package": "cmarrows",
@@ -552,8 +558,8 @@
       "revision": "49086",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 1,
+      "smoke_cases": 0,
+      "interaction_cases": 6,
       "bt100_verdict": "pass"
     },
     {
@@ -561,17 +567,17 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 3,
-      "bt100_verdict": "partial"
+      "smoke_cases": 0,
+      "interaction_cases": 6,
+      "bt100_verdict": "pass"
     },
     {
       "package": "cqubeamer",
       "revision": "54512",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 6,
       "bt100_verdict": "partial"
     },
     {
@@ -579,8 +585,8 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 2,
+      "smoke_cases": 0,
+      "interaction_cases": 3,
       "bt100_verdict": "partial"
     },
     {
@@ -588,8 +594,8 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 1,
+      "smoke_cases": 0,
+      "interaction_cases": 5,
       "bt100_verdict": "partial"
     },
     {
@@ -597,8 +603,8 @@
       "revision": "78101",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 1,
+      "smoke_cases": 0,
+      "interaction_cases": 4,
       "bt100_verdict": "partial"
     },
     {
@@ -651,9 +657,9 @@
       "revision": "77830",
       "licence": "unknown",
       "loadable_styles": 3,
-      "smoke_cases": 2,
-      "interaction_cases": 4,
-      "bt100_verdict": "pass"
+      "smoke_cases": 0,
+      "interaction_cases": 5,
+      "bt100_verdict": "partial"
     },
     {
       "package": "dvips.universal-darwin",
@@ -678,8 +684,8 @@
       "revision": "23483",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 2,
+      "smoke_cases": 0,
+      "interaction_cases": 9,
       "bt100_verdict": "partial"
     },
     {
@@ -714,8 +720,8 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 2,
-      "smoke_cases": 2,
-      "interaction_cases": 1,
+      "smoke_cases": 0,
+      "interaction_cases": 9,
       "bt100_verdict": "partial"
     },
     {
@@ -732,9 +738,9 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 2,
-      "smoke_cases": 2,
-      "interaction_cases": 3,
-      "bt100_verdict": "pass"
+      "smoke_cases": 0,
+      "interaction_cases": 8,
+      "bt100_verdict": "partial"
     },
     {
       "package": "etex",
@@ -750,8 +756,8 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 1,
+      "smoke_cases": 0,
+      "interaction_cases": 4,
       "bt100_verdict": "pass"
     },
     {
@@ -759,16 +765,16 @@
       "revision": "78101",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 3,
-      "bt100_verdict": "partial"
+      "smoke_cases": 0,
+      "interaction_cases": 4,
+      "bt100_verdict": "pass"
     },
     {
       "package": "etoolbox",
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
+      "smoke_cases": 0,
       "interaction_cases": 3,
       "bt100_verdict": "partial"
     },
@@ -786,36 +792,36 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 1,
-      "bt100_verdict": "pass"
+      "smoke_cases": 0,
+      "interaction_cases": 7,
+      "bt100_verdict": "partial"
     },
     {
       "package": "eurosym",
       "revision": "78101",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 0,
-      "bt100_verdict": "pass"
+      "smoke_cases": 0,
+      "interaction_cases": 5,
+      "bt100_verdict": "partial"
     },
     {
       "package": "everysel",
       "revision": "57489",
       "licence": "unknown",
       "loadable_styles": 2,
-      "smoke_cases": 2,
-      "interaction_cases": 2,
-      "bt100_verdict": "partial"
+      "smoke_cases": 0,
+      "interaction_cases": 6,
+      "bt100_verdict": "pass"
     },
     {
       "package": "everyshi",
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 2,
-      "smoke_cases": 2,
-      "interaction_cases": 0,
-      "bt100_verdict": "pass"
+      "smoke_cases": 0,
+      "interaction_cases": 10,
+      "bt100_verdict": "partial"
     },
     {
       "package": "expressg",
@@ -858,8 +864,8 @@
       "revision": "78101",
       "licence": "unknown",
       "loadable_styles": 7,
-      "smoke_cases": 2,
-      "interaction_cases": 2,
+      "smoke_cases": 0,
+      "interaction_cases": 4,
       "bt100_verdict": "partial"
     },
     {
@@ -867,36 +873,36 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 1,
-      "bt100_verdict": "pass"
+      "smoke_cases": 0,
+      "interaction_cases": 2,
+      "bt100_verdict": "partial"
     },
     {
       "package": "fancyhdr",
       "revision": "78101",
       "licence": "unknown",
       "loadable_styles": 4,
-      "smoke_cases": 2,
-      "interaction_cases": 1,
-      "bt100_verdict": "partial"
+      "smoke_cases": 0,
+      "interaction_cases": 2,
+      "bt100_verdict": "pass"
     },
     {
       "package": "fancyref",
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 1,
-      "bt100_verdict": "pass"
+      "smoke_cases": 0,
+      "interaction_cases": 5,
+      "bt100_verdict": "partial"
     },
     {
       "package": "fancyvrb",
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 4,
-      "smoke_cases": 2,
-      "interaction_cases": 0,
-      "bt100_verdict": "pass"
+      "smoke_cases": 0,
+      "interaction_cases": 6,
+      "bt100_verdict": "partial"
     },
     {
       "package": "featpost",
@@ -912,8 +918,8 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 2,
-      "smoke_cases": 2,
-      "interaction_cases": 3,
+      "smoke_cases": 0,
+      "interaction_cases": 5,
       "bt100_verdict": "partial"
     },
     {
@@ -921,8 +927,8 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 2,
+      "smoke_cases": 0,
+      "interaction_cases": 10,
       "bt100_verdict": "partial"
     },
     {
@@ -930,8 +936,8 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 8,
-      "smoke_cases": 2,
-      "interaction_cases": 2,
+      "smoke_cases": 0,
+      "interaction_cases": 6,
       "bt100_verdict": "partial"
     },
     {
@@ -939,8 +945,8 @@
       "revision": "76740",
       "licence": "unknown",
       "loadable_styles": 2,
-      "smoke_cases": 2,
-      "interaction_cases": 1,
+      "smoke_cases": 0,
+      "interaction_cases": 2,
       "bt100_verdict": "pass"
     },
     {
@@ -948,17 +954,17 @@
       "revision": "38770",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 0,
-      "bt100_verdict": "pass"
+      "smoke_cases": 0,
+      "interaction_cases": 7,
+      "bt100_verdict": "partial"
     },
     {
       "package": "fixlatvian",
       "revision": "21631",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 2,
+      "smoke_cases": 0,
+      "interaction_cases": 4,
       "bt100_verdict": "partial"
     },
     {
@@ -975,9 +981,9 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 1,
-      "bt100_verdict": "pass"
+      "smoke_cases": 0,
+      "interaction_cases": 4,
+      "bt100_verdict": "partial"
     },
     {
       "package": "font-change-xetex",
@@ -993,8 +999,8 @@
       "revision": "23608",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 4,
       "bt100_verdict": "partial"
     },
     {
@@ -1002,8 +1008,8 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 3,
-      "smoke_cases": 2,
-      "interaction_cases": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 5,
       "bt100_verdict": "partial"
     },
     {
@@ -1011,7 +1017,7 @@
       "revision": "15878",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
+      "smoke_cases": 0,
       "interaction_cases": 3,
       "bt100_verdict": "partial"
     },
@@ -1020,18 +1026,18 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 0,
-      "bt100_verdict": "pass"
+      "smoke_cases": 0,
+      "interaction_cases": 9,
+      "bt100_verdict": "partial"
     },
     {
       "package": "fp",
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 13,
-      "smoke_cases": 2,
-      "interaction_cases": 1,
-      "bt100_verdict": "pass"
+      "smoke_cases": 0,
+      "interaction_cases": 4,
+      "bt100_verdict": "partial"
     },
     {
       "package": "garrigues",
@@ -1047,17 +1053,17 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 2,
-      "bt100_verdict": "partial"
+      "smoke_cases": 0,
+      "interaction_cases": 0,
+      "bt100_verdict": "untested"
     },
     {
       "package": "gettitlestring",
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 4,
+      "smoke_cases": 0,
+      "interaction_cases": 6,
       "bt100_verdict": "partial"
     },
     {
@@ -1074,8 +1080,8 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 1,
+      "smoke_cases": 0,
+      "interaction_cases": 4,
       "bt100_verdict": "partial"
     },
     {
@@ -1083,8 +1089,8 @@
       "revision": "75374",
       "licence": "unknown",
       "loadable_styles": 9,
-      "smoke_cases": 2,
-      "interaction_cases": 2,
+      "smoke_cases": 0,
+      "interaction_cases": 6,
       "bt100_verdict": "partial"
     },
     {
@@ -1110,17 +1116,17 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 0,
-      "bt100_verdict": "pass"
+      "smoke_cases": 0,
+      "interaction_cases": 7,
+      "bt100_verdict": "partial"
     },
     {
       "package": "grffile",
       "revision": "78101",
       "licence": "unknown",
       "loadable_styles": 2,
-      "smoke_cases": 2,
-      "interaction_cases": 2,
+      "smoke_cases": 0,
+      "interaction_cases": 5,
       "bt100_verdict": "partial"
     },
     {
@@ -1146,8 +1152,8 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 3,
+      "smoke_cases": 0,
+      "interaction_cases": 5,
       "bt100_verdict": "partial"
     },
     {
@@ -1155,9 +1161,9 @@
       "revision": "65491",
       "licence": "unknown",
       "loadable_styles": 2,
-      "smoke_cases": 2,
-      "interaction_cases": 2,
-      "bt100_verdict": "pass"
+      "smoke_cases": 0,
+      "interaction_cases": 6,
+      "bt100_verdict": "partial"
     },
     {
       "package": "huffman",
@@ -1173,17 +1179,17 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 2,
-      "smoke_cases": 2,
-      "interaction_cases": 3,
-      "bt100_verdict": "partial"
+      "smoke_cases": 0,
+      "interaction_cases": 5,
+      "bt100_verdict": "pass"
     },
     {
       "package": "hypcap",
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 1,
+      "smoke_cases": 0,
+      "interaction_cases": 4,
       "bt100_verdict": "partial"
     },
     {
@@ -1191,8 +1197,8 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 8,
-      "smoke_cases": 2,
-      "interaction_cases": 1,
+      "smoke_cases": 0,
+      "interaction_cases": 6,
       "bt100_verdict": "partial"
     },
     {
@@ -1362,8 +1368,8 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 1,
+      "smoke_cases": 0,
+      "interaction_cases": 3,
       "bt100_verdict": "partial"
     },
     {
@@ -1371,35 +1377,35 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 6,
-      "smoke_cases": 2,
-      "interaction_cases": 2,
-      "bt100_verdict": "partial"
+      "smoke_cases": 0,
+      "interaction_cases": 4,
+      "bt100_verdict": "pass"
     },
     {
       "package": "index",
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 2,
-      "bt100_verdict": "pass"
+      "smoke_cases": 0,
+      "interaction_cases": 10,
+      "bt100_verdict": "partial"
     },
     {
       "package": "infwarerr",
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 0,
-      "bt100_verdict": "pass"
+      "smoke_cases": 0,
+      "interaction_cases": 5,
+      "bt100_verdict": "partial"
     },
     {
       "package": "intcalc",
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 2,
+      "smoke_cases": 0,
+      "interaction_cases": 5,
       "bt100_verdict": "partial"
     },
     {
@@ -1407,8 +1413,8 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 1,
+      "smoke_cases": 0,
+      "interaction_cases": 3,
       "bt100_verdict": "partial"
     },
     {
@@ -1416,9 +1422,9 @@
       "revision": "19440",
       "licence": "unknown",
       "loadable_styles": 11,
-      "smoke_cases": 2,
-      "interaction_cases": 2,
-      "bt100_verdict": "pass"
+      "smoke_cases": 0,
+      "interaction_cases": 9,
+      "bt100_verdict": "partial"
     },
     {
       "package": "knuth-lib",
@@ -1443,8 +1449,8 @@
       "revision": "77575",
       "licence": "unknown",
       "loadable_styles": 27,
-      "smoke_cases": 2,
-      "interaction_cases": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 8,
       "bt100_verdict": "partial"
     },
     {
@@ -1470,8 +1476,8 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 1,
+      "smoke_cases": 0,
+      "interaction_cases": 6,
       "bt100_verdict": "partial"
     },
     {
@@ -1479,17 +1485,17 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 2,
-      "smoke_cases": 2,
-      "interaction_cases": 2,
-      "bt100_verdict": "partial"
+      "smoke_cases": 0,
+      "interaction_cases": 3,
+      "bt100_verdict": "pass"
     },
     {
       "package": "kvsetkeys",
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 4,
+      "smoke_cases": 0,
+      "interaction_cases": 7,
       "bt100_verdict": "partial"
     },
     {
@@ -1515,26 +1521,26 @@
       "revision": "76637",
       "licence": "unknown",
       "loadable_styles": 4,
-      "smoke_cases": 2,
-      "interaction_cases": 0,
-      "bt100_verdict": "pass"
+      "smoke_cases": 0,
+      "interaction_cases": 4,
+      "bt100_verdict": "partial"
     },
     {
       "package": "l3kernel",
       "revision": "77438",
       "licence": "unknown",
       "loadable_styles": 2,
-      "smoke_cases": 2,
-      "interaction_cases": 0,
-      "bt100_verdict": "partial"
+      "smoke_cases": 0,
+      "interaction_cases": 3,
+      "bt100_verdict": "pass"
     },
     {
       "package": "l3kernel-dev",
       "revision": "77953",
       "licence": "unknown",
       "loadable_styles": 2,
-      "smoke_cases": 2,
-      "interaction_cases": 1,
+      "smoke_cases": 0,
+      "interaction_cases": 4,
       "bt100_verdict": "partial"
     },
     {
@@ -1542,17 +1548,17 @@
       "revision": "76637",
       "licence": "unknown",
       "loadable_styles": 7,
-      "smoke_cases": 2,
-      "interaction_cases": 1,
-      "bt100_verdict": "pass"
+      "smoke_cases": 0,
+      "interaction_cases": 4,
+      "bt100_verdict": "partial"
     },
     {
       "package": "latex",
       "revision": "76924",
       "licence": "unknown",
       "loadable_styles": 43,
-      "smoke_cases": 2,
-      "interaction_cases": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 8,
       "bt100_verdict": "partial"
     },
     {
@@ -1560,17 +1566,17 @@
       "revision": "77483",
       "licence": "unknown",
       "loadable_styles": 9,
-      "smoke_cases": 2,
-      "interaction_cases": 0,
-      "bt100_verdict": "pass"
+      "smoke_cases": 0,
+      "interaction_cases": 3,
+      "bt100_verdict": "partial"
     },
     {
       "package": "latex-base-dev",
       "revision": "77483",
       "licence": "unknown",
       "loadable_styles": 44,
-      "smoke_cases": 2,
-      "interaction_cases": 2,
+      "smoke_cases": 0,
+      "interaction_cases": 3,
       "bt100_verdict": "partial"
     },
     {
@@ -1614,9 +1620,9 @@
       "revision": "77483",
       "licence": "unknown",
       "loadable_styles": 2,
-      "smoke_cases": 2,
-      "interaction_cases": 3,
-      "bt100_verdict": "pass"
+      "smoke_cases": 0,
+      "interaction_cases": 9,
+      "bt100_verdict": "partial"
     },
     {
       "package": "latex-fonts",
@@ -1632,17 +1638,17 @@
       "revision": "76722",
       "licence": "unknown",
       "loadable_styles": 9,
-      "smoke_cases": 2,
-      "interaction_cases": 2,
-      "bt100_verdict": "partial"
+      "smoke_cases": 0,
+      "interaction_cases": 3,
+      "bt100_verdict": "pass"
     },
     {
       "package": "latex-lab",
       "revision": "76739",
       "licence": "unknown",
       "loadable_styles": 21,
-      "smoke_cases": 2,
-      "interaction_cases": 2,
+      "smoke_cases": 0,
+      "interaction_cases": 6,
       "bt100_verdict": "partial"
     },
     {
@@ -1650,26 +1656,26 @@
       "revision": "77531",
       "licence": "unknown",
       "loadable_styles": 23,
-      "smoke_cases": 2,
-      "interaction_cases": 0,
-      "bt100_verdict": "pass"
+      "smoke_cases": 0,
+      "interaction_cases": 3,
+      "bt100_verdict": "partial"
     },
     {
       "package": "latex-tools-dev",
       "revision": "77483",
       "licence": "unknown",
       "loadable_styles": 44,
-      "smoke_cases": 2,
-      "interaction_cases": 3,
-      "bt100_verdict": "pass"
+      "smoke_cases": 0,
+      "interaction_cases": 4,
+      "bt100_verdict": "partial"
     },
     {
       "package": "latexbug",
       "revision": "78101",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 1,
+      "smoke_cases": 0,
+      "interaction_cases": 6,
       "bt100_verdict": "pass"
     },
     {
@@ -1695,8 +1701,8 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 1,
+      "smoke_cases": 0,
+      "interaction_cases": 2,
       "bt100_verdict": "pass"
     },
     {
@@ -1704,8 +1710,8 @@
       "revision": "77875",
       "licence": "unknown",
       "loadable_styles": 5,
-      "smoke_cases": 2,
-      "interaction_cases": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 7,
       "bt100_verdict": "partial"
     },
     {
@@ -1713,18 +1719,18 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 7,
-      "smoke_cases": 2,
-      "interaction_cases": 1,
-      "bt100_verdict": "partial"
+      "smoke_cases": 0,
+      "interaction_cases": 4,
+      "bt100_verdict": "pass"
     },
     {
       "package": "lm",
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 0,
-      "bt100_verdict": "pass"
+      "smoke_cases": 0,
+      "interaction_cases": 8,
+      "bt100_verdict": "partial"
     },
     {
       "package": "lm-math",
@@ -1740,8 +1746,8 @@
       "revision": "77950",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 5,
       "bt100_verdict": "partial"
     },
     {
@@ -1749,8 +1755,8 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 3,
+      "smoke_cases": 0,
+      "interaction_cases": 11,
       "bt100_verdict": "partial"
     },
     {
@@ -1758,8 +1764,8 @@
       "revision": "75878",
       "licence": "unknown",
       "loadable_styles": 11,
-      "smoke_cases": 2,
-      "interaction_cases": 2,
+      "smoke_cases": 0,
+      "interaction_cases": 3,
       "bt100_verdict": "partial"
     },
     {
@@ -1785,8 +1791,8 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 16,
-      "smoke_cases": 2,
-      "interaction_cases": 2,
+      "smoke_cases": 0,
+      "interaction_cases": 3,
       "bt100_verdict": "partial"
     },
     {
@@ -1821,7 +1827,7 @@
       "revision": "78219",
       "licence": "unknown",
       "loadable_styles": 4,
-      "smoke_cases": 2,
+      "smoke_cases": 0,
       "interaction_cases": 3,
       "bt100_verdict": "partial"
     },
@@ -1830,8 +1836,8 @@
       "revision": "74324",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 2,
+      "smoke_cases": 0,
+      "interaction_cases": 3,
       "bt100_verdict": "partial"
     },
     {
@@ -1866,8 +1872,8 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 8,
-      "smoke_cases": 2,
-      "interaction_cases": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 6,
       "bt100_verdict": "partial"
     },
     {
@@ -1875,8 +1881,8 @@
       "revision": "78111",
       "licence": "unknown",
       "loadable_styles": 595,
-      "smoke_cases": 2,
-      "interaction_cases": 2,
+      "smoke_cases": 0,
+      "interaction_cases": 5,
       "bt100_verdict": "partial"
     },
     {
@@ -1911,8 +1917,8 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 3,
+      "smoke_cases": 0,
+      "interaction_cases": 7,
       "bt100_verdict": "partial"
     },
     {
@@ -1938,8 +1944,8 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 2,
+      "smoke_cases": 0,
+      "interaction_cases": 7,
       "bt100_verdict": "partial"
     },
     {
@@ -1947,9 +1953,9 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 3,
-      "smoke_cases": 2,
-      "interaction_cases": 1,
-      "bt100_verdict": "pass"
+      "smoke_cases": 0,
+      "interaction_cases": 7,
+      "bt100_verdict": "partial"
     },
     {
       "package": "mcf2graph",
@@ -1965,18 +1971,18 @@
       "revision": "15878",
       "licence": "unknown",
       "loadable_styles": 10,
-      "smoke_cases": 2,
-      "interaction_cases": 1,
-      "bt100_verdict": "pass"
+      "smoke_cases": 0,
+      "interaction_cases": 6,
+      "bt100_verdict": "partial"
     },
     {
       "package": "memoir",
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 2,
-      "smoke_cases": 2,
-      "interaction_cases": 2,
-      "bt100_verdict": "partial"
+      "smoke_cases": 0,
+      "interaction_cases": 8,
+      "bt100_verdict": "pass"
     },
     {
       "package": "metafont",
@@ -2010,9 +2016,9 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 2,
-      "bt100_verdict": "pass"
+      "smoke_cases": 0,
+      "interaction_cases": 7,
+      "bt100_verdict": "partial"
     },
     {
       "package": "metaobj",
@@ -2073,17 +2079,17 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 1,
-      "bt100_verdict": "pass"
+      "smoke_cases": 0,
+      "interaction_cases": 9,
+      "bt100_verdict": "partial"
     },
     {
       "package": "mfnfss",
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 2,
-      "smoke_cases": 2,
-      "interaction_cases": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 5,
       "bt100_verdict": "partial"
     },
     {
@@ -2091,17 +2097,17 @@
       "revision": "28444",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 0,
-      "bt100_verdict": "pass"
+      "smoke_cases": 0,
+      "interaction_cases": 5,
+      "bt100_verdict": "partial"
     },
     {
       "package": "mfpic4ode",
       "revision": "75712",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 3,
+      "smoke_cases": 0,
+      "interaction_cases": 4,
       "bt100_verdict": "partial"
     },
     {
@@ -2127,9 +2133,9 @@
       "revision": "78228",
       "licence": "unknown",
       "loadable_styles": 3,
-      "smoke_cases": 2,
-      "interaction_cases": 1,
-      "bt100_verdict": "pass"
+      "smoke_cases": 0,
+      "interaction_cases": 4,
+      "bt100_verdict": "partial"
     },
     {
       "package": "minim-hatching",
@@ -2217,7 +2223,7 @@
       "revision": "29776",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
+      "smoke_cases": 0,
       "interaction_cases": 3,
       "bt100_verdict": "partial"
     },
@@ -2262,8 +2268,8 @@
       "revision": "55559",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 6,
       "bt100_verdict": "partial"
     },
     {
@@ -2271,26 +2277,26 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 2,
-      "smoke_cases": 2,
-      "interaction_cases": 1,
-      "bt100_verdict": "pass"
+      "smoke_cases": 0,
+      "interaction_cases": 6,
+      "bt100_verdict": "partial"
     },
     {
       "package": "newfloat",
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 3,
-      "smoke_cases": 2,
+      "smoke_cases": 0,
       "interaction_cases": 3,
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "ntgclass",
       "revision": "77239",
       "licence": "unknown",
       "loadable_styles": 9,
-      "smoke_cases": 2,
-      "interaction_cases": 2,
+      "smoke_cases": 0,
+      "interaction_cases": 8,
       "bt100_verdict": "partial"
     },
     {
@@ -2298,8 +2304,8 @@
       "revision": "71916",
       "licence": "unknown",
       "loadable_styles": 34,
-      "smoke_cases": 2,
-      "interaction_cases": 2,
+      "smoke_cases": 0,
+      "interaction_cases": 5,
       "bt100_verdict": "partial"
     },
     {
@@ -2307,7 +2313,7 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 2,
-      "smoke_cases": 2,
+      "smoke_cases": 0,
       "interaction_cases": 4,
       "bt100_verdict": "partial"
     },
@@ -2316,8 +2322,8 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 2,
-      "smoke_cases": 2,
-      "interaction_cases": 1,
+      "smoke_cases": 0,
+      "interaction_cases": 5,
       "bt100_verdict": "pass"
     },
     {
@@ -2325,8 +2331,8 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 3,
+      "smoke_cases": 0,
+      "interaction_cases": 5,
       "bt100_verdict": "partial"
     },
     {
@@ -2334,8 +2340,8 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 2,
+      "smoke_cases": 0,
+      "interaction_cases": 5,
       "bt100_verdict": "partial"
     },
     {
@@ -2343,17 +2349,17 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 2,
-      "smoke_cases": 2,
-      "interaction_cases": 6,
-      "bt100_verdict": "pass"
+      "smoke_cases": 0,
+      "interaction_cases": 3,
+      "bt100_verdict": "partial"
     },
     {
       "package": "pdfmanagement-testphase",
       "revision": "77467",
       "licence": "unknown",
       "loadable_styles": 8,
-      "smoke_cases": 2,
-      "interaction_cases": 4,
+      "smoke_cases": 0,
+      "interaction_cases": 3,
       "bt100_verdict": "partial"
     },
     {
@@ -2361,8 +2367,8 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 1,
+      "smoke_cases": 0,
+      "interaction_cases": 8,
       "bt100_verdict": "partial"
     },
     {
@@ -2388,17 +2394,17 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 1,
-      "bt100_verdict": "pass"
+      "smoke_cases": 0,
+      "interaction_cases": 8,
+      "bt100_verdict": "partial"
     },
     {
       "package": "pgf",
       "revision": "78101",
       "licence": "unknown",
       "loadable_styles": 37,
-      "smoke_cases": 2,
-      "interaction_cases": 1,
+      "smoke_cases": 0,
+      "interaction_cases": 10,
       "bt100_verdict": "partial"
     },
     {
@@ -2406,8 +2412,8 @@
       "revision": "45356",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 1,
+      "smoke_cases": 0,
+      "interaction_cases": 5,
       "bt100_verdict": "partial"
     },
     {
@@ -2433,8 +2439,8 @@
       "revision": "76990",
       "licence": "unknown",
       "loadable_styles": 11,
-      "smoke_cases": 2,
-      "interaction_cases": 2,
+      "smoke_cases": 0,
+      "interaction_cases": 4,
       "bt100_verdict": "partial"
     },
     {
@@ -2442,17 +2448,17 @@
       "revision": "15878",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 3,
-      "bt100_verdict": "pass"
+      "smoke_cases": 0,
+      "interaction_cases": 8,
+      "bt100_verdict": "partial"
     },
     {
       "package": "pslatex",
       "revision": "67469",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 1,
+      "smoke_cases": 0,
+      "interaction_cases": 5,
       "bt100_verdict": "partial"
     },
     {
@@ -2460,7 +2466,7 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 15,
-      "smoke_cases": 2,
+      "smoke_cases": 0,
       "interaction_cases": 3,
       "bt100_verdict": "partial"
     },
@@ -2469,8 +2475,8 @@
       "revision": "15878",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 2,
+      "smoke_cases": 0,
+      "interaction_cases": 8,
       "bt100_verdict": "partial"
     },
     {
@@ -2478,8 +2484,8 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 2,
+      "smoke_cases": 0,
+      "interaction_cases": 4,
       "bt100_verdict": "partial"
     },
     {
@@ -2487,17 +2493,17 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 2,
-      "bt100_verdict": "pass"
+      "smoke_cases": 0,
+      "interaction_cases": 4,
+      "bt100_verdict": "partial"
     },
     {
       "package": "rcs",
       "revision": "15878",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 3,
       "bt100_verdict": "pass"
     },
     {
@@ -2505,8 +2511,8 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 3,
+      "smoke_cases": 0,
+      "interaction_cases": 6,
       "bt100_verdict": "pass"
     },
     {
@@ -2523,8 +2529,8 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 2,
+      "smoke_cases": 0,
+      "interaction_cases": 5,
       "bt100_verdict": "pass"
     },
     {
@@ -2532,8 +2538,8 @@
       "revision": "67271",
       "licence": "unknown",
       "loadable_styles": 6,
-      "smoke_cases": 2,
-      "interaction_cases": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 3,
       "bt100_verdict": "partial"
     },
     {
@@ -2559,9 +2565,9 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 0,
-      "bt100_verdict": "pass"
+      "smoke_cases": 0,
+      "interaction_cases": 3,
+      "bt100_verdict": "partial"
     },
     {
       "package": "scheme-basic",
@@ -2604,8 +2610,8 @@
       "revision": "20180",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 3,
       "bt100_verdict": "pass"
     },
     {
@@ -2613,17 +2619,17 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 14,
-      "smoke_cases": 2,
+      "smoke_cases": 0,
       "interaction_cases": 1,
-      "bt100_verdict": "partial"
+      "bt100_verdict": "pass"
     },
     {
       "package": "sepnum",
       "revision": "20186",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 1,
+      "smoke_cases": 0,
+      "interaction_cases": 5,
       "bt100_verdict": "pass"
     },
     {
@@ -2631,7 +2637,7 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
+      "smoke_cases": 0,
       "interaction_cases": 4,
       "bt100_verdict": "pass"
     },
@@ -2649,8 +2655,8 @@
       "revision": "43057",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 6,
       "bt100_verdict": "partial"
     },
     {
@@ -2658,8 +2664,8 @@
       "revision": "43058",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 1,
+      "smoke_cases": 0,
+      "interaction_cases": 4,
       "bt100_verdict": "partial"
     },
     {
@@ -2685,8 +2691,8 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 3,
       "bt100_verdict": "pass"
     },
     {
@@ -2703,9 +2709,9 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 5,
-      "bt100_verdict": "partial"
+      "smoke_cases": 0,
+      "interaction_cases": 6,
+      "bt100_verdict": "pass"
     },
     {
       "package": "symbol",
@@ -2739,8 +2745,8 @@
       "revision": "77539",
       "licence": "unknown",
       "loadable_styles": 8,
-      "smoke_cases": 2,
-      "interaction_cases": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 4,
       "bt100_verdict": "partial"
     },
     {
@@ -2748,9 +2754,9 @@
       "revision": "49732",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 3,
-      "bt100_verdict": "pass"
+      "smoke_cases": 0,
+      "interaction_cases": 7,
+      "bt100_verdict": "partial"
     },
     {
       "package": "tex",
@@ -2784,9 +2790,9 @@
       "revision": "78132",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 2,
-      "bt100_verdict": "partial"
+      "smoke_cases": 0,
+      "interaction_cases": 4,
+      "bt100_verdict": "pass"
     },
     {
       "package": "tex4ebook.universal-darwin",
@@ -2802,7 +2808,7 @@
       "revision": "77990",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
+      "smoke_cases": 0,
       "interaction_cases": 3,
       "bt100_verdict": "partial"
     },
@@ -2901,8 +2907,8 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 1,
+      "smoke_cases": 0,
+      "interaction_cases": 2,
       "bt100_verdict": "pass"
     },
     {
@@ -2910,7 +2916,7 @@
       "revision": "15878",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
+      "smoke_cases": 0,
       "interaction_cases": 2,
       "bt100_verdict": "partial"
     },
@@ -2928,9 +2934,9 @@
       "revision": "62518",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 0,
-      "bt100_verdict": "pass"
+      "smoke_cases": 0,
+      "interaction_cases": 3,
+      "bt100_verdict": "partial"
     },
     {
       "package": "thumbpdf.universal-darwin",
@@ -2955,9 +2961,9 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 6,
-      "smoke_cases": 2,
-      "interaction_cases": 2,
-      "bt100_verdict": "pass"
+      "smoke_cases": 0,
+      "interaction_cases": 7,
+      "bt100_verdict": "partial"
     },
     {
       "package": "tlshell",
@@ -2982,8 +2988,8 @@
       "revision": "76708",
       "licence": "unknown",
       "loadable_styles": 42,
-      "smoke_cases": 2,
-      "interaction_cases": 1,
+      "smoke_cases": 0,
+      "interaction_cases": 3,
       "bt100_verdict": "pass"
     },
     {
@@ -2991,26 +2997,26 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 0,
-      "bt100_verdict": "pass"
+      "smoke_cases": 0,
+      "interaction_cases": 6,
+      "bt100_verdict": "partial"
     },
     {
       "package": "typehtml",
       "revision": "17134",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 0,
-      "bt100_verdict": "pass"
+      "smoke_cases": 0,
+      "interaction_cases": 5,
+      "bt100_verdict": "partial"
     },
     {
       "package": "ucharcat",
       "revision": "38907",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 2,
+      "smoke_cases": 0,
+      "interaction_cases": 3,
       "bt100_verdict": "partial"
     },
     {
@@ -3018,8 +3024,8 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 1,
+      "smoke_cases": 0,
+      "interaction_cases": 4,
       "bt100_verdict": "partial"
     },
     {
@@ -3027,25 +3033,25 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 0,
-      "bt100_verdict": "pass"
+      "smoke_cases": 0,
+      "interaction_cases": 7,
+      "bt100_verdict": "partial"
     },
     {
       "package": "underscore",
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 3,
-      "bt100_verdict": "pass"
+      "smoke_cases": 0,
+      "interaction_cases": 5,
+      "bt100_verdict": "partial"
     },
     {
       "package": "unicode-bidi",
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
+      "smoke_cases": 0,
       "interaction_cases": 6,
       "bt100_verdict": "partial"
     },
@@ -3063,8 +3069,8 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 3,
-      "smoke_cases": 2,
-      "interaction_cases": 2,
+      "smoke_cases": 0,
+      "interaction_cases": 4,
       "bt100_verdict": "partial"
     },
     {
@@ -3081,35 +3087,35 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 2,
-      "bt100_verdict": "pass"
+      "smoke_cases": 0,
+      "interaction_cases": 5,
+      "bt100_verdict": "partial"
     },
     {
       "package": "unisugar",
       "revision": "22357",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 0,
-      "bt100_verdict": "pass"
+      "smoke_cases": 0,
+      "interaction_cases": 7,
+      "bt100_verdict": "partial"
     },
     {
       "package": "upquote",
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 1,
-      "bt100_verdict": "pass"
+      "smoke_cases": 0,
+      "interaction_cases": 6,
+      "bt100_verdict": "partial"
     },
     {
       "package": "url",
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 2,
+      "smoke_cases": 0,
+      "interaction_cases": 5,
       "bt100_verdict": "partial"
     },
     {
@@ -3117,8 +3123,8 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 2,
-      "smoke_cases": 2,
-      "interaction_cases": 2,
+      "smoke_cases": 0,
+      "interaction_cases": 11,
       "bt100_verdict": "partial"
     },
     {
@@ -3144,8 +3150,8 @@
       "revision": "75290",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 1,
+      "smoke_cases": 0,
+      "interaction_cases": 3,
       "bt100_verdict": "partial"
     },
     {
@@ -3153,8 +3159,8 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 4,
+      "smoke_cases": 0,
+      "interaction_cases": 6,
       "bt100_verdict": "partial"
     },
     {
@@ -3162,8 +3168,8 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 3,
       "bt100_verdict": "partial"
     },
     {
@@ -3171,8 +3177,8 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 2,
+      "smoke_cases": 0,
+      "interaction_cases": 4,
       "bt100_verdict": "partial"
     },
     {
@@ -3180,8 +3186,8 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 3,
+      "smoke_cases": 0,
+      "interaction_cases": 5,
       "bt100_verdict": "partial"
     },
     {
@@ -3207,8 +3213,8 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 3,
+      "smoke_cases": 0,
+      "interaction_cases": 5,
       "bt100_verdict": "partial"
     },
     {
@@ -3216,7 +3222,7 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
+      "smoke_cases": 0,
       "interaction_cases": 1,
       "bt100_verdict": "pass"
     },
@@ -3288,8 +3294,8 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 6,
-      "smoke_cases": 2,
-      "interaction_cases": 0,
+      "smoke_cases": 0,
+      "interaction_cases": 4,
       "bt100_verdict": "partial"
     },
     {
@@ -3297,8 +3303,8 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 2,
+      "smoke_cases": 0,
+      "interaction_cases": 3,
       "bt100_verdict": "partial"
     },
     {
@@ -3306,26 +3312,26 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 1,
-      "bt100_verdict": "pass"
+      "smoke_cases": 0,
+      "interaction_cases": 5,
+      "bt100_verdict": "partial"
     },
     {
       "package": "xkeyval",
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 4,
-      "smoke_cases": 2,
-      "interaction_cases": 1,
-      "bt100_verdict": "partial"
+      "smoke_cases": 0,
+      "interaction_cases": 4,
+      "bt100_verdict": "pass"
     },
     {
       "package": "xltxtra",
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 1,
+      "smoke_cases": 0,
+      "interaction_cases": 4,
       "bt100_verdict": "partial"
     },
     {
@@ -3333,17 +3339,17 @@
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 0,
-      "bt100_verdict": "pass"
+      "smoke_cases": 0,
+      "interaction_cases": 6,
+      "bt100_verdict": "partial"
     },
     {
       "package": "xunicode",
       "revision": "77682",
       "licence": "unknown",
       "loadable_styles": 1,
-      "smoke_cases": 1,
-      "interaction_cases": 1,
+      "smoke_cases": 0,
+      "interaction_cases": 7,
       "bt100_verdict": "partial"
     },
     {
@@ -3360,7 +3366,7 @@
       "revision": "59693",
       "licence": "unknown",
       "loadable_styles": 2,
-      "smoke_cases": 2,
+      "smoke_cases": 0,
       "interaction_cases": 3,
       "bt100_verdict": "partial"
     }

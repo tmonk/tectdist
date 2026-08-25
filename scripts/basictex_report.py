@@ -98,10 +98,20 @@ def main(argv=None):
 
     pipeline_ok = pipelines.get("passed") == pipelines.get("total") if pipelines else False
 
+    # Merge reference-failure attribution (standalone probes classify
+    # every pair failure as explained or pair-specific).
+    reffail = load_json(ref_dir / "ref-fail-classification.json")
+    attribution = reffail.get("classified", {}) if reffail else {}
+    pair_specific_cases = reffail.get("pair_specific_cases", []) if reffail else []
+    standalone_failed = reffail.get("standalone_failed_packages", []) \
+        if reffail else []
+    unattributed = len(pair_specific_cases)
+
     gate_pass = (
         failed == 0
         and tested > 0
         and pipeline_ok
+        and unattributed == 0
     )
 
     report = {
@@ -119,6 +129,13 @@ def main(argv=None):
             "pipelines_passed": pipelines.get("passed", 0) if pipelines else 0,
             "pipelines_total": pipelines.get("total", 0) if pipelines else 0,
             "pipeline_ok": pipeline_ok,
+            "interaction_reference_failures": {
+                "total": sum(attribution.values()),
+                "explained_by_standalone_failure": attribution.get(
+                    "explained-by-standalone-failure", 0),
+                "pair_specific": unattributed,
+                "standalone_failed_packages": len(standalone_failed),
+            },
         },
         "gate_pass": gate_pass,
         "rows": rows,
@@ -144,6 +161,26 @@ def main(argv=None):
         f"Output pipelines: {report['summary']['pipelines_passed']}/{report['summary']['pipelines_total']} qualified",
         "",
     ]
+    if attribution:
+        total_rf = sum(attribution.values())
+        md.extend([
+            "## Reference-failure attribution",
+            "",
+            f"{total_rf} interaction reference-failures, all attributed:",
+            "",
+            f"- explained by a component failing standalone: {attribution.get('explained-by-standalone-failure', 0)}",
+            f"- pair-specific (unattributed): {unattributed}",
+            f"- components failing standalone: {len(standalone_failed)}",
+            "",
+        ])
+        if standalone_failed:
+            md.extend(["| standalone-failing package | cause |", "|---|---|"])
+            sa = {r["package"]: r for r in load_json(
+                ref_dir / "reffail-standalone.json")["results"]}
+            for pkg in standalone_failed:
+                cause = sa.get(pkg, {}).get("error", "") or "unknown"
+                md.append(f"| {pkg} | {cause[:80]} |")
+            md.append("")
     if failed:
         md.extend(["## Failing packages", "", "| package | verdict |", "|---|---|"])
         for row in rows:
