@@ -2,19 +2,12 @@
   "schema_version": 1,
   "rows": [
     {
-      "document": "biblatex",
-      "reference_exit": 1,
-      "candidate_exit": 1,
-      "reference_pages": null,
-      "candidate_pages": null,
-      "verdict": "pass"
-    },
-    {
-      "document": "glossary",
-      "reference_exit": 1,
-      "candidate_exit": 1,
-      "reference_pages": null,
-      "candidate_pages": null,
+      "document": "beamer",
+      "reference_exit": 0,
+      "candidate_exit": 0,
+      "reference_pages": 3,
+      "candidate_pages": 3,
+      "text_identical": true,
       "verdict": "pass"
     }
   ]

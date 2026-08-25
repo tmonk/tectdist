@@ -237,3 +237,22 @@ requires_glossary = false
 requires_shell_escape = false
 edit_operations = ["small-text", "structural-section"]
 forbid_log_patterns = ["undefined references", "Rerun to get cross-references right"]
+
+[[document]]
+id = "beamer"
+path = "corpus/beamer"
+main = "main.tex"
+license = "CC0-1.0"
+claim = true
+platforms = ["macos-arm64", "linux-x86_64", "linux-arm64"]
+scenarios = ["warm-clean"]
+expected_pages = 3
+expected_text = ["Beamer Corpus Probe", "Outline", "Math Slide"]
+engine = "tectonic"
+requires = ["beamer"]
+requires_bibliography = false
+requires_index = false
+requires_glossary = false
+requires_shell_escape = false
+edit_operations = []
+forbid_log_patterns = []

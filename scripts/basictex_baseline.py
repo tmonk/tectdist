@@ -35,6 +35,7 @@ SEQUENCES = {
     "references": ["pdflatex {job}.tex", "pdflatex {job}.tex"],
     "paper": ["pdflatex {job}.tex", "pdflatex {job}.tex"],
     "multifile": ["pdflatex {job}.tex", "pdflatex {job}.tex"],
+    "beamer": ["pdflatex {job}.tex", "pdflatex {job}.tex"],
     "thesis": ["pdflatex {job}.tex", "pdflatex {job}.tex"],
     "graphics": ["pdflatex {job}.tex"],
     "tikz": ["pdflatex {job}.tex", "pdflatex {job}.tex"],

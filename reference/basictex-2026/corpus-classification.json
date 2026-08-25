@@ -2,6 +2,7 @@
   "schema_version": 1,
   "image_files_sha256": "395f0b4d7ce47684c021e8734421bd530206e58a96949cb6103a6333ad2b36b6",
   "documents": {
+    "beamer": "basictex-core",
     "biblatex": "extension",
     "bibtex": "basictex-core",
     "glossary": "extension",
