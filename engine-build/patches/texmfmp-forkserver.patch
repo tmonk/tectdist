@@ -1,0 +1,133 @@
+--- /tmp/texmfmp-pristine.c	2026-08-26 00:36:39
++++ reference/texlive-source/texlive-20260301-source/texk/web2c/lib/texmfmp.c	2026-08-25 23:18:58
+@@ -4212,3 +4212,130 @@
+     (*mfwp->mfwsw_paintrow) (row, init_color, transition_vector, vector_size);
+ }
+ #endif /* MF */
++
++
++/* =====================================================================
++ * tectdist fork-server prototype (plan X1).
++ * Activated only when TECTDIST_FORKSERVER_SOCKET is present.  The parent
++ * keeps the initialised engine and forks one copy-on-write child per job;
++ * children install their job name into the terminal buffer, return from
++ * this hook to resume mainbody, and _exit() on completion.
++ *
++ * NOTE (2026-08): the resumed child's command line carries NO &-prefix.
++ * The parent already preloaded the intended format (-fmt=tectdist-active
++ * for composed workers, -fmt=tectdist-latex for the base seed); a
++ * first-line &switch would force a full format load inside every child,
++ * discarding the preload (~320 ms fixed overhead measured).
++ * ===================================================================== */
++void
++tectdist_forkserver_serve ( void )
++{
++  fprintf ( stderr , "FS-enter\n" ) ;
++  fflush ( stderr ) ;
++  static int started = 0 ;
++  if ( started )
++    return ;
++  started = 1 ;
++#include <sys/socket.h>
++#include <sys/un.h>
++#include <sys/wait.h>
++  {
++    struct sockaddr_un addr ;
++    memset ( &addr , 0 , sizeof ( addr ) ) ;
++    addr . sun_family = AF_UNIX ;
++    const char *path = getenv ( "TECTDIST_FORKSERVER_SOCKET" ) ;
++    const char *job = getenv ( "TECTDIST_FORK_JOB" ) ;
++    if ( path == NULL || job == NULL )
++      return ;
++    strncpy ( addr . sun_path , path , sizeof ( addr . sun_path ) - 1 ) ;
++    unlink ( addr . sun_path ) ;
++    int sfd = socket ( AF_UNIX , SOCK_STREAM , 0 ) ;
++    if ( sfd < 0 )
++      return ;
++    if ( bind ( sfd , ( struct sockaddr * ) & addr , sizeof ( addr ) ) != 0 )
++      return ;
++    if ( listen ( sfd , 8 ) != 0 )
++      return ;
++    fprintf ( stderr , "forkserver: ready on %s\n" , addr . sun_path ) ;
++    for ( ;; )
++    {
++      int cfd = accept ( sfd , NULL , NULL ) ;
++      char req [ 256 ] ;
++      ssize_t n ;
++      pid_t pid ;
++      int st = 0 ;
++      char reply [ 128 ] ;
++      int code ;
++      const char *jobreq = job ;
++      if ( cfd < 0 )
++        continue ;
++      n = recv ( cfd , req , sizeof ( req ) - 1 , 0 ) ;
++      if ( n <= 0 )
++      {
++        close ( cfd ) ;
++        continue ;
++      }
++      req [ n ] = 0 ;
++      if ( strncmp ( req , "quit" , 4 ) == 0 )
++      {
++        close ( cfd ) ;
++        close ( sfd ) ;
++        unlink ( addr . sun_path ) ;
++        _exit ( 0 ) ;
++      }
++      if ( strncmp ( req , "compile" , 7 ) == 0 && req [ 7 ] == ' ' )
++      {
++        const char *requested = req + 8 ;
++        while ( *requested == ' ' ) ++ requested ;
++        if ( *requested )
++          jobreq = requested ;
++      }
++      else
++      {
++        close ( cfd ) ;
++        continue ;
++      }
++      {
++        struct timeval tv0 ; gettimeofday ( & tv0 , NULL ) ;
++        fprintf ( stderr , "[hook] pre-fork t=%ld\n" ,
++                  tv0 . tv_sec * 1000 + tv0 . tv_usec / 1000 ) ;
++      }
++      pid = fork () ;
++      if ( pid == 0 )
++      {
++        /* Child: install the job at the CURRENT SCAN POSITION — everything
++         * up to curinput.locfield (&format token) was already consumed. */
++        char jobline [ 512 ] ;
++        int line_len = snprintf ( jobline , sizeof ( jobline ) ,
++                                  "%s" , jobreq ) ;
++        /* Normalize the install window: at some convergence points
++         * (XeTeX's lab1, reached via goto before any first-line read)
++         * `first` still holds its startup value, and installing there
++         * leaves locfield/limitfield pointing outside the buffer — the
++         * child then hits "**" + EOF instead of processing the job.
++         * Installing at a known-good offset makes every convergence
++         * point behave like the pdftex one. */
++        if ( first < 1 || first + line_len + 1 >= bufsize )
++          first = 1 ;
++        memcpy ( buffer + first , jobline , line_len ) ;
++        curinput . locfield = first ;
++        curinput . limitfield = first + line_len ;
++        buffer [ curinput . limitfield ] = '\r' ;
++        last = curinput . limitfield ;
++        close ( cfd ) ;
++        return ;   /* child resumes mainbody */
++      }
++      waitpid ( pid , & st , 0 ) ;
++      {
++        struct timeval tv1 ; gettimeofday ( & tv1 , NULL ) ;
++        fprintf ( stderr , "[hook] post-waitpid t=%ld pid=%d\n" ,
++                  tv1 . tv_sec * 1000 + tv1 . tv_usec / 1000 , pid ) ;
++      }
++      code = WIFEXITED ( st ) ? WEXITSTATUS ( st ) : 128 + WTERMSIG ( st ) ;
++      n = ( ssize_t ) snprintf ( reply , sizeof ( reply ) ,
++                                 "{\"exit\":%d}" , code ) ;
++      send ( cfd , reply , n , 0 ) ;
++      close ( cfd ) ;
++    }
++  }
++}

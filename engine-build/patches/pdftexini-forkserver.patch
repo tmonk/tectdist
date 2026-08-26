@@ -1,0 +1,13 @@
+--- /tmp/pdftexini-clean.c	2026-08-26 00:37:00
++++ /tmp/pdftexini-current.c	2026-08-26 00:37:00
+@@ -5524,6 +5524,10 @@
+       } 
+     } 
+     fixdateandtime () ;
++    {
++      extern void tectdist_forkserver_serve ( void ) ;
++      tectdist_forkserver_serve ( ) ;
++    }
+ 	;
+ #ifdef INITEX
+     if ( trienotready ) 
