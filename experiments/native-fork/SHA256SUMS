@@ -1,0 +1,8 @@
+# Fork-server binaries are no longer committed to Git (plan O100-004).
+# They are built in CI from the patches below and published as workflow
+# artefacts / signed release assets. Recorded digests of the last locally
+# built binaries (reference/basictex-2026/image/bin/forkproto/, now removed
+# from the working tree) are retained here for provenance only:
+#
+# cd638361533c1e6e7812dba1bfdd2abe35b2f7faadb76b72f383a474be2decdc  pdftex
+# cb72eb3a10e90a13eb8083201907577070e8eb3d1235dba15cad93fe8b04d79a  xetex

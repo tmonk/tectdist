@@ -1,5 +1,20 @@
 # BT100/X10 Programme Status
 
+> **SUPERSEDED / FROZEN HISTORICAL SNAPSHOT (plan O100-001).**
+> This hand-written status document is retained only as a record of the state
+> audited by `docs/BASICTEX_X10_PLAN.md`. Its claims are NOT authoritative and
+> several were contradicted by final gate artefacts (e.g. "X1 ~90%" while the
+> head-commit XeTeX fork server exits after resume).
+>
+> Current programme status is GENERATED from gate artefacts; run:
+>
+> ```
+> python3 scripts/generate_status.py
+> ```
+>
+> which renders `docs/STATUS.md` from `reference/release-gate.json` and the
+> other machine-readable gate outputs. Do not edit status by hand.
+
 **Date:** 2026-08-24
 **Branch:** `perf`
 **Head:** `66bcdfd` (+ uncommitted docs)

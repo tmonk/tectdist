@@ -263,15 +263,15 @@ fixdateandtime convergence point. Hook relocated to just after
 (xelatex documents through a worker preloading an X2 project format,
 byte-identical outputs).
 
-REMAINING base-worker gap: children forked at lab1 die reading their
-job (`**` + EOF, ~1 ms) even with a normalized install window
-(first clamped to >=1, bounds-checked against bufsize — hardening now
-in texmfmp.c serve()). texmf.cnf sets parse_first_line=t with a
-`.tex`-engine override f, so first-line semantics differ per engine;
-composing the exact consumption conditions for xetex's lab1 flow needs
-a dedicated trace. Composed mode is unaffected (its body files are
-consumed through the normal X2 body flow) and is the production-relevant
-mode for every corpus document. Build-tree gotchas encountered and fixed:
+REMAINING base-worker gap (FINAL STATE): XeTeX children die SILENTLY
+after resume — exit 1 within 1 ms, ZERO stderr output — even with:
+UTF16-safe element-wise buffer install, normalized first window,
+correct convergence placement. pdftex uses the IDENTICAL mechanism
+successfully, so the divergence is XeTeX-specific state between
+resume-at-lab1 and input consumption. Requires lldb attach on the
+fork child (dedicated session). Until fixed, XeTeX workers fail fast
+and escalate to exact one-shot execution — BT100 preserved by design;
+the ~250 ms attempt overhead is the only cost. Build-tree gotchas encountered and fixed:
 a corrupted texmfmp.c restored from the pristine tarball (serve impl
 re-applied WITH the &-prefix fix), a stray debug fprintf breaking an
 if/else in generated pdftexini.c, and an empty build-tree

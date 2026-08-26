@@ -1,6 +1,6 @@
 # tectdist C100/X10: Universal Compatibility and 10× Execution Plan
 
-**Status:** SUPERSEDED by `docs/BASICTEX_X10_PLAN.md` (BasicTeX-scoped revision of this plan). Retained for architectural background; its C100 universal-universe gate is no longer the active compatibility target.
+**Status:** SUPERSEDED by `docs/BASICTEX_X10_PLAN.md`, which itself supersedes this file (see its header). Retained for architectural background only; its C100 universal-universe gate is no longer the active compatibility target.
 
 **Original status:** Proposed successor to `docs/ORDER_OF_MAGNITUDE_PERFORMANCE_PLAN.md`  
 **Repository:** `tmonk/tectdist`  

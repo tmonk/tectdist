@@ -19,3 +19,10 @@ reference/basictex-2026/installer/
 reference/basictex-2026/image/
 reference/texlive-source/texlive-20260301-source/
 reference/texlive-source/*.tar.xz
+# Generated TeX artefacts (plan O100-004)
+texput.fmt
+texput.log
+# Engine/runtime binaries are never committed (plan O100-004)
+engine-build/
+*.fmt
+experiments/native-fork/bin/
