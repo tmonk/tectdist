@@ -22,6 +22,7 @@ mod project_format;
 mod rebuild_cache;
 mod rebuild_gate;
 use checkpoint::CheckpointChain;
+use tectdist_core::runtime::RuntimePack;
 
 use serde::{Deserialize, Serialize};
 use std::collections::{HashMap, VecDeque};
@@ -678,23 +679,20 @@ fn sha256_file(path: &Path) -> Result<String, String> {
 }
 
 impl SupervisorState {
+    /// Resolve a logical tool name through the runtime-pack abstraction
+    /// (M1): TECTDIST_RUNTIME_ROOT preferred, legacy oracle-image root
+    /// accepted during the transition.
     fn image_tool(&self, tool: &str) -> Result<PathBuf, String> {
-        if self.image_root.as_os_str().is_empty() {
-            return Err(
-                "no runtime pack configured: set TECTDIST_RUNTIME_ROOT".to_string(),
-            );
-        }
-        let bin = self.image_root.join("bin");
-        let mut platform_dir = None;
-        for entry in bin.read_dir().map_err(|e| e.to_string())?.flatten() {
-            if entry.path().is_dir() && entry.path().join(tool).exists() {
-                platform_dir = Some(entry.path());
-                break;
-            }
-        }
-        platform_dir
-            .map(|dir| dir.join(tool))
-            .ok_or_else(|| format!("image has no tool '{tool}'"))
+        let pack = tectdist_core::runtime::ImageRuntimePack::new(
+            self.image_root.clone(),
+        );
+        pack.resolve_tool(tool)
+            .map_err(|error| match error {
+                message if message.starts_with("runtime root is not") => {
+                    "no runtime pack configured: set TECTDIST_RUNTIME_ROOT".to_string()
+                }
+                other => other,
+            })
     }
 
     #[allow(dead_code)] // key derivation shared by upcoming replay paths
@@ -1337,18 +1335,11 @@ fn run_profile_compile(
             )
         }
     };
-    let program = argv.first().ok_or("empty argv")?;
-    let platform_dir = root_path
-        .join("bin")
-        .read_dir()
-        .map_err(|error| format!("cannot read bin/: {error}"))?
-        .filter_map(Result::ok)
-        .find(|entry| entry.path().is_dir())
-        .ok_or("no platform directory under bin/")?;
-    let binary = platform_dir.path().join(program);
-    if !binary.exists() {
-        return Err(format!("BasicTeX image has no '{program}'"));
-    }
+    let program = argv.first().ok_or("empty argv")?.clone();
+    // Tool resolution goes through the RuntimePack trait (M1).
+    let pack = tectdist_core::runtime::ImageRuntimePack::new(root_path.clone());
+    let binary = pack.resolve_tool(&program)
+        .map_err(|error| format!("exact lane: {error}"))?;
     // NOTE: unchanged-rebuild detection lives in rebuild_gate.rs (content
     // digests over the whole project tree, recorded chains). The earlier
     // mtime-proxy check that lived here was removed: plan §12 forbids
