@@ -295,7 +295,15 @@ impl SupervisorState {
                 .ok()
                 .and_then(|value| value.parse().ok())
                 .unwrap_or(32),
-            image_root: PathBuf::from(std::env::var("TECTDIST_BASICTEX_ROOT").unwrap_or_default()),
+            // M1 transition: root resolution centralised in tectdist-core
+            // (TECTDIST_RUNTIME_ROOT preferred; legacy oracle-image root
+            // still accepted until PACK-008/009).
+            image_root: tectdist_core::runtime::detect_runtime_pack_source()
+                .map(|source| match source {
+                    tectdist_core::runtime::RuntimePackSource::TectdistRoot(path)
+                    | tectdist_core::runtime::RuntimePackSource::LegacyImageRoot(path) => path,
+                })
+                .unwrap_or_default(),
             aux_tracker: Mutex::new(checkpoint::AuxStateTracker::new()),
             rebuild_cache: rebuild_cache::RebuildCache::new(),
             started: std::time::Instant::now(),
@@ -672,7 +680,9 @@ fn sha256_file(path: &Path) -> Result<String, String> {
 impl SupervisorState {
     fn image_tool(&self, tool: &str) -> Result<PathBuf, String> {
         if self.image_root.as_os_str().is_empty() {
-            return Err("TECTDIST_BASICTEX_ROOT is not configured".to_string());
+            return Err(
+                "no runtime pack configured: set TECTDIST_RUNTIME_ROOT".to_string(),
+            );
         }
         let bin = self.image_root.join("bin");
         let mut platform_dir = None;
@@ -1315,10 +1325,18 @@ fn run_profile_compile(
     if profile != "basictex-2026" {
         return Err(format!("unsupported profile '{profile}'"));
     }
-    let root = std::env::var("TECTDIST_BASICTEX_ROOT").map_err(|_| {
-        "TECTDIST_BASICTEX_ROOT is not set; cannot resolve the BasicTeX image".to_string()
-    })?;
-    let root_path = PathBuf::from(root);
+    // M1 transition: root resolution centralised in tectdist-core
+    // (TECTDIST_RUNTIME_ROOT preferred; legacy oracle-image root still
+    // accepted until PACK-008/009).
+    let root_path = match tectdist_core::runtime::detect_runtime_pack_source() {
+        Some(tectdist_core::runtime::RuntimePackSource::TectdistRoot(path))
+        | Some(tectdist_core::runtime::RuntimePackSource::LegacyImageRoot(path)) => path,
+        None => {
+            return Err(
+                "no runtime pack configured: set TECTDIST_RUNTIME_ROOT".to_string(),
+            )
+        }
+    };
     let program = argv.first().ok_or("empty argv")?;
     let platform_dir = root_path
         .join("bin")

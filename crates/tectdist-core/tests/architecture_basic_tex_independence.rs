@@ -25,14 +25,19 @@ const FORBIDDEN: &[&str] = &[
 
 /// Reviewed baseline of known violations pending the M1 split.
 /// (file, pattern, current count). Never grow; only shrink.
+///
+/// History: M0 baselined scattered reads in tectdist-cli/main.rs (3) and
+/// tectdist-supervisor/main.rs (4); the first M1 increment consolidated all
+/// resolution into tectdist-core/src/runtime.rs behind the shared resolver,
+/// so those two entries dropped to zero and a single centralised entry
+/// remains until PACK-008/PACK-009 remove the legacy fallback entirely.
 const BASELINE: &[(&str, &str, usize)] = &[
-    // Plan PACK-008/PACK-009: exact lane moves to TECTDIST_RUNTIME_ROOT /
-    // RuntimePack; until then these files resolve the oracle image.
-    ("crates/tectdist-cli/src/main.rs", "TECTDIST_BASICTEX_ROOT", 3),
+    // Centralised transition resolver (TECTDIST_RUNTIME_ROOT preferred,
+    // legacy oracle-image root accepted during M1 only).
     (
-        "crates/tectdist-supervisor/src/main.rs",
+        "crates/tectdist-core/src/runtime.rs",
         "TECTDIST_BASICTEX_ROOT",
-        4,
+        7,
     ),
 ];
 

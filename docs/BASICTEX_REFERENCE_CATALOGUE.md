@@ -23,8 +23,11 @@ Production must contain **zero** references to:
 
 | # | Location | Pattern | Purpose today | Disposition |
 |---|---|---|---|---|
-| 1 | `crates/tectdist-cli/src/main.rs` | `TECTDIST_BASICTEX_ROOT` (3) | Resolves the pinned BasicTeX image to execute exact one-shot compiles for the `basictex-2026` profile | Removed at M1/PACK-008: exact lane resolves tools from `RuntimePack` via `TECTDIST_RUNTIME_ROOT`; `OracleRunner` moves behind test-only feature |
-| 2 | `crates/tectdist-supervisor/src/main.rs` | `TECTDIST_BASICTEX_ROOT` (4) | Supervisor-side resolution of BasicTeX image binaries/formats for exact execution and fork-server workers | Removed at M1/PACK-008–009: supervisor consumes only tectdist-owned runtime packs; BasicTeX execution becomes oracle-test-only |
+| 1 | `crates/tectdist-core/src/runtime.rs` | `TECTDIST_BASICTEX_ROOT` (7) | The single centralised runtime-root resolver (`detect_runtime_pack_source`): prefers `TECTDIST_RUNTIME_ROOT`, accepts the legacy oracle-image root during the M1 transition only. All supervisor/CLI resolution flows through it — their own direct reads were removed in the first M1 increment. | Removed at M1/PACK-008–009: the legacy fallback arm is deleted, leaving `TECTDIST_RUNTIME_ROOT` as the only production variable; oracle execution remains behind the `oracle-tools` feature (`OracleRunner`) |
+
+History: at M0 this table baselined scattered direct reads in
+`tectdist-cli/src/main.rs` (3) and `tectdist-supervisor/src/main.rs` (4);
+both dropped to zero when resolution was consolidated.
 
 No other production references exist. No production code links against
 Kpathsea from a system TeX; no committed binaries remain in source history

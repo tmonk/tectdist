@@ -1,5 +1,6 @@
 //! Compatibility planning model shared by all native executors.
 pub mod backend;
+pub mod runtime;
 use std::ffi::OsString;
 use std::path::PathBuf;
 

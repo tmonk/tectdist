@@ -6,3 +6,8 @@ license = "AGPL-3.0-only"
 
 [lib]
 path = "src/lib.rs"
+
+[features]
+# Oracle-comparison tooling (plan §2.3): enables the OracleRunner surface.
+# Never enabled for production builds; BasicTeX stays oracle-only.
+oracle-tools = []

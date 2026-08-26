@@ -243,7 +243,14 @@ fn doctor(json: bool) -> i32 {
     let format_cache_identity =
         env::var("TECTDIST_FORMAT_CACHE_ID").unwrap_or_else(|_| "runtime-default".into());
     let basictex_profile = env::var("TECTDIST_PROFILE").unwrap_or_else(|_| "default".into());
-    let basictex_root = env::var("TECTDIST_BASICTEX_ROOT").unwrap_or_default();
+    let basictex_root = tectdist_core::runtime::detect_runtime_pack_source()
+        .map(|source| match source {
+            tectdist_core::runtime::RuntimePackSource::TectdistRoot(path)
+            | tectdist_core::runtime::RuntimePackSource::LegacyImageRoot(path) => {
+                path.to_string_lossy().to_string()
+            }
+        })
+        .unwrap_or_default();
     let image_digest = PathBuf::from(&basictex_root)
         .join("image-manifest.json")
         .read_file_ok()
@@ -1785,11 +1792,24 @@ fn run_basictex_engine(name: &str, rest: &[OsString]) -> Result<i32, String> {
             Err(_) => { /* supervisor unavailable: direct execution */ }
         }
     }
-    let root = env::var("TECTDIST_BASICTEX_ROOT").map_err(|_| {
-        "TECTDIST_PROFILE=basictex-2026 requires TECTDIST_BASICTEX_ROOT to point at the image root"
-            .to_string()
-    })?;
-    let root_path = PathBuf::from(&root);
+    // M1 transition: the profile resolves its engine root through the
+    // shared runtime-pack resolver (TECTDIST_RUNTIME_ROOT preferred,
+    // legacy oracle-image root still accepted). See
+    // docs/BASICTEX_REFERENCE_CATALOGUE.md for the removal plan.
+    let root_path = match tectdist_core::runtime::detect_runtime_pack_source()
+    {
+        Some(tectdist_core::runtime::RuntimePackSource::TectdistRoot(path))
+        | Some(tectdist_core::runtime::RuntimePackSource::LegacyImageRoot(path)) => {
+            path
+        }
+        None => {
+            return Err(
+                "basictex-2026 profile requires a runtime pack: set \
+                 TECTDIST_RUNTIME_ROOT"
+                    .to_string(),
+            )
+        }
+    };
     let platform_dir = root_path
         .join("bin")
         .read_dir()
@@ -1804,7 +1824,7 @@ fn run_basictex_engine(name: &str, rest: &[OsString]) -> Result<i32, String> {
     let started = Instant::now();
     let status = Command::new(binary)
         .args(rest)
-        .env("TEXMFROOT", &root)
+        .env("TEXMFROOT", &root_path)
         .status()
         .map_err(|error| format!("cannot launch BasicTeX {name}: {error}"))?;
     trace_span(
